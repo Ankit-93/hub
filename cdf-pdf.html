@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CDF and PDF</title>
+    <!DOCTYPE html>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.8;
+            margin: 0;
+            padding: 0;
+            background-color: #eef2f3;
+            color: #333;
+        }
+        header {
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            color: white;
+            padding: 30px 0;
+            text-align: center;
+            font-size: 28px;
+            font-weight: bold;
+            animation: fadeIn 1.5s ease-in-out;
+        }
+        main {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 25px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.15);
+            animation: slideUp 1s ease-in-out;
+        }
+        h2, h3 {
+            color: #1e3c72;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        ul li {
+            background: #f7f9fc;
+            margin: 10px 0;
+            padding: 12px;
+            border-radius: 6px;
+            transition: transform 0.3s ease-in-out;
+        }
+        ul li:hover {
+            transform: scale(1.05);
+        }
+        a {
+            color: #2980b9;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        footer {
+            text-align: center;
+            padding: 20px;
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            color: white;
+            margin-top: 30px;
+        }
+        .image-container {
+            text-align: center;
+            margin: 30px 0;
+        }
+        .image-container img {
+            width: 85%;
+            border-radius: 10px;
+            box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+            animation: fadeIn 2s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes slideUp {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <h1>CDF (Cumulative Distribution Function)</h1>
+    <p>The Cumulative Distribution Function (CDF) gives the probability that a random variable <em>X</em> takes a value less than or equal to a certain value <em>x</em>. It is a cumulative measure of probability and is defined for both discrete and continuous random variables.</p>
+    <h2>Definition:</h2>
+    <p>For a random variable <em>X</em>, the CDF is denoted as <em>F<sub>X</sub>(x)</em>, and it is defined as:</p>
+    <p><em>F<sub>X</sub>(x) = P(X ≤ x)</em></p>
+    <h2>Properties of CDF:</h2>
+    <ul>
+        <li>Non-decreasing: The CDF never decreases as <em>x</em> increases.</li>
+        <li>Limits: <em>lim<sub>x→−∞</sub> F<sub>X</sub>(x) = 0</em> and <em>lim<sub>x→∞</sub> F<sub>X</sub>(x) = 1</em></li>
+        <li>Right-continuous: The CDF is continuous from the right.</li>
+        <li>For discrete random variables, the CDF is a step function. For continuous random variables, it is a smooth curve.</li>
+    </ul>
+    <h2>Example (Discrete):</h2>
+    <p>If <em>X</em> is the outcome of a fair six-sided die, then:</p>
+    <pre>
+        <em>F<sub>X</sub>(x) = { 0, x < 1
+                        1/6, 1 ≤ x < 2
+                        2/6, 2 ≤ x < 3
+                        3/6, 3 ≤ x < 4
+                        4/6, 4 ≤ x < 5
+                        5/6, 5 ≤ x < 6
+                        1, x ≥ 6 }</em>
+    </pre>
+    <h2>Example (Continuous):</h2>
+    <p>For a uniform random variable <em>X</em> over the interval [0,1], the CDF is:</p>
+    <pre>
+        <em>F<sub>X</sub>(x) = { 0, x < 0
+                        x, 0 ≤ x ≤ 1
+                        1, x > 1 }</em>
+    </pre>
+    <h1>PDF (Probability Density Function)</h1>
+    <p>The Probability Density Function (PDF) describes the likelihood of a continuous random variable <em>X</em> taking on a particular value. Unlike the CDF, the PDF does not give probabilities directly but instead represents the density of the probability at a point.</p>
+    <h2>Definition:</h2>
+    <p>For a continuous random variable <em>X</em>, the PDF <em>f<sub>X</sub>(x)</em> is the derivative of the CDF:</p>
+    <p><em>f<sub>X</sub>(x) = d/dx F<sub>X</sub>(x)</em></p>
+    <h2>Properties of PDF:</h2>
+    <ul>
+        <li>Non-negative: <em>f<sub>X</sub>(x) ≥ 0</em> for all <em>x</em>.</li>
+        <li>Total Area = 1: <em>∫<sub>−∞</sub><sup>∞</sup> f<sub>X</sub>(x) dx = 1</em></li>
+        <li>Probability for an interval: The probability that <em>X</em> falls within an interval [a,b] is given by: <em>P(a ≤ X ≤ b) = ∫<sub>a</sub><sup>b</sup> f<sub>X</sub>(x) dx</em></li>
+    </ul>
+    <h2>Example:</h2>
+    <p>For a uniform random variable <em>X</em> over the interval [0,1], the PDF is:</p>
+    <pre>
+        <em>f<sub>X</sub>(x) = { 1, 0 ≤ x ≤ 1
+                        0, otherwise }</em>
+    </pre>
+    <p>For a standard normal random variable <em>Z</em> with mean 0 and variance 1, the PDF is:</p>
+    <pre>
+        <em>f<sub>Z</sub>(z) = 1/√(2π) e<sup>−z²/2</sup></em>
+    </pre>
+    <h2>Relationship Between CDF and PDF</h2>
+    <p>The PDF is the derivative of the CDF: <em>f<sub>X</sub>(x) = d/dx F<sub>X</sub>(x)</em></p>
+    <p>The CDF is the integral of the PDF: <em>F<sub>X</sub>(x) = ∫<sub>−∞</sub><sup>x</sup> f<sub>X</sub>(t) dt</em></p>
+    <h2>Comparison of CDF and PDF</h2>
+    <table>
+        <tr>
+            <th>Aspect</th>
+            <th>CDF</th>
+            <th>PDF</th>
+        </tr>
+        <tr>
+            <td>Definition</td>
+            <td><em>F<sub>X</sub>(x) = P(X ≤ x)</em></td>
+            <td><em>f<sub>X</sub>(x) = d/dx F<sub>X</sub>(x)</em></td>
+        </tr>
+        <tr>
+            <td>Value</td>
+            <td>Cumulative probability</td>
+            <td>Probability density</td>
+        </tr>
+        <tr>
+            <td>Range</td>
+            <td>[0,1]</td>
+            <td>[0,∞)</td>
+        </tr>
+        <tr>
+            <td>Graph</td>
+            <td>S-shaped curve (for continuous random variables)</td>
+            <td>Bell-shaped or other curves depending on the distribution</td>
+        </tr>
+    </table>
+
+    <h2>Examples</h2>
+    <p>Click the button below to explore examples:</p>
+    <button> <a href="./src/pdf-example.html">View Examples</a></button>
+</body>
+</html>

@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Type 1 & Type 2 Errors with Confusion Matrix</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <style>
+      body {
+          font-family: 'Poppins', sans-serif;
+          line-height: 1.8;
+          margin: 0;
+          padding: 0;
+          background-color: #eef2f3;
+          color: #333;
+      }
+      header {
+          background: linear-gradient(135deg, #1e3c72, #2a5298);
+          color: white;
+          padding: 30px 0;
+          text-align: center;
+          font-size: 28px;
+          font-weight: bold;
+          animation: fadeIn 1.5s ease-in-out;
+      }
+      main {
+          max-width: 900px;
+          margin: 40px auto;
+          padding: 25px;
+          background: white;
+          border-radius: 10px;
+          box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.15);
+          animation: slideUp 1s ease-in-out;
+      }
+      h2, h3 {
+          color: #1e3c72;
+      }
+      ul {
+          list-style-type: none;
+          padding: 0;
+      }
+      ul li {
+          background: #f7f9fc;
+          margin: 10px 0;
+          padding: 12px;
+          border-radius: 6px;
+          transition: transform 0.3s ease-in-out;
+      }
+      ul li:hover {
+          transform: scale(1.05);
+      }
+      a {
+          color: #2980b9;
+          text-decoration: none;
+          font-weight: bold;
+      }
+      a:hover {
+          text-decoration: underline;
+      }
+      footer {
+          text-align: center;
+          padding: 20px;
+          background: linear-gradient(135deg, #1e3c72, #2a5298);
+          color: white;
+          margin-top: 30px;
+      }
+      .image-container {
+          text-align: center;
+          margin: 30px 0;
+      }
+      .image-container img {
+          width: 85%;
+          border-radius: 10px;
+          box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+          animation: fadeIn 2s ease-in-out;
+      }
+      @keyframes fadeIn {
+          from { opacity: 0; }
+          to { opacity: 1; }
+      }
+      @keyframes slideUp {
+          from { transform: translateY(20px); opacity: 0; }
+          to { transform: translateY(0); opacity: 1; }
+      }
+  </style>
+</head>
+<body>
+    <header>
+    <h1>Type 1 and Type 2 Errors in Hypothesis Testing</h1>
+  </header>
+    <div>
+        <h3 class="section-header">Confusion Matrix Representation</h3>
+        <pre>
+|                 | Decision: Reject H₀                 | Decision: Fail to Reject H₀         |
+|-----------------|-------------------------------------|-------------------------------------|
+| **H₀ is TRUE**  | Type 1 Error (False Positive)       | ✅ Correct Decision (True Negative) |
+| **H₀ is FALSE** | ✅ Correct Decision (True Positive) | Type 2 Error (False Negative)       |
+        </pre>
+    </div>
+
+    <div>
+        <h3 class="section-header">Type 1 Error (False Positive)</h3>
+        <pre>
+✅ Definition: Rejecting the null hypothesis (H₀) when it is actually TRUE.
+✅ Probability of Occurrence: Denoted by α (Significance Level), typically set to 0.05 (5%).
+✅ Consequence: You detect an effect that DOES NOT exist.
+        </pre>
+        <div class="example-box">
+            <strong>Example:</strong>
+            <ul>
+                <li>A COVID test detects the virus in a healthy person (False Alarm).</li>
+                <li>Convicting an innocent person in a court trial.</li>
+            </ul>
+        </div>
+    </div>
+
+    <div>
+        <h3 class="section-header">Type 2 Error (False Negative)</h3>
+        <pre>
+✅ Definition: Failing to reject the null hypothesis (H₀) when it is actually FALSE.
+✅ Probability of Occurrence: Denoted by β, related to statistical power (1 - β).
+✅ Consequence: You MISS detecting a real effect.
+        </pre>
+        <div class="example-box">
+            <strong>Example:</strong>
+            <ul>
+                <li>A COVID test fails to detect the virus in an infected person.</li>
+                <li>Letting a guilty person go free in court.</li>
+            </ul>
+        </div>
+    </div>
+
+    <div>
+        <h3 class="section-header">Comparison: Type 1 vs Type 2 Errors</h3>
+        <pre>
+| Error Type   |  What Happens?                                                  | Example                              | Probability            |
+|--------------|-----------------------------------------------------------------|--------------------------------------|------------------------|
+| Type 1 Error | Rejecting H₀ when it is actually TRUE (False Positive)          | Finding an effect that doesn’t exist | α (Significance Level) |
+| Type 2 Error | Failing to reject H₀ when it is actually FALSE (False Negative) | Missing a real effect                | β (Related to Power)   |
+        </pre>
+    </div>
+
+    <div>
+        <h3 class="section-header">How to Reduce These Errors?</h3>
+        <pre>
+🔹 Lower Type 1 Error (α):
+- Decrease significance level (α = 0.01 instead of 0.05).
+- Use larger sample sizes to improve accuracy.
+
+🔹 Lower Type 2 Error (β):
+- Increase sample size for more statistical power.
+- Increase effect size (look for bigger differences).
+        </pre>
+    </div>
+
+    <div>
+        <h3 class="section-header">Final Summary</h3>
+        <pre>
+- **Type 1 Error** → False Positive (Detecting something that isn’t there).
+- **Type 2 Error** → False Negative (Missing something that actually exists).
+        </pre>
+    </div>
+
+    <h2 class="section-header">One-Tailed & Two-Tailed Hypothesis Test</h2>
+
+    <div>
+        <h3 class="section-header">Problem Statement</h3>
+        <pre>
+Colleges in Karnataka have an average placement rate of **85%**.
+A new college has a sample of **150 students** with a placement rate of **88%** and a standard deviation of **4%**.
+
+Does this college have a different placement rate? We will conduct both **One-Tailed and Two-Tailed Tests**.
+        </pre>
+    </div>
+
+    <div>
+        <h3 class="section-header">Step 1: Define Hypotheses</h3>
+        <pre>
+🔹 **Null Hypothesis (H₀)**: The new college has the same placement rate as other Karnataka colleges.
+   - H₀: p = 0.85
+
+🔹 **Alternative Hypothesis (H₁) - Two-Tailed Test**: The new college has a different placement rate.
+   - H₁: p ≠ 0.85 (We check if placement rate is significantly different in either direction)
+
+🔹 **Alternative Hypothesis (H₁) - One-Tailed Test**: The new college has a higher placement rate.
+   - H₁: p > 0.85 (We check if placement rate is significantly higher)
+        </pre>
+    </div>
+
+    <div>
+        <h3 class="section-header">Step 2: Calculate Z-Score</h3>
+        <pre>
+Formula: 
+       Z = (p̂ - p) / (σ / √n)
+
+Where:
+- p̂ = 0.88 (Sample Placement Rate)
+- p  = 0.85 (Population Placement Rate)
+- σ  = 0.04 (Standard Deviation)
+- n  = 150 (Sample Size)
+
+Plugging in values:
+       Z = (0.88 - 0.85) / (0.04 / √150)
+       Z = 0.03 / (0.04 / 12.247)
+       Z = 0.03 / 0.003267
+       Z ≈ 9.18
+        </pre>
+    </div>
+
+    <div>
+        <h3 class="section-header">Step 3: Determine Critical Values</h3>
+        <pre>
+For a **Two-Tailed Test** at **α = 0.05**:
+- Critical Z-values: ±1.96
+- Decision Rule: If |Z| > 1.96, we reject H₀.
+
+For a **One-Tailed Test** (Right-Tailed) at **α = 0.05**:
+- Critical Z-value: 1.645
+- Decision Rule: If Z > 1.645, we reject H₀.
+        </pre>
+    </div>
+
+    <div>
+        <h3 class="section-header">Step 4: Compare & Conclusion</h3>
+        <pre>
+Our calculated Z-score: **9.18**
+
+🔹 **For the Two-Tailed Test**:
+- |9.18| > 1.96 → Reject H₀.
+- Conclusion: The new college has a **significantly different** placement rate.
+
+🔹 **For the One-Tailed Test (Right-Tail)**:
+- 9.18 > 1.645 → Reject H₀.
+- Conclusion: The new college has a **significantly higher** placement rate.
+
+✅ **Final Answer**: The new college has a placement rate that is significantly higher than 85%.
+        </pre>
+    </div>
+
+    <div>
+        <h2 class="section-header">Confidence Interval and Point Estimate</h2>
+        <h3>Problem Statement:</h3>
+        <pre>
+          On a quantitative test of the CAT, the standard deviation is known to be 100. A sample of 25 test takers has a mean score of 520. 
+          Construct a 95% confidence interval about the population mean.
+        </pre>
+        <h3>Confidence Interval and Point Estimate</h3>
+        <pre>
+              Step 1: Identify the given values
+              - Sample Mean (X̄): 520
+              - Population Standard Deviation (σ): 100
+              - Sample Size (n): 25
+              - Confidence Level: 95%
+          
+              Step 2: Find the Z-Score for 95% Confidence Level
+              - For a 95% confidence level, the Z-value ≈ 1.96.
+          
+              Step 3: Calculate the Standard Error (SE)
+              SE = σ / √n
+              SE = 100 / √25
+              SE = 100 / 5
+              SE = 20
+          
+              Step 4: Calculate the Confidence Interval
+              CI = X̄ ± Z * SE
+              CI = 520 ± 1.96 * 20
+              CI = 520 ± 39.2
+          
+              So, the 95% Confidence Interval is: **(480.8, 559.2)**
+          
+              Conclusion: We are 95% confident that the true population mean lies between 480.8 and 559.2.
+        </pre>
+    </div>
+
+    <div>
+        <h3>One-Sample Z-Test for Medication Effect on Intelligence</h3>
+        
+        <h4>Problem Statement:</h4>
+        <pre>
+          In the population, the average IQ is 100 with a standard deviation of 15. Researchers want to test a new medication to see if 
+          it has a positive, negative, or no effect on intelligence. A sample of 30 people who have taken the medication has a mean IQ of 140. 
+          Does the medication affect intelligence?
+        </pre>
+      
+        <h4>Hypothesis:</h4>
+        <pre>
+          Null Hypothesis (H₀): μ = 100 (No effect)
+          Alternative Hypothesis (Hₐ): μ ≠ 100 (Has an effect)
+        </pre>
+      
+        <h4>Calculations:</h4>
+        <pre>
+          Given:
+          - Sample Mean (X̄) = 140
+          - Population Mean (μ) = 100
+          - Standard Deviation (σ) = 15
+          - Sample Size (n) = 30
+      
+          Step 1: Compute Standard Error (SE)
+          SE = σ / √n
+          SE = 15 / √30
+          SE = 15 / 5.477
+          SE ≈ 2.737
+      
+          Step 2: Compute Z-Score
+          Z = (X̄ - μ) / SE
+          Z = (140 - 100) / 2.737
+          Z ≈ 14.62
+      
+          Step 3: Compare with Critical Value
+          - Critical Z-Value at 95% Confidence (α = 0.05, two-tailed) = ±1.96
+          - Since |14.62| > 1.96, we reject the null hypothesis.
+      
+          Conclusion:
+          - The test is statistically significant.
+          - The medication has a significant effect on intelligence.
+        </pre>
+      </div>
+
+      <div>
+        <h3>One-Sample T-Test for Medication Effect on Intelligence</h3>
+        
+        <h4>Problem Statement:</h4>
+        <p>
+          In the population, the average IQ is 100 with a standard deviation of 15. Researchers want to test a new medication to see if 
+          it has a positive, negative, or no effect on intelligence. A sample of 30 people who have taken the medication has a mean IQ of 140. 
+          Does the medication affect intelligence?
+        </p>
+      
+        <h4>Hypothesis:</h4>
+        <pre>
+          Null Hypothesis (H₀): μ = 100 (No effect)
+          Alternative Hypothesis (Hₐ): μ ≠ 100 (Has an effect)
+        </pre>
+      
+        <h4>Calculations:</h4>
+        <pre>
+          Given:
+          - Sample Mean (X̄) = 140
+          - Population Mean (μ) = 100
+          - Sample Standard Deviation (s) = 15
+          - Sample Size (n) = 30
+      
+          Step 1: Compute Standard Error (SE)
+          SE = s / √n
+          SE = 15 / √30
+          SE = 15 / 5.477
+          SE ≈ 2.737
+      
+          Step 2: Compute t-Score
+          t = (X̄ - μ) / SE
+          t = (140 - 100) / 2.737
+          t ≈ 14.62
+      
+          Step 3: Determine Degrees of Freedom
+          df = n - 1 = 30 - 1 = 29
+      
+          Step 4: Compare with Critical Value
+          - Critical t-Value at 95% Confidence (α = 0.05, two-tailed) = ±2.045
+          - Since |14.62| > 2.045, we reject the null hypothesis.
+      
+          Conclusion:
+          - The test is statistically significant.
+          - The medication has a significant effect on intelligence.
+        </pre>
+      </div>
+      <div>
+        <h2>Real-World Examples of One-Sample T-Test</h2>
+      
+        <h3>1️⃣ Medical Research: Effect of a New Drug on Blood Pressure</h3>
+        <p>
+          A pharmaceutical company develops a new drug to lower blood pressure. The average blood pressure in the population is 120 mmHg. 
+          A sample of 50 patients who took the drug had an average blood pressure of 112 mmHg, with a standard deviation of 10 mmHg.
+        </p>
+        <pre>
+          H₀: μ = 120 (No effect)
+          Hₐ: μ < 120 (The drug lowers blood pressure)
+        </pre>
+        <p>A one-sample t-test can determine if the drug significantly lowers blood pressure.</p>
+      
+        <h3>2️⃣ Business: Coffee Shop Tests a New Marketing Strategy</h3>
+        <p>
+          A coffee shop chain wants to check if its new marketing strategy increases average daily sales. Historically, the average daily 
+          sales were $1,000. After the new strategy, a sample of 20 stores showed an average daily sale of $1,150, with a standard deviation 
+          of $200.
+        </p>
+        <pre>
+          H₀: μ = 1000 (No effect)
+          Hₐ: μ > 1000 (Marketing strategy increased sales)
+        </pre>
+        <p>A t-test can determine whether the increase in sales is significant.</p>
+      
+        <h3>3️⃣ Education: Impact of an Online Learning Program</h3>
+        <p>
+          A school wants to know if a new online learning program improves student math scores. The average math test score before 
+          the program was 75. After using the program, a sample of 40 students had an average score of 80, with a standard deviation of 12.
+        </p>
+        <pre>
+          H₀: μ = 75 (No improvement)
+          Hₐ: μ > 75 (The program improves scores)
+        </pre>
+        <p>A t-test will determine if the program significantly improved scores.</p>
+      
+        <h3>4️⃣ Manufacturing: Quality Control in a Factory</h3>
+        <p>
+          A company producing light bulbs claims that their bulbs last an average of 1,000 hours. A sample of 30 bulbs from a new batch 
+          shows an average lifespan of 950 hours, with a standard deviation of 80 hours.
+        </p>
+        <pre>
+          H₀: μ = 1000 (No change)
+          Hₐ: μ ≠ 1000 (Quality has changed)
+        </pre>
+        <p>A t-test will determine if the observed lifespan is significantly different from 1,000 hours.</p>
+      
+        <h3>5️⃣ Psychology: Studying Stress Levels Before and After Meditation</h3>
+        <p>
+          A psychologist wants to know if meditation reduces stress. The average stress level in the population (on a scale of 1-10) is 6.5. 
+          After a 30-day meditation program, a sample of 25 participants had an average stress level of 5.8, with a standard deviation of 1.2.
+        </p>
+        <pre>
+          H₀: μ = 6.5 (No reduction)
+          Hₐ: μ < 6.5 (Meditation reduces stress)
+        </pre>
+        <p>A one-sample t-test will determine if the reduction in stress levels is significant.</p>
+      
+      </div>
+
+</body>
+</html>

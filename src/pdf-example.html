@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PDF and CDF Visualization</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.8;
+            margin: 0;
+            padding: 0;
+            background-color: #eef2f3;
+            color: #333;
+        }
+        header {
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            color: white;
+            padding: 30px 0;
+            text-align: center;
+            font-size: 28px;
+            font-weight: bold;
+            animation: fadeIn 1.5s ease-in-out;
+        }
+        main {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 25px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.15);
+            animation: slideUp 1s ease-in-out;
+        }
+        h2, h3 {
+            color: #1e3c72;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        ul li {
+            background: #f7f9fc;
+            margin: 10px 0;
+            padding: 12px;
+            border-radius: 6px;
+            transition: transform 0.3s ease-in-out;
+        }
+        ul li:hover {
+            transform: scale(1.05);
+        }
+        a {
+            color: #2980b9;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        footer {
+            text-align: center;
+            padding: 20px;
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            color: white;
+            margin-top: 30px;
+        }
+        .image-container {
+            text-align: center;
+            margin: 30px 0;
+        }
+        .image-container img {
+            width: 85%;
+            border-radius: 10px;
+            box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+            animation: fadeIn 2s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes slideUp {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <h1>Probability Density Function (PDF) and Cumulative Distribution Function (CDF)</h1>
+    <p>This example visualizes the PDF and CDF of a uniform distribution between 0 and 10.</p>
+
+    <canvas id="pdfChart"></canvas>
+    <canvas id="cdfChart"></canvas>
+
+    <script>
+        // Data for uniform distribution [0, 10]
+        const xValues = Array.from({ length: 500 }, (_, i) => -2 + i * 0.028); // x from -2 to 12
+
+        // PDF function: f(x) = 0.1 if 0 <= x <= 10, else 0
+        const pdfValues = xValues.map(x => (x >= 0 && x <= 10 ? 0.1 : 0));
+
+        // CDF function: F(x) = x/10 if 0 <= x <= 10, 0 if x < 0, 1 if x > 10
+        const cdfValues = xValues.map(x => {
+            if (x < 0) return 0;
+            if (x > 10) return 1;
+            return x / 10;
+        });
+
+        // PDF Chart
+        const pdfCtx = document.getElementById('pdfChart').getContext('2d');
+        new Chart(pdfCtx, {
+            type: 'line',
+            data: {
+                labels: xValues,
+                datasets: [{
+                    label: 'PDF',
+                    data: pdfValues,
+                    borderColor: 'blue',
+                    backgroundColor: 'rgba(0, 0, 255, 0.2)',
+                    borderWidth: 2,
+                    fill: true,
+                }],
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: { display: true },
+                    title: { display: true, text: 'Probability Density Function (PDF)' },
+                },
+                scales: {
+                    x: { title: { display: true, text: 'x' } },
+                    y: { title: { display: true, text: 'Density' }, min: 0, max: 0.2 },
+                },
+            },
+        });
+
+        // CDF Chart
+        const cdfCtx = document.getElementById('cdfChart').getContext('2d');
+        new Chart(cdfCtx, {
+            type: 'line',
+            data: {
+                labels: xValues,
+                datasets: [{
+                    label: 'CDF',
+                    data: cdfValues,
+                    borderColor: 'green',
+                    backgroundColor: 'rgba(0, 255, 0, 0.2)',
+                    borderWidth: 2,
+                    fill: true,
+                }],
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: { display: true },
+                    title: { display: true, text: 'Cumulative Distribution Function (CDF)' },
+                },
+                scales: {
+                    x: { title: { display: true, text: 'x' } },
+                    y: { title: { display: true, text: 'Cumulative Probability' }, min: 0, max: 1 },
+                },
+            },
+        });
+    </script>
+</body>
+</html>

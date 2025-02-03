@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Measures of Central Tendency, Dispersion, Percentiles, and Quartiles</title>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.8;
+            margin: 0;
+            padding: 0;
+            background-color: #eef2f3;
+            color: #333;
+        }
+        header {
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            color: white;
+            padding: 30px 0;
+            text-align: center;
+            font-size: 28px;
+            font-weight: bold;
+            animation: fadeIn 1.5s ease-in-out;
+        }
+        main {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 25px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.15);
+            animation: slideUp 1s ease-in-out;
+        }
+        h2, h3 {
+            color: #1e3c72;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        ul li {
+            background: #f7f9fc;
+            margin: 10px 0;
+            padding: 12px;
+            border-radius: 6px;
+            transition: transform 0.3s ease-in-out;
+        }
+        ul li:hover {
+            transform: scale(1.05);
+        }
+        a {
+            color: #2980b9;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        footer {
+            text-align: center;
+            padding: 20px;
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            color: white;
+            margin-top: 30px;
+        }
+        .image-container {
+            text-align: center;
+            margin: 30px 0;
+        }
+        .image-container img {
+            width: 85%;
+            border-radius: 10px;
+            box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+            animation: fadeIn 2s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes slideUp {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+    </style>
+</head>
+<header>
+    <h1>Measures of Central Tendency, Dispersion, Percentiles, and Quartiles</h1>
+</header>
+
+<body>
+    <p><i>Central tendency refers to the statistical concept that describes the center or typical value of a dataset. It provides a single value that summarizes the entire distribution of data, representing a point around which most of the data points tend to cluster. The goal is to find the "center" of the data to understand the overall trend or typical value.</i><br>
+        There are three main measures of central tendency:
+        <br>
+        Mean: The average of all values in the dataset.<br>
+        Median: The middle value when the data is arranged in order.<br>
+        Mode: The value that appears most frequently in the dataset.</p>
+
+    <h1>Measures of Central Tendency</h1>
+    <div class="measure">
+        <h3>Mean (Average)</h3>
+        <p>The mean is calculated by adding all the values in the dataset and dividing by the number of values. It is the most commonly used measure of central tendency.</p>
+        <pre>
+            Example:
+            Dataset: [3, 7, 8, 5, 12, 19, 15, 10, 4, 6]
+            Mean = (3 + 7 + 8 + 5 + 12 + 19 + 15 + 10 + 4 + 6) / 10 = 89 / 10 = 8.9
+        </pre>
+    </div>
+
+    <div class="measure">
+        <h3>Median</h3>
+        <p>The median is the middle value when the data is ordered. If there is an even number of values, the median is the average of the two middle numbers.</p>
+        <pre>
+            Example:
+            Dataset: [3, 7, 8, 5, 12, 19, 15, 10, 4, 6]
+            Ordered Dataset: [3, 4, 5, 6, 7, 8, 10, 12, 15, 19]
+            Median = (7 + 8) / 2 = 7.5
+        </pre>
+    </div>
+
+    <div class="measure">
+        <h3>Mode</h3>
+        <p>The mode is the value that appears most frequently in a dataset. There can be more than one mode if multiple values have the same frequency.</p>
+        <pre>
+            Example:
+            Dataset: [3, 7, 8, 5, 12, 19, 15, 10, 4, 6]
+            Mode = No mode (all values appear only once)
+        </pre>
+    </div>
+
+    <h1>Measures of Dispersion</h1>
+    <p><i>Measures of dispersion describe the spread or variability of a dataset. They give us an understanding of how spread out or clustered the values are in relation to the central tendency.</i></p>
+    
+    <div class="measure">
+        <h3>Range</h3>
+        <p>The range is the difference between the highest and lowest values in the dataset. It provides a simple way to measure the spread but does not account for how the data is distributed within that range.</p>
+        <pre>
+            Range = Max(X) - Min(X)
+            Example:
+            Dataset: [3, 7, 8, 5, 12, 19, 15, 10, 4, 6]
+            Range = 19 - 3 = 16
+        </pre>
+    </div>
+
+    <div class="measure">
+        <h3>Variance</h3>
+        <p>Variance measures the average squared deviation from the mean. It gives an idea of how much the data points vary from the mean.</p>
+        <pre>
+            Population Variance Example:
+            Dataset: [3, 7, 8, 5, 12, 19, 15, 10, 4, 6]
+            Mean = 8.9
+            Variance = ((3-8.9)^2 + (7-8.9)^2 + ... + (6-8.9)^2) / 10 = 43.89
+        </pre>
+    </div>
+
+    <div class="measure">
+        <h3>Standard Deviation</h3>
+        <p>The standard deviation is the square root of the variance. It provides a more interpretable measure of spread, as it is in the same units as the original data.</p>
+        <pre>
+            Population Standard Deviation Example:
+            Variance = 43.89
+            Standard Deviation = √43.89 ≈ 6.62
+        </pre>
+    </div>
+
+    <h1>Percentiles and Quartiles</h1>
+    <p><i>Percentiles and quartiles help to understand the distribution of data by dividing the dataset into specific parts based on the values of the data.</i></p>
+
+    <div class="measure">
+        <h3>Percentiles</h3>
+        <p>Percentiles are values that divide a dataset into 100 equal parts. Each percentile represents the percentage of data below it. For example, the 50th percentile is the value below which 50% of the data falls.</p>
+        <p>Example: We will find the 25th, 50th (median), and 75th percentiles for the dataset [3, 7, 8, 5, 12, 19, 15, 10, 4, 6].</p>
+        <pre>
+            Dataset: [3, 7, 8, 5, 12, 19, 15, 10, 4, 6]
+            Ordered Dataset: [3, 4, 5, 6, 7, 8, 10, 12, 15, 19]
+            
+            - 25th Percentile (P25): Position = (25 / 100) * (10 + 1) = 2.75, so P25 is between the 2nd and 3rd values: P25 ≈ 4.5
+            - 50th Percentile (P50 or Median): Position = (50 / 100) * (10 + 1) = 5.5, so P50 is between the 5th and 6th values: P50 = (7 + 8) / 2 = 7.5
+            - 75th Percentile (P75): Position = (75 / 100) * (10 + 1) = 8.25, so P75 is between the 8th and 9th values: P75 ≈ 11.5
+        </pre>
+    </div>
+
+    <div class="measure">
+        <h3>Quartiles</h3>
+        <p>Quartiles divide the dataset into four equal parts. The three quartiles are:</p>
+        <ul>
+            <li><strong>First Quartile (Q1)</strong>: The 25th percentile, separating the lowest 25% of the data.</li>
+            <li><strong>Second Quartile (Q2)</strong>: The 50th percentile, also known as the median.</li>
+            <li><strong>Third Quartile (Q3)</strong>: The 75th percentile, separating the lowest 75% of the data.</li>
+        </ul>
+        <p>For the dataset [3, 7, 8, 5, 12, 19, 15, 10, 4, 6], the quartiles are:</p>
+        <pre>
+            Ordered Dataset: [3, 4, 5, 6, 7, 8, 10, 12, 15, 19]
+            
+            Q1 (25th Percentile): P25 ≈ 4.5
+            Q2 (50th Percentile / Median): P50 = 7.5
+            Q3 (75th Percentile): P75 ≈ 11.5
+        </pre>
+    </div>
+
+</body>
+</html>

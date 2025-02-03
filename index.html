@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Statistics Blog</title>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.8;
+            margin: 0;
+            padding: 0;
+            background-color: #eef2f3;
+            color: #333;
+        }
+        header {
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            color: white;
+            padding: 30px 0;
+            text-align: center;
+            font-size: 28px;
+            font-weight: bold;
+            animation: fadeIn 1.5s ease-in-out;
+        }
+        main {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 25px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.15);
+            animation: slideUp 1s ease-in-out;
+        }
+        h2, h3 {
+            color: #1e3c72;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        ul li {
+            background: #f7f9fc;
+            margin: 10px 0;
+            padding: 12px;
+            border-radius: 6px;
+            transition: transform 0.3s ease-in-out;
+        }
+        ul li:hover {
+            transform: scale(1.05);
+        }
+        a {
+            color: #2980b9;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        footer {
+            text-align: center;
+            padding: 20px;
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            color: white;
+            margin-top: 30px;
+        }
+        .image-container {
+            text-align: center;
+            margin: 30px 0;
+        }
+        .image-container img {
+            width: 85%;
+            border-radius: 10px;
+            box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+            animation: fadeIn 2s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes slideUp {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        Welcome to the Statistics Blog
+    </header>
+    <div class="image-container">
+        <img src="statistics-banner.jpg" alt="Statistics Data Visualization">
+    </div>
+    <main>
+        <section>
+            <h3>What is Data?</h3>
+            <ul>
+                <li>Data is facts or pieces of information that can be measured.</li>
+                <li>IQ of Students: Values range from 0 to 100, e.g., 55, 75, 65.</li>
+                <li>Ages of Students: Values can be various ages, e.g., 30, 25, 24, 23, 27, 28.</li>
+            </ul>
+        </section>
+        <section>
+            <h2>Recent Posts</h2>
+            <ul>
+                <li><a href="2025-01-24-introduction-to-statistics.html">Univariate, Bivariate Analysis</a></li>
+                <li><a href="cdf-pdf.html">Understanding CDF & PDF Theory</a></li>
+                <li><a href="central-tendency.html">Central Tendency</a></li>
+                <li><a href="advance-stat.html">Distributions</a></li>
+                <li><a href="more-stat.html">Hypothesis Testing</a></li>
+                <li><a href="errors,ztest.html">Errors, Z & T Test</a></li>
+                <li><a href="chi-square.html">Chi-Square Test</a></li>
+                <li><a href="covariance.html">Covariance & Correlation</a></li>
+                <li><a href="Final Stats Intrerview Q&A.html">Few Questions</a></li>
+                <li><a href="Hypothesis_Testing.html">Few Python Samples</a></li>
+            </ul>
+        </section>
+    </main>
+    <footer>
+        <p>© 2025 Statistics Blog | All Rights Reserved</p>
+    </footer>
+</body>
+</html>

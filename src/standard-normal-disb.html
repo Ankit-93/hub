@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Standard Normal Distribution Example</title>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.8;
+            margin: 0;
+            padding: 0;
+            background-color: #eef2f3;
+            color: #333;
+        }
+        header {
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            color: white;
+            padding: 30px 0;
+            text-align: center;
+            font-size: 28px;
+            font-weight: bold;
+            animation: fadeIn 1.5s ease-in-out;
+        }
+        main {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 25px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.15);
+            animation: slideUp 1s ease-in-out;
+        }
+        h2, h3 {
+            color: #1e3c72;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        ul li {
+            background: #f7f9fc;
+            margin: 10px 0;
+            padding: 12px;
+            border-radius: 6px;
+            transition: transform 0.3s ease-in-out;
+        }
+        ul li:hover {
+            transform: scale(1.05);
+        }
+        a {
+            color: #2980b9;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        footer {
+            text-align: center;
+            padding: 20px;
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            color: white;
+            margin-top: 30px;
+        }
+        .image-container {
+            text-align: center;
+            margin: 30px 0;
+        }
+        .image-container img {
+            width: 85%;
+            border-radius: 10px;
+            box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+            animation: fadeIn 2s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes slideUp {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Example of Standard Normal Distribution</h1>
+</header>
+
+<section class="content">
+    <h2>Problem Statement</h2>
+    <p>Let's consider the <strong>Standard Normal Distribution</strong>, a normal distribution with:</p>
+    <ul>
+        <li><strong>Mean (μ) = 0</strong></li>
+        <li><strong>Standard deviation (σ) = 1</strong></li>
+    </ul>
+    <p>This distribution is commonly used in statistics for probability calculations and hypothesis testing.</p>
+</section>
+
+<hr>
+
+<section class="content">
+    <h2>1. Z-score Calculation</h2>
+    <h3>Q: What is the Z-score for a value of 2 in a standard normal distribution?</h3>
+    <p>For a standard normal distribution, the Z-score is calculated as:</p>
+    <pre>
+Z = (X - μ) / σ
+Z = (2 - 0) / 1 = 2
+    </pre>
+    <p>The Z-score is 2, meaning the value 2 is 2 standard deviations above the mean.</p>
+</section>
+
+<hr>
+
+<section class="content">
+    <h2>2. Probability Calculation</h2>
+    <h3>Q: What is the probability that a randomly chosen value is less than 2?</h3>
+    <p>From the <strong>Z-table</strong>, the probability of a value being less than 2 is:</p>
+    <pre>
+P(X < 2) = 0.9772
+    </pre>
+    <p>This means there is a <strong>97.72%</strong> chance that a randomly selected value is less than 2.</p>
+</section>
+
+<hr>
+
+<section class="content">
+    <h2>3. Visual Representation</h2>
+    <p>The standard normal distribution curve would look like:</p>
+    <p><strong>📈 Bell Curve Representation</strong></p>
+    <figure>
+        <img src="../assets/images/standard-normal-disb.png" alt="Standard Distribution">
+        <figcaption>Above is Standard Normal Distribution.</figcaption>
+      </figure>
+    <ul>
+        <li><strong>68%</strong> of values fall between <strong>-1 and 1</strong> (±1σ).</li>
+        <li><strong>95%</strong> fall between <strong>-2 and 2</strong> (±2σ).</li>
+        <li><strong>99.7%</strong> fall between <strong>-3 and 3</strong> (±3σ).</li>
+    </ul>
+</section>
+
+<hr>
+
+<section class="content">
+    <h2>4. Real-World Applications in AI</h2>
+    <ul>
+        <li><strong>Standardization</strong> (Z-score normalization) is commonly used to scale data for machine learning algorithms.</li>
+        <li><strong>Hypothesis testing</strong> uses the standard normal distribution to determine statistical significance.</li>
+        <li><strong>Gaussian Naive Bayes</strong> assumes the features are normally distributed in its calculations.</li>
+    </ul>
+    <p>Would you like a Python code snippet to visualize this? 🚀</p>
+</section>
+
+</body>
+</html>

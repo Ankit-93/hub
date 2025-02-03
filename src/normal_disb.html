@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Normal Distribution Example</title>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.8;
+            margin: 0;
+            padding: 0;
+            background-color: #eef2f3;
+            color: #333;
+        }
+        header {
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            color: white;
+            padding: 30px 0;
+            text-align: center;
+            font-size: 28px;
+            font-weight: bold;
+            animation: fadeIn 1.5s ease-in-out;
+        }
+        main {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 25px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.15);
+            animation: slideUp 1s ease-in-out;
+        }
+        h2, h3 {
+            color: #1e3c72;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        ul li {
+            background: #f7f9fc;
+            margin: 10px 0;
+            padding: 12px;
+            border-radius: 6px;
+            transition: transform 0.3s ease-in-out;
+        }
+        ul li:hover {
+            transform: scale(1.05);
+        }
+        a {
+            color: #2980b9;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        footer {
+            text-align: center;
+            padding: 20px;
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            color: white;
+            margin-top: 30px;
+        }
+        .image-container {
+            text-align: center;
+            margin: 30px 0;
+        }
+        .image-container img {
+            width: 85%;
+            border-radius: 10px;
+            box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+            animation: fadeIn 2s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes slideUp {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Example of Normal Distribution</h1>
+</header>
+
+<section class="content">
+    <h2>Problem Statement</h2>
+    <p>Let's consider <strong>human heights</strong> as an example of a <strong>normal distribution</strong>.</p>
+</section>
+
+<section class="content">
+    <h2>Example Data</h2>
+    <p>Suppose the <strong>heights of adult males</strong> in a population follow a normal distribution with:</p>
+    <ul>
+        <li><strong>Mean (μ) = 175 cm</strong></li>
+        <li><strong>Standard deviation (σ) = 10 cm</strong></li>
+    </ul>
+    <p>Using this, we can calculate probabilities, percentiles, and visualize the distribution.</p>
+</section>
+
+<hr>
+
+<section class="content">
+    <h2>1. Probability Calculation</h2>
+    <h3>Q: What is the probability that a randomly chosen person is taller than 185 cm?</h3>
+    <p>Using the <strong>Z-score formula</strong>:</p>
+    <pre>
+Z = (X - μ) / σ
+Z = (185 - 175) / 10 = 1.0
+    </pre>
+    <p>From the <strong>Z-table</strong>, the probability of a value being <strong>less than 185 cm</strong> is <strong>0.8413</strong>.</p>
+    <p>Thus, the probability of a height <strong>greater than 185 cm</strong>:</p>
+    <pre>
+P(X > 185) = 1 - 0.8413 = 0.1587
+    </pre>
+    <p>So, <strong>15.87%</strong> of people are taller than 185 cm.</p>
+</section>
+
+<hr>
+
+<section class="content">
+    <h2>2. Visual Representation</h2>
+    <p>The normal distribution curve for this example would look like:</p>
+    <p><strong>📈 Bell Curve Representation</strong></p>
+    <figure>
+        <img src="../assets/images/standard-disb.png" alt="Normal Distribution">
+        <figcaption>Above is Normal Distribution.</figcaption>
+      </figure>
+    <ul>
+        <li><strong>68%</strong> of people fall between <strong>165 cm and 185 cm</strong> (±1σ).</li>
+        <li><strong>95%</strong> fall between <strong>155 cm and 195 cm</strong> (±2σ).</li>
+        <li><strong>99.7%</strong> fall between <strong>145 cm and 205 cm</strong> (±3σ).</li>
+    </ul>
+</section>
+
+<hr>
+
+<section class="content">
+    <h2>3. Real-World Applications in AI</h2>
+    <ul>
+        <li><strong>Gaussian Naive Bayes classifier</strong> assumes normality of feature distributions.</li>
+        <li><strong>Anomaly detection</strong> identifies data points deviating significantly from the normal curve.</li>
+        <li><strong>Feature scaling & transformation</strong> in ML assumes normality for many algorithms.</li>
+    </ul>
+</section>
+
+</body>
+</html>

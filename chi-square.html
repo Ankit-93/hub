@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chi-Square Test for Independence</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.8;
+            margin: 0;
+            padding: 0;
+            background-color: #eef2f3;
+            color: #333;
+        }
+        header {
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            color: white;
+            padding: 30px 0;
+            text-align: center;
+            font-size: 28px;
+            font-weight: bold;
+            animation: fadeIn 1.5s ease-in-out;
+        }
+        main {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 25px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.15);
+            animation: slideUp 1s ease-in-out;
+        }
+        h2, h3 {
+            color: #1e3c72;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        ul li {
+            background: #f7f9fc;
+            margin: 10px 0;
+            padding: 12px;
+            border-radius: 6px;
+            transition: transform 0.3s ease-in-out;
+        }
+        ul li:hover {
+            transform: scale(1.05);
+        }
+        a {
+            color: #2980b9;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        footer {
+            text-align: center;
+            padding: 20px;
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            color: white;
+            margin-top: 30px;
+        }
+        .image-container {
+            text-align: center;
+            margin: 30px 0;
+        }
+        .image-container img {
+            width: 85%;
+            border-radius: 10px;
+            box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+            animation: fadeIn 2s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes slideUp {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <header><h1>Chi-Square Test for Independence</h1></header>
+    
+
+    <div>
+        <h3 class="section-header">Observed Frequency Table</h3>
+        <div class="table-container">
+            <table>
+                <tr>
+                    <th>Social Media</th>
+                    <th>Male</th>
+                    <th>Female</th>
+                    <th>Total</th>
+                </tr>
+                <tr>
+                    <td>Instagram</td>
+                    <td>50</td>
+                    <td>80</td>
+                    <td>130</td>
+                </tr>
+                <tr>
+                    <td>Facebook</td>
+                    <td>30</td>
+                    <td>40</td>
+                    <td>70</td>
+                </tr>
+                <tr>
+                    <td>Twitter</td>
+                    <td>20</td>
+                    <td>30</td>
+                    <td>50</td>
+                </tr>
+                <tr>
+                    <th>Total</th>
+                    <th>100</th>
+                    <th>150</th>
+                    <th>250</th>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <div>
+        <h3 class="section-header">Chi-Square Formula</h3>
+        <pre>
+        χ² = Σ [(O - E)² / E]
+        
+        Where:
+        - O = Observed frequency
+        - E = Expected frequency
+        </pre>
+    </div>
+
+    <div>
+        <h3 class="section-header">Step-by-Step Calculation</h3>
+        <pre>
+        Step 1: Calculate Expected Frequencies
+        E = (Row Total * Column Total) / Grand Total
+
+        Example for Instagram (Male):
+        E = (130 * 100) / 250 = 52
+
+        Step 2: Compute Chi-Square Statistic
+        χ² = Σ [(O - E)² / E]
+
+        Step 3: Compare χ² with Critical Value (from table)
+
+        Step 4: Conclusion:
+        - If χ² > Critical Value → Reject H₀ (Variables are dependent)
+        - If χ² ≤ Critical Value → Fail to reject H₀ (No significant relationship)
+        </pre>
+    </div>
+
+    <div>
+        <h3 class="section-header">Key Takeaways</h3>
+        <pre>
+        - Chi-Square Test helps check relationships between categorical variables.
+        - It is widely used in research, marketing, and medical studies.
+        - Large sample sizes improve accuracy.
+        </pre>
+    </div>
+    <h2>Chi-Square Goodness of Fit Test</h2>
+
+    <div>
+        <h3 class="section-header">Problem Statement</h3>
+        <pre>
+        The age distribution of a town in 2000 was:
+        - Under 18: 20%
+        - 18-35: 30%
+        - Over 35: 50%
+        
+        In 2010, the age distribution of 500 individuals was recorded as:
+        - Under 18: 121
+        - 18-35: 288
+        - Over 35: 91
+        
+        Using a significance level of α = 0.05, determine if the population distribution has changed.
+        </pre>
+    </div>
+
+    <div>
+        <h3 class="section-header">Observed vs. Expected Frequencies</h3>
+        <div class="table-container">
+            <table>
+                <tr>
+                    <th>Age Group</th>
+                    <th>Observed (O)</th>
+                    <th>Expected (E)</th>
+                    <th>(O - E)² / E</th>
+                </tr>
+                <tr>
+                    <td>&lt; 18</td>
+                    <td>121</td>
+                    <td>100</td>
+                    <td>4.41</td>
+                </tr>
+                <tr>
+                    <td>18 - 35</td>
+                    <td>288</td>
+                    <td>150</td>
+                    <td>126.96</td>
+                </tr>
+                <tr>
+                    <td>&gt; 35</td>
+                    <td>91</td>
+                    <td>250</td>
+                    <td>101.12</td>
+                </tr>
+                <tr>
+                    <th>Total</th>
+                    <th>500</th>
+                    <th>500</th>
+                    <th>232.49</th>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <div>
+        <h3 class="section-header">Chi-Square Formula</h3>
+        <pre>
+        χ² = Σ [(O - E)² / E]
+
+        Where:
+        - O = Observed frequency
+        - E = Expected frequency
+        </pre>
+    </div>
+
+    <div>
+        <h3 class="section-header">Step-by-Step Calculation</h3>
+        <pre>
+        Step 1: Compute Expected Frequencies
+        E = (Total Observations) * (Expected Proportion)
+
+        Step 2: Compute Chi-Square Statistic
+        χ² = Σ [(O - E)² / E]
+
+        Step 3: Compare with Critical Value
+        df = (3 - 1) = 2
+        Critical χ² (α = 0.05, df = 2) = 5.991
+
+        Step 4: Conclusion:
+        - If χ² > 5.991 → Reject H₀ (Age distribution has changed)
+        - If χ² ≤ 5.991 → Fail to reject H₀ (No significant change)
+        </pre>
+    </div>
+
+    <div>
+        <h3 class="section-header">Final Conclusion</h3>
+        <pre>
+        Computed χ² = 232.49, which is much greater than 5.991.
+        Thus, we reject H₀ and conclude that the population distribution 
+        has significantly changed over the past 10 years.
+        </pre>
+    </div>
+
+    <div class="container">
+        <h2>Problem Statement</h2>
+        <pre>
+            Suppose the IQ in a certain population is normally distributed with a mean (μ) of 100 
+            and a standard deviation (σ) of 15. A researcher wants to determine whether a new drug affects IQ levels.
+            He recruits 20 patients to try the drug and records their IQ levels.
+        </pre>
+        
+        <h3>Step 1: Given Data</h3>
+        <pre>
+        Population Mean (μ) = 100
+        Population Standard Deviation (σ) = 15
+        Sample Size (n) = 20
+        Sample IQ Scores = [95, 102, 98, 110, 105, 101, 99, 96, 104, 108, 
+                            97, 103, 107, 111, 94, 100, 106, 92, 109, 98]
+        </pre>
+    
+        <h3>Step 2: Compute Sample Mean</h3>
+        <pre>
+        Sample Mean (x̄) = (Sum of Sample IQs) / (Sample Size)
+                        ≈ 101.1
+        </pre>
+    
+        <h3>Step 3: Compute Z-Score</h3>
+        <pre>
+        Z = (x̄ - μ) / (σ / √n)
+          = (101.1 - 100) / (15 / √20)
+          = 0.328
+        </pre>
+    
+        <h3>Step 4: Compute P-Value (Two-Tailed Test)</h3>
+        <pre>
+        P-value = 2 * (1 - Φ(|Z|))
+               ≈ 2 * (1 - 0.6293)
+               ≈ 0.7414
+        </pre>
+    
+        <h3>Step 5: Decision Rule</h3>
+        <pre>
+        Significance Level (α) = 0.05
+    
+        Since P-value (0.7414) > α (0.05), we fail to reject the null hypothesis (H₀).
+        </pre>
+    
+        <div class="result">
+            Conclusion: The drug does not have a statistically significant effect on IQ levels.
+        </div>
+    </div>
+</body>
+</html>

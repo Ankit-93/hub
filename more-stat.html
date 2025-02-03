@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Statistics Document</title>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.8;
+            margin: 0;
+            padding: 0;
+            background-color: #eef2f3;
+            color: #333;
+        }
+        header {
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            color: white;
+            padding: 30px 0;
+            text-align: center;
+            font-size: 28px;
+            font-weight: bold;
+            animation: fadeIn 1.5s ease-in-out;
+        }
+        main {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 25px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.15);
+            animation: slideUp 1s ease-in-out;
+        }
+        h2, h3 {
+            color: #1e3c72;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        ul li {
+            background: #f7f9fc;
+            margin: 10px 0;
+            padding: 12px;
+            border-radius: 6px;
+            transition: transform 0.3s ease-in-out;
+        }
+        ul li:hover {
+            transform: scale(1.05);
+        }
+        a {
+            color: #2980b9;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        footer {
+            text-align: center;
+            padding: 20px;
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            color: white;
+            margin-top: 30px;
+        }
+        .image-container {
+            text-align: center;
+            margin: 30px 0;
+        }
+        .image-container img {
+            width: 85%;
+            border-radius: 10px;
+            box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+            animation: fadeIn 2s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes slideUp {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+    </style>
+</head>
+<header>
+    <h1>Statistics Document</h1>
+  </header>
+<body>
+    <pre>
+    <h2>Topics Covered:</h2>
+        <li>IQR</li>
+        <li>Probability</li>
+        <li>Permutation and Combination</li>
+        <li>Confidence Interval</li>
+        <li>P-Value</li>
+        <li>Hypothesis Testing</li>
+</pre>
+    <h2>Python Code:</h2>
+    <pre>
+import numpy as np
+import matplotlib.pyplot as plt
+%matplotlib inline
+
+dataset = [11, 10, 12, 13, 15, 12, 11, 14, 12, 13, 15, 18, 17, 19, 107, 12, 13, 14, 16, 12]
+plt.hist(dataset)
+<figure>
+    <img src="assets/images/more-stat-hist.png" alt="Histogram">
+    <figcaption>Above is Histogram for given disb.</figcaption>
+  </figure>
+    </pre>
+
+    <h2>Outlier Detection</h2>
+    <pre>
+def detect_outlier(data, threshold = 3):
+    mean = np.mean(data)
+    std = np.std(data)
+    
+    z_scored_data = [(i - mean) / std for i in data]
+    z_scored_data = [z_scored_data.index(i) for i in z_scored_data if i > threshold]
+    
+    return [data[i] for i in z_scored_data]
+
+detect_outlier(dataset)
+# Output: [107, 108]
+    </pre>
+
+    <h2>IQR Method</h2>
+    <ol>
+        <li>Sort the data</li>
+        <li>Calculate Q1 & Q3</li>
+        <li>IQR = Q3 - Q1</li>
+        <li>LOWER FENCE = Q1 - 1.5 * IQR</li>
+        <li>UPPER FENCE = Q3 + 1.5 * IQR</li>
+    </ol>
+
+    <pre>
+dataset = sorted(dataset)
+q1, q3 = np.percentile(dataset, [25, 75])
+print(q1, q3)
+# Output: 12.0, 15.5
+    </pre>
+
+    <div class="measure">
+        <h3>Probability</h3>
+        <p>Probability is a measure of the likelihood of an event.</p>
+        <pre>
+        E.g. Rolling a dice {1,2,3,4,5,6}
+        
+        Prob(6) = # of way event can occcure/ # of possible outcome = 1/6
+   
+        Toss a Coin {H, T}
+        Prob(H) = 1/2
+    </pre>
+
+        <div class="measure">
+            <h3>Addition Rule (Probability , "or")</h3>
+            <p><i><strong> Mutual Exclusive Events:</i></strong> 2 events are mutually exclusive if they cannot occur in
+                same time. e.g. Rolling a dice or Tossing a coin cause either i can get 1,2,3,4,5,6 or head,tell but not
+                at same time 2 events can occur.</p>
+
+            <p><strong><i>Non Mutual Exclusive Events:</i></strong> Two events are non mutually exclusive if they can
+                occur in same time. e.g. selecting a card from deck of cards. the card can be of King as well as Red
+                Heart
+            </p>
+            <pre>
+            ~ If i toss a coin what is the probability of getting a head or a tail?
+            
+                Prob(Heads or Tails) ?
+                Prob(A or B) = P(A) + P(B)
+                Prob(Heads or Tails) = 1/2 + 1/2 = 1
+            
+            ~ If what is the probability of getting a 3 or 6 or 1?
+            
+                Prob(A or B or C) = P(A) + P(B) + P(C)
+                Prob(1 or 3 or 6) = 1/6 + 1/6 + 1/6 = 1/2
+            
+            ~ What is probability of getting Queen or a Heart?
+            
+                Non Mutual Exclusive Events.
+                P(queen) = 4/52   P(heart) = 13/52   P(queen and heart) = 1/52
+                Addition Rule for Non Mutual Exculsive Events: P(A or B) = P(A) + P(B) - P(A U B)
+                Hence Probability will be P(Queen or Heart) = 4/52 + 13/52 - 1/52 = 16/52
+        </pre>
+        </div>
+
+        <div class="measure">
+            <h3>Multiplication Rule </h3>
+            <p><i><strong> Indepedndent Events:</i></strong> If each event is of same probabilty to occur.
+                e.g. Rolling a dice, tossing a coin</p>
+
+            <p><strong><i>Dependent Events:</i></strong>If a bag is having 2 green balls and 3 red balls.
+                if a ball is picked first P(Red) = 3/5 and P(Green) = 2/5
+                say first ball is a red ball.
+                So next time when we pick the balls probability will be P(Red) = 2/4 and P(Green) = 2/4. So this is
+                called Conditional Probability
+            </p>
+            <pre>
+                Q1. What is the prob of getting a 5 and 4 in a dice?
+
+                - - Prob(A and B) = P(A) * P(B) = 1/4
+                 
+                Q2. WHat is prob of drawing a Queen and then aces from a deck or cards?
+                
+                - - Prob(A and B) = P(A) * P(B/A)
+                                  = P(queen) * P(aces/queen)
+                                  = 4/52 * 4/51
+        </pre>
+        </div>
+        <div>
+            <h2>Permutation and Combination</h2>
+
+            <div>
+                <h3>Permutation</h3>
+                <p>A <strong>permutation</strong> is an arrangement of objects in a specific order. The order of
+                    selection <strong>matters</strong> in permutations.</p>
+                <pre><h4>Formula for Permutations:</h4><p>P(n, r) = n! / (n - r)!</p><h4>Example:</h4><p>How many ways can 3 people (A, B, C) be seated in a row?</p><p>P(3,3) = 3! / (3-3)! = 6</p><p>Possible arrangements: <strong>ABC, ACB, BAC, BCA, CAB, CBA</strong></p></pre>
+            </div>
+
+            <div>
+                <h3>Combination</h3>
+                <p>A <strong>combination</strong> is a selection of objects where order <strong>does not
+                        matter</strong>.</p>
+                <pre><h4>Formula for Combinations:</h4><p>C(n, r) = n! / (r!(n - r)!)</p><h4>Example:</h4><p>How many ways can you choose 2 people from a group of 3 (A, B, C)?</p><p>C(3,2) = 3! / (2!(3-2)!) = 3</p><p>Possible selections: <strong>AB, AC, BC</strong></p></pre>
+            </div>
+
+            <div>
+                <h3>Key Differences</h3>
+                <pre>
+                <table border="1">
+                    <tr>
+                        <th>Feature</th>
+                        <th>Permutation</th>
+                        <th>Combination</th>
+                    </tr>
+                    <tr>
+                        <td>Order</td>
+                        <td>Matters</td>
+                        <td>Doesn't Matter</td>
+                    </tr>
+                    <tr>
+                        <td>Formula</td>
+                        <td>P(n, r) = n! / (n - r)!</td>
+                        <td>C(n, r) = n! / (r!(n - r)!)</td>
+                    </tr>
+                    <tr>
+                        <td>Example</td>
+                        <td>Arranging people in a line</td>
+                        <td>Choosing team members</td>
+                    </tr>
+                </table></pre>
+            </div>
+        </div>
+        <div>
+            <h2>P-Value Explanation</h2>
+        
+            <div>
+                <h3>What is a P-Value?</h3>
+                <pre>
+        A <strong>p-value</strong> is a statistical measure that helps determine 
+        the significance of results in a hypothesis test. It tells us the 
+        probability of obtaining the observed results assuming the null 
+        hypothesis is true.
+                </pre>
+            </div>
+        
+            <div>
+                <h3>Interpreting the P-Value</h3>
+                <pre>
+        If p-value < 0.05  → Reject the null hypothesis (H₀)
+        If p-value ≥ 0.05  → Fail to reject the null hypothesis (H₀)
+                </pre>
+            </div>
+        
+            <div>
+                <h3>Example 1: Coin Toss</h3>
+                <pre>
+        Suppose you toss a coin 100 times and get 70 heads.
+        You want to test if the coin is fair.
+        
+        Null Hypothesis (H₀): The coin is fair (50% heads).
+        Alternative Hypothesis (H₁): The coin is biased.
+        
+        After statistical analysis, you get a <strong>p-value = 0.03</strong>. 
+        Since 0.03 < 0.05, we reject H₀ and conclude the coin is likely biased.
+                </pre>
+            </div>
+        
+            <div>
+                <h3>Example 2: New Drug Effectiveness</h3>
+                <pre>
+        A pharmaceutical company tests a new drug to see if 
+        it lowers blood pressure better than the existing drug.
+        
+        Null Hypothesis (H₀): The new drug is no better than the old one.
+        Alternative Hypothesis (H₁): The new drug is more effective.
+        
+        After conducting a study, the p-value is found to be <strong>0.08</strong>.
+        Since 0.08 > 0.05, we fail to reject H₀, meaning there's not 
+        enough evidence to claim the new drug is better.
+                </pre>
+            </div>
+        
+            <div>
+                <h3>Summary</h3>
+                <pre>
+        | P-Value  | Decision                            |
+        |----------|-------------------------------------|
+        | < 0.05   | Reject H₀ (Significant)             |
+        | ≥ 0.05   | Fail to reject H₀ (Not significant) |
+                </pre>
+            </div>
+        </div>
+        
+        <div>
+            <h2>Hypothesis Testing - Step by Step</h2>
+        
+            <div>
+                <h3>Step 1: Define the Hypotheses</h3>
+                <pre>
+        We start with two hypotheses:
+        
+        Null Hypothesis (H₀): There is no significant effect or difference.
+        Alternative Hypothesis (H₁): There is a significant effect or difference.
+        
+        Example:
+        A teacher believes a new teaching method improves student performance.
+        H₀: The new method has no effect.
+        H₁: The new method improves performance.
+                </pre>
+            </div>
+        
+            <div>
+                <h3>Step 2: Select a Significance Level (α)</h3>
+                <pre>
+        The significance level (α) is the probability of rejecting H₀ when it's actually true.
+        A common choice is:
+        
+        α = 0.05 (5% significance level)
+                </pre>
+            </div>
+        
+            <div>
+                <h3>Step 3: Collect and Analyze Data</h3>
+                <pre>
+        Example Data:
+        - Traditional teaching: Mean score = 70, Std Dev = 10, n = 30
+        - New method: Mean score = 75, Std Dev = 12, n = 30
+        
+        We perform a t-test to compare the two groups.
+                </pre>
+            </div>
+        
+            <div>
+                <h3>Step 4: Compute the Test Statistic</h3>
+                <pre>
+        We use the formula for the t-test:
+        
+                t = (X̄₁ - X̄₂) / sqrt( (s₁²/n₁) + (s₂²/n₂) )
+        
+        Where:
+        X̄₁ = 75, X̄₂ = 70
+        s₁ = 12, s₂ = 10
+        n₁ = 30, n₂ = 30
+        
+        After calculation:
+        t = 1.94
+                </pre>
+            </div>
+        
+            <div>
+                <h3>Step 5: Find the Critical Value or P-Value</h3>
+                <pre>
+        For a two-tailed t-test at α = 0.05 and df = 58:
+        Critical t-value ≈ ±2.00
+        
+        P-value = 0.057
+                </pre>
+            </div>
+        
+            <div>
+                <h3>Step 6: Make a Decision</h3>
+                <pre>
+        Compare p-value with α:
+        - P-value (0.057) > α (0.05) → Fail to reject H₀
+        - Conclusion: Not enough evidence to prove the new method is better.
+        
+        OR using critical value:
+        - |t| (1.94) < Critical value (2.00) → Fail to reject H₀.
+                </pre>
+            </div>
+        
+            <div>
+                <h3>Final Conclusion</h3>
+                <pre>
+        There is no significant evidence to conclude that the new teaching 
+        method improves student performance at the 5% significance level.
+                </pre>
+            </div>
+        </div>
+    
+        <div>
+            <h2>Hypothesis Testing - Is the Coin Biased?</h2>
+        
+            <div>
+                <h3>Step 1: Define the Hypotheses</h3>
+                <pre>
+        We toss a coin 100 times and get 65 heads.
+        We want to check if the coin is fair (unbiased).
+        
+        Null Hypothesis (H₀): The coin is fair (P = 0.5).
+        Alternative Hypothesis (H₁): The coin is biased (P ≠ 0.5).
+                </pre>
+            </div>
+        
+            <div>
+                <h3>Step 2: Choose a Significance Level (α)</h3>
+                <pre>
+        We use the common significance level:
+        
+        α = 0.05 (5% significance level)
+                </pre>
+            </div>
+        
+            <div>
+                <h3>Step 3: Collect Data</h3>
+                <pre>
+        Observed Data:
+        - Total Tosses (n) = 100
+        - Heads Count (X) = 65
+        - Expected Probability for Fair Coin (P) = 0.5
+                </pre>
+            </div>
+        
+            <div>
+                <h3>Step 4: Compute the Test Statistic</h3>
+                <pre>
+        We use the formula for the Z-test for proportions:
+        
+                Z = (X/n - P) / sqrt(P(1-P)/n)
+        
+        Substituting values:
+                Z = (65/100 - 0.5) / sqrt(0.5 * 0.5 / 100)
+                  = (0.65 - 0.5) / sqrt(0.0025)
+                  = 0.15 / 0.05
+                  = 3.0
+                </pre>
+            </div>
+        
+            <div>
+                <h3>Step 5: Find the Critical Value or P-Value</h3>
+                <pre>
+        For a two-tailed test at α = 0.05:
+        - Critical Z-values = ±1.96
+        - P-value for Z = 3.0 is 0.0027 (from standard normal table)
+        
+        Since 0.0027 < 0.05, we reject H₀.
+                </pre>
+            </div>
+        
+            <div>
+                <h3>Step 6: Conclusion</h3>
+                <pre>
+        Since the p-value (0.0027) is less than 0.05, we reject the null hypothesis.
+        Conclusion: The coin is likely biased.
+                </pre>
+            </div>
+        </div>
+        
+
+</body>
+
+</html>

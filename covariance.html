@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Covariance and Correlation</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.8;
+            margin: 0;
+            padding: 0;
+            background-color: #eef2f3;
+            color: #333;
+        }
+        header {
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            color: white;
+            padding: 30px 0;
+            text-align: center;
+            font-size: 28px;
+            font-weight: bold;
+            animation: fadeIn 1.5s ease-in-out;
+        }
+        main {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 25px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.15);
+            animation: slideUp 1s ease-in-out;
+        }
+        h2, h3 {
+            color: #1e3c72;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        ul li {
+            background: #f7f9fc;
+            margin: 10px 0;
+            padding: 12px;
+            border-radius: 6px;
+            transition: transform 0.3s ease-in-out;
+        }
+        ul li:hover {
+            transform: scale(1.05);
+        }
+        a {
+            color: #2980b9;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        footer {
+            text-align: center;
+            padding: 20px;
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            color: white;
+            margin-top: 30px;
+        }
+        .image-container {
+            text-align: center;
+            margin: 30px 0;
+        }
+        .image-container img {
+            width: 85%;
+            border-radius: 10px;
+            box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+            animation: fadeIn 2s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes slideUp {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <a href="index.html" class="home-icon"><i class="fas fa-home"></i></a>
+    <h1>Covariance and Correlation</h1>
+</header>
+
+<main>
+    <section>
+        <h2>Understanding Covariance and Correlation</h2>
+        <p>Covariance and correlation are two statistical tools that are used to determine the relationship between two variables.</p>
+    </section>
+
+    <section>
+        <h2>Comparison Table</h2>
+        <table>
+            <tr>
+                <th>Measure</th>
+                <th>Indicates</th>
+                <th>Range</th>
+                <th>Strength</th>
+                <th>Scale Dependency</th>
+            </tr>
+            <tr>
+                <td><b>Covariance</b></td>
+                <td>Direction only</td>
+                <td>-∞ to +∞</td>
+                <td>❌ Strength unknown</td>
+                <td>Yes</td>
+            </tr>
+            <tr>
+                <td><b>Correlation</b></td>
+                <td>Strength & Direction</td>
+                <td>-1 to 1</td>
+                <td>✅</td>
+                <td>No</td>
+            </tr>
+            <tr>
+                <td><b>PCC</b></td>
+                <td>Linear relationship</td>
+                <td>-1 to 1</td>
+                <td>✅</td>
+                <td>No</td>
+            </tr>
+        </table>
+    </section>
+</main>
+<div class="container">
+    <h2>Example Data</h2>
+    <p>Consider the following dataset of Hours Studied (X) and Exam Scores (Y):</p>
+    
+    <table>
+        <tr>
+            <th>Student</th>
+            <th>Hours Studied (X)</th>
+            <th>Exam Score (Y)</th>
+        </tr>
+        <tr><td>1</td><td>2</td><td>50</td></tr>
+        <tr><td>2</td><td>3</td><td>60</td></tr>
+        <tr><td>3</td><td>5</td><td>65</td></tr>
+        <tr><td>4</td><td>7</td><td>70</td></tr>
+        <tr><td>5</td><td>9</td><td>85</td></tr>
+    </table>
+
+    <h2>Step 1: Compute Mean</h2>
+    <pre>
+X̄ = (2 + 3 + 5 + 7 + 9) / 5 = 5.2
+Ȳ = (50 + 60 + 65 + 70 + 85) / 5 = 66
+    </pre>
+
+    <h2>Step 2: Compute Covariance</h2>
+    <pre>
+Cov(X, Y) = Σ (Xᵢ - X̄) (Yᵢ - Ȳ) / n
+
+Calculated values:
+Cov(X, Y) = (51.2 + 13.2 + 0.2 + 7.2 + 72.2) / 5 = 28.8
+    </pre>
+    <div class="result">Covariance = 28.8 → Positive relationship</div>
+
+    <h2>Step 3: Compute Standard Deviations</h2>
+    <pre>
+σₓ = sqrt(Σ (Xᵢ - X̄)² / n) = sqrt(32.8 / 5) ≈ 2.56
+σᵧ = sqrt(Σ (Yᵢ - Ȳ)² / n) = sqrt(670 / 5) ≈ 11.58
+    </pre>
+
+    <h2>Step 4: Compute Correlation (r)</h2>
+    <pre>
+r = Cov(X, Y) / (σₓ * σᵧ)
+r = 28.8 / (2.56 * 11.58) ≈ 0.97
+    </pre>
+    <div class="result">Correlation (r) = 0.97 → Strong Positive Correlation</div>
+
+    <h2>Final Results</h2>
+    <table>
+        <tr>
+            <th>Metric</th>
+            <th>Value</th>
+            <th>Interpretation</th>
+        </tr>
+        <tr>
+            <td>Covariance</td>
+            <td>28.8</td>
+            <td>Positive Relationship</td>
+        </tr>
+        <tr>
+            <td>Correlation (r)</td>
+            <td>0.97</td>
+            <td>Strong Positive Correlation</td>
+        </tr>
+        <tr>
+            <td>PCC (r)</td>
+            <td>0.97</td>
+            <td>Almost Perfect Linear Relationship</td>
+        </tr>
+    </table>
+
+    <div class="result">
+        Conclusion: The more hours a student studies, the higher their exam score.  
+        Since r ≈ 1, there is a strong linear relationship.
+    </div>
+</div>
+
+
+<footer>
+    <p>© 2025 Statistics Blog</p>
+</footer>
+
+</body>
+</html>

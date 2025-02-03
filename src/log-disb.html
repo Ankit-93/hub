@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Log-Normal Distribution Example</title>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.8;
+            margin: 0;
+            padding: 0;
+            background-color: #eef2f3;
+            color: #333;
+        }
+        header {
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            color: white;
+            padding: 30px 0;
+            text-align: center;
+            font-size: 28px;
+            font-weight: bold;
+            animation: fadeIn 1.5s ease-in-out;
+        }
+        main {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 25px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.15);
+            animation: slideUp 1s ease-in-out;
+        }
+        h2, h3 {
+            color: #1e3c72;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        ul li {
+            background: #f7f9fc;
+            margin: 10px 0;
+            padding: 12px;
+            border-radius: 6px;
+            transition: transform 0.3s ease-in-out;
+        }
+        ul li:hover {
+            transform: scale(1.05);
+        }
+        a {
+            color: #2980b9;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        footer {
+            text-align: center;
+            padding: 20px;
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            color: white;
+            margin-top: 30px;
+        }
+        .image-container {
+            text-align: center;
+            margin: 30px 0;
+        }
+        .image-container img {
+            width: 85%;
+            border-radius: 10px;
+            box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+            animation: fadeIn 2s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes slideUp {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Example of Log-Normal Distribution</h1>
+</header>
+
+<section class="content">
+    <h2>Problem Statement</h2>
+    <p>Let's consider <strong>stock prices</strong> as an example of a <strong>log-normal distribution</strong>.</p>
+</section>
+
+<section class="content">
+    <h2>Example Data</h2>
+    <p>Suppose the <strong>daily returns of a stock</strong> follow a normal distribution with:</p>
+    <ul>
+        <li><strong>Mean (μ) = 0</strong> (log of return)</li>
+        <li><strong>Standard deviation (σ) = 0.2</strong></li>
+    </ul>
+    <p>Since stock prices cannot be negative, the actual stock price follows a <strong>log-normal distribution</strong>.</p>
+</section>
+
+<hr>
+
+<section class="content">
+    <h2>1. Probability Calculation</h2>
+    <h3>Q: What is the probability that the stock price will be greater than 1.5 times its mean?</h3>
+    <p>Using the <strong>log-normal probability formula</strong>:</p>
+    <pre>
+P(X > x) = 1 - Φ((ln(x) - μ) / σ)
+    </pre>
+    <p>For <strong>x = 1.5</strong>:</p>
+    <pre>
+Z = (ln(1.5) - 0) / 0.2 ≈ 2.02
+    </pre>
+    <p>From the <strong>Z-table</strong>, the probability of a value being <strong>less than 2.02</strong> is <strong>0.9783</strong>.</p>
+    <p>Thus, the probability of the stock price being greater than 1.5 times the mean:</p>
+    <pre>
+P(X > 1.5) = 1 - 0.9783 = 0.0217
+    </pre>
+    <p>So, <strong>2.17%</strong> of the time, the stock price will be greater than 1.5 times its mean.</p>
+</section>
+
+<hr>
+
+<section class="content">
+    <h2>2. Visual Representation</h2>
+    <p>The log-normal distribution curve for this example would look like:</p>
+    <p><strong>📈 Skewed Distribution Representation</strong></p>
+    <figure>
+        <img src="../assets/images/log-normal.png" alt="Skewed Distribution">
+        <figcaption>Above is Skewed Distribution.</figcaption>
+      </figure>
+    <ul>
+        <li>The distribution is <strong>right-skewed</strong> (long tail towards higher values).</li>
+        <li>Values are always <strong>positive</strong>.</li>
+        <li>Most values cluster near the lower range, but extreme values occur.</li>
+    </ul>
+</section>
+
+<hr>
+
+<section class="content">
+    <h2>3. Real-World Applications in AI</h2>
+    <ul>
+        <li><strong>Stock price modeling</strong>: Used in financial markets to predict future prices.</li>
+        <li><strong>Risk management</strong>: Helps assess asset returns and economic losses.</li>
+        <li><strong>Reliability analysis</strong>: Used in engineering to model failure rates.</li>
+    </ul>
+    <p>Would you like a Python code snippet to visualize this? 🚀</p>
+</section>
+
+</body>
+</html>

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Statistics Interview Questions</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+            line-height: 1.6;
+            background-color: #f9f9f9;
+        }
+        h1, h2 {
+            color: #333;
+        }
+        .question {
+            font-weight: bold;
+            color: #0056b3;
+        }
+        .answer {
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Statistics Interview Questions</h1>
+
+    <div class="question">1. What is the Central Limit Theorem and why is it important?</div>
+    <div class="answer">
+        The Central Limit Theorem (CLT) states that the distribution of the sum (or average) of a large number of 
+        independent, identically distributed random variables approaches a normal (or Gaussian) distribution, 
+        regardless of the original distribution of the variables. This is crucial in statistics because it allows us to 
+        make inferences about populations using the normal distribution, which has well-understood properties.
+    </div>
+
+    <div class="question">2. Explain Type I and Type II errors.</div>
+    <div class="answer">
+        <strong>Type I Error (False Positive, or Alpha error):</strong> Occurs when you incorrectly reject a true null hypothesis.<br>
+        <strong>Type II Error (False Negative, or Beta error):</strong> Occurs when you fail to reject a false null hypothesis.<br>
+        The significance level (usually denoted by α) is the probability of making a Type I error. The power of a test is 
+        1 minus the probability of making a Type II error (β).
+    </div>
+
+    <div class="question">3. What is R-squared in linear regression?</div>
+    <div class="answer">
+        R-squared, also known as the coefficient of determination, measures the proportion of the variance in the 
+        dependent variable that can be explained by the independent variables in a regression model. An R-squared value 
+        of 1 indicates that the regression predictions perfectly fit the data, whereas values close to 0 indicate that 
+        the model does not explain much of the variance.
+    </div>
+
+    <div class="question">4. What is the difference between correlation and causation?</div>
+    <div class="answer">
+        Correlation indicates a mutual relationship or association between two variables. When one variable changes, 
+        there's a tendency for the other variable to change in a specific direction. However, correlation does not 
+        imply causation. Causation means that a change in one variable is responsible for a change in another. For 
+        example, a strong correlation between ice cream sales and drowning incidents does not mean ice cream causes 
+        drowning—both are likely influenced by temperature.
+    </div>
+
+    <div class="question">5. What is the difference between a parametric and a non-parametric test?</div>
+    <div class="answer">
+        <strong>Parametric tests:</strong> Assume the population follows a certain distribution (e.g., normal). Examples include t-tests and ANOVA.<br>
+        <strong>Non-parametric tests:</strong> Do not make strong assumptions about the population distribution. Examples include the Mann-Whitney U test 
+        and Kruskal-Wallis test.
+    </div>
+
+    <div class="question">6. Explain p-value.</div>
+    <div class="answer">
+        The p-value helps determine the significance of results in hypothesis testing. It represents the probability of 
+        observing the current data, or something more extreme, given that the null hypothesis is true. A small p-value 
+        (typically ≤ 0.05) indicates strong evidence against the null hypothesis, leading us to reject it.
+    </div>
+
+    <div class="question">7. Describe the difference between cross-validation and bootstrapping.</div>
+    <div class="answer">
+        <strong>Cross-validation:</strong> A technique for evaluating the performance of a statistical model by partitioning the data into a training set 
+        and a test set. A common method is k-fold cross-validation.<br>
+        <strong>Bootstrapping:</strong> A resampling technique used to estimate the distribution of a statistic by sampling with replacement from the data. 
+        It helps assess the variability of a sample statistic and construct confidence intervals.
+    </div>
+
+</body>
+</html>

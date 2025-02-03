@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Removing Outliers Example</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 20px;
+        }
+        .measure {
+            margin-bottom: 20px;
+        }
+        .measure h3 {
+            color: #333;
+        }
+        pre {
+            background-color: #f4f4f4;
+            padding: 10px;
+            border: 1px solid #ddd;
+            font-size: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <h1>Removing Outliers from a Dataset</h1>
+    <p><i>Outliers are values that lie significantly outside the normal range of a dataset. Removing outliers is an important step in data cleaning, as they can distort the analysis. One common method of identifying outliers is by using the **Interquartile Range (IQR)**.</i></p>
+    
+    <h2>Dataset Example</h2>
+    <pre>
+        Original Dataset: [3, 7, 8, 5, 12, 19, 15, 10, 4, 6]
+    </pre>
+
+    <h3>Step 1: Calculate the Five-Number Summary</h3>
+    <pre>
+        Ordered Dataset: [3, 4, 5, 6, 7, 8, 10, 12, 15, 19]
+
+        Minimum = 3
+        Q1 (25th percentile) = 4.5 (between 4 and 5)
+        Median (Q2) = 7.5 (between 7 and 8)
+        Q3 (75th percentile) = 11.5 (between 10 and 12)
+        Maximum = 19
+    </pre>
+
+    <h3>Step 2: Calculate the Interquartile Range (IQR)</h3>
+    <pre>
+        IQR = Q3 - Q1 = 11.5 - 4.5 = 7
+    </pre>
+
+    <h3>Step 3: Determine the Lower and Upper Boundaries for Outliers</h3>
+    <pre>
+        Lower Bound = Q1 - 1.5 * IQR = 4.5 - 1.5 * 7 = 4.5 - 10.5 = -6
+        Upper Bound = Q3 + 1.5 * IQR = 11.5 + 1.5 * 7 = 11.5 + 10.5 = 22
+    </pre>
+
+    <h3>Step 4: Identify and Remove Outliers</h3>
+    <pre>
+        Any data point less than -6 or greater than 22 is considered an outlier.
+        In this dataset:
+        - No value is less than -6.
+        - The maximum value is 19, which is within the range of -6 to 22.
+        
+        Therefore, there are no outliers to remove in this case.
+    </pre>
+
+    <h3>Step 5: (Hypothetical) If There Were Outliers</h3>
+    <p>If there were outliers beyond the calculated boundaries, you could remove them. For example, if the dataset had a value like 25, it would be considered an outlier and would be removed.</p>
+    <pre>
+        After removing outliers (if any), the updated dataset would look like:
+        [3, 4, 5, 6, 7, 8, 10, 12, 15]
+    </pre>
+
+</body>
+</html>

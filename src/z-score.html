@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Z-Score Distribution</title>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.8;
+            margin: 0;
+            padding: 0;
+            background-color: #eef2f3;
+            color: #333;
+        }
+        header {
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            color: white;
+            padding: 30px 0;
+            text-align: center;
+            font-size: 28px;
+            font-weight: bold;
+            animation: fadeIn 1.5s ease-in-out;
+        }
+        main {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 25px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.15);
+            animation: slideUp 1s ease-in-out;
+        }
+        h2, h3 {
+            color: #1e3c72;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        ul li {
+            background: #f7f9fc;
+            margin: 10px 0;
+            padding: 12px;
+            border-radius: 6px;
+            transition: transform 0.3s ease-in-out;
+        }
+        ul li:hover {
+            transform: scale(1.05);
+        }
+        a {
+            color: #2980b9;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        footer {
+            text-align: center;
+            padding: 20px;
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            color: white;
+            margin-top: 30px;
+        }
+        .image-container {
+            text-align: center;
+            margin: 30px 0;
+        }
+        .image-container img {
+            width: 85%;
+            border-radius: 10px;
+            box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+            animation: fadeIn 2s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes slideUp {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Z-Score Distribution</h1>
+</header>
+
+<section class="content">
+    <h2>Understanding Z-Score</h2>
+    <p>The <strong>Z-score</strong> (also called the standard score) indicates how many standard deviations a data point is from the mean.</p>
+    <p>The formula for the Z-score is:</p>
+    <pre>
+Z = (X - μ) / σ
+    </pre>
+    <p>Where:</p>
+    <ul>
+        <li><strong>X</strong> = individual data point</li>
+        <li><strong>μ</strong> = mean of the data</li>
+        <li><strong>σ</strong> = standard deviation</li>
+    </ul>
+</section>
+
+<hr>
+
+<section class="content">
+    <h2>Example Calculation</h2>
+    <h3>Q: What is the Z-score of a student who scored 85 on a test where the class average is 75 with a standard deviation of 5?</h3>
+    <p>Using the formula:</p>
+    <pre>
+Z = (X - μ) / σ
+Z = (85 - 75) / 5 = 2.0
+    </pre>
+    <p>This means the student's score is <strong>2 standard deviations above</strong> the mean.</p>
+</section>
+
+<hr>
+
+<section class="content">
+    <h2>Interpreting Z-Scores</h2>
+    <ul>
+        <li>A <strong>Z-score of 0</strong> means the value is exactly at the mean.</li>
+        <li>A <strong>positive Z-score</strong> means the value is above the mean.</li>
+        <li>A <strong>negative Z-score</strong> means the value is below the mean.</li>
+    </ul>
+</section>
+
+<hr>
+
+<section class="content">
+    <h2>Z-Score Table (Standard Normal Distribution)</h2>
+    <p>The Z-score allows us to calculate probabilities using the standard normal table:</p>
+    <pre>
+Z-Score   Probability
+----------------------
+-2.0      0.0228
+-1.0      0.1587
+ 0.0      0.5000
+ 1.0      0.8413
+ 2.0      0.9772
+    </pre>
+    <p>For example, a Z-score of 1.0 corresponds to a probability of 0.8413, meaning 84.13% of the data lies below this value.</p>
+</section>
+
+<hr>
+
+<section class="content">
+    <h2>Visual Representation</h2>
+    <p>The standard normal distribution curve:</p>
+    <figure>
+        <img src="../assets/images/z-score.png" alt="Z-Score Distribution">
+        <figcaption>Above is Z Score Distribution.</figcaption>
+      </figure>
+    <ul>
+        <li><strong>68%</strong> of data falls between <strong>-1σ and +1σ</strong>.</li>
+        <li><strong>95%</strong> falls between <strong>-2σ and +2σ</strong>.</li>
+        <li><strong>99.7%</strong> falls between <strong>-3σ and +3σ</strong>.</li>
+    </ul>
+</section>
+
+<hr>
+
+<section class="content">
+    <h2>Applications of Z-Scores</h2>
+    <ul>
+        <li><strong>Standardization</strong>: Used in machine learning to normalize data.</li>
+        <li><strong>Outlier detection</strong>: Identifies extreme values in datasets.</li>
+        <li><strong>Statistical significance</strong>: Helps determine whether a value is unusual.</li>
+    </ul>
+</section>
+
+</body>
+</html>

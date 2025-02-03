@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Statistics Distributions</title>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.8;
+            margin: 0;
+            padding: 0;
+            background-color: #eef2f3;
+            color: #333;
+        }
+        header {
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            color: white;
+            padding: 30px 0;
+            text-align: center;
+            font-size: 28px;
+            font-weight: bold;
+            animation: fadeIn 1.5s ease-in-out;
+        }
+        main {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 25px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.15);
+            animation: slideUp 1s ease-in-out;
+        }
+        h2, h3 {
+            color: #1e3c72;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        ul li {
+            background: #f7f9fc;
+            margin: 10px 0;
+            padding: 12px;
+            border-radius: 6px;
+            transition: transform 0.3s ease-in-out;
+        }
+        ul li:hover {
+            transform: scale(1.05);
+        }
+        a {
+            color: #2980b9;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        footer {
+            text-align: center;
+            padding: 20px;
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            color: white;
+            margin-top: 30px;
+        }
+        .image-container {
+            text-align: center;
+            margin: 30px 0;
+        }
+        .image-container img {
+            width: 85%;
+            border-radius: 10px;
+            box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+            animation: fadeIn 2s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes slideUp {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Statistical Distributions</h1>
+
+    <div class="distribution">
+        <h2>1. Normal Distribution</h2>
+        <p>The normal distribution is a bell-shaped curve where most data points are clustered around the mean.</p>
+        <canvas id="normalChart"></canvas>
+        <div class="parameters" id="normalParams"></div>
+        <a href="./src/normal_disb.html">click here to read more</a>
+    </div>
+
+    <div class="distribution">
+        <h2>2. Standard Normal Distribution</h2>
+        <p>The standard normal distribution has a mean of 0 and a standard deviation of 1.</p>
+        <!-- <canvas id="standardNormalChart"></canvas> -->
+        <div class="parameters">Mean: 0, Standard Deviation: 1</div>
+        <a href="./src/standard-normal-disb.html">click here to read more</a>
+    </div>
+
+    <div class="distribution">
+        <h2>3. Z-Score Distribution</h2>
+        <p>The Z-score standardizes data, showing how far it is from the mean in terms of standard deviations.</p>
+        <canvas id="zScoreChart"></canvas>
+        <div class="parameters" id="zScoreParams"></div>
+        <a href="./src/z-score.html">click here to read more</a>
+    </div>
+
+    <div class="distribution">
+        <h2>4. Log-Normal Distribution</h2>
+        <p>The log-normal distribution models data where the log of values is normally distributed.</p>
+        <canvas id="logNormalChart"></canvas>
+        <div class="parameters" id="logNormalParams"></div>
+        <a href="./src/log-disb.html">click here to read more</a>
+    </div>
+
+    <div class="distribution">
+        <h2>5. Binomial Distribution</h2>
+        <p>The binomial distribution shows probabilities for successes in a fixed number of trials.</p>
+        <canvas id="binomialChart"></canvas>
+        <div class="parameters">Number of Trials: 10, Success Probability: 0.5</div>
+        <a href="./src/binomial-disb.html">click here to read more</a>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 Statistical Distributions Explained</p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        // Helper function to calculate mean
+        function calculateMean(data) {
+            return data.reduce((sum, value) => sum + value, 0) / data.length;
+        }
+
+        // Helper function to calculate standard deviation
+        function calculateStandardDeviation(data, mean) {
+            return Math.sqrt(data.reduce((sum, value) => sum + Math.pow(value - mean, 2), 0) / data.length);
+        }
+
+        // Normal Distribution
+        const normalData = [55, 72, 68, 85, 90, 67, 80, 76, 89, 91];
+        const normalMean = calculateMean(normalData);
+        const normalSD = calculateStandardDeviation(normalData, normalMean);
+        document.getElementById('normalParams').innerHTML = `Mean: ${normalMean.toFixed(2)}, Standard Deviation: ${normalSD.toFixed(2)}`;
+        new Chart(document.getElementById('normalChart'), {
+            type: 'line',
+            data: {
+                labels: normalData.map((_, i) => `Sample ${i + 1}`),
+                datasets: [{
+                    label: 'Normal Distribution',
+                    data: normalData,
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    fill: true
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: { beginAtZero: true }
+                }
+            }
+        });
+
+        // Z-Score Distribution
+        const zScores = normalData.map(value => (value - normalMean) / normalSD);
+        const zScoreMean = calculateMean(zScores);
+        const zScoreSD = calculateStandardDeviation(zScores, zScoreMean);
+        document.getElementById('zScoreParams').innerHTML = `Mean: ${zScoreMean.toFixed(2)}, Standard Deviation: ${zScoreSD.toFixed(2)}`;
+        new Chart(document.getElementById('zScoreChart'), {
+            type: 'line',
+            data: {
+                labels: zScores.map((_, i) => `Sample ${i + 1}`),
+                datasets: [{
+                    label: 'Z-Scores',
+                    data: zScores,
+                    borderColor: 'rgba(255, 159, 64, 1)',
+                    backgroundColor: 'rgba(255, 159, 64, 0.2)',
+                    fill: true
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: { beginAtZero: true }
+                }
+            }
+        });
+
+        // Log-Normal Distribution
+        const logNormalData = [3.8, 4.0, 4.2, 4.5, 4.3];
+        const logNormalMean = calculateMean(logNormalData);
+        const logNormalSD = calculateStandardDeviation(logNormalData, logNormalMean);
+        document.getElementById('logNormalParams').innerHTML = `Mean: ${logNormalMean.toFixed(2)}, Standard Deviation: ${logNormalSD.toFixed(2)}`;
+        new Chart(document.getElementById('logNormalChart'), {
+            type: 'line',
+            data: {
+                labels: logNormalData.map((_, i) => `Sample ${i + 1}`),
+                datasets: [{
+                    label: 'Log-Normal Distribution',
+                    data: logNormalData,
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                    backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                    fill: true
+                }]
+            }
+        });
+
+        // Binomial Distribution
+        const binomialData = [0.0001, 0.0016, 0.0122, 0.0614, 0.1853, 0.3326, 0.2892, 0.1211, 0.0276, 0.0039, 0.0003];
+        new Chart(document.getElementById('binomialChart'), {
+            type: 'bar',
+            data: {
+                labels: binomialData.map((_, i) => `Trial ${i}`),
+                datasets: [{
+                    label: 'Binomial Distribution',
+                    data: binomialData,
+                    backgroundColor: 'rgba(255, 99, 132, 0.5)',
+                    borderColor: 'rgba(255, 99, 132, 1)'
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: { beginAtZero: true }
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>

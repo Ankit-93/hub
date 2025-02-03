@@ -6,83 +6,93 @@
     <title>Chi-Square Test for Independence</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
+        /* Global Styles */
         body {
             font-family: 'Poppins', sans-serif;
-            line-height: 1.8;
             margin: 0;
             padding: 0;
-            background-color: #eef2f3;
-            color: #333;
+            color: #ffffff;
+            background: url('assets/images/Background.webp') no-repeat center center fixed;
+            background-size: cover;
+            position: relative;
         }
-        header {
-            background: linear-gradient(135deg, #1e3c72, #2a5298);
-            color: white;
-            padding: 30px 0;
+        
+        /* Dark Overlay */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1;
+        }
+
+        /* Layout Containers */
+        header, footer {
+            background: linear-gradient(135deg, #002c26, #004d40);
             text-align: center;
-            font-size: 28px;
-            font-weight: bold;
-            animation: fadeIn 1.5s ease-in-out;
+            padding: 20px;
+            font-size: 24px;
+            position: relative;
+            z-index: 10;
         }
+        
         main {
             max-width: 900px;
             margin: 40px auto;
             padding: 25px;
-            background: white;
+            background: rgba(3, 40, 36, 0.85);
             border-radius: 10px;
-            box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.15);
-            animation: slideUp 1s ease-in-out;
+            box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+            position: relative;
+            z-index: 10;
         }
+        
         h2, h3 {
-            color: #1e3c72;
+            color: #f5f5f5;
         }
-        ul {
-            list-style-type: none;
-            padding: 0;
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: rgba(255, 255, 255, 0.1);
         }
-        ul li {
-            background: #f7f9fc;
-            margin: 10px 0;
+        
+        th, td {
+            border: 1px solid rgba(255, 255, 255, 0.43);
             padding: 12px;
-            border-radius: 6px;
-            transition: transform 0.3s ease-in-out;
+            text-align: center;
+            color: #ffffff;
         }
-        ul li:hover {
-            transform: scale(1.05);
-        }
-        a {
-            color: #2980b9;
-            text-decoration: none;
+        
+        th {
+            background: rgba(255, 255, 255, 0.2);
             font-weight: bold;
         }
-        a:hover {
-            text-decoration: underline;
-        }
-        footer {
-            text-align: center;
-            padding: 20px;
-            background: linear-gradient(135deg, #1e3c72, #2a5298);
-            color: white;
-            margin-top: 30px;
-        }
+
         .image-container {
             text-align: center;
             margin: 30px 0;
         }
+        
         .image-container img {
             width: 85%;
             border-radius: 10px;
             box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
-            animation: fadeIn 2s ease-in-out;
         }
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-        @keyframes slideUp {
-            from { transform: translateY(20px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
+        
+        .result {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 8px;
+            font-weight: bold;
         }
     </style>
 </head>

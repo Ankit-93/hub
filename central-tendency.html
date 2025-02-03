@@ -5,78 +5,119 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Measures of Central Tendency, Dispersion, Percentiles, and Quartiles</title>
     <style>
+        /* Global Styles */
         body {
             font-family: 'Poppins', sans-serif;
             line-height: 1.8;
             margin: 0;
             padding: 0;
-            background-color: #eef2f3;
-            color: #333;
+            color: #ffffff;
+            background: url('assets/images/Background.webp') no-repeat center center fixed;
+            background-size: cover;
+            position: relative;
         }
+
+        /* Dark Overlay to Improve Readability */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5); /* 50% Dark overlay */
+            z-index: 1;
+        }
+
+        /* Header */
         header {
-            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            background: linear-gradient(135deg, #002c26, #002c26);
             color: white;
             padding: 30px 0;
             text-align: center;
             font-size: 28px;
             font-weight: bold;
             animation: fadeIn 1.5s ease-in-out;
+            position: relative;
+            z-index: 10;
         }
+
+        /* Main Content */
         main {
             max-width: 900px;
             margin: 40px auto;
             padding: 25px;
-            background: white;
+            background: rgba(11, 11, 11, 0.9); /* Light semi-transparent background */
             border-radius: 10px;
-            box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.15);
+            box-shadow: 0px 5px 10px rgba(83, 82, 82, 0.05);
             animation: slideUp 1s ease-in-out;
+            position: relative;
+            z-index: 10;
         }
+
         h2, h3 {
-            color: #1e3c72;
+            color: #ffffff;
         }
+
+        /* List Styles */
         ul {
             list-style-type: none;
             padding: 0;
         }
+
         ul li {
-            background: #f7f9fc;
+            background: #4e5867;
             margin: 10px 0;
             padding: 12px;
             border-radius: 6px;
             transition: transform 0.3s ease-in-out;
         }
+
         ul li:hover {
             transform: scale(1.05);
         }
+
+        /* Links */
         a {
-            color: #2980b9;
+            color: #ffffff;
             text-decoration: none;
             font-weight: bold;
         }
+
         a:hover {
             text-decoration: underline;
         }
+
+        /* Footer */
         footer {
             text-align: center;
             padding: 20px;
-            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            background: linear-gradient(135deg, #002c26, #002c26);
             color: white;
             margin-top: 30px;
+            position: relative;
+            z-index: 10;
         }
+
+        /* Image Container */
         .image-container {
             text-align: center;
             margin: 30px 0;
         }
+
         .image-container img {
             width: 85%;
             border-radius: 10px;
             box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
             animation: fadeIn 2s ease-in-out;
         }
+
+        /* Animations */
         @keyframes fadeIn {
             from { opacity: 0; }
             to { opacity: 1; }
         }
+
         @keyframes slideUp {
             from { transform: translateY(20px); opacity: 0; }
             to { transform: translateY(0); opacity: 1; }
@@ -182,11 +223,10 @@
     <div class="measure">
         <h3>Quartiles</h3>
         <p>Quartiles divide the dataset into four equal parts. The three quartiles are:</p>
-        <ul>
+
             <li><strong>First Quartile (Q1)</strong>: The 25th percentile, separating the lowest 25% of the data.</li>
             <li><strong>Second Quartile (Q2)</strong>: The 50th percentile, also known as the median.</li>
             <li><strong>Third Quartile (Q3)</strong>: The 75th percentile, separating the lowest 75% of the data.</li>
-        </ul>
         <p>For the dataset [3, 7, 8, 5, 12, 19, 15, 10, 4, 6], the quartiles are:</p>
         <pre>
             Ordered Dataset: [3, 4, 5, 6, 7, 8, 10, 12, 15, 19]

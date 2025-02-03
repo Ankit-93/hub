@@ -1,0 +1,1094 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Statistics Interview Q&A</title>
+</head>
+<style>
+    /* Global Styles */
+    body {
+        font-family: 'Poppins', sans-serif;
+        margin: 0;
+        padding: 0;
+        color: #ffffff;
+        background: url('assets/images/Background.webp') no-repeat center center fixed;
+        background-size: cover;
+        position: relative;
+    }
+    
+    /* Dark Overlay */
+    body::before {
+        content: "";
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 1;
+    }
+
+    /* Layout Containers */
+    header, footer {
+        background: linear-gradient(135deg, #002c26, #004d40);
+        text-align: center;
+        padding: 20px;
+        font-size: 24px;
+        position: relative;
+        z-index: 10;
+    }
+    
+    main {
+        max-width: 900px;
+        margin: 40px auto;
+        padding: 25px;
+        background: rgba(3, 40, 36, 0.85);
+        border-radius: 10px;
+        box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+        position: relative;
+        z-index: 10;
+    }
+    
+    h2, h3 {
+        color: #f5f5f5;
+    }
+    
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0;
+        background: rgba(255, 255, 255, 0.1);
+    }
+    
+    th, td {
+        border: 1px solid rgba(255, 255, 255, 0.43);
+        padding: 12px;
+        text-align: center;
+        color: #ffffff;
+    }
+    
+    th {
+        background: rgba(255, 255, 255, 0.2);
+        font-weight: bold;
+    }
+
+    .image-container {
+        text-align: center;
+        margin: 30px 0;
+    }
+    
+    .image-container img {
+        width: 85%;
+        border-radius: 10px;
+        box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+    }
+    
+    .result {
+        background: rgba(255, 255, 255, 0.2);
+        padding: 15px;
+        margin: 10px 0;
+        border-radius: 8px;
+        font-weight: bold;
+    }
+</style>
+<body>
+    <header><h1>Statistics Interview Q&A</h1></header>
+    
+
+    <h2>1. What is the Central Limit Theorem and why is it important?</h2>
+    <p><strong>Answer:</strong> The Central Limit Theorem (CLT) states that the distribution of the sum (or average) of
+        a large number of independent, identically distributed random variables approaches a normal (or Gaussian)
+        distribution, regardless of the original distribution of the variables. It's crucial in statistics because it
+        allows us to make inferences about populations using the normal distribution, which has well-understood
+        properties.</p>
+
+    <h2>2. Explain Type I and Type II errors.</h2>
+    <p><strong>Answer:</strong></p>
+    <ul>
+        <li><strong>Type I Error (False Positive, or Alpha error):</strong> Incorrectly rejecting a true null
+            hypothesis.</li>
+        <li><strong>Type II Error (False Negative, or Beta error):</strong> Failing to reject a false null hypothesis.
+        </li>
+    </ul>
+    <p>The significance level (α) is the probability of making a Type I error. The power of a test is 1 minus the
+        probability of making a Type II error (β).</p>
+
+    <h2>3. What is R-squared in linear regression?</h2>
+    <p><strong>Answer:</strong> R-squared, also known as the coefficient of determination, measures the proportion of
+        the variance in the dependent variable that can be explained by the independent variables in a regression model.
+        An R-squared value of 1 indicates that the regression predictions perfectly fit the data. Values close to 1
+        indicate a strong fit, while values close to 0 indicate a weak fit.</p>
+
+    <h2>4. What is the difference between correlation and causation?</h2>
+    <p><strong>Answer:</strong> Correlation indicates a mutual relationship or association between two variables. When
+        one variable changes, the other tends to change in a specific direction. However, correlation does not imply
+        causation. Causation means that a change in one variable is responsible for a change in another.</p>
+    <p>For example, even if there is a strong correlation between ice cream sales and drowning incidents, it does not
+        mean that buying more ice cream causes more drownings. A lurking variable, like temperature, can be influencing
+        both.</p>
+
+    <h2>5. What is the difference between a parametric and a non-parametric test?</h2>
+    <p><strong>Answer:</strong> Parametric tests make assumptions about the parameters of the population distribution,
+        such as assuming a normal distribution. Examples include t-tests and ANOVA. Non-parametric tests do not make
+        strong assumptions about the population’s distribution. Examples include the Mann-Whitney U test and
+        Kruskal-Wallis test.</p>
+
+    <h2>6. Explain p-value.</h2>
+    <p><strong>Answer:</strong> The p-value is a measure used to determine the significance of results in hypothesis
+        testing. It represents the probability of observing the current data, or something more extreme, given that the
+        null hypothesis is true.</p>
+    <ul>
+        <li>A small p-value (typically ≤ 0.05) indicates strong evidence against the null hypothesis, leading to its
+            rejection.</li>
+        <li>A larger p-value suggests weaker evidence against the null hypothesis, leading to a failure to reject it.
+        </li>
+    </ul>
+
+    <h2>7. Describe the difference between cross-validation and bootstrapping.</h2>
+    <p><strong>Answer:</strong> Cross-validation is a technique for evaluating the performance of a statistical model by
+        partitioning the data into a training set and a test set. A common method is k-fold cross-validation.</p>
+    <p>Bootstrapping, on the other hand, is a resampling technique used to estimate the distribution of a statistic by
+        sampling with replacement from the data. It helps assess variability and construct confidence intervals.</p>
+    <h2>8. Can you explain the different measures of central tendency?</h2>
+    <p><strong>Answer:</strong> The three main measures of central tendency are:</p>
+    <ul>
+        <li><strong>Mean:</strong> The average of all the numbers in a dataset.</li>
+        <li><strong>Median:</strong> The middle value in a dataset when the numbers are arranged in order.</li>
+        <li><strong>Mode:</strong> The number that appears most frequently in a dataset.</li>
+    </ul>
+
+    <h2>9. What is the difference between population and sample?</h2>
+    <p><strong>Answer:</strong> A population includes all members of a specified group, while a sample is a subset of
+        the population. Statistics calculated on a population are called parameters, while those calculated on a sample
+        are called statistics.</p>
+
+    <h2>10. How do you handle missing data?</h2>
+    <p><strong>Answer:</strong> Handling missing data can involve various techniques:</p>
+    <ul>
+        <li><strong>Deletion:</strong> Remove records with missing values.</li>
+        <li><strong>Imputation:</strong> Fill missing values with estimated ones, such as using the mean, median, or
+            mode of the known values, or using more complex algorithms or models to predict the missing value.</li>
+        <li><strong>Analysis:</strong> Use statistical techniques designed to handle missing values, such as multiple
+            imputation or full information maximum likelihood estimation.</li>
+    </ul>
+
+    <h2>11. What is the interquartile range (IQR) and why is it useful?</h2>
+    <p><strong>Answer:</strong> The IQR is a measure of statistical dispersion and is calculated as the difference
+        between the upper (Q3) and lower (Q1) quartiles in a dataset. It is useful for understanding the spread of the
+        data and for identifying outliers, as it is not affected by extremely large or small values.</p>
+
+    <h2>12. Explain the concept of skewness in statistics.</h2>
+    <p><strong>Answer:</strong> Skewness is a measure of the asymmetry of the probability distribution of a real-valued
+        random variable. A negative skew indicates that the left tail of the distribution is longer, while a positive
+        skew indicates that the right tail is longer. A skewness of zero indicates a perfectly symmetrical distribution.
+    </p>
+
+    <h2>13. Can you describe what a box plot represents?</h2>
+    <p><strong>Answer:</strong> A box plot, or box-and-whisker plot, visually displays the distribution of a dataset,
+        including its central tendency and variability. The box represents the interquartile range (IQR, Q3-Q1), the
+        line inside the box shows the median, and the whiskers extend to the smallest and largest observations in the
+        dataset.</p>
+
+    <h2>14. What is the difference between variance and standard deviation?</h2>
+    <p><strong>Answer:</strong> Variance and standard deviation are both measures of dispersion or spread in a dataset.
+    </p>
+    <ul>
+        <li><strong>Variance:</strong> The average of the squared differences from the mean.</li>
+        <li><strong>Standard Deviation:</strong> The square root of the variance. It is more commonly used because it is
+            in the same units as the data.</li>
+    </ul>
+
+    <h2>15. What is a z-score and what is it used for?</h2>
+    <p><strong>Answer:</strong> A z-score is a statistical measurement that describes a value's relation to the mean of
+        a group of values. It is measured in terms of standard deviations from the mean. A z-score is used to determine
+        how unusual a value is, and it's commonly used for hypothesis testing, outlier detection, and comparison of
+        scores from different datasets.</p>
+
+    <h2>16. Can you explain what covariance and correlation are?</h2>
+    <p><strong>Answer:</strong></p>
+    <ul>
+        <li><strong>Covariance:</strong> A measure of the joint variability of two random variables. A positive
+            covariance indicates that the variables tend to increase and decrease together, whereas a negative
+            covariance indicates that as one variable increases, the other tends to decrease.</li>
+        <li><strong>Correlation:</strong> The normalization of covariance to have values between -1 and 1, providing a
+            measure of the strength and direction of the linear relationship between the two variables. A correlation of
+            1 indicates a perfect positive linear relationship, -1 indicates a perfect negative linear relationship, and
+            0 indicates no linear correlation.</li>
+    </ul>
+
+    <h2>17. How does the presence of outliers affect the mean and median of a dataset?</h2>
+    <p><strong>Answer:</strong> Outliers can greatly affect the mean because the mean considers all values in its
+        calculation. An extreme outlier can pull the mean up or down, making it less representative of the central
+        location of the data. The median, however, is more resistant to outliers since it depends only on the middle
+        value(s) of an ordered dataset. In datasets with outliers, the median can often be a better representation of
+        central tendency.</p>
+
+    <h2>18. Describe the concept of kurtosis. How is it different from skewness?</h2>
+    <p><strong>Answer:</strong> Kurtosis measures the "tailedness" of a probability distribution. High kurtosis
+        indicates a distribution with tails heavier or more extreme than the normal distribution, and low kurtosis
+        indicates a distribution with tails lighter than the normal distribution. While skewness deals with the
+        asymmetry and direction of skew (left or right), kurtosis deals with the extremities (or outliers) in the
+        distribution tails.</p>
+
+    <h2>19. How do you interpret the value of a Pearson correlation coefficient?</h2>
+    <p><strong>Answer:</strong> The Pearson correlation coefficient, often denoted as <em>r</em>, measures the strength
+        and direction of a linear relationship between two variables. Its values range between -1 and 1:</p>
+    <ul>
+        <li><strong>r = 1:</strong> Perfect positive linear relationship.</li>
+        <li><strong>r = -1:</strong> Perfect negative linear relationship.</li>
+        <li><strong>r = 0:</strong> No linear correlation.</li>
+    </ul>
+    <p>The closer <em>r</em> is to 1 or -1, the stronger the linear relationship. However, a strong correlation does not
+        imply causation.</p>
+
+    <h2>20. Explain Simpson's Paradox and its implications in descriptive statistics.</h2>
+    <p><strong>Answer:</strong> Simpson's Paradox occurs when a trend or relationship between two variables reverses or
+        disappears when they are examined in the context of a third variable. This can happen due to confounding
+        factors. It emphasizes the importance of considering all relevant factors when interpreting statistical
+        relationships.</p>
+
+    <h2>21. In a given dataset, what are the differences and relationships between the range, variance, and standard
+        deviation?</h2>
+    <p><strong>Answer:</strong></p>
+    <ul>
+        <li><strong>Range:</strong> The difference between the maximum and minimum values in the dataset.</li>
+        <li><strong>Variance:</strong> The average of the squared differences from the mean.</li>
+        <li><strong>Standard Deviation:</strong> The square root of the variance.</li>
+    </ul>
+    <p>The range provides a sense of the full spread of the data but is sensitive to outliers. The variance gives a
+        measure of how data points differ from the mean, but it's in squared units of the data. Standard deviation,
+        being the square root of variance, gives dispersion in the original units of the data and is commonly used
+        because of this.</p>
+
+    <h2>22. How would you decide between using the mean vs. median as a measure of central tendency?</h2>
+    <p><strong>Answer:</strong> The decision often depends on the shape of the data distribution and the presence of
+        outliers:</p>
+    <ul>
+        <li>For a symmetric distribution without outliers, the mean and median will be close, and either could be used.
+        </li>
+        <li>For skewed distributions or distributions with outliers, the median is usually a better representation
+            because it is less affected by extreme values.</li>
+    </ul>
+
+    <h2>23. Why might standard deviation be a misleading measure of spread in some situations?</h2>
+    <p><strong>Answer:</strong> Standard deviation can be misleading, especially when the data contains outliers, since
+        it considers all deviations from the mean in its calculation. Extreme values can inflate the standard deviation,
+        making it appear that the data is more variable than it actually is.</p>
+    <h2>1. How does the presence of outliers affect the mean and median of a dataset?</h2>
+    <p><strong>Answer:</strong> Outliers can greatly affect the mean because the mean considers all values in its
+        calculation. An extreme outlier can pull the mean up or down, making it less representative of the central
+        location of the data. The median, however, is more resistant to outliers since it depends only on the middle
+        value(s) of an ordered dataset. In datasets with outliers, the median can often be a better representation of
+        central tendency.</p>
+
+    <h2>24. Describe the concept of kurtosis. How is it different from skewness?</h2>
+    <p><strong>Answer:</strong> Kurtosis measures the "tailedness" of a probability distribution. High kurtosis
+        indicates a distribution with tails heavier or more extreme than the normal distribution, and low kurtosis
+        indicates a distribution with tails lighter than the normal distribution. While skewness deals with the
+        asymmetry and direction of skew (left or right), kurtosis deals with the extremities (or outliers) in the
+        distribution tails.</p>
+
+    <h2>25. How do you interpret the value of a Pearson correlation coefficient?</h2>
+    <p><strong>Answer:</strong> The Pearson correlation coefficient, often denoted as <em>r</em>, measures the strength
+        and direction of a linear relationship between two variables. Its values range between -1 and 1:</p>
+    <ul>
+        <li><strong>r = 1:</strong> Perfect positive linear relationship.</li>
+        <li><strong>r = -1:</strong> Perfect negative linear relationship.</li>
+        <li><strong>r = 0:</strong> No linear correlation.</li>
+    </ul>
+    <p>The closer <em>r</em> is to 1 or -1, the stronger the linear relationship. However, a strong correlation does not
+        imply causation.</p>
+
+    <h2>26. Explain Simpson's Paradox and its implications in descriptive statistics.</h2>
+    <p><strong>Answer:</strong> Simpson's Paradox occurs when a trend or relationship between two variables reverses or
+        disappears when they are examined in the context of a third variable. This can happen due to confounding
+        factors. It emphasizes the importance of considering all relevant factors when interpreting statistical
+        relationships.</p>
+
+    <h2>27. In a given dataset, what are the differences and relationships between the range, variance, and standard
+        deviation?</h2>
+    <p><strong>Answer:</strong></p>
+    <ul>
+        <li><strong>Range:</strong> The difference between the maximum and minimum values in the dataset.</li>
+        <li><strong>Variance:</strong> The average of the squared differences from the mean.</li>
+        <li><strong>Standard Deviation:</strong> The square root of the variance.</li>
+    </ul>
+    <p>The range provides a sense of the full spread of the data but is sensitive to outliers. The variance gives a
+        measure of how data points differ from the mean, but it's in squared units of the data. Standard deviation,
+        being the square root of variance, gives dispersion in the original units of the data and is commonly used
+        because of this.</p>
+
+    <h2>28. How would you decide between using the mean vs. median as a measure of central tendency?</h2>
+    <p><strong>Answer:</strong> The decision often depends on the shape of the data distribution and the presence of
+        outliers:</p>
+    <ul>
+        <li>For a symmetric distribution without outliers, the mean and median will be close, and either could be used.
+        </li>
+        <li>For skewed distributions or distributions with outliers, the median is usually a better representation
+            because it is less affected by extreme values.</li>
+    </ul>
+
+    <h2>29. Why might standard deviation be a misleading measure of spread in some situations?</h2>
+    <p><strong>Answer:</strong> Standard deviation can be misleading, especially when the data contains outliers, since
+        it considers all deviations from the mean in its calculation. Extreme values can inflate the standard deviation,
+        making it appear that the data is more variable than it actually is.</p>
+
+    <h2>30. Let's Try Some Use Cases on Descriptive Statistics</h2>
+    <h3>Use Case: Sales Performance Analysis</h3>
+    <p><strong>Scenario:</strong> A company sells products in three regions: North, South, and West. The sales team
+        wants to understand the sales performance across these regions to allocate resources more efficiently.</p>
+    <h4>Dataset:</h4>
+    <table border="1">
+        <tr>
+            <th>Region</th>
+            <th>Monthly Sales (in thousands)</th>
+        </tr>
+        <tr>
+            <td>North</td>
+            <td>12, 15, 14, 13, 17, 19, 20</td>
+        </tr>
+        <tr>
+            <td>South</td>
+            <td>22, 21, 20, 23, 25, 26, 28</td>
+        </tr>
+        <tr>
+            <td>West</td>
+            <td>32, 30, 31, 29, 30, 33, 35</td>
+        </tr>
+    </table>
+
+    <h4>31: Which region has the highest average monthly sales?</h4>
+    <p><strong>Answer:</strong> The mean (average) sales for each region:</p>
+    <ul>
+        <li>North: 15.7</li>
+        <li>South: 23.6</li>
+        <li>West: 31.4</li>
+    </ul>
+    <p>The West region has the highest average monthly sales.</p>
+
+    <h4>32: Which region has the most consistent monthly sales (lowest variability)?</h4>
+    <p><strong>Answer:</strong> The standard deviation for each region:</p>
+    <ul>
+        <li>North: 2.99</li>
+        <li>South: 2.61</li>
+        <li>West: 2.16</li>
+    </ul>
+    <p>The West region has the most consistent monthly sales due to the lowest standard deviation.</p>
+    <h2>33. How does the presence of outliers affect the mean and median of a dataset?</h2>
+    <p><strong>Answer:</strong> Outliers can greatly affect the mean because the mean considers all values in its
+        calculation. An extreme outlier can pull the mean up or down, making it less representative of the central
+        location of the data. The median, however, is more resistant to outliers since it depends only on the middle
+        value(s) of an ordered dataset. In datasets with outliers, the median can often be a better representation of
+        central tendency.</p>
+
+    <h2>34. Describe the concept of kurtosis. How is it different from skewness?</h2>
+    <p><strong>Answer:</strong> Kurtosis measures the "tailedness" of a probability distribution. High kurtosis
+        indicates a distribution with tails heavier or more extreme than the normal distribution, and low kurtosis
+        indicates a distribution with tails lighter than the normal distribution. While skewness deals with the
+        asymmetry and direction of skew (left or right), kurtosis deals with the extremities (or outliers) in the
+        distribution tails.</p>
+
+    <h2>35. How do you interpret the value of a Pearson correlation coefficient?</h2>
+    <p><strong>Answer:</strong> The Pearson correlation coefficient, often denoted as <em>r</em>, measures the strength
+        and direction of a linear relationship between two variables. Its values range between -1 and 1:</p>
+    <ul>
+        <li><strong>r = 1:</strong> Perfect positive linear relationship.</li>
+        <li><strong>r = -1:</strong> Perfect negative linear relationship.</li>
+        <li><strong>r = 0:</strong> No linear correlation.</li>
+    </ul>
+    <p>The closer <em>r</em> is to 1 or -1, the stronger the linear relationship. However, a strong correlation does not
+        imply causation.</p>
+
+    <h2>36. Explain Simpson's Paradox and its implications in descriptive statistics.</h2>
+    <p><strong>Answer:</strong> Simpson's Paradox occurs when a trend or relationship between two variables reverses or
+        disappears when they are examined in the context of a third variable. This can happen due to confounding
+        factors. It emphasizes the importance of considering all relevant factors when interpreting statistical
+        relationships.</p>
+
+    <h2>37. In a given dataset, what are the differences and relationships between the range, variance, and standard
+        deviation?</h2>
+    <p><strong>Answer:</strong></p>
+    <ul>
+        <li><strong>Range:</strong> The difference between the maximum and minimum values in the dataset.</li>
+        <li><strong>Variance:</strong> The average of the squared differences from the mean.</li>
+        <li><strong>Standard Deviation:</strong> The square root of the variance.</li>
+    </ul>
+    <p>The range provides a sense of the full spread of the data but is sensitive to outliers. The variance gives a
+        measure of how data points differ from the mean, but it's in squared units of the data. Standard deviation,
+        being the square root of variance, gives dispersion in the original units of the data and is commonly used
+        because of this.</p>
+
+    <h2>38. How would you decide between using the mean vs. median as a measure of central tendency?</h2>
+    <p><strong>Answer:</strong> The decision often depends on the shape of the data distribution and the presence of
+        outliers:</p>
+    <ul>
+        <li>For a symmetric distribution without outliers, the mean and median will be close, and either could be used.
+        </li>
+        <li>For skewed distributions or distributions with outliers, the median is usually a better representation
+            because it is less affected by extreme values.</li>
+    </ul>
+
+    <h2>39. Why might standard deviation be a misleading measure of spread in some situations?</h2>
+    <p><strong>Answer:</strong> Standard deviation can be misleading, especially when the data contains outliers, since
+        it considers all deviations from the mean in its calculation. Extreme values can inflate the standard deviation,
+        making it appear that the data is more variable than it actually is.</p>
+
+    <h2>40. Let's Try Some Use Cases on Descriptive Statistics</h2>
+
+    <h3>Use Case: Recovery Times Analysis</h3>
+    <p><strong>Scenario:</strong> A hospital wants to analyze the recovery times of patients undergoing a specific
+        surgery.</p>
+
+    <h4>Dataset:</h4>
+    <table border="1">
+        <tr>
+            <th>Patient Group</th>
+            <th>Recovery Times (days)</th>
+        </tr>
+        <tr>
+            <td>A</td>
+            <td>5, 6, 4, 5, 7, 5, 6</td>
+        </tr>
+        <tr>
+            <td>B</td>
+            <td>7, 8, 7, 9, 8, 7, 9</td>
+        </tr>
+        <tr>
+            <td>C</td>
+            <td>5, 7, 6, 5, 6, 6, 5</td>
+        </tr>
+    </table>
+
+    <h4>41: Which patient group has the quickest median recovery time?</h4>
+    <p><strong>Answer:</strong> The median recovery times:</p>
+    <ul>
+        <li>Group A: 5 days</li>
+        <li>Group B: 8 days</li>
+        <li>Group C: 6 days</li>
+    </ul>
+    <p>Patient Group A has the quickest median recovery time of 5 days.</p>
+
+    <h4>42: Which patient group has the least variation in recovery times?</h4>
+    <p><strong>Answer:</strong> The range of recovery times:</p>
+    <ul>
+        <li>Group A: 3 days</li>
+        <li>Group B: 2 days</li>
+        <li>Group C: 2 days</li>
+    </ul>
+    <p>Patient Groups B and C have the least variation in recovery times with a range of 2 days.</p>
+
+    <h4>43: How do the interquartile ranges (IQR) of the groups compare?</h4>
+    <p><strong>Answer:</strong> The interquartile ranges:</p>
+    <ul>
+        <li>Group A: IQR = 1</li>
+        <li>Group B: IQR = 2</li>
+        <li>Group C: IQR = 1</li>
+    </ul>
+    <p>Patient Groups A and C have the same IQR of 1 day, which is less than Group B's IQR.</p>
+    <h1>Use Cases on Different Types of Distributions</h1>
+    <p>Sure! Here’s a use case incorporating outliers, feature transformation, histograms, PDF, and PMF.</p>
+
+    <h2>Use Case: An E-commerce Company Analyzes Website Page Load Times</h2>
+    <p>An e-commerce company analyzes its website’s page load times (in seconds) over a month to optimize user
+        experience. The data includes:</p>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Day</th>
+                <th>Load Times (seconds)</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>1</td>
+                <td>3, 2.5, 2.8, 3.1, 15 (Outlier due to a server glitch)</td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>2.6, 2.5, 2.7, 2.9, 2.8</td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td>2.7, 2.8, 2.6, 2.5, 3</td>
+            </tr>
+            <tr>
+                <td>...</td>
+                <td>...</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h3>44: What impact do outliers have on the average load time?</h3>
+    <p><strong>Process:</strong> Calculate the mean with and without outliers. Compare both means to gauge the effect of
+        outliers.</p>
+    <p><strong>Answer:</strong>
+        With the outlier: Mean = (3 + 2.5 + 2.8 + 3.1 + 15) / 5 = 5.28<br>
+        Without the outlier: Mean = (3 + 2.5 + 2.8 + 3.1) / 4 = 2.85<br>
+        The outlier significantly increases the average page load time by 2.43 seconds.
+    </p>
+
+    <h3>45: How can we transform load times to normalize the data?</h3>
+    <p><strong>Process:</strong> Use logarithmic transformation. Compute the logarithm (base 10 or natural logarithm) of
+        all page load times.</p>
+    <p><strong>Answer:</strong> Log-transforming the data can help in dealing with skewed data or data with outliers. If
+        the original load time was 3 seconds, the transformed value using a natural log would be ln(3) ≈ 1.0986.</p>
+
+    <h3>46: Describe the distribution of load times using histograms.</h3>
+    <p><strong>Process:</strong>
+    <ol>
+        <li>Divide the data into bins (e.g., 2-2.5 seconds, 2.5-3 seconds).</li>
+        <li>Count the number of observations within each bin.</li>
+        <li>Plot the frequency of observations vs. bins.</li>
+    </ol>
+    </p>
+    <p><strong>Answer:</strong> Using the histogram, you might find, for instance, that most page load times cluster
+        around 2.5-3 seconds, indicating the mode of the distribution. Peaks would represent common load times, while
+        troughs would show less frequent load times.</p>
+
+    <h3>47: What is the Probability Density Function (PDF) for day 2's load times?</h3>
+    <p><strong>Process:</strong>
+    <ol>
+        <li>Estimate the PDF from the data (often using kernel density estimation).</li>
+        <li>Plot the continuous curve, showing how densities of load times vary.</li>
+    </ol>
+    </p>
+    <p><strong>Answer:</strong> The PDF will be a continuous curve indicating the probability of the page taking a
+        specific time to load. For instance, the peak around 2.7 seconds might have a higher value, indicating it's the
+        most common load time for day 2.</p>
+
+    <h3>48: What is the Probability Mass Function (PMF) for load times on day 3?</h3>
+    <p><strong>Process:</strong>
+    <ol>
+        <li>For discrete data, compute the proportion of each unique load time.</li>
+        <li>Plot these proportions.</li>
+    </ol>
+    </p>
+    <p><strong>Answer:</strong> The PMF might show, for instance, that the probability of the page taking exactly 2.7
+        seconds to load is 0.2 (or 20%). It gives probabilities for discrete outcomes.</p>
+    <h1>Use Cases on Different Types of Distributions</h1>
+
+    <h2>Use Case 1: A Pharmaceutical Company Analyzes Relief Times</h2>
+    <p>A pharmaceutical company has developed a new drug. During clinical trials, they measured the time (in hours) it
+        took for patients to show symptom relief. They're particularly interested in how quickly the drug works.</p>
+
+    <p><strong>Dataset Sample:</strong></p>
+    <table>
+        <thead>
+            <tr>
+                <th>Patient Number</th>
+                <th>Relief Time (hours)</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>1</td>
+                <td>3.5</td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>3</td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td>2.8</td>
+            </tr>
+            <tr>
+                <td>4</td>
+                <td>4.1</td>
+            </tr>
+            <tr>
+                <td>...</td>
+                <td>...</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h3>49: Do the relief times follow a normal distribution?</h3>
+    <p><strong>Process:</strong>
+    <ol>
+        <li>Plot a histogram of the relief times.</li>
+        <li>Overlay a normal distribution curve on the histogram.</li>
+    </ol>
+    </p>
+    <p><strong>Answer:</strong> If the histogram matches closely with the normal distribution curve, then the relief
+        times likely follow a normal distribution.</p>
+
+    <h3>50: What percentage of patients experienced relief within 3 hours, assuming the data follows a normal
+        distribution?</h3>
+    <p><strong>Process:</strong>
+    <ol>
+        <li>Calculate the z-score for 3 hours: 𝑧 = (𝑋 − 𝜇) / 𝜎</li>
+        <li>Look up this z-score in a z-table to find the percentage of patients.</li>
+    </ol>
+    </p>
+    <p><strong>Answer:</strong> If the z-score is, for example, -0.5 and corresponds to 30% on the z-table, then 30% of
+        patients experienced relief within 3 hours.</p>
+
+    <h2>Use Case 2: A Factory Analyzes Defective Bulbs</h2>
+    <p>A factory produces light bulbs. They have a dataset of the number of bulbs produced each day and the percentage
+        of defective bulbs. They want to improve the quality control process.</p>
+
+    <p><strong>Dataset Sample:</strong></p>
+    <table>
+        <thead>
+            <tr>
+                <th>Day</th>
+                <th>Defective Bulbs (%)</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>1</td>
+                <td>2</td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>1.5</td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td>3</td>
+            </tr>
+            <tr>
+                <td>...</td>
+                <td>...</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h3>51: Do the percentages of defective bulbs follow a Poisson distribution?</h3>
+    <p><strong>Process:</strong>
+    <ol>
+        <li>If the occurrence of defects is rare and random, the distribution might follow a Poisson distribution.</li>
+        <li>Plot the PMF of the observed defects and compare with the PMF of a Poisson distribution with the same mean.
+        </li>
+    </ol>
+    </p>
+    <p><strong>Answer:</strong> If the observed PMF aligns closely with the Poisson PMF, it's likely that the defect
+        rates follow a Poisson distribution.</p>
+
+    <h3>52: If the data follows a binomial distribution, what is the probability that more than 5% of the bulbs
+        are defective on any given day?</h3>
+    <p><strong>Process:</strong>
+    <ol>
+        <li>Use the binomial probability formula: 𝑃(𝑋 = 𝑘) = (𝑛 𝑘) 𝑝𝑘(1 − 𝑝)𝑛−𝑘</li>
+        <li>Where:
+            <ul>
+                <li>𝑛 is the total number of trials (bulbs produced)</li>
+                <li>𝑘 is the number of successes (defective bulbs)</li>
+                <li>𝑝 is the probability of success on a single trial.</li>
+            </ul>
+        </li>
+        <li>Calculate the probability for 5%, 6%, 7%,... and sum these probabilities.</li>
+    </ol>
+    </p>
+    <p><strong>Answer:</strong> The sum of the probabilities gives the likelihood that more than 5% of the bulbs are
+        defective on any given day.</p>
+    <h2>53. Z-test</h2>
+    <p><strong>Question:</strong> A national examination board believes that the students in state X score an average of
+        52 in mathematics. A state education official disputes this and collects a random sample of 100 student scores
+        from the state. The sample has an average score of 54 with a standard deviation of 10. At the 0.05 significance
+        level, is the official correct?</p>
+
+    <p><strong>Solution:</strong></p>
+    <p><strong>Null Hypothesis (H0):</strong> The students in state X have an average score of 52.</p>
+    <p><strong>Alternative Hypothesis (Ha):</strong> The students in state X do not have an average score of 52.</p>
+
+    <h3>Step by Step Process:</h3>
+    <ol>
+        <li>Calculate the z-score: 𝑧 = (𝑋ˉ − μ) / (σ/√n)</li>
+        <li>Compare the z-score to the critical z-value for a 0.05 significance level (two-tailed).</li>
+        <li>If |z| > z-critical, reject the null hypothesis.</li>
+    </ol>
+
+    <p><strong>Python Code:</strong></p>
+    <pre>
+            import math
+            import scipy.stats as stats
+
+            X_bar = 54
+            mu = 52
+            sigma = 10
+            n = 100
+
+            z = (X_bar - mu) / (sigma/math.sqrt(n))
+            p = 1 - stats.norm.cdf(abs(z))
+            alpha = 0.05
+
+            if p < alpha:
+                print("Reject the null hypothesis")
+            else:
+                print("Do not reject the null hypothesis")
+    </pre>
+
+    <h2>54. T-test</h2>
+    <p><strong>Question:</strong> A company claims its new energy drink increases stamina. 15 people were tested before
+        and after consuming the drink. Test if the drink has a significant effect on stamina at the 0.05 significance
+        level.</p>
+
+    <p><strong>Solution:</strong></p>
+    <p>Given that the measurements are paired (before and after for the same individual), use a paired t-test.</p>
+
+    <h3>Step by Step Process:</h3>
+    <ol>
+        <li>Compute the difference in stamina for each individual.</li>
+        <li>Compute the mean and standard deviation of these differences.</li>
+        <li>Calculate the t-statistic.</li>
+        <li>Compare the t-statistic to the critical t-value for a 0.05 significance level.</li>
+    </ol>
+
+    <p><strong>Python Code:</strong></p>
+    <pre>
+            import numpy as np
+            import scipy.stats as stats
+
+            before = np.array([...])  # insert stamina values before drinking
+            after = np.array([...])   # insert stamina values after drinking
+
+            differences = after - before
+            t_stat, p_value = stats.ttest_rel(after, before)
+
+            alpha = 0.05
+            if p_value < alpha:
+                print("Reject the null hypothesis")
+            else:
+                print("Do not reject the null hypothesis")
+    </pre>
+
+    <h2>55. ANOVA</h2>
+    <p><strong>Question:</strong> A farmer tests three types of fertilizers to see which one produces the highest crop
+        yield. Is there a significant difference in yield across the fertilizers?</p>
+
+    <p><strong>Solution:</strong></p>
+    <h3>Step by Step Process:</h3>
+    <ol>
+        <li>Use one-way ANOVA to compare the means of crop yields from the three fertilizers.</li>
+        <li>If the p-value is below the significance level, there is a significant difference.</li>
+    </ol>
+
+    <p><strong>Python Code:</strong></p>
+    <pre>
+            import numpy as np
+            import scipy.stats as stats
+
+            fertilizerA = np.array([...])  # insert yields for fertilizer A
+            fertilizerB = np.array([...])  # insert yields for fertilizer B
+            fertilizerC = np.array([...])  # insert yields for fertilizer C
+
+            f_stat, p_value = stats.f_oneway(fertilizerA, fertilizerB, fertilizerC)
+
+            alpha = 0.05
+            if p_value < alpha:
+                print("Reject the null hypothesis")
+            else:
+                print("Do not reject the null hypothesis")
+    </pre>
+
+    <h2>56. Chi-Square Test</h2>
+    <p><strong>Question:</strong> A company wants to know if there's a relationship between gender (male, female) and
+        product preference (Product A, Product B). They survey 100 customers. Is product preference independent of
+        gender?</p>
+
+    <p><strong>Solution:</strong></p>
+    <h3>Step by Step Process:</h3>
+    <ol>
+        <li>Construct a contingency table of gender vs. product preference.</li>
+        <li>Compute the chi-square statistic and p-value.</li>
+        <li>If the p-value is below the significance level, they are not independent.</li>
+    </ol>
+
+    <p><strong>Python Code:</strong></p>
+    <pre>
+            import numpy as np
+            import scipy.stats as stats
+
+            # Contingency table: rows = gender, columns = product preference
+            observed = np.array([[30, 20],  # males
+                                [25, 25]]) # females
+
+            chi2_stat, p_value, _, _ = stats.chi2_contingency(observed)
+
+            alpha = 0.05
+            if p_value < alpha:
+                print("Reject the null hypothesis")
+            else:
+                print("Do not reject the null hypothesis")
+    </pre>
+
+    <h2>57. Regression</h2>
+    <p><strong>Question:</strong> An e-commerce website wants to understand if the time spent on the website (in
+        minutes) predicts the total amount spent (in dollars). They gather data from 100 users. Determine if there's a
+        relationship.</p>
+
+    <p><strong>Solution:</strong></p>
+    <h3>Step by Step Process:</h3>
+    <ol>
+        <li>Run a simple linear regression with time spent as the independent variable and amount spent as the dependent
+            variable.</li>
+        <li>If the p-value for the slope is below the significance level, there's a significant relationship.</li>
+    </ol>
+
+    <p><strong>Python Code:</strong></p>
+    <pre>
+            import numpy as np
+            import statsmodels.api as sm
+
+            time_spent = np.array([...])    # insert time spent by users
+            amount_spent = np.array([...])  # insert amount spent by users
+
+            X = sm.add_constant(time_spent)  # adding a constant
+            model = sm.OLS(amount_spent, X).fit()
+
+            alpha = 0.05
+            if model.pvalues[1] < alpha:
+                print("Reject the null hypothesis")
+            else:
+                print("Do not reject the null hypothesis")
+    </pre>
+
+    <h1>A/B Testing Use Case - Online Retail Store</h1>
+
+    <h2>Scenario: Online Retail Store A/B Testing</h2>
+    <p><strong>Problem:</strong> An online retail store has introduced a new webpage design to increase the amount of
+        time users spend on the page and ultimately increase purchases. They have conducted A/B testing, where Group A
+        is exposed to the old design, and Group B to the new design. They've collected data on the time spent on the
+        webpage and whether a purchase was made.</p>
+    <p><strong>Objective:</strong> Determine if the new webpage design leads to a significant increase in both time
+        spent on the webpage and the likelihood of making a purchase.</p>
+
+    <h3>Steps:</h3>
+
+    <h4>1. Define the Problem:</h4>
+    <p><strong>Null Hypothesis (H0):</strong> The new webpage design does not significantly affect the time spent on the
+        webpage and the likelihood of making a purchase.</p>
+    <p><strong>Alternative Hypothesis (HA):</strong> The new webpage design significantly affects the time spent on the
+        webpage and the likelihood of making a purchase.</p>
+
+    <h4>2. Data Collection:</h4>
+    <p>Collect data on time spent on the webpage and purchasing behavior for both groups.</p>
+
+    <h4>3. Data Exploration and Preprocessing:</h4>
+    <ul>
+        <li>Understand the basic statistics of the datasets.</li>
+        <li>Handle missing values if any.</li>
+        <li>Check and handle outliers.</li>
+    </ul>
+
+    <h4>4. Perform T-Test on Time Spent:</h4>
+    <p>Conduct an Independent Samples t-test to compare the mean time spent on the webpage by the two groups.</p>
+
+    <h4>5. Perform Chi-Square Test on Purchase Behavior:</h4>
+    <p>Construct a contingency table of the groups and purchasing behavior. Then conduct a Chi-Square test to check the
+        independence of the group and purchasing behavior.</p>
+
+    <h4>6. Decision Making:</h4>
+    <p>Based on the p-values from the t-test and Chi-Square test, reject or fail to reject the null hypothesis. Make
+        recommendations for the business.</p>
+
+    <h3>Python Code for T-Test (Time Spent):</h3>
+    <pre>
+import numpy as np
+import scipy.stats as stats
+
+# Example data for time spent by Group A (old design) and Group B (new design)
+group_A_time_spent = np.array([...])  # insert time spent for Group A
+group_B_time_spent = np.array([...])  # insert time spent for Group B
+
+# Perform independent t-test
+t_stat, p_value = stats.ttest_ind(group_A_time_spent, group_B_time_spent)
+
+alpha = 0.05
+if p_value < alpha:
+    print("Reject the null hypothesis: The new design significantly affects the time spent.")
+else:
+    print("Do not reject the null hypothesis: No significant effect on time spent.")
+    </pre>
+
+    <h3>Python Code for Chi-Square Test (Purchase Behavior):</h3>
+    <pre>
+import numpy as np
+import scipy.stats as stats
+
+# Construct a contingency table: rows = group (A/B), columns = purchase behavior (yes/no)
+# Example: 30 users from Group A purchased, 20 did not; 35 users from Group B purchased, 15 did not
+observed = np.array([[30, 20],  # Group A: purchased, not purchased
+                     [35, 15]]) # Group B: purchased, not purchased
+
+# Perform chi-square test
+chi2_stat, p_value, _, _ = stats.chi2_contingency(observed)
+
+alpha = 0.05
+if p_value < alpha:
+    print("Reject the null hypothesis: Group and purchase behavior are not independent.")
+else:
+    print("Do not reject the null hypothesis: No significant relationship between group and purchase behavior.")
+    </pre>
+
+    <h3>Decision Making:</h3>
+    <p>If the p-value for the t-test on time spent is less than 0.05, we reject the null hypothesis and conclude that
+        the new webpage design significantly affects the time spent on the webpage. If the p-value for the Chi-Square
+        test on purchase behavior is less than 0.05, we reject the null hypothesis and conclude that there is a
+        significant relationship between the group and purchase behavior.</p>
+
+    <h3>Business Recommendations:</h3>
+    <ul>
+        <li>If both tests show significant results, the business should consider fully implementing the new webpage
+            design.</li>
+        <li>If only one test shows a significant result, further investigation is needed (e.g., improving the design to
+            increase purchases).</li>
+        <li>If neither test shows a significant result, the business might need to reassess the design or explore other
+            changes to increase engagement and purchases.</li>
+    </ul>
+
+    <h1>A/B Testing Analysis - Webpage Design</h1>
+    <p>This Python script performs an analysis of A/B testing results for a webpage redesign, comparing the time spent
+        on the page and purchase behavior between two groups. Below is the Python code used for the analysis:</p>
+
+    <h2>Python Code for A/B Testing Analysis:</h2>
+    <pre>
+import numpy as np
+import pandas as pd
+import scipy.stats as stats
+
+# Sample data creation
+data = pd.DataFrame({
+    'group': ['A', 'A', 'B', 'A', 'B', 'B', 'A', 'B'], 
+    'time_spent': [3, 5, 7, 4, 6, 8, 2, 7],
+    'purchase': [0, 1, 1, 0, 1, 1, 0, 1]
+})
+
+# Step 4: Perform T-Test on Time Spent
+group_A_time_spent = data[data['group'] == 'A']['time_spent']
+group_B_time_spent = data[data['group'] == 'B']['time_spent']
+t_stat, p_value_time = stats.ttest_ind(group_A_time_spent, group_B_time_spent)
+
+# Step 5: Perform Chi-Square Test on Purchase Behavior
+contingency_table = pd.crosstab(data['group'], data['purchase'])
+chi2_stat, p_value_purchase, _, _ = stats.chi2_contingency(contingency_table)
+
+# Step 6: Decision Making
+alpha = 0.05
+if p_value_time < alpha:
+    print("There is a significant difference in time spent on the webpage between the two groups.")
+else:
+    print("There is no significant difference in time spent on the webpage between the two groups.")
+
+if p_value_purchase < alpha:
+    print("There is a significant difference in purchasing behavior between the two groups.")
+else:
+    print("There is no significant difference in purchasing behavior between the two groups.")
+    </pre>
+
+    <h2>Explanation:</h2>
+    <ul>
+        <li>The script compares the time spent on the webpage between two groups (A - control group, B - test group)
+            using an Independent Samples t-test.</li>
+        <li>A Chi-Square test is used to assess whether there is a significant difference in the purchasing behavior
+            between the two groups.</li>
+        <li>If the p-value from the t-test is less than 0.05, it indicates a significant difference in the time spent on
+            the webpage. Similarly, if the p-value from the Chi-Square test is less than 0.05, it suggests a significant
+            difference in purchasing behavior.</li>
+        <li>Based on the results of the tests, the null hypothesis is either rejected or not, and conclusions are made
+            about the impact of the new webpage design.</li>
+    </ul>
+
+    <h2>Recommendation:</h2>
+    <p>If both tests show significant differences (i.e., the p-values are less than 0.05), the recommendation is to
+        implement the new webpage design. If not, further analysis and testing may be required to improve webpage
+        performance and sales.</p>
+    <h1>A/B Testing Analysis - Webpage Design</h1>
+    <p>This is a detailed analysis of A/B testing results for comparing an old and new webpage design. The analysis is
+        based on time spent on the webpage and purchasing behavior.</p>
+
+    <h2>Hypothetical Data:</h2>
+    <h3>Group A (Old Design):</h3>
+    <p><strong>Time spent (minutes):</strong> [3, 5, 4, 6, 5, 5, 6, 4]</p>
+    <p><strong>Purchases:</strong> [0, 1, 0, 1, 1, 0, 0, 1]</p>
+
+    <h3>Group B (New Design):</h3>
+    <p><strong>Time spent (minutes):</strong> [6, 7, 7, 7, 8, 6, 7, 8]</p>
+    <p><strong>Purchases:</strong> [1, 1, 1, 1, 1, 1, 0, 1]</p>
+
+    <h2>Step-by-Step Solution with Numerical Calculation:</h2>
+
+    <h3>1. Define the Problem:</h3>
+    <p>Null Hypothesis (H0): The new webpage design does not significantly affect the time spent on the webpage or the
+        likelihood of making a purchase.</p>
+    <p>Alternative Hypothesis (HA): The new webpage design significantly affects the time spent on the webpage or the
+        likelihood of making a purchase.</p>
+
+    <h3>2. Data Collection:</h3>
+    <p>The data has been hypothetically provided above.</p>
+
+    <h3>3. Data Exploration and Preprocessing:</h3>
+    <p>Calculate the means and standard deviations for both groups:</p>
+    <ul>
+        <li><strong>Group A (Time Spent):</strong>
+            Mean = (3 + 5 + 4 + 6 + 5 + 5 + 6 + 4) / 8 = 4.75 minutes<br>
+            Standard Deviation ≈ 1.16 minutes
+        </li>
+        <li><strong>Group B (Time Spent):</strong>
+            Mean = (6 + 7 + 7 + 7 + 8 + 6 + 7 + 8) / 8 = 7 minutes<br>
+            Standard Deviation ≈ 0.76 minutes
+        </li>
+    </ul>
+
+    <h3>4. Perform T-Test on Time Spent:</h3>
+    <p>We calculate the t-statistic using the formula:</p>
+    <pre>
+        t = (X̄1 - X̄2) / sqrt[(s₁² / n₁) + (s₂² / n₂)]
+        </pre>
+    <p>Where:
+        <br>X̄₁ and X̄₂ are the sample means of group A and B.<br>
+        s₁ and s₂ are the sample standard deviations of group A and B.<br>
+        n₁ and n₂ are the sample sizes of group A and B.
+    </p>
+    <p>Using the given values:</p>
+    <pre>
+        t = (4.75 - 7) / sqrt[(1.16² / 8) + (0.76² / 8)] ≈ -5.91
+        </pre>
+    <p>The degrees of freedom (df) = n₁ + n₂ - 2 = 8 + 8 - 2 = 14. Consulting the t-distribution table for df=14 and
+        α=0.05 (two-tailed), the critical t-value is approximately ±2.145.</p>
+    <p>Since t ≈ -5.91 < -2.145, we reject the null hypothesis for time spent.</p>
+
+            <h3>5. Perform Chi-Square Test on Purchase Behavior:</h3>
+            <p>Construct a 2x2 contingency table:</p>
+            <pre>
+        Purchase = 0    | Purchase = 1   | Total
+        Group A    | 4          | 4           | 8
+        Group B    | 1          | 7           | 8
+        </pre>
+            <p>Calculate the expected frequencies for each cell:</p>
+            <ul>
+                <li>For Group A and Purchase=0: Expected frequency = (row total * column total) / grand total = (8 * 5)
+                    / 16 = 2.5</li>
+            </ul>
+            <p>Compute the chi-square statistic using the formula:</p>
+            <pre>
+        χ² = Σ[(observed - expected)² / expected]
+        </pre>
+            <p>Using the observed and expected frequencies, we get χ² ≈ 3.6.</p>
+            <p>For a 2x2 table with α=0.05, the critical value from the chi-square distribution is approximately 3.841.
+            </p>
+            <p>Since χ² ≈ 3.6 < 3.841, we fail to reject the null hypothesis for purchase behavior.</p>
+
+                    <h3>6. Decision Making:</h3>
+                    <ul>
+                        <li>The t-test indicates a significant difference in time spent on the webpage between the two
+                            designs.</li>
+                        <li>The chi-square test suggests that purchase behavior isn't significantly different between
+                            the groups, although it's close to the threshold.</li>
+                    </ul>
+
+                    <h2>Recommendation:</h2>
+                    <p>The new webpage design seems to engage users for longer periods. While purchase behavior hasn't
+                        shown a statistically significant change, it's close, and with a larger sample, it might.
+                        Further A/B testing or possibly combining this new design with other strategies could be
+                        beneficial for sales.</p>
+
+</body>
+
+</html>

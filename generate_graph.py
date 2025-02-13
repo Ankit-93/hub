@@ -136,4 +136,105 @@ plt.grid()
 plt.tight_layout()
 plt.show()
 
+# Generate a toy dataset
+import numpy as np
+import matplotlib.pyplot as plt
+from sklearn.neighbors import KNeighborsClassifier
+
+# Generate a toy dataset
+np.random.seed(42)
+class_0 = np.random.normal(loc=[155, 55], scale=[5, 5], size=(10, 2))  # Short people
+class_1 = np.random.normal(loc=[175, 75], scale=[5, 5], size=(10, 2))  # Tall people
+
+# Labels
+labels_0 = np.zeros(len(class_0))
+labels_1 = np.ones(len(class_1))
+
+# Combine data
+data = np.vstack((class_0, class_1))
+labels = np.hstack((labels_0, labels_1))
+
+# Query point
+query_point = np.array([[165, 60]])
+
+# Fit KNN model
+k = 3
+knn = KNeighborsClassifier(n_neighbors=k)
+knn.fit(data, labels)
+predicted_class = knn.predict(query_point)[0]
+
+# Find the k nearest neighbors
+distances, indices = knn.kneighbors(query_point)
+
+# Plot dataset
+plt.figure(figsize=(8, 6), facecolor='lightgrey')
+plt.scatter(class_0[:, 0], class_0[:, 1], color='blue', label='Class 0 (Short)', edgecolors='black', alpha=0.7)
+plt.scatter(class_1[:, 0], class_1[:, 1], color='red', label='Class 1 (Tall)', edgecolors='black', alpha=0.7)
+plt.scatter(query_point[0, 0], query_point[0, 1], color='green', s=150, marker='X', label='Query Point')
+
+# Highlight the nearest neighbors
+plt.scatter(data[indices][0][:, 0], data[indices][0][:, 1], 
+            s=200, facecolors='none', edgecolors='gold', linewidths=2, label=f'Nearest {k} Neighbors')
+
+# Labels and title
+plt.xlabel("Height (cm)")
+plt.ylabel("Weight (kg)")
+plt.title("K-Nearest Neighbors (KNN) Visualization")
+plt.legend()
+plt.grid(True)
+plt.show()
+
+
+import matplotlib.pyplot as plt
+
+# Given dataset: (Age, Salary)
+points = [(150, None), (60, None), (47, None), (300, None), (70, 110), (85, 140)]
+
+# Sort by Age (x-axis) for KD-Tree construction
+sorted_points = sorted(points, key=lambda x: x[0])
+
+# KD-Tree structure based on median split
+tree_structure = {
+    "root": (85, 140),
+    "left": {
+        "node": (60, None),
+        "left": (47, None),
+        "right": (70, 110),
+    },
+    "right": {
+        "node": (150, None),
+        "right": (300, None)
+    }
+}
+
+# Plot KD-Tree structure
+fig, ax = plt.subplots(figsize=(6, 6))
+
+# Draw tree connections
+ax.plot([85, 60], [140, 120], 'k-', lw=1.5)  # Root to Left
+ax.plot([85, 150], [140, 130], 'k-', lw=1.5)  # Root to Right
+ax.plot([60, 47], [120, 110], 'k-', lw=1.5)  # Left child to its left
+ax.plot([60, 70], [120, 110], 'k-', lw=1.5)  # Left child to its right
+ax.plot([150, 300], [130, 125], 'k-', lw=1.5)  # Right child to its right
+
+# Scatter plot of nodes
+for point in points:
+    ax.scatter(point[0], 120 if point[1] is None else point[1], s=100, color="blue")
+
+# Annotate nodes
+ax.text(85, 140, "(85,140)", fontsize=12, ha='right', color='red', fontweight='bold')
+ax.text(60, 120, "(60,?)", fontsize=12, ha='right', color='black')
+ax.text(47, 110, "(47,?)", fontsize=12, ha='right', color='black')
+ax.text(70, 110, "(70,110)", fontsize=12, ha='right', color='black')
+ax.text(150, 130, "(150,?)", fontsize=12, ha='right', color='black')
+ax.text(300, 125, "(300,?)", fontsize=12, ha='right', color='black')
+
+ax.set_xticks([])
+ax.set_yticks([])
+ax.set_title("KD-Tree Visualization")
+ax.set_xlabel("Age (X-axis)")
+ax.set_ylabel("Salary (Y-axis)")
+
+plt.grid(False)
+plt.show()
 

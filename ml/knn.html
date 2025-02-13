@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KNN with 2D Toy Dataset</title>
+    <style>
+        canvas {
+            border: 1px solid black;
+        }
+    </style>
+</head>
+<body>
+    <h1>K-Nearest Neighbors (KNN) on 2D Toy Dataset</h1>
+    <canvas id="canvas" width="500" height="500"></canvas>
+    <script>
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+
+        // Toy dataset: [x, y, label]
+        const dataset = [
+            [1, 2, 0],
+            [2, 3, 0],
+            [3, 3, 0],
+            [6, 8, 1],
+            [7, 8, 1],
+            [8, 7, 1]
+        ];
+
+        // Function to calculate Euclidean distance
+        function euclideanDistance(point1, point2) {
+            return Math.sqrt(Math.pow(point1[0] - point2[0], 2) + Math.pow(point1[1] - point2[1], 2));
+        }
+
+        // KNN function
+        function knn(k, queryPoint) {
+            // Calculate distances
+            const distances = dataset.map(dataPoint => ({
+                distance: euclideanDistance(queryPoint, dataPoint),
+                label: dataPoint[2]
+            }));
+
+            // Sort by distance
+            distances.sort((a, b) => a.distance - b.distance);
+
+            // Get the k nearest neighbors
+            const kNearestNeighbors = distances.slice(0, k);
+
+            // Count the labels of the k nearest neighbors
+            const labelCounts = kNearestNeighbors.reduce((acc, neighbor) => {
+                acc[neighbor.label] = (acc[neighbor.label] || 0) + 1;
+                return acc;
+            }, {});
+
+            // Return the label with the highest count
+            return Object.keys(labelCounts).reduce((a, b) => labelCounts[a] > labelCounts[b] ? a : b);
+        }
+
+        // Function to draw the dataset on the canvas
+        function drawDataset() {
+            dataset.forEach(dataPoint => {
+                ctx.beginPath();
+                ctx.arc(dataPoint[0] * 50, dataPoint[1] * 50, 5, 0, 2 * Math.PI);
+                ctx.fillStyle = dataPoint[2] === 0 ? 'blue' : 'red';
+                ctx.fill();
+                ctx.stroke();
+            });
+        }
+
+        // Function to draw the query point and its classification
+        function drawQueryPoint(queryPoint, label) {
+            ctx.beginPath();
+            ctx.arc(queryPoint[0] * 50, queryPoint[1] * 50, 5, 0, 2 * Math.PI);
+            ctx.fillStyle = label === 0 ? 'lightblue' : 'pink';
+            ctx.fill();
+            ctx.stroke();
+        }
+
+        // Example usage
+        const queryPoint = [5, 5];
+        const k = 3;
+        const label = knn(k, queryPoint);
+
+        // Draw the dataset and the query point
+        drawDataset();
+        drawQueryPoint(queryPoint, label);
+
+        // Output the result
+        console.log(`The query point [${queryPoint}] is classified as label: ${label}`);
+    </script>
+</body>
+</html>

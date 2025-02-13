@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Understanding K-Nearest Neighbors (KNN)</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script type="text/javascript" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML">
+        </script>
+
+    <style>
+        /* Global Styles */
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            color: #ffffff;
+            background: url('../assets/images/ml-background.jpg') no-repeat center center fixed;
+            background-size: cover;
+            position: relative;
+        }
+
+        /* Dark Overlay */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1;
+        }
+
+        /* Layout Containers */
+        header,
+        footer {
+            background: linear-gradient(135deg, #0829df, #04013c);
+            text-align: center;
+            padding: 20px;
+            font-size: 24px;
+            position: relative;
+            z-index: 10;
+        }
+
+        main {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 25px;
+            background: rgba(19, 50, 185, 0.85);
+            border-radius: 10px;
+            box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+            position: relative;
+            z-index: 10;
+        }
+
+        h1,
+        h2,
+        h3 {
+            color: #d9dcdf;
+        }
+
+        .case h3 {
+            color: #ffcc00;
+        }
+
+        .case p {
+            color: #ffffff;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        th,
+        td {
+            border: 1px solid rgba(255, 255, 255, 0.43);
+            padding: 12px;
+            text-align: center;
+            color: #ffffff;
+        }
+
+        th {
+            background: rgba(255, 255, 255, 0.2);
+            font-weight: bold;
+        }
+
+        .image-container {
+            text-align: center;
+            margin: 5px 0;
+        }
+
+        .image-container img {
+            width: 65%;
+            border-radius: 5px;
+            box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Keep Flexbox for content before "Conclusion" */
+        .content-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+        }
+
+        .image-container {
+            flex: 1;
+        }
+
+        .image-container img {
+            width: 65%;
+            border-radius: 10px;
+        }
+
+        .text-container {
+            flex: 1;
+        }
+
+        /* Remove Flexbox after "Conclusion" */
+        .special-container {
+            width: 90%;
+            max-width: 1600px;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+            margin: 20px auto;
+            display: block;
+            /* Stack elements instead of flex */
+            text-align: justify;
+        }
+
+        /* Individual Case Boxes */
+        .case {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.15);
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 6px;
+        }
+
+        .case h3 {
+            color: #ffcc00;
+            margin-bottom: 5px;
+        }
+
+        .case p {
+            color: #ffffff;
+        }
+    </style>
+</head>
+<header>
+    <h1>Facts about Classification</h1>
+</header>
+
+<body>
+    <h2>📌 Need for Cross-Validation</h2>
+    <div class="special-container">
+        <div class="text">
+            <h3>✅ Why is Cross-Validation Needed?</h3>
+            <p>In any machine learning model, if the model performs poorly on the test data, we typically adjust the
+                hyperparameters or switch to a different model. If we repeat this process multiple times, there is a
+                chance that we might achieve good accuracy on the test data without overfitting. However, despite this,
+                the model might still perform poorly on unseen data. The reason for this is that we measured the
+                generalization error multiple times on the test set, causing the model and its hyperparameters to adapt
+                specifically to that set. As a result, the model becomes overly optimized for the test set and is
+                unlikely to perform well on new, unseen data.</p>
+
+        </div>
+        <div class="content-container">
+            <div class="image-container">
+                <img src="../assets/images/10-K-Fold-Cross-Validation.webp" alt="Cross Validation">
+                <p><em>Figure: K-Fold Cross Validation</em></p>
+            </div>
+            <div class="text-container">
+                <div class="text">
+                    <ul>
+                        <strong>Benefits:</strong>
+                        <pre>
+                        <li>Ensures the model performs well on unseen data by validating its performance
+ across multiple subsets, reducing the risk of overfitting.</li>
+                        <li>Provides a more reliable evaluation by using all data for both training and 
+validation, reducing variance in performance metrics.</li>
+                        <li>Ensures every data point is used for both training and validation, 
+maximizing the utility of the dataset.</li>
+                        <li>Helps identify the best model configuration by evaluating performance 
+across different hyperparameter settings.</li>
+                    </ul></pre>
+                        <h3>Pseudo-Example of K-Fold Cross-Validation</h3>
+                        <div class="code-box">
+                            </pre>
+                            <pre>
+    Dataset = [D1, D2, D3, D4, D5]
+    K = 5  # 5-Fold Cross Validation
+
+    Iteration 1: Train on [D2, D3, D4, D5], Test on [D1]
+    Iteration 2: Train on [D1, D3, D4, D5], Test on [D2]
+    Iteration 3: Train on [D1, D2, D4, D5], Test on [D3]
+    Iteration 4: Train on [D1, D2, D3, D5], Test on [D4]
+    Iteration 5: Train on [D1, D2, D3, D4], Test on [D5]
+
+    Final Model Performance = Average of all 5 test results
+        </pre>
+                        </div>
+
+                        <h3>🚀 Key Takeaways</h3>
+                        <ul>
+                            <li>K-Fold Cross Validation ensures **each data point** is tested once.</li>
+                            <li>More folds (e.g., K=10) provide a **smoother estimate** of accuracy.</li>
+                            <li>Cross-validation is **crucial for small datasets** where a single split may be
+                                misleading.
+                            </li>
+                        </ul>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="special-container">
+        <div class="text">
+            <div class="case">
+                <h3>What is k-fold cross validation?</h3>
+                <p>
+                    By reducing the training data, we risk losing important patterns/trends in the data set, which in
+                    turn increases
+                    error induced by bias. With k-fold CV, we will have enough data for training & validation.
+                </p>
+                <p>
+                    After splitting the total data set (D<sub>n</sub>) into training (D<sub>Train</sub>) and test
+                    (D<sub>Test</sub>) data
+                    sets in the ratio of 80:20, we further randomly split the training data into k equal parts. E.g.:
+                </p>
+                <p>
+                    We have to randomly split the data set into k equal parts, then compute k different accuracies for
+                    each
+                    hyperparameter value and take their mean. Time complexity for k folds will be k * n * d, making it
+                    O(knd), where k is the number of folds.
+                </p>
+                <p><strong>Generally, k = 5, 10 is preferred.</strong></p>
+            </div>
+
+        </div>
+    </div>
+    <div class="special-container">
+        <div class="case">
+            <h3>Example of 5-Fold Cross Validation:</h3>
+            <p>
+                In a **5-Fold Cross Validation**, the training data is split into **5 equal parts**. In each iteration:
+            <ul>
+                <li>One part is used for testing (shown in yellow).</li>
+                <li>The remaining four parts are used for training (shown in blue).</li>
+            </ul>
+            This process is repeated **5 times**, with each fold being the test set once.
+            </p>
+
+            <h3>Formula for Final Performance Score:</h3>
+            <p>
+                The final performance is calculated as the **mean of the individual performances** across all k
+                iterations:
+                <br>
+                <strong>Performance = (1/k) * Σ Performance<sub>i</sub> for i=1 to k</strong>
+            </p>
+
+            <h3>Time Complexity of K-Fold Cross Validation</h3>
+            <p>
+                We must compute k different accuracies for each hyperparameter value and take their mean.
+                The time complexity for k folds is **O(k * n * d)**, where:
+            <ul>
+                <li>k = number of folds</li>
+                <li>n = number of data points</li>
+                <li>d = model complexity</li>
+            </ul>
+            Generally, **k = 5 or 10** is preferred.
+
+            </p>
+        </div></div>
+        <div class="special-container">
+        <div class="case">
+        <div class="kd-tree-explanation">
+            <h3>What is KD-Tree?</h3>
+            <p>A <b>K-Dimensional Tree (KD-Tree)</b> is a binary tree used for organizing points in
+                k-dimensional space. It is mainly used for nearest neighbor search,
+                range queries, and spatial indexing.
+            </p>
+
+            <h3>Example: Constructing a KD-Tree</h3>
+            <p>Let's consider a set of 2D points: <b>(7,2), (5,4), (9,6), (2,3), (4,7), (8,1)</b>.</p>
+
+            <ol>
+                <li><b>Step 1:</b> Choose the first axis (x-axis) and sort points by x-coordinate.</li>
+                <li><b>Step 2:</b> Select the median point as the root. Here, (7,2) is the root.</li>
+                <li><b>Step 3:</b> Recursively split the remaining points using alternating axes (x → y
+                    → x...).</li>
+            </ol>
+
+
+            <h3>Time Complexity of KD-Tree</h3>
+            <ul>
+                <li><b>Build Time Complexity:</b> O(n log n)</li>
+                <li><b>Nearest Neighbor Search (Best Case):</b> O(log n)</li>
+                <li><b>Nearest Neighbor Search (Worst Case):</b> O(n) (if the tree is unbalanced)</li>
+            </ul>
+
+            <h3>How KD-Tree Helps in KNN?</h3>
+            <p>
+                When searching for the nearest neighbors of a query point, the KD-Tree:
+            <ul>
+                <li>Prunes irrelevant branches of the tree.</li>
+                <li>Reduces the number of distance calculations.</li>
+                <li>Significantly speeds up search compared to brute-force O(n) search.</li>
+            </ul>
+            </p>
+
+            <h3>Use Cases</h3>
+            <ul>
+                <li>Image Recognition (e.g., finding similar images)</li>
+                <li>Geospatial Search (e.g., finding nearby locations on a map)</li>
+                <li>Machine Learning (e.g., used in KNN for fast classification)</li>
+            </ul>
+
+            <p>
+                The diagram above illustrates how a KD-Tree partitions the space step by step. Each
+                split divides the space based on an alternating axis (x, then y, then x again, etc.).
+            </p>
+        </div></div></div>
+        <div class="special-container">
+            <div class="case">
+        <div>
+            <h2>What is Locality Sensitive Hashing (LSH)?</h2>
+            <p>
+                Locality Sensitive Hashing (LSH) is a technique used for approximate nearest neighbor search in
+                high-dimensional spaces.
+                Unlike traditional hashing methods, LSH increases the probability that similar data points will be
+                mapped to
+                the same hash bucket.
+                This makes LSH useful in applications such as document similarity, image retrieval, and recommendation
+                systems.
+            </p>
+
+            <h3>Example of LSH:</h3>
+            <p>Suppose we have the following three text documents:</p>
+            <ul>
+                <li><b>Doc 1:</b> "The quick brown fox jumps over the lazy dog"</li>
+                <li><b>Doc 2:</b> "The fast brown fox leaps over the sleepy dog"</li>
+                <li><b>Doc 3:</b> "A red apple is on the table"</li>
+            </ul>
+
+            <p>
+                Using LSH with a MinHash function for text similarity, Doc 1 and Doc 2 would likely hash to the same
+                bucket
+                because
+                they contain similar words. However, Doc 3 is quite different and would hash to a different bucket.
+            </p>
+
+            <h3>How It Works:</h3>
+            <ol>
+                <li>Convert documents into sets of words (or shingles).</li>
+                <li>Compute MinHash signatures for each document.</li>
+                <li>Use multiple hash functions to group similar documents into the same bucket.</li>
+                <li>Retrieve similar documents by checking within the same bucket.</li>
+            </ol>
+
+            <h3>Benefits of LSH:</h3>
+            <ul>
+                <li>Efficient for high-dimensional data</li>
+                <li>Speeds up nearest neighbor searches</li>
+                <li>Used in search engines, plagiarism detection, and machine learning applications</li>
+            </ul>
+        </div></div></div>
+        <div class="special-container">
+            <div class="case">
+        <div>
+            <h2>What is the Curse of Dimensionality?</h2>
+            <p>
+                The Curse of Dimensionality refers to the various problems that arise when working with high-dimensional
+                data.
+                As the number of dimensions increases, the volume of the space grows exponentially, leading to sparsity
+                and
+                increased computational complexity.
+                This phenomenon can cause issues such as overfitting, increased distance between data points, and the
+                need
+                for more data to maintain statistical significance.
+            </p>
+
+            <h3>Effects of the Curse of Dimensionality:</h3>
+            <ul>
+                <li>Increased computational complexity</li>
+                <li>Sparsity of data points</li>
+                <li>Increased distance between data points</li>
+                <li>Overfitting due to the abundance of features</li>
+                <li>Need for more data to maintain statistical significance</li>
+            </ul>
+
+            <h3>Strategies to Mitigate the Curse of Dimensionality:</h3>
+            <ul>
+                <li>Feature selection and dimensionality reduction techniques</li>
+                <li>Regularization to prevent overfitting</li>
+                <li>Use of domain knowledge to reduce irrelevant features</li>
+                <li>Feature engineering to create meaningful features</li>
+                <li>Model selection based on the complexity of the data</li>
+            </ul></div></div></div>
+            <div class="special-container">
+                <div class="case">
+            <div>
+                <h2>Reachability Distance & Local Reachability Density</h2>
+            
+                <h3>Reachability Distance:</h3>
+                <p>
+                    Reachability distance expresses the maximum of the distance between two points and the k-distance of the second point.
+                    The distance metric used can be Euclidean, Minkowski, Manhattan, or any other distance measure.
+                </p>
+                <p><b>Formula:</b></p>
+                <p><code>Reachability_Distance(a, b) = max{ k-distance(b), normal_distance(a, b) }</code></p>
+            
+                <h3>Local Reachability Density:</h3>
+                <p>
+                    Local reachability density refers to how far we need to go from a given point to reach its neighboring points.
+                    The reachability distances of the k closest neighbors of a point are used to calculate the local reachability density.
+                    The sum of these reachability distances is divided by k, and the inverse of this value gives the desired density.
+                </p>
+                <p><b>Formula:</b></p>
+                <p><code>Local_reachability_density(a) = 1 / ( sum( Reachability_Distance(a, n) ) / k )</code></p>
+                <p>Where <b>n</b> refers to the k nearest neighbors of point <b>a</b>.</p>
+            </div></div></div>
+            <div class="special-container">
+                <div class="case"><div>
+                    <h2>Local Outlier Factor (LOF)</h2>
+                
+                    <p>
+                        The <b>Local Outlier Factor (LOF)</b> is a measure used to identify the degree to which a data point deviates from its neighbors.
+                        It is based on the concept of local density and is particularly useful for detecting outliers in datasets with varying densities.
+                    </p>
+                
+                    <h3>How LOF Works:</h3>
+                    <ul>
+                        <li>LOF compares the local reachability density of a point with those of its k-nearest neighbors.</li>
+                        <li>If a point has a significantly lower local reachability density than its neighbors, it is considered an outlier.</li>
+                        <li>LOF values greater than 1 indicate outliers, where higher values signify stronger anomalies.</li>
+                    </ul>
+                
+                    <h3>Formula:</h3>
+                    <p>
+                        <code>LOF(a) = ( sum( Local_reachability_density(n) / Local_reachability_density(a) ) ) / k</code>
+                    </p>
+                    <p>Where <b>n</b> refers to the k-nearest neighbors of point <b>a</b>.</p>
+                
+                    <h3>Interpretation:</h3>
+                    <ul>
+                        <li>LOF ≈ 1 → The point is in a dense region (normal).</li>
+                        <li>LOF > 1 → The point is in a sparse region (potential outlier).</li>
+                        <li>Higher LOF → Stronger outlier indication.</li>
+                    </ul>
+                </div>
+                </div></div>
+            
+</body>
+
+</html>

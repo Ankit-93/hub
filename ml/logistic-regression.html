@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Understanding K-Nearest Neighbors (KNN)</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script type="text/javascript" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML">
+        </script>
+
+    <style>
+        /* Global Styles */
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            color: #ffffff;
+            background: url('../assets/images/ml-background.jpg') no-repeat center center fixed;
+            background-size: cover;
+            position: relative;
+        }
+
+        /* Dark Overlay */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1;
+        }
+
+        /* Layout Containers */
+        header,
+        footer {
+            background: linear-gradient(135deg, #0829df, #04013c);
+            text-align: center;
+            padding: 20px;
+            font-size: 24px;
+            position: relative;
+            z-index: 10;
+        }
+
+        main {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 25px;
+            background: rgba(19, 50, 185, 0.85);
+            border-radius: 10px;
+            box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+            position: relative;
+            z-index: 10;
+        }
+
+        h1,
+        h2,
+        h3 {
+            color: #d9dcdf;
+        }
+
+        .case h3 {
+            color: #ffcc00;
+        }
+
+        .case p {
+            color: #ffffff;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        th,
+        td {
+            border: 1px solid rgba(255, 255, 255, 0.43);
+            padding: 12px;
+            text-align: center;
+            color: #ffffff;
+        }
+
+        th {
+            background: rgba(255, 255, 255, 0.2);
+            font-weight: bold;
+        }
+
+        .image-container {
+            text-align: center;
+            margin: 5px 0;
+        }
+
+        .image-container img {
+            width: 85%;
+            border-radius: 5px;
+            box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Keep Flexbox for content before "Conclusion" */
+        .content-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+        }
+
+        .image-container {
+            flex: 1;
+        }
+
+        .image-container img {
+            width: 100%;
+            border-radius: 10px;
+        }
+
+        .text-container {
+            flex: 1;
+        }
+
+        /* Remove Flexbox after "Conclusion" */
+        .container-cases {
+            width: 90%;
+            max-width: 1600px;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+            margin: 20px auto;
+            display: block;
+            /* Stack elements instead of flex */
+            text-align: justify;
+        }
+
+        /* Individual Case Boxes */
+        .case {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.15);
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 6px;
+        }
+
+        .case h3 {
+            color: #ffcc00;
+            margin-bottom: 5px;
+        }
+
+        .case p {
+            color: #ffffff;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <h1>Logistic Regression</h1>
+    </header>
+
+
+    <div class="container-cases">
+        <div class="case">
+            <h3>Explain Logistic Regression</h3>
+            <p>
+                Logistic regression is a statistical method used to predict a binary outcome, such as "yes" or "no,"
+                based on prior observations in a dataset.
+                It models the probability of a certain class or event existing based on independent variables.
+            </p>
+            <p>
+                A logistic regression model predicts a dependent variable by analyzing the relationship between one or
+                more independent variables.
+            </p>
+            <p>
+                Logistic regression can be interpreted in terms of <b>geometry</b>, <b>probability</b>, and <b>loss
+                    function</b>:
+            </p>
+            <ul>
+                <li><b>Geometrically:</b> If the data is linearly separable, a hyperplane can separate the data points
+                    into two classes.</li>
+                <li><b>Equation of a hyperplane:</b> <br><b>w<sup>T</sup>x + b = 0</b></li>
+                <li>If the hyperplane passes through the origin, then <b>b = 0</b>, reducing the equation to:
+                    <b>w<sup>T</sup>x = 0</b>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="container-cases">
+        <div class="case">
+            <h3>What is Sigmoid Function & Squashing?</h3>
+            <p>
+                The sigmoid function is a mathematical function that can take any real value and map it to a value
+                between 0 and 1,
+                forming an "S"-shaped curve.
+            </p>
+            <p>
+                The sigmoid function, also called the logistic function, is defined as:
+                <br><b> Y = 1 / (1 + exp(-z))</b>
+            </p>
+            <p>
+                In logistic regression, our optimization problem is to maximize the sum of signed distances. However,
+                this approach is
+                sensitive to outliers. To mitigate this issue, we introduce a concept: if the signed distance is small,
+                we keep it as is;
+                if it is large, we scale it to a smaller value.
+            </p>
+            <p>
+                To achieve this, we apply the sigmoid function, which converts a large range of signed distances into a
+                limited range of [-1,1].
+                This process of compressing values into a fixed range is called <b>squashing</b>.
+            </p>
+        </div>
+    </div>
+    <div class="container-cases">
+        <div class="case">
+            <h3><b>Explain about Optimization Problem in Logistic Regression.</b></h3>
+            <p>
+                In any classification problem, our goal is to maximize the number of correctly classified points and
+                minimize the number of misclassified points.
+            </p>
+            <p>
+                For a correctly classified point, the condition holds: <b>y<sub>i</sub> W<sup>T</sup> x<sub>i</sub> >
+                    0</b>
+            </p>
+            <p>
+                For a misclassified point, the condition holds: <b>y<sub>i</sub> W<sup>T</sup> x<sub>i</sub>
+                    < 0</b>
+            </p>
+            <p>
+                Thus, our optimization problem is to find <b>W</b> that maximizes the sum of <b>y<sub>i</sub>
+                    W<sup>T</sup> x<sub>i</sub></b>.
+            </p>
+            <p>
+                <b>W* = argmax (∑ y<sub>i</sub> W<sup>T</sup> x<sub>i</sub>)</b>
+            </p>
+        </div>
+    </div>
+    <div class="container-cases">
+        <div class="case">
+            <h3>Mathematical Formulation of Objective Function</h3>
+
+            <p>For LR, the optimization problem is:</p>
+            <p>W* = argmax ( ∑ ( y<sub>i</sub> W<sup>T</sup> x<sub>i</sub> ) )</p>
+
+            <p>After applying the sigmoid function, the equation transforms into:</p>
+            <p>W* = argmax ∑ ( 1 / ( 1 + exp( - y<sub>i</sub> W<sup>T</sup> x<sub>i</sub> ) ) )</p>
+
+            <p>Now, if we apply a monotonic increasing function such as Logarithm, then it becomes:</p>
+            <p>W* = argmax ∑ log( 1 / ( 1 + exp( - y<sub>i</sub> W<sup>T</sup> x<sub>i</sub> ) ) )</p>
+            <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;⇒ W* = argmin ∑ log(
+                1 + exp( - y<sub>i</sub> W<sup>T</sup> x<sub>i</sub> ) )</p>
+
+            <p>Let Z<sub>i</sub> = y<sub>i</sub> W<sup>T</sup> x<sub>i</sub>, then:</p>
+            <p>W* = argmin ∑ log( 1 + exp( - Z<sub>i</sub> ) ) for i ∈ (0, n)</p>
+
+            <p>The minimum value of the above occurs at Z<sub>i</sub> → ∞.</p>
+            <p>If Z<sub>i</sub> tends to +∞, then the equation approaches 0.</p>
+
+            <p>If the selected W correctly classifies all training points, and Z<sub>i</sub> → ∞, then W is the best W
+                for training data.</p>
+            <p>However, this leads to <b>overfitting</b>, as it does not guarantee good performance on test data.</p>
+            <p>The training data may contain <b>outliers</b> that the model has fitted perfectly.</p>
+
+            <p>To prevent overfitting, we introduce <b>regularization</b>, modifying the equation as follows:</p>
+
+            <p>W* = argmin ∑ log( ( 1 + exp( - y<sub>i</sub> W<sup>T</sup> x<sub>i</sub> ) ) ) + λ W<sup>T</sup> W</p>
+
+            <p>Where <b>λ</b> is a hyperparameter controlling regularization. It is determined using
+                <b>cross-validation</b>:</p>
+
+            <ul>
+                <li>If <b>λ = 0</b>, there is no regularization → <b>high variance (overfitting).</b></li>
+                <li>If <b>λ is too large</b>, the loss term diminishes, meaning training data has little influence on
+                    optimization → <b>high bias (underfitting).</b></li>
+            </ul>
+        </div>
+    </div>
+    <div class="container-cases">
+        <div class="case">
+            <h3>Explain Importance of Weight Vector in Logistic Regression</h3>
+
+            <p>Optimization problem:</p>
+            <p>W* = argmin ∑ log( (1 + exp( - y<sub>i</sub> W<sup>T</sup> x<sub>i</sub> ) ) )</p>
+
+            <p>So, the <b>optimal W</b> (W*) is the <b>Weight vector</b>, which is a <b>d-dimensional vector.</b></p>
+
+            <p>Geometric intuition:</p>
+            <p>The weight vector W is normal to a hyperplane that separates data points into different classes.</p>
+            <ul>
+                <li>Positive data points lie in the direction of W.</li>
+                <li>Negative data points lie in the opposite direction.</li>
+            </ul>
+
+            <p>For Logistic Regression:</p>
+            <ul>
+                <li>If W<sup>T</sup> x<sub>q</sub> > 0, then y<sub>q</sub> = +1</li>
+                <li>If W<sup>T</sup> x<sub>q</sub>
+                    < 0, then y<sub>q</sub> = -1
+                </li>
+                <li>If the point lies on the hyperplane (W<sup>T</sup> x<sub>q</sub> = 0), we cannot determine the class
+                    of the query point.</li>
+            </ul>
+
+            <p>Interpretation of Weight Vectors:</p>
+            <ul>
+                <li><b>Case 1:</b> If W<sub>i</sub> is <b>positive</b>:
+                    <ul>
+                        <li>As x<sub>qi</sub> increases, W<sub>i</sub>x<sub>qi</sub> increases.</li>
+                        <li>sigmoid (W<sup>T</sup> x<sub>q</sub>) increases.</li>
+                        <li>P(y<sub>q</sub> = +1) increases.</li>
+                    </ul>
+                </li>
+                <li><b>Case 2:</b> If W<sub>i</sub> is <b>negative</b>:
+                    <ul>
+                        <li>As x<sub>qi</sub> increases, W<sub>i</sub>x<sub>qi</sub> decreases.</li>
+                        <li>sigmoid (W<sup>T</sup> x<sub>q</sub>) decreases.</li>
+                        <li>P(y<sub>q</sub> = +1) decreases, while P(y<sub>q</sub> = -1) increases.</li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="container-cases">
+        <div class="case">
+            <h3>Multi-Collinearity of Features</h3>
+
+            <p>In Logistic Regression (LR), feature importance is interpreted from weight vectors under the assumption
+                of independence.</p>
+            <p>However, if there is <b>co-linearity</b>, we cannot interpret feature importance from the weight vector.
+            </p>
+
+            <p><b>Definition:</b></p>
+            <ul>
+                <li>Two features are <b>collinear</b> if one feature can be expressed as a function of another feature.
+                </li>
+                <li>A <b>multi-collinear</b> feature is a feature that can be expressed as a function of multiple other
+                    features.</li>
+            </ul>
+
+            <p><b>Impact of Multi-Collinearity:</b></p>
+            <ul>
+                <li>Weight vectors are <b>affected</b> by multi-collinear features.</li>
+                <li>To use weight vectors for feature importance interpretation, <b>multi-collinear features must be
+                        removed.</b></li>
+            </ul>
+
+            <p><b>How to detect Multi-Collinearity?</b></p>
+            <p>A multi-collinear feature can be identified by adding <b>noise (perturbation)</b> to the feature values:
+            </p>
+            <ul>
+                <li>If, after training, the weight vector changes significantly, the features are multi-collinear.</li>
+                <li>In such cases, the weight vector cannot be used for feature importance interpretation.</li>
+            </ul>
+
+            <p><b>Conclusion:</b></p>
+            <p>Performing a <b>multi-collinearity test is mandatory</b> to ensure reliable feature importance analysis.
+            </p>
+        </div>
+    </div>
+    <div class="container-cases">
+        <div class="case">
+            <h3>Find Train & Run Time Space and Time Complexity of Logistic Regression</h3>
+
+            <p>Solving the optimization problem using <b>Stochastic Gradient Descent</b>:</p>
+
+            <ul>
+                <li><b>Train Time:</b> Time Complexity: <b>O(n d)</b></li>
+                <li><b>Run Time:</b> Time Complexity: <b>O(d)</b></li>
+                <li><b>Space Complexity:</b> <b>O(d)</b></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="container-cases">
+        <div class="case">
+            <h3>After analyzing the model, your manager has informed that your regression model is suffering from multicollinearity. How would you check if he’s true? Without losing any information, can you still build a better model?</h3>
+            <p>To check for multicollinearity, you can:</p>
+            <ul>
+                <li>Calculate the <b>Variance Inflation Factor (VIF)</b>. If VIF > 10, multicollinearity is a concern.</li>
+                <li>Check the correlation matrix for highly correlated independent variables.</li>
+                <li>Observe instability in coefficient estimates.</li>
+            </ul>
+            <p><b>Building a better model without losing information:</b></p>
+            <ul>
+                <li>Use <b>Principal Component Analysis (PCA)</b> to transform correlated variables into independent components.</li>
+                <li>Apply <b>Ridge or Lasso Regression</b> to penalize large coefficients and reduce dependency.</li>
+                <li>Remove redundant features while preserving predictive power.</li>
+            </ul>
+        </div>
+    
+        <div class="case">
+            <h3>What are the basic assumptions to be made for linear regression?</h3>
+            <ul>
+                <li><b>Linearity:</b> The relationship between the independent and dependent variable is linear.</li>
+                <li><b>Independence:</b> Observations are independent of each other.</li>
+                <li><b>Homoscedasticity:</b> Constant variance of errors across all levels of the independent variable.</li>
+                <li><b>No multicollinearity:</b> Independent variables should not be highly correlated.</li>
+                <li><b>Normality of residuals:</b> Errors should be normally distributed.</li>
+            </ul>
+        </div>
+    
+        <div class="case">
+            <h3>What is the difference between stochastic gradient descent (SGD) and gradient descent (GD)?</h3>
+            <ul>
+                <li><b>Gradient Descent (GD):</b> Uses the entire dataset to compute gradients in each step. Slower but provides stable convergence.</li>
+                <li><b>Stochastic Gradient Descent (SGD):</b> Uses a single random sample per step. Faster but can be noisy.</li>
+            </ul>
+        </div>
+    
+        <div class="case">
+            <h3>When would you use GD over SGD, and vice-versa?</h3>
+            <ul>
+                <li><b>Use GD:</b> When dataset is small and requires stable convergence.</li>
+                <li><b>Use SGD:</b> When dataset is large, as it is computationally efficient.</li>
+                <li><b>Mini-batch SGD:</b> A hybrid approach that balances stability and efficiency.</li>
+            </ul>
+        </div>
+    </div>
+    <div class="container-cases">
+        <div class="case">
+            <h3>How do you decide whether your linear regression model fits the data?</h3>
+            <p>To assess the goodness of fit of a linear regression model, you can use several statistical methods:</p>
+            <ul>
+                <li><b>R-Squared (Coefficient of Determination):</b> Measures how well the independent variables explain the variance in the dependent variable.</li>
+                <li><b>Adjusted R-Squared:</b> Adjusts R-Squared for the number of predictors to prevent overestimation.</li>
+                <li><b>Residual Analysis:</b> Checking residual plots for randomness helps identify non-linearity or heteroscedasticity.</li>
+                <li><b>p-values & Confidence Intervals:</b> Determines statistical significance of predictors.</li>
+                <li><b>F-Test:</b> Assesses overall model significance.</li>
+            </ul>
+            <p>More details: <a href="https://www.researchgate.net/post/What_statistical_test_is_required_to_assess_goodness_of_fit_of_a_linear_or_nonlinear_regression_equation" target="_blank">ResearchGate Post</a></p>
+        </div>
+    
+        <div class="case">
+            <h3>Is it possible to perform logistic regression with Microsoft Excel?</h3>
+            <p>Yes, logistic regression can be performed in Microsoft Excel using tools like:</p>
+            <ul>
+                <li><b>Solver:</b> To maximize the likelihood function.</li>
+                <li><b>Analysis ToolPak:</b> For regression and statistical functions.</li>
+                <li><b>Custom VBA Macros:</b> To automate calculations.</li>
+            </ul>
+            <p>Tutorial: <a href="https://www.youtube.com/watch?v=EKRjDurXau0" target="_blank">YouTube Video</a></p>
+        </div>
+    
+        <div class="case">
+            <h3>When will you use classification over regression?</h3>
+            <p>Classification is used when the target variable is categorical, while regression is used for continuous variables.</p>
+            <ul>
+                <li><b>Use Classification:</b> When predicting discrete labels (e.g., spam detection, medical diagnosis).</li>
+                <li><b>Use Regression:</b> When predicting continuous values (e.g., stock prices, temperature forecasting).</li>
+            </ul>
+            <p>More details: <a href="https://www.quora.com/When-will-you-use-classification-over-regression" target="_blank">Quora Discussion</a></p>
+        </div>
+    
+        <div class="case">
+            <h3>Why isn't Logistic Regression called Logistic Classification?</h3>
+            <p>Despite being used for classification tasks, logistic regression is still a regression-based approach:</p>
+            <ul>
+                <li>It models the probability of class membership using a regression equation.</li>
+                <li>The logistic function maps predictions to probabilities between 0 and 1.</li>
+                <li>Classification happens after applying a threshold (e.g., 0.5).</li>
+            </ul>
+            <p>More details: <a href="https://stats.stackexchange.com/questions/127042/why-isnt-logistic-regression-called-logistic-classification/127044" target="_blank">Stats StackExchange</a></p>
+        </div>
+    </div>
+    <div class="container-cases">
+        <div class="case">
+            <h3>How to Decrease the Test Time Complexity of a Logistic Regression Model?</h3>
+            <p>To reduce the test time complexity of a logistic regression model, we can:</p>
+            <ul>
+                <li>Reduce the number of features <b>(d)</b>, as test time complexity is <b>O(d)</b>.</li>
+                <li>Use feature selection techniques like PCA, L1 regularization, or mutual information.</li>
+                <li>Apply model pruning to eliminate less significant features.</li>
+                <li>Use hardware optimizations such as vectorized operations.</li>
+            </ul>
+        </div>
+    
+        <div class="case">
+            <h3>What is the Need for Sigmoid Function in Logistic Regression?</h3>
+            <p>The sigmoid function is used in logistic regression because:</p>
+            <ul>
+                <li>It maps any real-valued number to a probability between <b>0</b> and <b>1</b>, making it suitable for binary classification.</li>
+                <li>It allows for a smooth gradient, which is essential for optimization using gradient descent.</li>
+                <li>It helps in squashing large values into a manageable range, preventing extreme values from dominating the model.</li>
+                <li>It ensures the output can be interpreted as a probability, which is crucial for decision-making.</li>
+            </ul>
+            <p>The sigmoid function is mathematically represented as:</p>
+            <p><b>σ(z) = 1 / (1 + exp(-z))</b></p>
+        </div>
+    </div>
+            
+
+
+
+
+</body>
+
+</html>

@@ -161,137 +161,145 @@
 </header>
 
 <body>
-    <h1>Understanding K-Nearest Neighbors (KNN)</h1>
-    <p>K-Nearest Neighbors (KNN) is a simple,
-        yet powerful,
-        supervised learning algorithm used for classification and regression. It makes predictions based on the majority
-        class of its nearest neighbors. </p>
-    <h2>Steps to Calculate KNN</h2>
-    <h3>1. Choose the Number of Neighbors (K)</h3>
-    <p>The first step is to select the number of neighbors (<strong>K</strong>). A small K value (e.g., K=3) makes the
-        model more sensitive to noise,
-        while a larger K value provides smoother decision boundaries. </p>
-    <h3>2. Compute the Distance</h3>
-    <p>For a given query point,
-        calculate the distance between it and all other points in the dataset. The most common distance metric is the
-        <strong>Euclidean distance</strong>,
-        which is computed as:
-    </p>
-    <div class="highlight"><strong>Euclidean Distance Formula:</strong><br>d=√((x₂ - x₁)² + (y₂ - y₁)²) </div>
-    <h3>3. Identify the K Nearest Neighbors</h3>
-    <p>Sort all the distances in ascending order and select the top K closest points to the query point. </p>
-    <h3>4. Determine the Majority Class</h3>
-    <p>Among the K nearest neighbors,
-        count the occurrences of each class label. The class with the highest count is assigned to the query point. </p>
-    <h3>5. Assign the Class to the Query Point</h3>
-    <p>The final step is to classify the query point based on the majority class of its nearest neighbors. </p>
-    <h2>Example: Toy Dataset</h2>
-    <p>Let's consider a small dataset where we have points classified into two categories (0 and 1).</p>
-
-    <table>
-        <tr>
-            <th>X</th>
-            <th>Y</th>
-            <th>Label</th>
-        </tr>
-        <tr>
-            <td>1</td>
-            <td>2</td>
-            <td>0</td>
-        </tr>
-        <tr>
-            <td>2</td>
-            <td>3</td>
-            <td>0</td>
-        </tr>
-        <tr>
-            <td>3</td>
-            <td>3</td>
-            <td>0</td>
-        </tr>
-        <tr>
-            <td>6</td>
-            <td>8</td>
-            <td>1</td>
-        </tr>
-        <tr>
-            <td>7</td>
-            <td>8</td>
-            <td>1</td>
-        </tr>
-        <tr>
-            <td>8</td>
-            <td>7</td>
-            <td>1</td>
-        </tr>
-    </table>
-    <p>Now,
-        if we have a query point at (5, 5) and choose K=3,
-        we calculate distances:</p>
-    <table>
-        <tr>
-            <th>Point (X, Y)</th>
-            <th>Distance to (5, 5)</th>
-            <th>Label</th>
-        </tr>
-        <tr>
-            <td>(1, 2)</td>
-            <td>5.00</td>
-            <td>0</td>
-        </tr>
-        <tr>
-            <td>(2, 3)</td>
-            <td>3.61</td>
-            <td>0</td>
-        </tr>
-        <tr>
-            <td>(3, 3)</td>
-            <td>2.83</td>
-            <td>0</td>
-        </tr>
-        <tr>
-            <td>(6, 8)</td>
-            <td>3.16</td>
-            <td>1</td>
-        </tr>
-        <tr>
-            <td>(7, 8)</td>
-            <td>3.61</td>
-            <td>1</td>
-        </tr>
-        <tr>
-            <td>(8, 7)</td>
-            <td>3.61</td>
-            <td>1</td>
-        </tr>
-    </table>
-    <div class="content-container">
-        <div class="image-container"><img src="../assets/images/knn.png" alt="K-Nearest Neighbors"></div>
-        <div class="text-container">
-            <p>The 3 nearest neighbors are:</p>
-            <ul>
-                <li>(3, 3) - Class 0</li>
-                <li>(6, 8) - Class 1</li>
-                <li>(2, 3) - Class 0</li>
-            </ul>
-            <p>Since Class 0 appears twice and Class 1 appears once,
-                the query point (5, 5) is classified as <strong>Class 0</strong>.</p>
-            <h2>Key Characteristics of KNN</h2>
-            <ul>
-                <li>KNN is a <strong>non-parametric</strong>algorithm,
-                    meaning it makes no assumptions about the data distribution.</li>
-                <li>It is a <strong>lazy learner</strong>,
-                    meaning it stores the training data and makes predictions at runtime.</li>
-                <li>It works well with small datasets but can become slow for large datasets due to distance
-                    calculations.</li>
-            </ul>
-            <h2>Conclusion</h2>
-            <p>KNN is an intuitive and effective algorithm for classification tasks. However,
-                choosing an optimal K value and handling large datasets efficiently are key challenges in using KNN.
+    <div class="failure-cases">
+        <div class="case">
+            <h1>Understanding K-Nearest Neighbors (KNN)</h1>
+            <p>K-Nearest Neighbors (KNN) is a simple,
+                yet powerful,
+                supervised learning algorithm used for classification and regression. It makes predictions based on the
+                majority
+                class of its nearest neighbors. </p>
+            <h2>Steps to Calculate KNN</h2>
+            <h3>1. Choose the Number of Neighbors (K)</h3>
+            <p>The first step is to select the number of neighbors (<strong>K</strong>). A small K value (e.g., K=3)
+                makes the
+                model more sensitive to noise,
+                while a larger K value provides smoother decision boundaries. </p>
+            <h3>2. Compute the Distance</h3>
+            <p>For a given query point,
+                calculate the distance between it and all other points in the dataset. The most common distance metric
+                is the
+                <strong>Euclidean distance</strong>,
+                which is computed as:
             </p>
+            <div class="highlight"><strong>Euclidean Distance Formula:</strong><br>d=√((x₂ - x₁)² + (y₂ - y₁)²) </div>
+            <h3>3. Identify the K Nearest Neighbors</h3>
+            <p>Sort all the distances in ascending order and select the top K closest points to the query point. </p>
+            <h3>4. Determine the Majority Class</h3>
+            <p>Among the K nearest neighbors,
+                count the occurrences of each class label. The class with the highest count is assigned to the query
+                point. </p>
+            <h3>5. Assign the Class to the Query Point</h3>
+            <p>The final step is to classify the query point based on the majority class of its nearest neighbors. </p>
+            <h2>Example: Toy Dataset</h2>
+            <p>Let's consider a small dataset where we have points classified into two categories (0 and 1).</p>
+
+            <table>
+                <tr>
+                    <th>X</th>
+                    <th>Y</th>
+                    <th>Label</th>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>2</td>
+                    <td>0</td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>3</td>
+                    <td>0</td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td>3</td>
+                    <td>0</td>
+                </tr>
+                <tr>
+                    <td>6</td>
+                    <td>8</td>
+                    <td>1</td>
+                </tr>
+                <tr>
+                    <td>7</td>
+                    <td>8</td>
+                    <td>1</td>
+                </tr>
+                <tr>
+                    <td>8</td>
+                    <td>7</td>
+                    <td>1</td>
+                </tr>
+            </table>
+            <p>Now,
+                if we have a query point at (5, 5) and choose K=3,
+                we calculate distances:</p>
+            <table>
+                <tr>
+                    <th>Point (X, Y)</th>
+                    <th>Distance to (5, 5)</th>
+                    <th>Label</th>
+                </tr>
+                <tr>
+                    <td>(1, 2)</td>
+                    <td>5.00</td>
+                    <td>0</td>
+                </tr>
+                <tr>
+                    <td>(2, 3)</td>
+                    <td>3.61</td>
+                    <td>0</td>
+                </tr>
+                <tr>
+                    <td>(3, 3)</td>
+                    <td>2.83</td>
+                    <td>0</td>
+                </tr>
+                <tr>
+                    <td>(6, 8)</td>
+                    <td>3.16</td>
+                    <td>1</td>
+                </tr>
+                <tr>
+                    <td>(7, 8)</td>
+                    <td>3.61</td>
+                    <td>1</td>
+                </tr>
+                <tr>
+                    <td>(8, 7)</td>
+                    <td>3.61</td>
+                    <td>1</td>
+                </tr>
+            </table>
+            <div class="content-container">
+                <div class="image-container"><img src="../assets/images/knn.png" alt="K-Nearest Neighbors"></div>
+                <div class="text-container">
+                    <p>The 3 nearest neighbors are:</p>
+                    <ul>
+                        <li>(3, 3) - Class 0</li>
+                        <li>(6, 8) - Class 1</li>
+                        <li>(2, 3) - Class 0</li>
+                    </ul>
+                    <p>Since Class 0 appears twice and Class 1 appears once,
+                        the query point (5, 5) is classified as <strong>Class 0</strong>.</p>
+                    <h2>Key Characteristics of KNN</h2>
+                    <ul>
+                        <li>KNN is a <strong>non-parametric</strong>algorithm,
+                            meaning it makes no assumptions about the data distribution.</li>
+                        <li>It is a <strong>lazy learner</strong>,
+                            meaning it stores the training data and makes predictions at runtime.</li>
+                        <li>It works well with small datasets but can become slow for large datasets due to distance
+                            calculations.</li>
+                    </ul>
+                    <h2>Conclusion</h2>
+                    <p>KNN is an intuitive and effective algorithm for classification tasks. However,
+                        choosing an optimal K value and handling large datasets efficiently are key challenges in using
+                        KNN.
+                    </p>
+                </div>
+            </div>
         </div>
     </div>
-
     <div class="failure-cases">
         <h2>Failure Cases of KNN</h2>
         <div class="case">

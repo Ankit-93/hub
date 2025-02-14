@@ -15,7 +15,7 @@
             margin: 0;
             padding: 0;
             color: #ffffff;
-            background: url('assets/images/Background.webp') no-repeat center center fixed;
+            background: url('../assets/images/Background.webp') no-repeat center center fixed;
             background-size: cover;
             position: relative;
         }
@@ -93,12 +93,46 @@
             margin: 10px 0;
             border-radius: 8px;
             font-weight: bold;
+        }        .failure-cases {
+            width: 90%;
+            max-width: 1600px;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+            margin: 20px auto;
+            display: block;
+            /* Stack elements instead of flex */
+            text-align: justify;
+        }
+
+        /* Individual Case Boxes */
+        .case {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.15);
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 6px;
+        }
+
+        .case h3 {
+            color: #ffcc00;
+            margin-bottom: 5px;
+        }
+
+        .case p {
+            color: #ffffff;
+        }
+
+        body::before {
+            pointer-events: none;
         }
     </style>
 </head>
 <body>
     <header><h1>Chi-Square Test for Independence</h1></header>
-    
+    <div class="failure-cases">
+        <div class="case">
 
     <div>
         <h3 class="section-header">Observed Frequency Table</h3>
@@ -320,6 +354,6 @@
         <div class="result">
             Conclusion: The drug does not have a statistically significant effect on IQ levels.
         </div>
-    </div>
+    </div></div></div>
 </body>
 </html>

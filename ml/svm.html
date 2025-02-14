@@ -1,0 +1,1333 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Support Vector Machine (SVM)</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script type="text/javascript" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML">
+        </script>
+    <script type="text/javascript" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML">
+        </script>
+    <style>
+        /* Global Styles */
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            color: #ffffff;
+            background: url('../assets/images/ml-background.jpg') no-repeat center center fixed;
+            background-size: cover;
+            position: relative;
+        }
+
+        /* Dark Overlay */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1;
+        }
+
+        /* Layout Containers */
+        header,
+        footer {
+            background: linear-gradient(135deg, #0829df, #04013c);
+            text-align: center;
+            padding: 20px;
+            font-size: 24px;
+            position: relative;
+            z-index: 10;
+        }
+
+        main {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 25px;
+            background: rgba(19, 50, 185, 0.85);
+            border-radius: 10px;
+            box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+            position: relative;
+            z-index: 10;
+        }
+
+        h1,
+        h2,
+        h3 {
+            color: #d9dcdf;
+        }
+
+        .case h3 {
+            color: #ffcc00;
+        }
+
+        .case p {
+            color: #ffffff;
+        }
+
+        /* Table Styles */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        th,
+        td {
+            border: 1px solid rgba(255, 255, 255, 0.43);
+            padding: 12px;
+            text-align: center;
+            color: #ffffff;
+        }
+
+        th {
+            background: rgba(255, 255, 255, 0.2);
+            font-weight: bold;
+        }
+
+        /* Image Styling */
+        .image-container {
+            text-align: center;
+            margin: 10px 0;
+            flex: 1;
+        }
+
+        .image-container img {
+            width: 95%;
+            height: 300px;
+            /* Adjusted height */
+            border-radius: 5px;
+            box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+            object-fit: contain;
+            display: block;
+        }
+
+        /* Content Flexbox Layout */
+        .content-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+        .text-container {
+            flex: 1;
+        }
+
+        /* Failure Cases Section */
+        .failure-cases {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Container for Cases */
+        .container-cases {
+            width: 90%;
+            max-width: 1600px;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+            margin: 20px auto;
+            display: flex;
+            flex-direction: row;
+            /* Image and text side by side */
+            align-items: center;
+            gap: 20px;
+            text-align: justify;
+        }
+
+        /* Individual Case Boxes */
+        .case {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.15);
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 6px;
+        }
+
+        .case h3 {
+            color: #ffcc00;
+            margin-bottom: 5px;
+        }
+
+        .case p {
+            color: #ffffff;
+        }
+
+        /* Ensuring Image Adjusts Well */
+        .image-container img {
+            max-width: 100%;
+            height: auto;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <h1>Support Vector</h1>
+    </header>
+
+
+    <div class="container-cases">
+        <div class="case">
+            <h3>Explain SVM</h3>
+            <div>
+                <h2>Support Vector Machine (SVM) - Explained Simply</h2>
+                <p>Support Vector Machine (SVM) is a <b>supervised learning algorithm</b> used for <b>classification and
+                        regression</b> tasks. However, it is mainly used for <b>classification</b> problems.</p>
+
+                <h3>1. What is SVM?</h3>
+                <p>SVM works by finding the <b>best possible boundary (hyperplane)</b> that separates data points of
+                    different classes. The goal is to maximize the <b>margin</b> between the classes while correctly
+                    classifying the data points.</p>
+                <ul>
+                    <li>If the data is <b>linearly separable</b>, SVM finds a straight-line boundary (in 2D) or a
+                        hyperplane (in higher dimensions).</li>
+                    <li>If the data is <b>not linearly separable</b>, SVM uses the <b>kernel trick</b> to transform the
+                        data into a higher-dimensional space where it becomes separable.</li>
+                </ul>
+
+                <h3>2. Key Concepts in SVM</h3>
+                <div>
+                    <h4>A. Hyperplane</h4>
+                    <p>A <b>hyperplane</b> is a decision boundary that separates different classes.</p>
+                    <ul>
+                        <li>In <b>2D</b>, it is a <b>line</b>.</li>
+                        <li>In <b>3D</b>, it is a <b>plane</b>.</li>
+                        <li>In higher dimensions, it is called a <b>hyperplane</b>.</li>
+                    </ul>
+
+                    <h4>B. Support Vectors</h4>
+                    <p>Support Vectors are <b>the data points closest to the hyperplane</b>. These points are crucial
+                        because they define the position and orientation of the decision boundary.</p>
+
+                    <h4>C. Margin</h4>
+                    <p>The <b>margin</b> is the distance between the hyperplane and the nearest support vectors from
+                        each class.</p>
+                    <ul>
+                        <li>SVM <b>maximizes the margin</b>, ensuring better generalization to new data.</li>
+                    </ul>
+                </div>
+
+                <h3>3. How SVM Works?</h3>
+                <ol>
+                    <li><b>Find a hyperplane</b> that best separates the classes.</li>
+                    <li><b>Maximize the margin</b> between classes.</li>
+                    <li><b>Use support vectors</b> to define the margin.</li>
+                    <li><b>Classify new points</b> based on their position relative to the hyperplane.</li>
+                </ol>
+
+                <h3>4. Types of SVM</h3>
+                <h4>A. Linear SVM</h4>
+                <p>If the data is <b>linearly separable</b>, a straight hyperplane is used.</p>
+
+                <h4>B. Non-Linear SVM (Kernel Trick)</h4>
+                <p>If the data is <b>not linearly separable</b>, SVM uses <b>kernel functions</b> to map the data into a
+                    higher-dimensional space where a linear separator can be applied.</p>
+                <ul>
+                    <li><b>Linear Kernel</b> → For linearly separable data.</li>
+                    <li><b>Polynomial Kernel</b> → For more complex boundaries.</li>
+                    <li><b>Radial Basis Function (RBF) Kernel</b> → For highly non-linear data.</li>
+                    <li><b>Sigmoid Kernel</b> → Similar to neural networks.</li>
+                </ul>
+
+                <h3>5. Mathematical Formulation</h3>
+                <p>The equation of the hyperplane is:</p>
+                <p><b>w ⋅ x - b = 0</b></p>
+                <p>where:</p>
+                <ul>
+                    <li><b>w</b> = weight vector (normal to the hyperplane)</li>
+                    <li><b>x</b> = feature vector</li>
+                    <li><b>b</b> = bias term</li>
+                </ul>
+                <p>For classification:</p>
+                <ul>
+                    <li>If <b>\( w \cdot x - b \geq 1 \) → Class 1</b></li>
+                    <li>If <b>\( w \cdot x - b \leq -1 \) </b> → <b>Class -1</b></li>
+                </ul>
+
+                <p>The optimization goal is: <b>Maximize \( \frac{1}{\|w\|} \) subject to \( y_i (w \cdot x_i - b) \geq
+                        1 \)</b></p>
+
+                <h3>6. Advantages of SVM</h3>
+                <ul>
+                    <li>✅ <b>Effective for high-dimensional data</b></li>
+                    <li>✅ <b>Works well with small datasets</b></li>
+                    <li>✅ <b>Robust to outliers (with soft margin)</b></li>
+                    <li>✅ <b>Can handle non-linear problems using kernels</b></li>
+                </ul>
+
+                <h3>7. Disadvantages of SVM</h3>
+                <ul>
+                    <li>❌ <b>Computationally expensive for large datasets</b></li>
+                    <li>❌ <b>Choosing the right kernel can be tricky</b></li>
+                    <li>❌ <b>Less interpretable than simpler models</b></li>
+                </ul>
+
+                <h3>8. Applications of SVM</h3>
+                <ul>
+                    <li>🔹 <b>Image classification</b> (e.g., face detection)</li>
+                    <li>🔹 <b>Text classification</b> (e.g., spam detection)</li>
+                    <li>🔹 <b>Medical diagnosis</b> (e.g., cancer detection)</li>
+                    <li>🔹 <b>Handwriting recognition</b></li>
+                </ul>
+
+                <h3>Conclusion</h3>
+                <p>SVM is a powerful and versatile algorithm, especially for classification problems. Its ability to
+                    find the <b>optimal decision boundary</b> makes it a popular choice in machine learning.</p>
+
+                <p><b>Would you like a practical example or code implementation? 🚀</b></p>
+            </div>
+        </div>
+    </div>
+    <div class="container-cases">
+        <div class="case">
+            <div>
+                <h3>Support Vectors in SVM</h3>
+                <p>
+                    In <strong>Support Vector Machine (SVM)</strong>, <em>support vectors</em> are the
+                    <strong>data points closest to the decision boundary (hyperplane)</strong>. These points
+                    are crucial because they determine the <strong>position and orientation</strong> of the
+                    hyperplane and influence the margin between classes.
+                </p>
+
+                <h3>Key Properties of Support Vectors</h3>
+                <ul>
+                    <li><strong>They define the optimal hyperplane</strong> – Support vectors are the critical data
+                        points that affect the placement of the decision boundary.</li>
+                    <li><strong>They lie closest to the hyperplane</strong> – The margin is calculated based on the
+                        distance of these support vectors from the hyperplane.</li>
+                    <li><strong>They help maximize the margin</strong> – SVM creates a hyperplane with the maximum
+                        margin, ensuring the decision boundary is as far as possible from the support vectors.</li>
+                    <li><strong>Only support vectors influence the decision boundary</strong> – Other data points
+                        that are farther away do not contribute to defining the hyperplane.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="container-cases">
+        <div class="case">
+            <div>
+                <h2>Support Vectors in SVM</h2>
+                <p>
+                    In <strong>Support Vector Machine (SVM)</strong>, <em>support vectors</em> are the
+                    <strong>data points closest to the decision boundary (hyperplane)</strong>. These points
+                    are crucial because they determine the <strong>position and orientation</strong> of the
+                    hyperplane and influence the margin between classes.
+                </p>
+
+                <h3>Mathematical Representation</h3>
+                <p>The decision boundary in SVM is represented as:</p>
+                <p>
+                    <strong>w · x - b = 0</strong>
+                </p>
+                <p>where:</p>
+                <ul>
+                    <li><strong>w</strong> is the weight vector (defines the orientation of the hyperplane).</li>
+                    <li><strong>x</strong> is the feature vector.</li>
+                    <li><strong>b</strong> is the bias term.</li>
+                </ul>
+                <p>The support vectors satisfy:</p>
+                <p>
+                    <strong>w · x<sub>i</sub> - b = ±1</strong>
+                </p>
+
+                <h3>Visualization of Support Vectors</h3>
+                <p>The diagram below represents the support vectors, the margin, and the decision boundary:</p>
+                <div style="text-align: center;">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/7/72/SVM_margin.png"
+                        alt="Support Vector Machine Diagram" width="500">
+                </div>
+
+                <h3>Key Properties of Support Vectors</h3>
+                <ul>
+                    <li><strong>They define the optimal hyperplane</strong> – Support vectors are the critical data
+                        points that affect the placement of the decision boundary.</li>
+                    <li><strong>They lie closest to the hyperplane</strong> – The margin is calculated based on the
+                        distance of these support vectors from the hyperplane.</li>
+                    <li><strong>They help maximize the margin</strong> – SVM creates a hyperplane with the maximum
+                        margin, ensuring the decision boundary is as far as possible from the support vectors.</li>
+                    <li><strong>Only support vectors influence the decision boundary</strong> – Other data points that
+                        are farther away do not contribute to defining the hyperplane.</li>
+                </ul>
+
+                <h3>Why Are Support Vectors Important?</h3>
+                <ul>
+                    <li><strong>They make SVM robust</strong> – Even if non-support vector data points are removed, the
+                        model remains the same.</li>
+                    <li><strong>They improve generalization</strong> – A well-defined margin ensures better performance
+                        on unseen data.</li>
+                    <li><strong>They help in both linear and non-linear SVM</strong> – In <em>non-linear SVM</em>, a
+                        kernel function maps the data to a higher-dimensional space where it becomes linearly separable.
+                    </li>
+                </ul>
+            </div>
+
+        </div>
+    </div>
+    <div class="container-cases">
+        <div class="case">
+            <h2>Support Vector Machine (SVM) - Hard and Soft Margin</h2>
+
+            <p><b>Let,</b></p>
+            <p>$$π : Wᵀ . X + b = 0$$</p>
+            <p>$$π⁺ : Wᵀ . X + b = 1 $$</p>
+            <p>$$π⁻ : Wᵀ . X + b = -1$$</p>
+
+            <h3>Two Parallel Planes:</h3>
+            <p>$$||2 \text{ planes}|| = \frac{\text{difference of vector components}}{||w||} = \frac{|W^T \cdot x + b -
+                (W^T \cdot x + b+1)|}{||w||} = \frac{|b-1|}{||w||}$$</p>
+
+            <h3>Margin Calculation: <p>$$margin(d) = 2 / ||W||$$</p>
+            </h3>
+
+
+            <h3>Optimization Problem:</h3>
+            <p>$$W*, b* = arg max(W, b) (2 / ||W||)$$</p>
+
+            <h3>Constraint Condition:</h3>
+            <p>$$yᵢ * (Wᵀ xᵢ + b) ≥ 1 ∀ xᵢ$$</p>
+
+            <h3>Support Vector Table:</h3>
+            <table border="1">
+                <tr>
+                    <th>yᵢ</th>
+                    <th>Support vector</th>
+                    <th>Wᵀ xᵢ + b</th>
+                    <th>yᵢ (Wᵀ xᵢ + b)</th>
+                </tr>
+                <tr>
+                    <td>+1</td>
+                    <td>Yes</td>
+                    <td>>1</td>
+                    <td>>1</td>
+                </tr>
+                <tr>
+                    <td>-1</td>
+                    <td>Yes</td>
+                    <td>
+                        < -1</td>
+                    <td>>1</td>
+                </tr>
+            </table>
+
+            <p>It is not always possible for all points of the same class to lie on one side of the margin. Some points
+                may
+                exist between π⁺ and π⁻. This case is known as <b>Hard Margin SVM</b>.</p>
+
+            <h2>Soft Margin SVM - Introducing Slack Variable (ζᵢ)</h2>
+            <p>For every point xᵢ, we introduce a variable ζᵢ such that:</p>
+            <p>yᵢ (Wᵀ xᵢ + b) ≥ 1 - ζᵢ, ζᵢ ≥ 0</p>
+
+            <h3>Misclassification Table:</h3>
+            <table border="1">
+                <tr>
+                    <th>xᵢ</th>
+                    <th>yᵢ</th>
+                    <th>Wᵀ xᵢ + b</th>
+                    <th>yᵢ (Wᵀ xᵢ + b)</th>
+                    <th>ζᵢ</th>
+                    <th>Remark</th>
+                </tr>
+                <tr>
+                    <td>x₁</td>
+                    <td>+1</td>
+                    <td>-0.5</td>
+                    <td>-0.5</td>
+                    <td>1.5</td>
+                    <td>Misclassified</td>
+                </tr>
+                <tr>
+                    <td>x₂</td>
+                    <td>+1</td>
+                    <td>1.6</td>
+                    <td>1.6</td>
+                    <td>0</td>
+                    <td>Correct</td>
+                </tr>
+                <tr>
+                    <td>x₃</td>
+                    <td>+1</td>
+                    <td>0.5</td>
+                    <td>0.5</td>
+                    <td>1.5</td>
+                    <td>Misclassified</td>
+                </tr>
+                <tr>
+                    <td>x₄</td>
+                    <td>-1</td>
+                    <td>-1.5</td>
+                    <td>-1.5</td>
+                    <td>0</td>
+                    <td>Correct</td>
+                </tr>
+            </table>
+
+            <h3>Soft Margin SVM - Optimization Function:</h3>
+            <p>$$W*, b* = arg max(W, b) (2 / ||W||)$$</p>
+            <p>$$W*, b* = arg min(W, b) (||W||² / 2 + C ∑ ζᵢ)$$</p>
+            <p>Regularizer + Hyperparameter + Loss</p>
+            <p>$$(1/n) ∑ ζᵢ = Average-distance-of-misclassified-points$$</p>
+
+            <h3>Key Insights:</h3>
+            <ul>
+                <li>The equation above is known as <b>Soft Margin SVM</b>.</li>
+                <li><b>C</b> is a hyperparameter (always positive).</li>
+                <li><b>Higher C → Higher penalty for misclassification</b> (may lead to <b>overfitting</b>).</li>
+                <li><b>Lower C → Allows more misclassification</b> (prevents overfitting but may cause
+                    <b>underfitting</b>).
+                </li>
+            </ul>
+
+            <h3>Diagram:</h3>
+            <div style="text-align: center;">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/7/72/SVM_margin.png"
+                    alt="Support Vector Machine Diagram" width="500">
+            </div>
+        </div>
+    </div>
+    <div class="container-cases">
+        <div class="case">
+            <div>
+                <h3>What do you mean by Hard Margin SVM?</h3>
+                <p>In SVM, we try to find a hyperplane that maximizes the margin.</p>
+
+                <p>Assume three hyperplanes, namely \( \pi, \pi^+, \pi^- \), such that:</p>
+                <ul>
+                    <li>\( \pi^+ \) is parallel to \( \pi \), passing through the support vectors on the positive side.
+                    </li>
+                    <li>\( \pi^- \) is parallel to \( \pi \), passing through the support vectors on the negative side.
+                    </li>
+                </ul>
+
+                <p>Let this hyperplane be \( W^T X + b \), where \( W \) is perpendicular to the hyperplane.</p>
+
+                <p>
+                    For \( \pi^+ \): \( W^T X + b = 1 \) \( \Rightarrow W^T X + b - 1 = 0 \) <br>
+                    For \( \pi^- \): \( W^T X + b = -1 \) \( \Rightarrow W^T X + b + 1 = 0 \)
+                </p>
+
+                <p>
+                    <b>Margin Calculation:</b><br>
+                    \[
+                    \text{Margin} = \frac{\text{difference of vector components} ||w||}{||W||} = \frac{(W^T X + b -1) -
+                    (W^T X + b+1)}{||W||} = \frac{| -2 |}{||W||}
+                    \]
+                </p>
+
+                <p>
+                    <b>Objective:</b> Find \( (W^*, b^*) = \arg \max \frac{2}{||W||} \)
+                </p>
+
+                <p>
+                    <b>Constraints:</b>
+                <ul>
+                    <li>\( y_i (W^T X + b) \geq 1 \) (For correctly classified points)</li>
+                    <li>\( y_i (W^T X + b) < 1 \) (For incorrectly classified points)</li>
+                </ul>
+                </p>
+
+                <p>
+                    If the points are linearly separable, the hyperplane can distinguish them. However, if an outlier is
+                    introduced, the hyperplane may fail to separate them.
+                    This type of SVM is called a <b>Hard Margin SVM</b> because it has strict constraints to correctly
+                    classify each and every data point.
+                </p>
+            </div>
+
+        </div>
+    </div>
+    <div class="container-cases">
+        <div class="case">
+            <div>
+                <h2>
+                    <p><b>Kernel Function in SVM</b></p>
+                </h2>
+                <p>
+                    A <b>kernel function</b> is a way of computing the dot product of two vectors \( x \) and \( y \) in
+                    some
+                    (possibly very high-dimensional) feature space. This is why kernel functions are sometimes called
+                    "generalized dot products."
+                </p>
+
+                <p>
+                    The <b>kernel trick</b> is a method of using a linear classifier to solve a non-linear problem by
+                    transforming
+                    non-linear data into a higher-dimensional space where it becomes linearly separable.
+                </p>
+
+                <h3>Soft Margin SVM Formulation</h3>
+                <p>
+                    As per the soft margin SVM formulation, the goal is to maximize the margin while allowing some
+                    misclassifications:
+                </p>
+
+                <p>
+                    \[
+                    w^*, b^* = \arg\max_{w, b} \frac{2}{\|w\|} = \arg\min_{w, b} \frac{\|w\|^2}{2}
+                    \]
+                </p>
+
+                <p>
+                    The optimization problem with slack variables \( \zeta_i \) is:
+                </p>
+
+                <p>
+                    \[
+                    w^*, b^* = \arg\min_w \frac{\|w\|^2}{2} + C \sum_{i=1}^{n} \zeta_i,
+                    \]
+                    subject to \( y_i (w^T x_i + b) \geq 1 - \zeta_i \) for all points, where \( \zeta_i \geq 0 \).
+                </p>
+
+                <p>
+                    Here, \( C \) is a hyperparameter that controls the trade-off between maximizing the margin and
+                    minimizing misclassification:
+                <ul>
+                    <li>High \( C \): Less tolerance for misclassification (overfitting risk).</li>
+                    <li>Low \( C \): More tolerance for misclassification (underfitting risk).</li>
+                </ul>
+                </p>
+
+                <h3>Dual Form of SVM Using Lagrange Multipliers</h3>
+                <p>
+                    The alternative method is the <b>dual form</b> of SVM, which uses Lagrange multipliers to solve the
+                    constrained optimization problem:
+                </p>
+
+                <p>
+                    \[
+                    \max_{\alpha_i} \sum_{i=1}^{n} \alpha_i - \frac{1}{2} \sum_{i=1}^{n} \sum_{j=1}^{n} \alpha_i
+                    \alpha_j y_i y_j (x_i^T x_j)
+                    \]
+                </p>
+
+                <p>
+                    Subject to:
+                <ul>
+                    <li>\( \alpha_i \geq 0 \)</li>
+                    <li>\( \sum_{i=1}^{n} \alpha_i y_i = 0 \)</li>
+                </ul>
+                </p>
+
+                <p>
+                    - For every \( x_i \), there is a corresponding \( \alpha_i \).
+                    - \( x_i \) appears in the form of the dot product \( x_i^T x_j \).
+                    - \( x_i \) and \( x_j \) are data points from the training dataset.
+                    - Only points with \( \alpha_i > 0 \) are <b>support vectors</b>, while non-support vectors have \(
+                    \alpha_i = 0 \).
+                </p>
+
+                <h3>Kernel Trick & Similarity</h3>
+                <p>
+                    Since the dual form depends only on the dot product \( x_i^T x_j \), we can replace it with a
+                    <b>kernel function</b> \( K(x_i, x_j) \) to enable SVMs to handle non-linearly separable data.
+                </p>
+
+                <p>
+                    Some common kernel functions:
+                <ul>
+                    <li><b>Linear Kernel:</b> \( K(x_i, x_j) = x_i^T x_j \)</li>
+                    <li><b>Polynomial Kernel:</b> \( K(x_i, x_j) = (x_i^T x_j + c)^d \)</li>
+                    <li><b>Gaussian (RBF) Kernel:</b> \( K(x_i, x_j) = e^{-\gamma \|x_i - x_j\|^2} \)</li>
+                </ul>
+                </p>
+
+                <p>
+                    The kernel trick effectively transforms the data into a higher-dimensional space where it becomes
+                    linearly separable,
+                    without explicitly computing the transformation.
+                </p>
+            </div>
+
+
+        </div>
+    </div>
+    <div class="container-cases">
+        <div class="case">
+            <div>
+                <h2>Why is SVM Called a Maximum Margin Classifier?</h2>
+
+                <p>
+                    Suppose we are given a dataset containing two classes and asked to build a classifier.
+                    This dataset can be perfectly separated using a hyperplane. However, there are infinitely
+                    many such separating hyperplanes. We need a reasonable way to decide which hyperplane to use as a
+                    classifier.
+                </p>
+
+                <p>
+                    <b>Support Vector Machine (SVM)</b> is a type of classifier that finds the optimal hyperplane
+                    that best separates the positive and negative classes. The key idea behind SVM is to maximize
+                    the margin between the two classes while maintaining classification accuracy.
+                </p>
+
+                <h3>What is the Maximum Margin?</h3>
+
+                <p>
+                    The <b>margin</b> is the distance between the separating hyperplane and the closest data points
+                    from either class (these closest points are called <b>support vectors</b>).
+                </p>
+
+                <p>
+                    The optimal hyperplane is the one that maximizes this margin, ensuring the classifier is:
+                <ul>
+                    <li>Less sensitive to small variations in data (reducing overfitting).</li>
+                    <li>More generalizable to unseen data.</li>
+                    <li>Equidistant from both classes, providing a balanced decision boundary.</li>
+                </ul>
+                </p>
+
+                <h3>Mathematical Formulation</h3>
+
+                <p>
+                    Given a dataset \( (x_i, y_i) \) where \( y_i \in \{-1, 1\} \), the decision boundary is defined by:
+                </p>
+
+                <p>
+                    \[
+                    w \cdot x + b = 0
+                    \]
+                </p>
+
+                <p>
+                    The margin is defined as:
+                </p>
+
+                <p>
+                    \[
+                    \frac{2}{\|w\|}
+                    \]
+                </p>
+
+                <p>
+                    To find the optimal hyperplane, we solve the following optimization problem:
+                </p>
+
+                <p>
+                    \[
+                    \min_{w, b} \frac{\|w\|^2}{2}
+                    \]
+                    Subject to:
+                    \[
+                    y_i (w \cdot x_i + b) \geq 1, \quad \forall i
+                    \]
+                </p>
+
+                <p>
+                    This ensures that the margin is maximized while correctly classifying all data points.
+                </p>
+
+                <h3>Conclusion</h3>
+                <p>
+                    Since SVM explicitly aims to <b>maximize the margin</b> while maintaining correct classification,
+                    it is called a <b>Maximum Margin Classifier</b>.
+                </p>
+            </div>
+
+        </div>
+    </div>
+    <div class="container-cases">
+        <div class="case">
+            <div>
+                <h2>Is SVM Affected by Outliers?</h2>
+                <p>Yes, <b>Support Vector Machine (SVM) is affected by outliers</b>, but its impact depends on the type
+                    of SVM used.</p>
+
+                <h3>1. Hard Margin SVM (Strict Separation)</h3>
+                <ul>
+                    <li>In <b>Hard Margin SVM</b>, we assume that data is perfectly separable, meaning <b>no
+                            misclassification is allowed</b>.</li>
+                    <li><b>Problem:</b> A single outlier can drastically change the position of the decision boundary,
+                        making the model highly sensitive to noise.</li>
+                </ul>
+                <p>🚫 <b>Hard Margin SVM is highly affected by outliers.</b></p>
+
+                <h3>2. Soft Margin SVM (Allows Some Misclassification)</h3>
+                <ul>
+                    <li><b>Soft Margin SVM</b> introduces a <i>slack variable</i> \( \zeta_i \) to allow some points to
+                        be misclassified.</li>
+                    <li>This helps in handling <b>outliers</b> by introducing a trade-off between maximizing the margin
+                        and minimizing misclassification.</li>
+                </ul>
+                <p>✅ <b>Soft Margin SVM is less affected by outliers compared to Hard Margin SVM.</b></p>
+
+                <h3>3. Kernel SVM (Non-Linear Decision Boundary)</h3>
+                <ul>
+                    <li>If an <b>outlier is too far</b> from the majority of data points, a <b>kernel function</b>
+                        (e.g., RBF, polynomial) can help by mapping data to a higher-dimensional space.</li>
+                    <li>However, <b>if outliers are within the decision boundary</b>, they may still influence the
+                        hyperplane.</li>
+                </ul>
+                <p>⚖ <b>Effect of outliers depends on the kernel and regularization parameters.</b></p>
+
+                <h3>How to Reduce the Effect of Outliers in SVM?</h3>
+                <ul>
+                    <li><b>Use Soft Margin SVM</b>: Allows some flexibility to handle outliers.</li>
+                    <li><b>Tune the Regularization Parameter (C)</b>:
+                        <ul>
+                            <li>A <b>lower C</b> value allows more misclassifications, reducing sensitivity to outliers.
+                            </li>
+                            <li>A <b>higher C</b> enforces strict classification, making it more sensitive to outliers.
+                            </li>
+                        </ul>
+                    </li>
+                    <li><b>Use Robust Kernel Functions</b>: RBF and polynomial kernels can help in non-linearly
+                        separable data.</li>
+                    <li><b>Preprocess Data</b>:
+                        <ul>
+                            <li>Detect and <b>remove extreme outliers</b> using techniques like <b>IQR (Interquartile
+                                    Range) or Z-score</b>.</li>
+                            <li><b>Normalize/scale features</b> to reduce the impact of large values.</li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <h3>Conclusion</h3>
+                <ul>
+                    <li><b>Hard Margin SVM is highly sensitive</b> to outliers.</li>
+                    <li><b>Soft Margin SVM handles outliers better</b> by allowing some misclassification.</li>
+                    <li><b>Proper tuning of hyperparameters and data preprocessing can minimize outlier effects.</b>
+                    </li>
+                </ul>
+            </div>
+
+        </div>
+    </div>
+    <div class="container-cases">
+        <div class="case">
+            <div>
+                <h2>Relation Between KNN and Kernel SVM</h2>
+                <h3>1. Understanding KNN and Kernel SVM</h3>
+                <ul>
+                    <li><b>K-Nearest Neighbors (KNN):</b> A non-parametric, instance-based learning algorithm that
+                        classifies a point based on the majority class of its k-nearest neighbors.</li>
+                    <li><b>Kernel SVM:</b> A model that maps data to a higher-dimensional space using a kernel function,
+                        allowing it to find non-linear decision boundaries.</li>
+                </ul>
+
+                <h3>2. Key Similarities</h3>
+                <ul>
+                    <li><b>Both work well with non-linearly separable data:</b> KNN uses local decision boundaries,
+                        while Kernel SVM transforms data using kernels.</li>
+                    <li><b>Both rely on similarity:</b>
+                        <ul>
+                            <li>KNN classifies based on distance (e.g., Euclidean, cosine similarity).</li>
+                            <li>Kernel SVM uses a kernel function (e.g., RBF, polynomial) to compute similarity.</li>
+                        </ul>
+                    </li>
+                    <li><b>Both can approximate each other:</b>
+                        <ul>
+                            <li>A well-tuned **Kernel SVM with RBF kernel** can behave like a smoothed version of KNN.
+                            </li>
+                            <li>KNN with **proper k selection** can approximate the decision boundary of a Kernel SVM.
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <h3>3. Differences Between KNN and Kernel SVM</h3>
+                <table border="1">
+                    <tr>
+                        <th>Aspect</th>
+                        <th>KNN</th>
+                        <th>Kernel SVM</th>
+                    </tr>
+                    <tr>
+                        <td>Type</td>
+                        <td>Instance-based (Lazy learning)</td>
+                        <td>Model-based (Optimized decision boundary)</td>
+                    </tr>
+                    <tr>
+                        <td>Computational Cost</td>
+                        <td>High at test time (O(n))</td>
+                        <td>High at training time (O(n²) or more)</td>
+                    </tr>
+                    <tr>
+                        <td>Decision Boundary</td>
+                        <td>Flexible but noisy for small k</td>
+                        <td>Smooth and well-regularized</td>
+                    </tr>
+                    <tr>
+                        <td>Handling High-Dimensional Data</td>
+                        <td>Struggles with high dimensions (curse of dimensionality)</td>
+                        <td>Performs well with appropriate kernels</td>
+                    </tr>
+                    <tr>
+                        <td>Outlier Sensitivity</td>
+                        <td>Highly affected</td>
+                        <td>Can be tuned using soft margin</td>
+                    </tr>
+                </table>
+
+                <h3>4. When to Use KNN vs. Kernel SVM</h3>
+                <ul>
+                    <li><b>Use KNN when:</b>
+                        <ul>
+                            <li>The dataset is small and low-dimensional.</li>
+                            <li>A simple, interpretable model is needed.</li>
+                            <li>Real-time learning is not required.</li>
+                        </ul>
+                    </li>
+                    <li><b>Use Kernel SVM when:</b>
+                        <ul>
+                            <li>The dataset has complex, non-linear relationships.</li>
+                            <li>High accuracy is required with a well-defined decision boundary.</li>
+                            <li>There is enough computational power for training.</li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <h3>5. Connection Between KNN and Kernel SVM</h3>
+                <p>Kernel SVM can be seen as a more sophisticated and optimized version of KNN, where instead of
+                    directly using distances, we transform the space using kernels to define better decision boundaries.
+                </p>
+                <p>In fact, some research suggests that Kernel SVM with an RBF kernel behaves similarly to KNN but in a
+                    more controlled manner by learning an optimal distance metric rather than relying on raw Euclidean
+                    distances.</p>
+
+                <h3>Conclusion</h3>
+                <ul>
+                    <li>Both KNN and Kernel SVM rely on similarity and can approximate each other under certain
+                        conditions.</li>
+                    <li>KNN is simpler but computationally expensive at test time, whereas Kernel SVM is computationally
+                        heavy at training time but efficient at prediction.</li>
+                    <li>Choosing between them depends on dataset size, dimensionality, and computational constraints.
+                    </li>
+                </ul>
+            </div>
+
+        </div>
+    </div>
+    <div class="container-cases">
+        <div class="case">
+            <div>
+                <h2>Hyperparameters in Stochastic Gradient Descent (SGD) with Hinge Loss</h2>
+
+                <h3>1. Understanding SGD with Hinge Loss</h3>
+                <p>Stochastic Gradient Descent (SGD) is an optimization algorithm used for training machine learning
+                    models, especially in linear classifiers like SVM (Support Vector Machine). Hinge Loss is the loss
+                    function used in SVM, which penalizes misclassified points.</p>
+
+                <h3>2. Key Hyperparameters in SGD with Hinge Loss</h3>
+                <ul>
+                    <li><b>Learning Rate (η):</b> Determines the step size for updating weights. A small η leads to slow
+                        convergence, while a large η may cause instability.</li>
+                    <li><b>Regularization Parameter (λ):</b> Controls the trade-off between margin maximization and
+                        classification error. Helps prevent overfitting.</li>
+                    <li><b>Batch Size:</b> Defines how many training samples are used to compute gradients before
+                        updating weights.</li>
+                    <li><b>Number of Epochs:</b> The number of times the algorithm processes the entire dataset.</li>
+                    <li><b>Decay Rate:</b> Reduces the learning rate over time to fine-tune convergence.</li>
+                    <li><b>Momentum:</b> Helps accelerate learning by maintaining a moving average of past gradients.
+                    </li>
+                </ul>
+
+                <h3>3. Hinge Loss in Support Vector Machine (SVM)</h3>
+                <p>Hinge loss is defined as:</p>
+                <p>\( L(y, f(x)) = \max(0, 1 - y f(x)) \)</p>
+                <p>where:</p>
+                <ul>
+                    <li>\( y \) is the actual label (-1 or +1).</li>
+                    <li>\( f(x) \) is the predicted score from the model.</li>
+                    <li>The loss is 0 if the sample is correctly classified and lies beyond the margin.</li>
+                </ul>
+
+                <h3>4. Graphical Representation of Hinge Loss</h3>
+                <p>Below is a diagram illustrating hinge loss:</p>
+
+                <img src="https://upload.wikimedia.org/wikipedia/commons/1/1a/Hinge_loss.svg" alt="Hinge Loss Graph"
+                    width="400px">
+
+                <p>Key Observations:</p>
+                <ul>
+                    <li>If the prediction is correct and far from the decision boundary, the loss is 0.</li>
+                    <li>If the point is close to the boundary but correctly classified, the loss is small.</li>
+                    <li>If the point is misclassified, the loss increases linearly.</li>
+                </ul>
+
+                <h3>5. Why Use Hinge Loss?</h3>
+                <ul>
+                    <li>Encourages a larger margin between classes, improving generalization.</li>
+                    <li>Helps deal with outliers by penalizing only those that fall within the margin.</li>
+                    <li>Works well in scenarios where class separation is important, such as text classification and
+                        image recognition.</li>
+                </ul>
+
+                <h3>Conclusion</h3>
+                <p>SGD with hinge loss is commonly used in SVM and linear classifiers. The choice of hyperparameters,
+                    such as learning rate and regularization, plays a crucial role in model performance. Hinge loss
+                    helps in maximizing the margin and improving classification robustness.</p>
+            </div>
+
+        </div>
+    </div>
+    <div class="container-cases">
+        <div class="case">
+            <div>
+                <h2>Kernel SVM vs. Linear SVM (SGD Classifier with Hinge Loss) - Latency Comparison</h2>
+
+                <h3>1. Difference Between Kernel SVM and Linear SVM (SGD Classifier)</h3>
+                <ul>
+                    <li><b>Kernel SVM:</b> Uses different kernels (e.g., RBF, polynomial) to transform data into a
+                        higher-dimensional space, allowing it to handle non-linearly separable data.</li>
+                    <li><b>Linear SVM (SGD Classifier with Hinge Loss):</b> Uses stochastic gradient descent (SGD) with
+                        hinge loss to optimize a linear decision boundary.</li>
+                </ul>
+
+                <h3>2. Latency Comparison</h3>
+                <p><b>Kernel SVM is computationally expensive</b> because:</p>
+                <ul>
+                    <li>It computes a kernel function for every pair of data points, leading to a complexity of \(
+                        O(n^2) \) or worse.</li>
+                    <li>Training requires solving a quadratic optimization problem, which is slow for large datasets.
+                    </li>
+                </ul>
+
+                <p><b>SGD Classifier with Hinge Loss has lower latency</b> because:</p>
+                <ul>
+                    <li>It approximates SVM using online learning, processing one batch at a time.</li>
+                    <li>Its training complexity is roughly \( O(n) \), making it scalable for large datasets.</li>
+                    <li>It is suitable for linear problems but does not work well for complex non-linear decision
+                        boundaries.</li>
+                </ul>
+
+                <h3>3. When to Use Each?</h3>
+                <ul>
+                    <li><b>Use SGD Classifier with Hinge Loss</b> when the data is linearly separable or approximately
+                        linear.</li>
+                    <li><b>Use Kernel SVM</b> when the data has complex decision boundaries and requires transformations
+                        for better separation.</li>
+                    <li>If using an RBF kernel, <b>SGD is not suitable</b> since it only optimizes linear models.</li>
+                </ul>
+
+                <h3>Conclusion</h3>
+                <p>SGD Classifier with Hinge Loss is preferred for large-scale, linear problems due to its lower
+                    latency, while Kernel SVM is better for non-linear problems but is computationally expensive.</p>
+            </div>
+
+        </div>
+    </div>
+    <div class="container-cases">
+        <div class="case">
+            <div>
+                <h2>Computing Feature Importance in SVM</h2>
+
+                <h3>1. Feature Importance in Linear SVM</h3>
+                <p>For an SVM classifier with a <b>linear kernel</b>, feature importance can be determined using the
+                    weight vector \( w \):</p>
+                <ul>
+                    <li>The decision function for linear SVM is \( f(x) = w \cdot x + b \).</li>
+                    <li>The magnitude of each component of \( w \) represents the importance of the corresponding
+                        feature.</li>
+                    <li>Feature importance can be ranked using \( |w_i| \), where larger values indicate more
+                        influential features.</li>
+                </ul>
+
+                <h3>2. Feature Selection in SVM</h3>
+                <p>Feature selection techniques like <b>Forward Feature Selection</b> can be used to identify important
+                    features iteratively:</p>
+                <ul>
+                    <li>Start with an empty set of features.</li>
+                    <li>Add features one by one and train the SVM model.</li>
+                    <li>Keep the feature that improves classification performance the most.</li>
+                    <li>Repeat until performance stops improving.</li>
+                </ul>
+
+                <h3>3. Why Feature Importance is Difficult in Non-Linear SVM</h3>
+                <p>For SVM with <b>non-linear kernels</b> (e.g., RBF, polynomial):</p>
+                <ul>
+                    <li>The kernel function transforms data into a higher-dimensional space.</li>
+                    <li>Feature importance is not directly related to the original input space.</li>
+                    <li>Unlike linear SVM, there is no explicit weight vector \( w \) for feature importance
+                        computation.</li>
+                </ul>
+
+                <h3>4. Alternative Methods for Non-Linear SVM</h3>
+                <p>Although feature importance is not directly available for non-linear SVM, alternative methods
+                    include:</p>
+                <ul>
+                    <li><b>PCA (Principal Component Analysis):</b> Identifies dominant patterns in the transformed
+                        space.</li>
+                    <li><b>Permutation Feature Importance:</b> Measures change in model accuracy when shuffling feature
+                        values.</li>
+                    <li><b>SHAP (SHapley Additive Explanations):</b> Provides feature importance scores based on model
+                        predictions.</li>
+                </ul>
+
+                <h3>Conclusion</h3>
+                <p>Feature importance in SVM is straightforward for a <b>linear kernel</b> (using weights \( w \)), but
+                    for <b>non-linear kernels</b>, indirect methods like PCA, permutation importance, or SHAP are
+                    required.</p>
+            </div>
+
+        </div>
+    </div>
+    <div class="container-cases">
+        <div class="case">
+            <div>
+                <h2>Alpha Value for Non-Support Vectors</h2>
+                <p>In Support Vector Machines (SVM), the <b>alpha values (\(\alpha_i\))</b> are the Lagrange multipliers
+                    that determine the contribution of each data point to the decision boundary.</p>
+
+                <h3>Key Points:</h3>
+                <ul>
+                    <li>For <b>support vectors</b>: \( \alpha_i > 0 \), meaning they actively contribute to the decision
+                        boundary.</li>
+                    <li>For <b>non-support vectors</b>: \( \alpha_i = 0 \), meaning they do not influence the final
+                        classifier.</li>
+                </ul>
+
+                <h3>Mathematical Explanation:</h3>
+                <p>In the dual formulation of SVM optimization:</p>
+                <p><b>
+                        \( L(\alpha) = \sum_{i=1}^{n} \alpha_i - \frac{1}{2} \sum_{i=1}^{n} \sum_{j=1}^{n} \alpha_i
+                        \alpha_j y_i y_j K(x_i, x_j) \)
+                    </b></p>
+                <p>Subject to:</p>
+                <p><b>
+                        \( \sum_{i=1}^{n} \alpha_i y_i = 0, \quad 0 \leq \alpha_i \leq C \)
+                    </b></p>
+
+                <h3>Conclusion:</h3>
+                <p>Only the <b>support vectors</b> have nonzero \(\alpha_i\), while non-support vectors have \(\alpha_i
+                    = 0\), meaning they do not contribute to the final decision function.</p>
+            </div>
+
+        </div>
+    </div>
+    <div class="container-cases">
+        <div class="case">
+            <div>
+                <h2>Training and Runtime Complexities of SVM</h2>
+
+                <h3>Training Complexity</h3>
+                <ul>
+                    <li>SVM training can be performed using <b>Stochastic Gradient Descent (SGD)</b> for linear SVM.
+                    </li>
+                    <li>For kernel SVMs, a specialized algorithm like <b>Sequential Minimal Optimization (SMO)</b> is
+                        used.</li>
+                    <li>Example: <b>libSVM</b> is a widely used library for training SVMs.</li>
+                    <li><b>Training Time Complexity:</b> \( O(n^2) \) for kernel SVMs.</li>
+                    <li>Since training complexity is quadratic in the number of samples \( n \), SVMs are not preferred
+                        for very large datasets.</li>
+                </ul>
+
+                <h3>Runtime Complexity</h3>
+                <ul>
+                    <li><b>Run Time Complexity:</b> \( O(kd) \), where:
+                        <ul>
+                            <li>\( k \) is the number of support vectors.</li>
+                            <li>\( d \) is the dimensionality of the input space.</li>
+                        </ul>
+                    </li>
+                    <li>Since the prediction time depends on the number of support vectors, SVMs with a large number of
+                        support vectors may have higher inference time.</li>
+                </ul>
+            </div>
+
+        </div>
+    </div>
+    <div class="container-cases">
+        <div class="case">
+            <div>
+                <h2>Special Cases of SVM</h2>
+
+                <h3>Feature Engineering</h3>
+                <ul>
+                    <li>Kernelization can be applied to map data into higher-dimensional space.</li>
+                </ul>
+
+                <h3>Decision Surfaces</h3>
+                <ul>
+                    <li>SVM can learn <b>non-linear decision surfaces</b> using kernel functions.</li>
+                </ul>
+
+                <h3>Similarity or Distance Function</h3>
+                <ul>
+                    <li>SVM models can use <b>custom kernel functions</b> to measure similarity or distance effectively.
+                    </li>
+                </ul>
+
+                <h3>Interpretability and Feature Importance</h3>
+                <ul>
+                    <li>For a <b>linear kernel classifier</b>, feature importance can be found using <b>forward feature
+                            selection</b>.</li>
+                    <li>For other kernels, feature importance is not directly interpretable since data is transformed
+                        into a new space.</li>
+                </ul>
+
+                <h3>Impact of Outliers</h3>
+                <ul>
+                    <li>Support Vectors determine the decision boundary, so outliers typically have little impact.</li>
+                    <li>However, for <b>RBF kernels with a small sigma</b>, outliers may affect the decision boundary,
+                        similar to k-NN with small \( k \).</li>
+                </ul>
+
+                <h3>Bias-Variance Tradeoff</h3>
+                <ul>
+                    <li><b>High C (Regularization Parameter):</b> Leads to overfitting, resulting in high variance.</li>
+                    <li><b>Low C:</b> Causes underfitting, resulting in high bias.</li>
+                </ul>
+
+                <h3>Handling Large Dimensionality</h3>
+                <ul>
+                    <li>SVM performs well in <b>high-dimensional spaces</b> (large \( d \)).</li>
+                    <li>However, when the dataset size or the number of support vectors is very large, SVMs can become
+                        computationally expensive.</li>
+                    <li>In such cases, <b>Logistic Regression</b> is often preferred.</li>
+                </ul>
+            </div>
+
+        </div>
+    </div>
+    <div class="container-cases">
+        <div class="case">
+            <div>
+                <h2>Various Kernels in SVM</h2>
+
+                <p>Kernels are mathematical functions that transform data into higher dimensions to make it linearly
+                    separable. The choice of the kernel function significantly affects the performance of an SVM model.
+                </p>
+
+                <h3>1. Linear Kernel</h3>
+                <p>The simplest kernel, used when data is already linearly separable.</p>
+                <p><b>Formula:</b> \( K(x, y) = x \cdot y \)</p>
+                <ul>
+                    <li>Computationally efficient.</li>
+                    <li>Works well with high-dimensional sparse data (e.g., text classification).</li>
+                    <li>Not suitable for non-linearly separable data.</li>
+                </ul>
+
+                <h3>2. Polynomial Kernel</h3>
+                <p>Maps input features into a higher-dimensional space using polynomial transformation.</p>
+                <p><b>Formula:</b> \( K(x, y) = (x \cdot y + c)^d \), where \( d \) is the degree of the polynomial.</p>
+                <ul>
+                    <li>Good for capturing feature interactions.</li>
+                    <li>Computationally expensive for high-degree polynomials.</li>
+                </ul>
+
+                <h3>3. Radial Basis Function (RBF) Kernel</h3>
+                <p>The most commonly used kernel. It maps data into an infinite-dimensional space.</p>
+                <p><b>Formula:</b> \( K(x, y) = \exp(-\gamma ||x - y||^2) \)</p>
+                <ul>
+                    <li>Works well with complex decision boundaries.</li>
+                    <li>\( \gamma \) controls how much influence a single training example has.</li>
+                    <li>Can overfit if \( \gamma \) is too large.</li>
+                </ul>
+
+                <h3>4. Sigmoid Kernel</h3>
+                <p>Inspired by neural networks, it behaves like an activation function.</p>
+                <p><b>Formula:</b> \( K(x, y) = \tanh(\alpha x \cdot y + c) \)</p>
+                <ul>
+                    <li>Less commonly used compared to RBF.</li>
+                    <li>Can behave inconsistently with different values of \( \alpha \) and \( c \).</li>
+                </ul>
+
+                <h3>5. Custom Kernels</h3>
+                <p>Custom similarity functions can be designed based on domain knowledge.</p>
+                <ul>
+                    <li>Can be useful for specialized tasks.</li>
+                    <li>Needs to satisfy Mercer’s theorem (must be a valid positive semi-definite function).</li>
+                </ul>
+            </div>
+
+        </div>
+    </div>
+    <div class="failure-cases">
+        <div class="case">
+
+            <div class="container-cases">
+                <div class="image-container"><img src="..\assets\images\Loss-functions.ppm" alt="Hinge Loss Graph" />
+                </div>
+                <div class="text-container">
+                    <h3>Formulation of Hinge Loss</h3>
+                    <p><b>Mathematical Representation:</b></p>
+                    <p>\( Z_i = y_i f(x_i) = y_i (W^T x_i + b) \)</p>
+
+                    <p><b>0-1 Loss:</b></p>
+                    <ul>
+                        <li>If \( Z_i > 0 \), it is correctly classified.</li>
+                        <li>If \( Z_i < 0 \), it is incorrectly classified.</li>
+                    </ul>
+
+                    <p><b>Hinge Loss:</b></p>
+                    <ul>
+                        <li>If \( Z_i \geq 1 \), hinge loss = 0.</li>
+                        <li>If \( Z_i < 1 \), hinge loss=\( 1 - Z_i \).</li>
+                    </ul>
+
+                    <p><b>Final Expression for Hinge Loss:</b></p>
+                    <p>\( \xi_i = \max(0, 1 - Z_i) \)</p>
+                    <p>The graph shows different loss functions:</p>
+                    <ul>
+                        <li><b>0-1 Loss:</b> Orange line</li>
+                        <li><b>Hinge Loss:</b> Blue curve</li>
+                        <li><b>Cross-Entropy Loss:</b> Green curve</li>
+                        <li><b>Exponential Loss:</b> Purple curve</li>
+                    </ul>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="container-cases">
+        <div class="case">
+            <div class="hinge-loss">
+                <h3>Is Hinge Loss Differentiable?</h3>
+                <p><b>Hinge loss is not differentiable</b> at \( Z_i = 1 \) because it has a sharp corner at that point.
+                    The hinge loss function is given by:</p>
+
+                <p>\[
+                    \text{Hinge loss} = \max(0, 1 - Z_i)
+                    \]</p>
+
+                <p>This function has a <b>kink (nondifferentiable point) at \( Z_i = 1 \)</b>, where the derivative
+                    changes abruptly. However, it is still subdifferentiable, meaning we can define a subgradient, which
+                    allows it to be used in optimization.</p>
+
+                <h3>Can Hinge Loss Be Used for SGD?</h3>
+                <p>Yes, <b>Stochastic Gradient Descent (SGD) can be used with hinge loss</b> because it relies on
+                    subgradients instead of strict differentiability.</p>
+
+                <p>The subgradient of hinge loss is:</p>
+
+                <p>\[
+                    \frac{dL}{dZ_i} =
+                    \begin{cases}
+                    0, & \text{if } Z_i \geq 1 \\
+                    -y_i, & \text{if } Z_i < 1 \end{cases} \]</p>
+
+                        <p>This piecewise function allows SGD to update the weights even though hinge loss is not fully
+                            differentiable.</p>
+
+                        <p><b>Sklearn’s `SGDClassifier` uses hinge loss by default</b> when `loss='hinge'`, making it a
+                            common approach for linear SVMs.</p>
+            </div>
+
+        </div>
+    </div>
+    <div class="container-cases">
+        <div class="case">
+
+        </div>
+    </div>
+    <div class="container-cases">
+        <div class="case">
+
+        </div>
+    </div>
+</body>
+
+</html>

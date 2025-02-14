@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Support Vector Machine (SVM)</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script type="text/javascript" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML">
+        </script>
+    <script type="text/javascript" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML">
+        </script>
+    <style>
+        /* Global Styles */
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            color: #ffffff;
+            background: url('../assets/images/ml-background.jpg') no-repeat center center fixed;
+            background-size: cover;
+            position: relative;
+        }
+
+        /* Dark Overlay */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1;
+        }
+
+        /* Layout Containers */
+        header,
+        footer {
+            background: linear-gradient(135deg, #0829df, #04013c);
+            text-align: center;
+            padding: 20px;
+            font-size: 24px;
+            position: relative;
+            z-index: 10;
+        }
+
+        main {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 25px;
+            background: rgba(19, 50, 185, 0.85);
+            border-radius: 10px;
+            box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+            position: relative;
+            z-index: 10;
+        }
+
+        h1,
+        h2,
+        h3 {
+            color: #d9dcdf;
+        }
+
+        .case h3 {
+            color: #ffcc00;
+        }
+
+        .case p {
+            color: #ffffff;
+        }
+
+        /* Table Styles */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        th,
+        td {
+            border: 1px solid rgba(255, 255, 255, 0.43);
+            padding: 12px;
+            text-align: center;
+            color: #ffffff;
+        }
+
+        th {
+            background: rgba(255, 255, 255, 0.2);
+            font-weight: bold;
+        }
+
+        /* Image Styling */
+        .image-container {
+            text-align: center;
+            margin: 10px 0;
+            flex: 1;
+        }
+
+        .image-container img {
+            width: 95%;
+            height: 300px;
+            /* Adjusted height */
+            border-radius: 5px;
+            box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+            object-fit: contain;
+            display: block;
+        }
+
+        /* Content Flexbox Layout */
+        .content-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+        .text-container {
+            flex: 1;
+        }
+
+        /* Failure Cases Section */
+        .failure-cases {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Container for Cases */
+        .container-cases {
+            width: 90%;
+            max-width: 1600px;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+            margin: 20px auto;
+            display: flex;
+            flex-direction: row;
+            /* Image and text side by side */
+            align-items: center;
+            gap: 20px;
+            text-align: justify;
+        }
+
+        /* Individual Case Boxes */
+        .case {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.15);
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 6px;
+        }
+
+        .case h3 {
+            color: #ffcc00;
+            margin-bottom: 5px;
+        }
+
+        .case p {
+            color: #ffffff;
+        }
+
+        /* Ensuring Image Adjusts Well */
+        .image-container img {
+            max-width: 100%;
+            height: auto;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <h1>Naive Bayes</h1>
+    </header>
+
+    <div class="container-cases">
+        <div class="case">
+            <div class="bayes-theorem">
+                <h2>Bayes' Theorem</h2>
+                <p>Bayes' Theorem is a fundamental concept in probability theory and statistics that describes how to update the probability of a hypothesis based on new evidence. It is expressed mathematically as:</p>
+            
+                <p>\[
+                P(A | B) = \frac{P(B | A) \cdot P(A)}{P(B)}
+                \]</p>
+            
+                <h3>Explanation of Terms:</h3>
+                <ul>
+                    <li><b>\( P(A | B) \)</b>: Posterior Probability - The probability of event A occurring given that B has occurred.</li>
+                    <li><b>\( P(B | A) \)</b>: Likelihood - The probability of event B occurring given that A is true.</li>
+                    <li><b>\( P(A) \)</b>: Prior Probability - The initial probability of event A before observing B.</li>
+                    <li><b>\( P(B) \)</b>: Marginal Probability - The total probability of event B occurring.</li>
+                </ul>
+            
+                <h3>Applications of Bayes' Theorem:</h3>
+                <ul>
+                    <li>Spam email filtering (classifying emails as spam or not spam)</li>
+                    <li>Medical diagnosis (computing the probability of a disease given test results)</li>
+                    <li>Machine learning (used in Naïve Bayes classifier)</li>
+                    <li>Risk assessment and decision-making</li>
+                </ul>
+            
+                <h3>Example:</h3>
+                <p>Suppose a medical test for a disease is 99% accurate, and the disease is present in 1% of the population. If a person tests positive, Bayes’ Theorem helps determine the actual probability of having the disease by considering both the accuracy of the test and the base rate of the disease in the population.</p>
+            </div>
+            
+        </div>
+    </div>
+    <div class="container-cases">
+        <div class="case">
+            <div class="probability-concepts">
+                <h2>Dependent and Independent Events, Mutually Exclusive and Inclusive Events</h2>
+            
+                <h3>1. Independent Events</h3>
+                <p>Two events are <b>independent</b> if the occurrence of one event does not affect the probability of the other event.</p>
+                <p><b>Mathematical Representation:</b></p>
+                <p>\[
+                P(A \cap B) = P(A) \cdot P(B)
+                \]</p>
+                <p><b>Example:</b></p>
+                <ul>
+                    <li>Flipping a coin and rolling a die. The outcome of the coin flip does not affect the die roll.</li>
+                    <li>Drawing a card from a deck, replacing it, and drawing another card. Since we replace the card, the probability remains unchanged.</li>
+                </ul>
+            
+                <h3>2. Dependent Events</h3>
+                <p>Two events are <b>dependent</b> if the occurrence of one event affects the probability of the other.</p>
+                <p><b>Mathematical Representation:</b></p>
+                <p>\[
+                P(A \cap B) = P(A) \cdot P(B | A)
+                \]</p>
+                <p><b>Example:</b></p>
+                <ul>
+                    <li>Drawing two cards from a deck without replacement. The probability of drawing the second card depends on the first draw.</li>
+                    <li>Picking a colored ball from a bag and not putting it back before picking another ball.</li>
+                </ul>
+            
+                <h3>3. Conditionally Independent Events</h3>
+                <p>Two events A and B are <b>conditionally independent</b> given a third event C if knowing C makes A and B independent.</p>
+                <p><b>Mathematical Representation:</b></p>
+                <p>\[
+                P(A \cap B | C) = P(A | C) \cdot P(B | C)
+                \]</p>
+                <p><b>Example:</b></p>
+                <ul>
+                    <li>Test results of two students are independent given that they studied separately.</li>
+                    <li>The probability of two employees being late is independent given that there is no traffic jam.</li>
+                </ul>
+            
+                <h3>4. Conditionally Dependent Events</h3>
+                <p>Two events A and B are <b>conditionally dependent</b> given C if knowing C affects the dependency between A and B.</p>
+                <p><b>Example:</b></p>
+                <ul>
+                    <li>If two students are copying from each other, their test results are conditionally dependent given that they sit together.</li>
+                    <li>If two employees carpool, their lateness is conditionally dependent on the same traffic conditions.</li>
+                </ul>
+            
+                <h3>5. Mutually Exclusive Events</h3>
+                <p>Two events are <b>mutually exclusive</b> if they cannot happen at the same time.</p>
+                <p><b>Mathematical Representation:</b></p>
+                <p>\[
+                P(A \cap B) = 0
+                \]</p>
+                <p><b>Example:</b></p>
+                <ul>
+                    <li>Rolling a die and getting either a 3 or a 5. You cannot get both on the same roll.</li>
+                    <li>Drawing a single card that is both a heart and a spade. It is not possible.</li>
+                </ul>
+            
+                <h3>6. Mutually Inclusive Events</h3>
+                <p>Two events are <b>mutually inclusive</b> if they can happen at the same time.</p>
+                <p><b>Mathematical Representation:</b></p>
+                <p>\[
+                P(A \cup B) = P(A) + P(B) - P(A \cap B)
+                \]</p>
+                <p><b>Example:</b></p>
+                <ul>
+                    <li>Drawing a red card and drawing a king from a deck of cards. A card can be both red and a king.</li>
+                    <li>Rolling a die and getting an even number or a number greater than 3. (Numbers 4 and 6 satisfy both conditions.)</li>
+                </ul>
+            
+                <h3>7. Intersection of Events (AND Probability)</h3>
+                <p>The probability that both events A and B occur together:</p>
+                <p><b>For Independent Events:</b></p>
+                <p>\[
+                P(A \cap B) = P(A) \cdot P(B)
+                \]</p>
+                <p><b>For Dependent Events:</b></p>
+                <p>\[
+                P(A \cap B) = P(A) \cdot P(B | A)
+                \]</p>
+                <p><b>Example:</b></p>
+                <ul>
+                    <li>Drawing a red card and then a king from a deck of cards without replacement.</li>
+                </ul>
+            
+                <h3>8. Union of Events (OR Probability)</h3>
+                <p>The probability that either event A or event B (or both) occurs:</p>
+                <p>\[
+                P(A \cup B) = P(A) + P(B) - P(A \cap B)
+                \]</p>
+                <p><b>For Mutually Exclusive Events:</b></p>
+                <p>\[
+                P(A \cup B) = P(A) + P(B)
+                \]</p>
+                <p><b>Example:</b></p>
+                <ul>
+                    <li>Rolling a die and getting either an even number or a 3.</li>
+                    <li>Drawing a king or a queen from a deck of cards.</li>
+                </ul>
+            </div>
+            
+            
+        </div>
+    </div>
+    <div class="container-cases">
+        <div class="case">
+            <div class="probability-concepts">
+                <h2>Intersection and Union of Events</h2>
+            
+                <h3>1. Intersection of Events (AND Probability)</h3>
+                <p>The intersection of two events \( A \) and \( B \), denoted as \( A \cap B \), represents the probability that both events occur simultaneously.</p>
+            
+                <h4>Mathematical Formulation:</h4>
+                <p><b>For Independent Events:</b></p>
+                <p>\[
+                P(A \cap B) = P(A) \cdot P(B)
+                \]</p>
+            
+                <p><b>For Dependent Events:</b></p>
+                <p>\[
+                P(A \cap B) = P(A) \cdot P(B | A)
+                \]</p>
+            
+                <h4>Examples:</h4>
+                <ul>
+                    <li><b>Independent Events:</b> Rolling a die and flipping a coin. The probability of rolling a 6 and getting heads is:
+                        \[
+                        P(6 \cap H) = P(6) \times P(H) = \frac{1}{6} \times \frac{1}{2} = \frac{1}{12}
+                        \]
+                    </li>
+                    <li><b>Dependent Events:</b> Drawing two red cards from a deck without replacement.
+                        <ul>
+                            <li>Probability of drawing the first red card: \( P(A) = \frac{26}{52} \)</li>
+                            <li>Probability of drawing a second red card (after first is removed): \( P(B | A) = \frac{25}{51} \)</li>
+                            <li>\( P(A \cap B) = \frac{26}{52} \times \frac{25}{51} = \frac{650}{2652} \approx 0.245 \) </li>
+                        </ul>
+                    </li>
+                </ul>
+            
+                <h3>2. Union of Events (OR Probability)</h3>
+                <p>The union of two events \( A \) and \( B \), denoted as \( A \cup B \), represents the probability that either event occurs (or both).</p>
+            
+                <h4>Mathematical Formulation:</h4>
+                <p>\[
+                P(A \cup B) = P(A) + P(B) - P(A \cap B)
+                \]</p>
+            
+                <p><b>For Mutually Exclusive Events:</b> (Events that cannot happen together, e.g., rolling a 2 or a 5 on a single die roll)</p>
+                <p>\[
+                P(A \cup B) = P(A) + P(B)
+                \]</p>
+            
+                <h4>Examples:</h4>
+                <ul>
+                    <li><b>Mutually Exclusive Events:</b> Rolling a die and getting either a 2 or a 5.
+                        \[
+                        P(2 \cup 5) = P(2) + P(5) = \frac{1}{6} + \frac{1}{6} = \frac{2}{6} = \frac{1}{3}
+                        \]
+                    </li>
+                    <li><b>Non-Mutually Exclusive Events:</b> Drawing a red card or a king from a deck.
+                        <ul>
+                            <li>Probability of drawing a red card: \( P(A) = \frac{26}{52} \)</li>
+                            <li>Probability of drawing a king: \( P(B) = \frac{4}{52} \)</li>
+                            <li>Probability of drawing a red king (overlap): \( P(A \cap B) = \frac{2}{52} \)</li>
+                            <li>\( P(A \cup B) = \frac{26}{52} + \frac{4}{52} - \frac{2}{52} = \frac{28}{52} \approx 0.538 \)</li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            
+            
+        </div>
+    </div>
+
+    <div class="container-cases">
+        <div class="case">
+            <div class="naive-bayes">
+                <h2>Mathematical Intuition of Naïve Bayes with Laplace Smoothing and Log Probabilities</h2>
+            
+                <h3>1. Bayes’ Theorem</h3>
+                <p>Naïve Bayes is based on Bayes’ Theorem:</p>
+                <p>\[
+                P(Y | X) = \frac{P(X | Y) P(Y)}{P(X)}
+                \]</p>
+                <p>Since \( P(X) \) is constant for all classes, we can simplify the decision rule:</p>
+                <p>\[
+                P(Y | X) \propto P(Y) P(X | Y)
+                \]</p>
+            
+                <h3>2. The Naïve Assumption (Conditional Independence)</h3>
+                <p>The algorithm assumes that features are independent given the class:</p>
+                <p>\[
+                P(X | Y) = \prod_{i=1}^{n} P(X_i | Y)
+                \]</p>
+                <p>Thus, classification is based on:</p>
+                <p>\[
+                P(Y | X) \propto P(Y) \prod_{i=1}^{n} P(X_i | Y)
+                \]</p>
+            
+                <h3>3. Laplace Smoothing</h3>
+                <p>To avoid zero probabilities for unseen words/features, we use Laplace smoothing:</p>
+                <p>\[
+                P(X_i | Y) = \frac{\text{Count}(X_i, Y) + 1}{\sum \text{Count}(X, Y) + V}
+                \]</p>
+                <p>where:</p>
+                <ul>
+                    <li>\( V \) = total number of unique words (or features).</li>
+                    <li>\( \text{Count}(X_i, Y) \) = occurrences of feature \( X_i \) in class \( Y \).</li>
+                    <li>\( \sum \text{Count}(X, Y) \) = total number of words/features in class \( Y \).</li>
+                </ul>
+            
+                <h3>4. Log Probabilities for Numerical Stability</h3>
+                <p>Since multiplying small probabilities can lead to numerical underflow, we take the logarithm:</p>
+                <p>\[
+                \log P(Y | X) = \log P(Y) + \sum_{i=1}^{n} \log P(X_i | Y)
+                \]</p>
+                <p>This ensures that extremely small probabilities do not become zero.</p>
+            
+                <h3>5. Example Calculation</h3>
+                <p>Suppose we classify an email as spam (\( S \)) or not spam (\( \neg S \)) based on words “Free” and “Win.”</p>
+                
+                <p>Given the following data:</p>
+                <ul>
+                    <li>\( P(S) = 0.4 \), \( P(\neg S) = 0.6 \)</li>
+                    <li>Word frequencies in spam emails:
+                        <ul>
+                            <li>\(\text{Count}(\text{"Free"}, S) = 7\)</li>
+                            <li>\(\text{Count}(\text{"Win"}, S) = 6\)</li>
+                        </ul>
+                    </li>
+                    <li>Word frequencies in non-spam emails:
+                        <ul>
+                            <li>\(\text{Count}(\text{"Free"}, \neg S) = 2\)</li>
+                            <li>\(\text{Count}(\text{"Win"}, \neg S) = 1\)</li>
+                        </ul>
+                    </li>
+                    <li>Total words in spam \( (\sum \text{words in } S) = 20 \)</li>
+                    <li>Total words in non-spam \( (\sum \text{words in } \neg S) = 30 \)</li>
+                    <li>Total vocabulary size \( V = 50 \) (unique words in dataset)</li>
+                </ul>
+            
+                <p>Applying Laplace Smoothing:</p>
+                <p>\[
+                P(\text{"Free"} | S) = \frac{7 + 1}{20 + 50} = \frac{8}{70} = 0.114
+                \]</p>
+                <p>\[
+                P(\text{"Win"} | S) = \frac{6 + 1}{20 + 50} = \frac{7}{70} = 0.1
+                \]</p>
+                <p>\[
+                P(\text{"Free"} | \neg S) = \frac{2 + 1}{30 + 50} = \frac{3}{80} = 0.0375
+                \]</p>
+                <p>\[
+                P(\text{"Win"} | \neg S) = \frac{1 + 1}{30 + 50} = \frac{2}{80} = 0.025
+                \]</p>
+            
+                <h3>6. Log Probability Calculation</h3>
+                <p>Instead of multiplying probabilities, we take the log:</p>
+                
+                <p>\[
+                \log P(S | X) = \log P(S) + \log P(\text{"Free"} | S) + \log P(\text{"Win"} | S)
+                \]</p>
+                <p>\[
+                = \log(0.4) + \log(0.114) + \log(0.1)
+                \]</p>
+            
+                <p>\[
+                \log P(\neg S | X) = \log P(\neg S) + \log P(\text{"Free"} | \neg S) + \log P(\text{"Win"} | \neg S)
+                \]</p>
+                <p>\[
+                = \log(0.6) + \log(0.0375) + \log(0.025)
+                \]</p>
+            
+                <p>Comparing log probabilities, the class with the highest value is chosen.</p>
+            
+                <h3>7. Advantages of Log Probabilities</h3>
+                <ul>
+                    <li>Prevents numerical underflow when multiplying very small probabilities.</li>
+                    <li>Turns multiplication into addition, making calculations faster.</li>
+                    <li>Improves model stability when dealing with large feature sets.</li>
+                </ul>
+            
+                <h3>8. Final Decision Rule</h3>
+                <p>Instead of comparing probabilities, we compare log probabilities:</p>
+                <p>\[
+                \log P(S | X) > \log P(\neg S | X) \Rightarrow \text{Classify as Spam}
+                \]</p>
+            
+                <p>\[
+                \log P(S | X) < \log P(\neg S | X) \Rightarrow \text{Classify as Not Spam}
+                \]</p>
+            
+                <h3>9. Conclusion</h3>
+                <p>Naïve Bayes with Laplace Smoothing and Log Probabilities is a powerful classification method, especially in text classification problems like spam detection.</p>
+            </div>
+            
+        </div>
+    </div>
+    <div class="container-cases">
+        <div class="case">
+            <div class="bias-variance-tradeoff">
+                <h2>Bias-Variance Tradeoff in Naïve Bayes</h2>
+            
+                <h3>1. Understanding the Bias-Variance Tradeoff</h3>
+                <p>The bias-variance tradeoff is a fundamental concept in machine learning that describes the balance between two sources of error:</p>
+                <ul>
+                    <li><b>Bias:</b> Error introduced due to overly simplistic assumptions in the learning algorithm.</li>
+                    <li><b>Variance:</b> Error introduced due to excessive sensitivity to small fluctuations in the training data.</li>
+                </ul>
+                <p>Ideally, a model should find the right balance between bias and variance to achieve low overall error.</p>
+            
+                <h3>2. Bias in Naïve Bayes</h3>
+                <p>Naïve Bayes assumes that all features are <b>conditionally independent</b> given the class label. This assumption is often unrealistic in real-world data.</p>
+                <p><b>Effect of High Bias:</b></p>
+                <ul>
+                    <li>Since Naïve Bayes makes a strong independence assumption, it simplifies the model.</li>
+                    <li>This results in a **high bias**, meaning it may not capture complex relationships between features.</li>
+                    <li>High bias leads to **underfitting**, where the model performs poorly on both training and test data.</li>
+                </ul>
+            
+                <h3>3. Variance in Naïve Bayes</h3>
+                <p>Variance refers to how much the model's predictions change when trained on different subsets of data.</p>
+                <p><b>Effect of Low Variance:</b></p>
+                <ul>
+                    <li>Because Naïve Bayes is a simple model, it does not fluctuate much with different training sets.</li>
+                    <li>This results in **low variance**, meaning that the model is stable and does not overfit.</li>
+                    <li>Even with small datasets, Naïve Bayes generalizes well because it is not too complex.</li>
+                </ul>
+            
+                <h3>4. Overall Tradeoff in Naïve Bayes</h3>
+                <p>Naïve Bayes generally has **high bias but low variance**:</p>
+                <ul>
+                    <li>**High Bias**: Due to the independence assumption, it may oversimplify the problem.</li>
+                    <li>**Low Variance**: Since it does not model complex relationships, it is less sensitive to data variations.</li>
+                </ul>
+                <p><b>Implications:</b></p>
+                <ul>
+                    <li>Naïve Bayes is well-suited for problems where the independence assumption is reasonable (e.g., text classification).</li>
+                    <li>It is robust with small datasets and less prone to overfitting.</li>
+                    <li>However, in cases where features are highly correlated, Naïve Bayes may underperform due to its high bias.</li>
+                </ul>
+            
+                <h3>5. Visual Representation</h3>
+                <p>A typical bias-variance tradeoff curve looks like this:</p>
+                <p>
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/6/68/Bias-variance_tradeoff.svg" alt="Bias-Variance Tradeoff Graph" width="80%">
+                </p>
+            
+                <h3>6. Reducing Bias in Naïve Bayes</h3>
+                <p>Since Naïve Bayes has high bias, some strategies to reduce it include:</p>
+                <ul>
+                    <li>Using **Bayesian Networks** to relax the independence assumption.</li>
+                    <li>Applying **feature engineering** to remove redundant or correlated features.</li>
+                    <li>Using **more complex models** like Logistic Regression or Random Forest if independence assumption is too limiting.</li>
+                </ul>
+            
+                <h3>7. Conclusion</h3>
+                <p>Naïve Bayes is a simple and efficient classifier that balances the bias-variance tradeoff by favoring:</p>
+                <ul>
+                    <li>High bias (simplifies assumptions about data).</li>
+                    <li>Low variance (performs consistently across datasets).</li>
+                </ul>
+                <p>It works well in applications like spam detection, sentiment analysis, and text classification, but may struggle when feature dependencies are significant.</p>
+            </div>
+            
+        </div>
+    </div>
+    <div class="container-cases">
+        <div class="case">
+            <div class="feature-importance-interpretability">
+                <h2>Feature Importance and Interpretability in Naïve Bayes</h2>
+            
+                <h3>1. Interpretability of Naïve Bayes</h3>
+                <p>Naïve Bayes is considered an <b>interpretable model</b> because:</p>
+                <ul>
+                    <li>It directly calculates the probability of each class given the features.</li>
+                    <li>Each feature contributes independently to the final prediction, making the impact of individual features clear.</li>
+                    <li>The probability scores provide intuitive insights into classification confidence.</li>
+                </ul>
+            
+                <h3>2. Feature Importance in Naïve Bayes</h3>
+                <p>Unlike models like decision trees or linear regression, Naïve Bayes does not provide explicit feature importance scores. However, we can estimate feature importance by:</p>
+                <ul>
+                    <li>Examining the **conditional probabilities** \( P(X_i | Y) \) for each feature \( X_i \).</li>
+                    <li>Looking at the impact of each feature in the **log probability** computation.</li>
+                    <li>Using the **likelihood ratio** to compare feature significance.</li>
+                </ul>
+            
+                <h3>3. Log-Probability and Feature Contribution</h3>
+                <p>Naïve Bayes calculates the probability of a class as:</p>
+                <p>\[
+                P(Y | X_1, X_2, ..., X_n) \propto P(Y) \prod_{i=1}^{n} P(X_i | Y)
+                \]</p>
+                <p>Taking the log probability for numerical stability:</p>
+                <p>\[
+                \log P(Y | X_1, ..., X_n) = \log P(Y) + \sum_{i=1}^{n} \log P(X_i | Y)
+                \]</p>
+                <p>From this equation, we can analyze which features contribute the most by looking at the magnitude of **\( \log P(X_i | Y) \)** values.</p>
+            
+                <h3>4. Measuring Feature Importance</h3>
+                <p>There are different ways to measure feature importance in Naïve Bayes:</p>
+                <ul>
+                    <li><b>Weight of Evidence (WoE):</b> Measures how much a feature contributes to classification by computing the log of the likelihood ratio.</li>
+                    <li><b>Mutual Information:</b> Measures the dependency between a feature and the target class.</li>
+                    <li><b>Permutation Importance:</b> Shuffles feature values and measures the impact on prediction accuracy.</li>
+                </ul>
+            
+                <h3>5. Example: Analyzing Feature Importance in Text Classification</h3>
+                <p>In spam detection, consider the probabilities:</p>
+                <ul>
+                    <li>\( P(\text{"free"} | \text{spam}) = 0.20 \), \( P(\text{"free"} | \text{ham}) = 0.01 \)</li>
+                    <li>\( P(\text{"offer"} | \text{spam}) = 0.15 \), \( P(\text{"offer"} | \text{ham}) = 0.02 \)</li>
+                </ul>
+                <p>Since "free" and "offer" have much higher conditional probabilities in spam emails than in non-spam emails, these words are <b>important features</b> for classification.</p>
+            
+                <h3>6. Limitations of Feature Importance in Naïve Bayes</h3>
+                <ul>
+                    <li>Naïve Bayes assumes **feature independence**, so it does not capture feature interactions.</li>
+                    <li>Feature importance is **not directly available** but can be derived using log probabilities.</li>
+                    <li>It is less useful when features are correlated, as the model does not adjust for dependencies.</li>
+                </ul>
+            
+                <h3>7. Conclusion</h3>
+                <p>Naïve Bayes is an interpretable model where feature importance can be estimated using:</p>
+                <ul>
+                    <li>Log probabilities and likelihood ratios.</li>
+                    <li>Weight of Evidence and Mutual Information.</li>
+                    <li>Analysis of conditional probabilities \( P(X_i | Y) \).</li>
+                </ul>
+                <p>While it does not explicitly compute feature importance like tree-based models, its **simple and transparent structure** makes it a useful tool for understanding feature contributions.</p>
+            </div>
+            
+        </div>
+    </div>
+    <div class="container-cases">
+        <div class="case">
+            <div class="nb-imbalanced-outliers">
+                <h2>Handling Imbalanced Datasets and Outliers in Naïve Bayes</h2>
+            
+                <h3>1. Challenges with Imbalanced Datasets</h3>
+                <p>In an <b>imbalanced dataset</b>, one class has significantly more instances than another. Naïve Bayes assumes equal prior probabilities unless explicitly corrected, which can lead to biased predictions.</p>
+                
+                <h4>📌 Why is it a problem?</h4>
+                <ul>
+                    <li>The model tends to predict the majority class more often.</li>
+                    <li>Minority class instances may be misclassified.</li>
+                    <li>Standard accuracy becomes misleading; metrics like precision-recall are more relevant.</li>
+                </ul>
+            
+                <h3>2. Solutions for Imbalanced Datasets</h3>
+                <h4>✅ Adjusting Prior Probabilities</h4>
+                <p>Instead of assuming uniform class probabilities \( P(Y) \), we can set class priors based on observed class frequencies:</p>
+                <p>\[
+                P(Y = c) = \frac{\text{count}(Y=c)}{\text{total samples}}
+                \]</p>
+            
+                <h4>✅ Using Sampling Techniques</h4>
+                <ul>
+                    <li><b>Oversampling</b>: Duplicate or generate synthetic samples (e.g., using SMOTE).</li>
+                    <li><b>Undersampling</b>: Reduce the majority class to balance the dataset.</li>
+                </ul>
+            
+                <h4>✅ Using Alternative Evaluation Metrics</h4>
+                <p>Accuracy is unreliable in imbalanced datasets. Instead, use:</p>
+                <ul>
+                    <li><b>Precision & Recall</b>: Focus on minority class predictions.</li>
+                    <li><b>F1-Score</b>: Harmonic mean of precision and recall.</li>
+                    <li><b>ROC-AUC</b>: Measures true positive vs. false positive rate.</li>
+                </ul>
+            
+                <h3>3. Impact of Outliers on Naïve Bayes</h3>
+                <p>Naïve Bayes relies on probability estimates, which can be significantly affected by outliers.</p>
+            
+                <h4>📌 Why do outliers affect Naïve Bayes?</h4>
+                <ul>
+                    <li>Extreme feature values can distort probability estimations.</li>
+                    <li>For **Gaussian Naïve Bayes**, outliers influence the mean and variance.</li>
+                    <li>For **Multinomial/Bernoulli Naïve Bayes**, rare words or features may be overemphasized.</li>
+                </ul>
+            
+                <h3>4. Solutions for Handling Outliers</h3>
+                <h4>✅ Laplace (Additive) Smoothing</h4>
+                <p>Laplace smoothing prevents zero probabilities due to rare words or extreme values:</p>
+                <p>\[
+                P(X_i | Y) = \frac{\text{count}(X_i, Y) + \alpha}{\text{count}(Y) + \alpha \cdot |V|}
+                \]</p>
+                <p>where \( \alpha \) (usually 1) prevents division by zero.</p>
+            
+                <h4>✅ Transform Features (Log, Clipping)</h4>
+                <ul>
+                    <li>Apply **log transformation** to reduce extreme variations.</li>
+                    <li>Use **Winsorization** (clipping) to limit extreme values.</li>
+                </ul>
+            
+                <h4>✅ Robust Probability Estimations</h4>
+                <ul>
+                    <li>Use **robust statistics** like median and IQR instead of mean and variance.</li>
+                    <li>Employ **kernel density estimation (KDE)** instead of assuming Gaussian distributions.</li>
+                </ul>
+            
+                <h3>5. Conclusion</h3>
+                <p>To improve Naïve Bayes on imbalanced data and outliers:</p>
+                <ul>
+                    <li>Use **adjusted priors** and **sampling methods** for imbalanced datasets.</li>
+                    <li>Apply **Laplace smoothing** and **log transformations** for handling outliers.</li>
+                    <li>Evaluate performance with **F1-score, ROC-AUC, and precision-recall curves** instead of accuracy.</li>
+                </ul>
+                <p>By addressing these challenges, Naïve Bayes can remain a robust and interpretable model for real-world data.</p>
+            </div>
+            
+        </div>
+    </div>
+
+    <div class="container-cases">
+        <div class="case">
+
+        </div>
+    </div>
+</body>
+
+</html>

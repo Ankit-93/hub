@@ -12,7 +12,7 @@
             margin: 0;
             padding: 0;
             color: #ffffff;
-            background: url('assets/images/Background.webp') no-repeat center center fixed;
+            background: url('../assets/images/Background.webp') no-repeat center center fixed;
             background-size: cover;
             position: relative;
         }
@@ -121,6 +121,39 @@
         @keyframes slideUp {
             from { transform: translateY(20px); opacity: 0; }
             to { transform: translateY(0); opacity: 1; }
+        }        .failure-cases {
+            width: 90%;
+            max-width: 1600px;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+            margin: 20px auto;
+            display: block;
+            /* Stack elements instead of flex */
+            text-align: justify;
+        }
+
+        /* Individual Case Boxes */
+        .case {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.15);
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 6px;
+        }
+
+        .case h3 {
+            color: #ffcc00;
+            margin-bottom: 5px;
+        }
+
+        .case p {
+            color: #ffffff;
+        }
+
+        body::before {
+            pointer-events: none;
         }
     </style>
 </head>
@@ -129,6 +162,8 @@
 </header>
 
 <body>
+    <div class="failure-cases">
+        <div class="case">
     <p><i>Central tendency refers to the statistical concept that describes the center or typical value of a dataset. It provides a single value that summarizes the entire distribution of data, representing a point around which most of the data points tend to cluster. The goal is to find the "center" of the data to understand the overall trend or typical value.</i><br>
         There are three main measures of central tendency:
         <br>
@@ -236,6 +271,6 @@
             Q3 (75th Percentile): P75 ≈ 11.5
         </pre>
     </div>
-
+        </div></div>
 </body>
 </html>

@@ -1,0 +1,912 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Understanding Ensemble Techniques</title>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;700&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <!-- MathJax for Equations -->
+    <script type="text/javascript" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML">
+        </script>
+
+    <style>
+        /* Global Styles */
+        body {
+            font-family: 'Courier New', monospace;
+            margin: 0;
+            padding: 0;
+            color: #ffffff;
+            background: url('../assets/images/ml-background.jpg') no-repeat center center fixed;
+            background-size: cover;
+            position: relative;
+        }
+
+        /* Dark Overlay */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1;
+        }
+
+        /* Layout Containers */
+        header,
+        footer {
+            background: linear-gradient(135deg, #0829df, #04013c);
+            text-align: center;
+            padding: 20px;
+            font-size: 24px;
+            position: relative;
+            z-index: 10;
+        }
+
+        main {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 25px;
+            background: rgba(19, 50, 185, 0.85);
+            border-radius: 10px;
+            box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+            position: relative;
+            z-index: 10;
+        }
+
+        h1,
+        h2,
+        h3 {
+            color: #d9dcdf;
+        }
+
+        /* Styling for Key Sections */
+        .case h3 {
+            color: #ffcc00;
+        }
+
+        .case p {
+            color: #ffffff;
+        }
+
+        /* Table Styles */
+        table {
+            font-family: 'Courier New', monospace;
+            width: 100%;
+            border-collapse: collapse;
+            margin: 10px 0;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        th,
+        td {
+            border: 1px solid #ccc;
+            padding: 8px;
+            text-align: center;
+            font-size: 14px;
+        }
+
+        th {
+            background: rgba(0, 0, 0, 0.2);
+        }
+
+        /* Image Styling */
+        .image-container {
+            text-align: center;
+            margin: 10px 0;
+        }
+
+        .image-container img {
+            width: 35%;
+            border-radius: 5px;
+            box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Content Alignment */
+        .content-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+        }
+
+        .image-container {
+            flex: 1;
+        }
+
+        .image-container img {
+            width: 65%;
+            border-radius: 10px;
+        }
+
+        .text-container {
+            flex: 1;
+            width: 55%;
+        }
+
+        /* Failure Cases Section */
+        .failure-cases {
+            width: 90%;
+            max-width: 1600px;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+            margin: 20px auto;
+            text-align: justify;
+        }
+
+        .case {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.15);
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 6px;
+        }
+
+        /* Decision Tree Node Styles */
+        .node circle {
+            fill: #69b3a2;
+            stroke: #555;
+            stroke-width: 2px;
+        }
+
+        .node text {
+            font-size: 14px;
+            font-family: 'Courier New', monospace;
+            fill: white;
+        }
+
+        .link {
+            fill: none;
+            stroke: #ccc;
+            stroke-width: 2px;
+        }
+    </style>
+</head>
+
+<header>
+    <h1>Ensemble Techniques </h1>
+</header>
+
+<body>
+
+
+    <div class="failure-cases">
+        <div class="case">
+            <div style="font-family: 'Courier New', monospace; padding: 10px; border: 1px solid #ddd;">
+                <h2>How Boosting Works?</h2>
+                <p>
+                    <a href="https://www.youtube.com/watch?v=Nol1hVtLOSg&t=38s" target="_blank"
+                        style="color: blue; text-decoration: none;">
+                        Video Link
+                    </a>
+                </p>
+
+                <div>
+                    <pre style="font-family: 'Courier New', monospace;">
+            The idea of Additive modelling:
+            Additive modelling is at the foundation of Boosting algorithms. The idea is simple - form a complex function by adding together
+            a bunch of simpler terms. In Gradient Boosting, a number of simpler models are added together to give a complex final model.
+            As we shall see, gradient boosting learns a model by taking a weighted sum of a suitable number of base learners.
+                    </pre>
+                </div>
+
+                <div>
+                    <pre style="font-family: 'Courier New', monospace;">
+            Boosting: take low variance and high bias models; use additive combining to reduce bias.
+            - The 𝑁 models are trained sequentially, taking into account the success of the previous model and increasing the
+              weights of the data that this previous model has had the highest error on, which makes the subsequent models focus on the
+              most difficult data observations.
+            - Also, the individual models that perform the best on the weighted training samples will become stronger (get a
+              higher weight) and therefore have a higher impact on the final prediction.
+                    </pre>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="failure-cases">
+        <div class="case" style="font-family: 'Courier New', monospace; padding: 10px; border: 1px solid #ddd;">
+            <div>
+                <h2>Mathematical Process of Gradient Boosting Decision Trees (GBDT)</h2>
+
+                <h3>Example Problem</h3>
+                <p>Suppose we have the following dataset with one feature \( x \) and a target \( y \):</p>
+
+                <table border="1" cellpadding="5" cellspacing="0">
+                    <tr>
+                        <th>\( x \)</th>
+                        <th>\( y \)</th>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>2</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>4</td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>6</td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td>8</td>
+                    </tr>
+                </table>
+
+                <h3>Step 1: Initial Model</h3>
+                <p>The initial model \( \hat{y}_i^{(0)} \) is typically the mean of the target values:</p>
+                <p>\[
+                    \hat{y}_i^{(0)} = \frac{1}{n} \sum_{i=1}^n y_i = \frac{2 + 4 + 6 + 8}{4} = 5
+                    \]</p>
+
+                <p>So, the initial predictions are:</p>
+                <table border="1" cellpadding="5" cellspacing="0">
+                    <tr>
+                        <th>\( x \)</th>
+                        <th>\( y \)</th>
+                        <th>\( \hat{y}_i^{(0)} \)</th>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>2</td>
+                        <td>5</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>4</td>
+                        <td>5</td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>6</td>
+                        <td>5</td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td>8</td>
+                        <td>5</td>
+                    </tr>
+                </table>
+
+                <h3>Step 2: Calculate Residuals (Errors)</h3>
+                <p>The residuals \( r_i^{(1)} \) are the differences between the actual values \( y_i \) and the
+                    predicted values \( \hat{y}_i^{(0)} \):</p>
+                <p>\[
+                    r_i^{(1)} = y_i - \hat{y}_i^{(0)}
+                    \]</p>
+
+                <table border="1" cellpadding="5" cellspacing="0">
+                    <tr>
+                        <th>\( x \)</th>
+                        <th>\( y \)</th>
+                        <th>\( \hat{y}_i^{(0)} \)</th>
+                        <th>\( r_i^{(1)} \)</th>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>2</td>
+                        <td>5</td>
+                        <td>-3</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>4</td>
+                        <td>5</td>
+                        <td>-1</td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>6</td>
+                        <td>5</td>
+                        <td>1</td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td>8</td>
+                        <td>5</td>
+                        <td>3</td>
+                    </tr>
+                </table>
+
+                <h3>Step 3: Train a New Tree on Residuals</h3>
+                <p>A decision tree is trained to predict these residuals. Suppose the tree makes the following
+                    predictions:</p>
+
+                <table border="1" cellpadding="5" cellspacing="0">
+                    <tr>
+                        <th>\( x \)</th>
+                        <th>\( f_1(x) \)</th>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>-2</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>-2</td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>2</td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td>2</td>
+                    </tr>
+                </table>
+
+                <h3>Step 4: Update Predictions</h3>
+                <p>We update the predictions using a learning rate \( \eta = 0.1 \):</p>
+                <p>\[
+                    \hat{y}_i^{(1)} = \hat{y}_i^{(0)} + \eta f_1(x_i)
+                    \]</p>
+
+                <h3>Step 5: Calculate New Residuals</h3>
+                <p>We compute new residuals based on updated predictions:</p>
+
+                <table border="1" cellpadding="5" cellspacing="0">
+                    <tr>
+                        <th>\( x \)</th>
+                        <th>\( y \)</th>
+                        <th>\( \hat{y}_i^{(1)} \)</th>
+                        <th>\( r_i^{(2)} \)</th>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>2</td>
+                        <td>4.8</td>
+                        <td>-2.8</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>4</td>
+                        <td>4.8</td>
+                        <td>-0.8</td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>6</td>
+                        <td>5.2</td>
+                        <td>0.8</td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td>8</td>
+                        <td>5.2</td>
+                        <td>2.8</td>
+                    </tr>
+                </table>
+
+                <h3>Step 6: Train Another Tree on New Residuals</h3>
+                <p>We train another tree \( f_2(x) \) to predict the new residuals. Suppose the tree makes these
+                    predictions:</p>
+
+                <table border="1" cellpadding="5" cellspacing="0">
+                    <tr>
+                        <th>\( x \)</th>
+                        <th>\( f_2(x) \)</th>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>-1.8</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>-1.8</td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>1.8</td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td>1.8</td>
+                    </tr>
+                </table>
+
+                <h3>Step 7: Update Predictions Again</h3>
+                <p>We update the predictions again using \( \eta = 0.1 \):</p>
+                <p>\[
+                    \hat{y}_i^{(2)} = \hat{y}_i^{(1)} + \eta f_2(x_i)
+                    \]</p>
+
+                <h3>Final Model</h3>
+                <p>After 2 iterations, the final predictions are:</p>
+
+                <table border="1" cellpadding="5" cellspacing="0">
+                    <tr>
+                        <th>\( x \)</th>
+                        <th>\( y \)</th>
+                        <th>\( \hat{y}_i^{(2)} \)</th>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>2</td>
+                        <td>4.62</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>4</td>
+                        <td>4.62</td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>6</td>
+                        <td>5.38</td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td>8</td>
+                        <td>5.38</td>
+                    </tr>
+                </table>
+
+                <h3>Key Takeaways</h3>
+                <ul>
+                    <li>Each tree improves predictions by focusing on residuals.</li>
+                    <li>The learning rate \( \eta \) controls the contribution of each tree.</li>
+                    <li>Iterating further reduces errors and improves accuracy.</li>
+                </ul>
+            </div>
+
+
+        </div>
+    </div>
+    <div class="failure-cases">
+        <div class="case" style="font-family: 'Courier New', monospace; padding: 10px; border: 1px solid #ddd;">
+            <div>
+                <h2>Gradient Boosting Decision Trees (GBDT) Optimization</h2>
+
+                <h3>Objective Function</h3>
+                <p>GBDT minimizes a loss function \( L(y, \hat{y}) \) by iteratively fitting decision trees to the
+                    negative gradient of the loss.</p>
+
+                <h4>General Optimization Equation:</h4>
+                <pre>
+            F_0(x) = argmin_c ∑ L(y_i, c)  # Initialize with a constant value (e.g., mean of y)
+            
+            For t = 1 to N (number of trees):
+                - Compute the residuals (negative gradient of the loss function):
+                  r_i^{(t)} = - ∂L(y_i, F_{t-1}(x_i)) / ∂F_{t-1}(x_i)
+                
+                - Fit a regression tree f_t(x) to predict the residuals:
+                  f_t(x) = TrainDecisionTree(X, r^{(t)})
+            
+                - Compute step size γ_t by optimizing:
+                  γ_t = argmin_γ ∑ L(y_i, F_{t-1}(x_i) + γ f_t(x_i))
+                
+                - Update the model:
+                  F_t(x) = F_{t-1}(x) + η γ_t f_t(x)  # η is the learning rate
+            
+            Final model:
+                F_N(x) = F_0(x) + η ∑ γ_t f_t(x)
+                </pre>
+
+                <h3>GBDT Pseudocode</h3>
+                <pre>
+            # Gradient Boosting Decision Trees (GBDT) Pseudocode
+            
+            # Input: Training data (X, y), number of trees (N), learning rate (eta)
+            # Output: Final model F(x)
+            
+            # Step 1: Initialize model with a constant value (typically mean of y)
+            F_0(x) = mean(y)
+            
+            # Step 2: Iterate through N trees
+            for t = 1 to N do:
+                # Compute residuals (negative gradient of loss function)
+                residuals = -Gradient_Loss(y, F_{t-1}(X))
+                
+                # Train a new decision tree f_t(X) to predict residuals
+                f_t(X) = TrainDecisionTree(X, residuals)
+                
+                # Compute optimal step size γ_t
+                gamma_t = OptimalStepSize(y, F_{t-1}(X), f_t(X))
+                
+                # Update the model by adding the scaled predictions of the new tree
+                F_t(x) = F_{t-1}(x) + eta * gamma_t * f_t(x)
+            
+            # Return the final model
+            return F_N(x)
+                </pre>
+            </div>
+
+        </div>
+    </div>
+    <div class="failure-cases">
+        <div class="case" style="font-family: 'Courier New', monospace; padding: 10px; border: 1px solid #ddd;">
+            <div>
+                <h2>Feature Importance in Decision Trees</h2>
+
+                <p>Feature importance in <b>Decision Trees (DT)</b> is computed based on how much each feature
+                    contributes to reducing the impurity (e.g., Gini impurity or entropy) in the dataset. Below are the
+                    key methods used for computing feature importance.</p>
+
+                <h3>1. Gini Importance (Mean Decrease in Impurity)</h3>
+                <p>The most common way to measure feature importance is using <b>Gini Importance</b> (also known as Mean
+                    Decrease in Impurity or MDI). It is computed as:</p>
+
+                <p>
+                    Feature Importance (X<sub>j</sub>) = ∑<sub>t ∈ T<sub>j</sub></sub> (N<sub>t</sub> / N) * ΔI(t)
+                </p>
+
+                <ul>
+                    <li>T<sub>j</sub> = set of all nodes where feature X<sub>j</sub> is used for splitting.</li>
+                    <li>N<sub>t</sub> = number of samples in node t.</li>
+                    <li>N = total number of samples.</li>
+                    <li>ΔI(t) = impurity reduction at node t.</li>
+                </ul>
+
+                <h3>2. Permutation Feature Importance</h3>
+                <p>Another method is <b>Permutation Feature Importance</b>, which measures how much a model’s accuracy
+                    drops when a feature's values are randomly shuffled.</p>
+                <ol>
+                    <li>Train the tree model normally.</li>
+                    <li>Compute the baseline accuracy or error.</li>
+                    <li>Shuffle the values of a feature and predict again.</li>
+                    <li>Measure the drop in accuracy—higher drops indicate more important features.</li>
+                </ol>
+
+                <h3>3. SHAP Values (SHapley Additive exPlanations)</h3>
+                <p>A more advanced and interpretable way to compute feature importance is using <b>SHAP values</b>,
+                    which quantify how much each feature contributes to a model's predictions.</p>
+
+                <h3>Example: Feature Importance in Python (Scikit-Learn)</h3>
+                <pre>
+                <code>
+                from sklearn.tree import DecisionTreeClassifier
+                from sklearn.datasets import load_iris
+                import pandas as pd
+            
+                # Load dataset
+                iris = load_iris()
+                X, y = iris.data, iris.target
+                feature_names = iris.feature_names
+            
+                # Train Decision Tree
+                dt = DecisionTreeClassifier()
+                dt.fit(X, y)
+            
+                # Get feature importances
+                feature_importances = dt.feature_importances_
+            
+                # Display as DataFrame
+                df_importance = pd.DataFrame({'Feature': feature_names, 'Importance': feature_importances})
+                df_importance = df_importance.sort_values(by='Importance', ascending=False)
+            
+                print(df_importance)
+                </code>
+                </pre>
+
+                <h3>Key Takeaways</h3>
+                <ul>
+                    <li><b>Impurity Reduction (Gini Importance)</b> – Measures how much a feature reduces impurity.</li>
+                    <li><b>Permutation Importance</b> – Measures drop in accuracy when a feature is shuffled.</li>
+                    <li><b>SHAP Values</b> – Provides a more interpretable way to measure feature contrib
+
+            </div>
+        </div>
+        <div class="failure-cases">
+            <div class="case" style="font-family: 'Courier New', monospace; padding: 10px; border: 1px solid #ddd;">
+                <div>
+                    <h2>What Kind of Base Learners Are Preferable in Random Forest Classifiers?</h2>
+                
+                    <p>In <b>Random Forest (RF) Classifiers</b>, the choice of base learners significantly impacts the performance of the ensemble model. The preferred base learners should have <b>low bias</b> and <b>high variance</b>, ensuring that the ensemble benefits from variance reduction through averaging.</p>
+                
+                    <h3>1. Decision Trees as Base Learners</h3>
+                    <p>Decision Trees (DT) are commonly used as base learners in Random Forest because they:</p>
+                    <ul>
+                        <li>Are <b>high variance</b> models – small changes in data lead to different trees.</li>
+                        <li>Can capture complex relationships in data.</li>
+                        <li>Work well with bootstrap aggregation (bagging), reducing overfitting.</li>
+                    </ul>
+                
+                    <h3>2. Depth of Decision Trees</h3>
+                    <p>To ensure optimal performance, Decision Trees in Random Forest should have a <b>reasonable depth</b>:</p>
+                    <ul>
+                        <li>If trees are <b>too deep</b>, they may overfit individual bootstrap samples.</li>
+                        <li>If trees are <b>too shallow</b>, they may have high bias and underperform.</li>
+                    </ul>
+                    <p>Typically, in Random Forest, trees are grown <b>fully or with moderate depth</b> (e.g., max depth between 5-20 depending on the dataset) to maintain high variance while allowing bagging to stabilize predictions.</p>
+                
+                    <h3>3. Why High Variance Base Learners?</h3>
+                    <p>Random Forest reduces variance by averaging predictions from multiple independent trees. Using <b>high variance base learners</b> ensures diversity among individual trees, making the ensemble more robust.</p>
+                
+                    <h3>4. Example: Implementing Random Forest with Decision Trees in Python</h3>
+                    <pre>
+                    <code>
+                    from sklearn.ensemble import RandomForestClassifier
+                    from sklearn.datasets import load_iris
+                
+                    # Load dataset
+                    iris = load_iris()
+                    X, y = iris.data, iris.target
+                
+                    # Train Random Forest with Decision Trees as base learners
+                    rf = RandomForestClassifier(n_estimators=100, max_depth=10, random_state=42)
+                    rf.fit(X, y)
+                
+                    # Print feature importances
+                    print("Feature Importances:", rf.feature_importances_)
+                    </code>
+                    </pre>
+                
+                    <h3>Key Takeaways</h3>
+                    <ul>
+                        <li><b>Low Bias, High Variance Models</b> – Decision Trees are preferred as they provide diversity.</li>
+                        <li><b>Reasonable Tree Depth</b> – Too deep trees may overfit, too shallow trees may underperform.</li>
+                        <li><b>Bagging Reduces Variance</b> – Combining multiple high-variance trees stabilizes predictions.</li>
+                    </ul>
+                </div>
+                
+            </div>
+        </div>
+        <div class="failure-cases">
+            <div class="case" style="font-family: 'Courier New', monospace; padding: 10px; border: 1px solid #ddd;">
+                <div>
+                    <h2>How Does Bootstrapping Work in Random Forest Classification?</h2>
+                
+                    <p>Bootstrapping is a fundamental concept in <b>Random Forest (RF)</b> that helps in reducing variance and improving model stability. It involves sampling with replacement to create multiple training datasets.</p>
+                
+                    <h3>1. Bootstrapping: Sampling with Replacement</h3>
+                    <p>Given a standard training set <b>D</b> of size <b>n</b>, Random Forest generates <b>m</b> new training sets <b>Dᵢ</b>, each of size <b>n</b>, by sampling from <b>D</b> <b>uniformly and with replacement</b>.</p>
+                
+                    <ul>
+                        <li>Since we sample with replacement, some observations may appear multiple times in a given <b>Dᵢ</b>.</li>
+                        <li>For large <b>n</b>, a bootstrap sample <b>Dᵢ</b> contains about <b>63.2%</b> unique examples from the original dataset <b>D</b>, while the rest are duplicates.</li>
+                    </ul>
+                
+                    <h3>2. Training on Bootstrap Samples</h3>
+                    <p>Each of the <b>m</b> bootstrap samples is used to train an individual model, usually a <b>Decision Tree</b>. This ensures that each tree sees a slightly different version of the data.</p>
+                
+                    <h3>3. Aggregation (Bagging)</h3>
+                    <p>The outputs of these <b>m</b> models are then combined to make the final prediction:</p>
+                    <ul>
+                        <li>For <b>classification</b>: Majority voting is used to determine the final class.</li>
+                        <li>For <b>regression</b>: Predictions are averaged to obtain the final output.</li>
+                    </ul>
+                
+                    <h3>4. Impact of Bootstrapping in Random Forest</h3>
+                    <p>Bootstrapping plays a crucial role in stabilizing the Random Forest model:</p>
+                    <ul>
+                        <li><b>Variance Reduction</b>: Since we aggregate multiple diverse models, the overall variance is reduced.</li>
+                        <li><b>Robustness</b>: Even if a portion of the data is changed, the overall prediction remains stable.</li>
+                        <li><b>Low Bias & Reduced Variance</b>: Individual trees may have <b>low bias and high variance</b>, but bagging ensures the final model has <b>low bias and reduced variance</b>.</li>
+                    </ul>
+                
+                    <h3>5. Example: Implementing Bootstrapping in Random Forest</h3>
+                    <pre>
+                    <code>
+                    from sklearn.ensemble import RandomForestClassifier
+                    from sklearn.datasets import load_iris
+                
+                    # Load dataset
+                    iris = load_iris()
+                    X, y = iris.data, iris.target
+                
+                    # Train Random Forest with bootstrapping
+                    rf = RandomForestClassifier(n_estimators=100, bootstrap=True, random_state=42)
+                    rf.fit(X, y)
+                
+                    # Print feature importances
+                    print("Feature Importances:", rf.feature_importances_)
+                    </code>
+                    </pre>
+                
+                    <h3>Key Takeaways</h3>
+                    <ul>
+                        <li><b>Bootstrapping</b> creates multiple training datasets by sampling with replacement.</li>
+                        <li>Each tree is trained on a different <b>bootstrap sample</b>.</li>
+                        <li>The final prediction is obtained by <b>majority voting</b> (classification) or <b>averaging</b> (regression).</li>
+                        <li>Bootstrapping ensures that <b>variance is reduced</b> and <b>model stability</b> is improved.</li>
+                    </ul>
+                </div>
+                
+            </div>
+        </div>
+        <div class="failure-cases">
+            <div class="case" style="font-family: 'Courier New', monospace; padding: 10px; border: 1px solid #ddd;">
+                <div>
+                    <h2>Why is Bagging Better Than Boosting?</h2>
+                
+                    <pre>
+                    Bagging is the simplest way of combining predictions that belong to the same type, 
+                    while Boosting is a way of combining predictions that belong to different types.
+                    
+                    - Bagging aims to decrease variance, not bias.
+                    - Boosting aims to decrease bias, not variance.
+                    </pre>
+                
+                    <h3>1. Difference in Approach</h3>
+                    <ul>
+                        <li><b>Bagging (Bootstrap Aggregating)</b> trains multiple models independently in parallel on different bootstrap samples and averages their predictions.</li>
+                        <li><b>Boosting</b> trains models sequentially, with each new model correcting the errors of the previous model.</li>
+                    </ul>
+                
+                    <h3>2. Stability and Overfitting</h3>
+                    <ul>
+                        <li>Bagging is less prone to overfitting because it reduces variance by averaging multiple models.</li>
+                        <li>Boosting can overfit more easily since it aggressively corrects mistakes in training.</li>
+                    </ul>
+                
+                    <h3>3. Computation and Interpretability</h3>
+                    <ul>
+                        <li>Bagging is computationally efficient and easy to parallelize.</li>
+                        <li>Boosting is harder to parallelize since it builds models sequentially.</li>
+                    </ul>
+                
+                    <h3>4. When to Use Bagging vs. Boosting</h3>
+                    <ul>
+                        <li><b>Use Bagging</b> when you have a high variance model like Decision Trees to improve stability.</li>
+                        <li><b>Use Boosting</b> when you have a high bias model and need better accuracy but can handle the risk of overfitting.</li>
+                    </ul>
+                
+                    <h3>5. Example: Implementing Bagging in Python</h3>
+                    <pre>
+                    <code>
+                    from sklearn.ensemble import BaggingClassifier
+                    from sklearn.tree import DecisionTreeClassifier
+                    from sklearn.datasets import load_iris
+                    from sklearn.model_selection import train_test_split
+                
+                    # Load dataset
+                    iris = load_iris()
+                    X_train, X_test, y_train, y_test = train_test_split(iris.data, iris.target, test_size=0.3, random_state=42)
+                
+                    # Train Bagging Classifier
+                    bagging_clf = BaggingClassifier(base_estimator=DecisionTreeClassifier(), n_estimators=50, random_state=42)
+                    bagging_clf.fit(X_train, y_train)
+                
+                    # Evaluate the model
+                    print("Bagging Classifier Accuracy:", bagging_clf.score(X_test, y_test))
+                    </code>
+                    </pre>
+                
+                    <h3>Key Takeaways</h3>
+                    <ul>
+                        <li><b>Bagging</b> reduces variance and stabilizes predictions.</li>
+                        <li><b>Boosting</b> reduces bias but may lead to overfitting.</li>
+                        <li>Bagging is simpler, more robust, and easier to parallelize.</li>
+                    </ul>
+                </div>
+                
+            </div>
+        </div>
+        <div class="failure-cases">
+            <div class="case" style="font-family: 'Courier New', monospace; padding: 10px; border: 1px solid #ddd;">
+                <div>
+                    <h2>Boosting vs. Bagging: Overfitting in Different Data Conditions</h2>
+                
+                    <h3>Understanding Bias and Variance</h3>
+                    <pre>
+                    - Bagging decreases variance.
+                    - Boosting decreases bias.
+                    - Underfitting occurs when a model has high bias and low variance.
+                    - Overfitting occurs when a model has low bias and high variance.
+                    </pre>
+                
+                    <h3>1. When the Number of Data Points is Huge</h3>
+                    <ul>
+                        <li>Bagging performs well because it stabilizes predictions and reduces variance.</li>
+                        <li>Boosting may still work effectively, but with enough data, bias is naturally reduced, making Boosting less necessary.</li>
+                        <li>Overfitting risk is lower in both methods due to the large dataset.</li>
+                    </ul>
+                
+                    <h3>2. When the Number of Data Points is Low</h3>
+                    <ul>
+                        <li>Boosting is more prone to overfitting because it aggressively corrects mistakes, even when they are due to noise.</li>
+                        <li>Bagging helps by reducing variance, but if the dataset is too small, the models may still suffer from high variance.</li>
+                        <li>Overfitting risk is higher in Boosting than in Bagging.</li>
+                    </ul>
+                
+                    <h3>3. Key Takeaways</h3>
+                    <pre>
+                    - If data is large → Both Bagging and Boosting work, but Boosting is not as necessary.
+                    - If data is small → Boosting is more prone to overfitting, while Bagging is safer.
+                    - In general, Boosting overfits more than Bagging.
+                    </pre>
+                
+                    <h3>4. Example: Overfitting in Boosting</h3>
+                    <pre>
+                    <code>
+                    from sklearn.ensemble import AdaBoostClassifier
+                    from sklearn.tree import DecisionTreeClassifier
+                    from sklearn.datasets import make_classification
+                    from sklearn.model_selection import train_test_split
+                
+                    # Create a small dataset
+                    X, y = make_classification(n_samples=50, n_features=10, random_state=42)
+                    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
+                
+                    # Train Boosting Classifier
+                    boosting_clf = AdaBoostClassifier(base_estimator=DecisionTreeClassifier(max_depth=2), n_estimators=50, random_state=42)
+                    boosting_clf.fit(X_train, y_train)
+                
+                    # Evaluate the model
+                    print("Boosting Classifier Accuracy on Training:", boosting_clf.score(X_train, y_train))
+                    print("Boosting Classifier Accuracy on Test:", boosting_clf.score(X_test, y_test))
+                    </code>
+                    </pre>
+                
+                    <p>This example demonstrates how Boosting can overfit a small dataset, leading to much higher training accuracy than test accuracy.</p>
+                </div>
+                
+            </div>
+        </div>
+        <div class="failure-cases">
+            <div class="case" style="font-family: 'Courier New', monospace; padding: 10px; border: 1px solid #ddd;">
+                <div>
+                    <h2>Parallelization in Bagging vs. Computational Cost in Boosting</h2>
+                
+                    <h3>1. Parallelization in Bagging</h3>
+                    <pre>
+                    - One of the big advantages of bagging is that it can be parallelized.
+                    - Different models are fitted independently from each other.
+                    - Intensive parallelization techniques can be used if required.
+                    - This makes bagging computationally efficient and scalable.
+                    </pre>
+                
+                    <h3>2. Computational Cost in Boosting</h3>
+                    <pre>
+                    - Boosting uses a sequential modeling technique.
+                    - The same model is trained repeatedly, each time adjusting to previous errors.
+                    - Because each model depends on the previous one, it cannot be parallelized easily.
+                    - As a result, boosting requires more computational power compared to bagging.
+                    </pre>
+                
+                    <h3>3. Key Takeaways</h3>
+                    <pre>
+                    - Bagging is highly parallelizable and computationally efficient.
+                    - Boosting is sequential and requires more time and computational resources.
+                    - When scalability is needed, bagging is often the better choice.
+                    </pre>
+                
+                    <h3>4. Example: Parallelization in Bagging</h3>
+                    <pre>
+                    <code>
+                    from sklearn.ensemble import BaggingClassifier
+                    from sklearn.tree import DecisionTreeClassifier
+                    from sklearn.datasets import make_classification
+                    from sklearn.model_selection import train_test_split
+                
+                    # Create a dataset
+                    X, y = make_classification(n_samples=1000, n_features=20, random_state=42)
+                    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
+                
+                    # Train Bagging Classifier with parallel processing (n_jobs=-1 uses all CPU cores)
+                    bagging_clf = BaggingClassifier(base_estimator=DecisionTreeClassifier(), n_estimators=50, n_jobs=-1, random_state=42)
+                    bagging_clf.fit(X_train, y_train)
+                
+                    # Evaluate the model
+                    print("Bagging Classifier Accuracy:", bagging_clf.score(X_test, y_test))
+                    </code>
+                    </pre>
+                
+                    <p>The above code demonstrates how bagging leverages parallel computing by setting <code>n_jobs=-1</code>, utilizing all CPU cores for training.</p>
+                </div>
+                
+            </div>
+        </div>
+        <div class="failure-cases">
+            <div class="case" style="font-family: 'Courier New', monospace; padding: 10px; border: 1px solid #ddd;">
+            </div>
+        </div>
+
+
+
+
+</body>
+
+</html>

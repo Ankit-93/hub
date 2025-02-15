@@ -1,0 +1,1303 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Understanding Decision Tree</title>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;700&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <!-- MathJax for Equations -->
+    <script type="text/javascript" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML">
+        </script>
+
+    <style>
+        /* Global Styles */
+        body {
+            font-family: 'Courier New', monospace;
+            margin: 0;
+            padding: 0;
+            color: #ffffff;
+            background: url('../assets/images/ml-background.jpg') no-repeat center center fixed;
+            background-size: cover;
+            position: relative;
+        }
+
+        /* Dark Overlay */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1;
+        }
+
+        /* Layout Containers */
+        header,
+        footer {
+            background: linear-gradient(135deg, #0829df, #04013c);
+            text-align: center;
+            padding: 20px;
+            font-size: 24px;
+            position: relative;
+            z-index: 10;
+        }
+
+        main {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 25px;
+            background: rgba(19, 50, 185, 0.85);
+            border-radius: 10px;
+            box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+            position: relative;
+            z-index: 10;
+        }
+
+        h1,
+        h2,
+        h3 {
+            color: #d9dcdf;
+        }
+
+        /* Styling for Key Sections */
+        .case h3 {
+            color: #ffcc00;
+        }
+
+        .case p {
+            color: #ffffff;
+        }
+
+        /* Table Styles */
+        table {
+            font-family:'Courier New', monospace;
+            width: 100%;
+            border-collapse: collapse;
+            margin: 10px 0;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        th,
+        td {
+            border: 1px solid #ccc;
+            padding: 8px;
+            text-align: center;
+            font-size: 14px;
+        }
+
+        th {
+            background: rgba(0, 0, 0, 0.2);
+        }
+
+        /* Image Styling */
+        .image-container {
+            text-align: center;
+            margin: 10px 0;
+        }
+
+        .image-container img {
+            width: 35%;
+            border-radius: 5px;
+            box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Content Alignment */
+        .content-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+        }
+
+        .image-container {
+            flex: 1;
+        }
+
+        .image-container img {
+            width: 65%;
+            border-radius: 10px;
+        }
+
+        .text-container {
+            flex: 1;
+            width: 55%;
+        }
+
+        /* Failure Cases Section */
+        .failure-cases {
+            width: 90%;
+            max-width: 1600px;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+            margin: 20px auto;
+            text-align: justify;
+        }
+
+        .case {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.15);
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 6px;
+        }
+
+        /* Decision Tree Node Styles */
+        .node circle {
+            fill: #69b3a2;
+            stroke: #555;
+            stroke-width: 2px;
+        }
+
+        .node text {
+            font-size: 14px;
+            font-family: 'Courier New', monospace;
+            fill: white;
+        }
+
+        .link {
+            fill: none;
+            stroke: #ccc;
+            stroke-width: 2px;
+        }
+    </style>
+</head>
+
+<header>
+    <h1>Decision Trees (DT) </h1>
+</header>
+
+<body>
+    <div class="failure-cases">
+        <div class="case">
+            <div>
+                <h3><strong>Geometric Intuition of Decision Trees: Axis-Parallel Hyperplanes</strong></h3>
+                <p>A <strong>Decision Tree</strong> is a flowchart-like structure that recursively splits data based on
+                    feature values. Each split creates decision boundaries that are <strong>parallel to the feature
+                        axes</strong>, which makes decision trees highly interpretable. Below, we explore how a decision
+                    tree models the given dataset.</p>
+
+                <hr>
+
+                <h3><strong>Dataset Used</strong></h3>
+
+                <table border="1">
+                    <tr>
+                        <th>Outlook</th>
+                        <th>Temp.</th>
+                        <th>Humidity</th>
+                        <th>Windy</th>
+                        <th>Play Golf</th>
+                    </tr>
+                    <tr>
+                        <td>Rainy</td>
+                        <td>Hot</td>
+                        <td>High</td>
+                        <td>False</td>
+                        <td>No</td>
+                    </tr>
+                    <tr>
+                        <td>Rainy</td>
+                        <td>Hot</td>
+                        <td>High</td>
+                        <td>True</td>
+                        <td>No</td>
+                    </tr>
+                    <tr>
+                        <td>Overcast</td>
+                        <td>Hot</td>
+                        <td>High</td>
+                        <td>False</td>
+                        <td>Yes</td>
+                    </tr>
+                    <tr>
+                        <td>Sunny</td>
+                        <td>Mild</td>
+                        <td>High</td>
+                        <td>False</td>
+                        <td>Yes</td>
+                    </tr>
+                    <tr>
+                        <td>Sunny</td>
+                        <td>Cool</td>
+                        <td>Normal</td>
+                        <td>False</td>
+                        <td>Yes</td>
+                    </tr>
+                    <tr>
+                        <td>Sunny</td>
+                        <td>Cool</td>
+                        <td>Normal</td>
+                        <td>True</td>
+                        <td>No</td>
+                    </tr>
+                    <tr>
+                        <td>Overcast</td>
+                        <td>Cool</td>
+                        <td>Normal</td>
+                        <td>True</td>
+                        <td>Yes</td>
+                    </tr>
+                    <tr>
+                        <td>Rainy</td>
+                        <td>Mild</td>
+                        <td>High</td>
+                        <td>False</td>
+                        <td>No</td>
+                    </tr>
+                    <tr>
+                        <td>Rainy</td>
+                        <td>Cool</td>
+                        <td>Normal</td>
+                        <td>False</td>
+                        <td>Yes</td>
+                    </tr>
+                    <tr>
+                        <td>Sunny</td>
+                        <td>Mild</td>
+                        <td>Normal</td>
+                        <td>False</td>
+                        <td>Yes</td>
+                    </tr>
+                    <tr>
+                        <td>Rainy</td>
+                        <td>Mild</td>
+                        <td>Normal</td>
+                        <td>True</td>
+                        <td>Yes</td>
+                    </tr>
+                    <tr>
+                        <td>Overcast</td>
+                        <td>Mild</td>
+                        <td>High</td>
+                        <td>True</td>
+                        <td>Yes</td>
+                    </tr>
+                    <tr>
+                        <td>Overcast</td>
+                        <td>Hot</td>
+                        <td>Normal</td>
+                        <td>False</td>
+                        <td>Yes</td>
+                    </tr>
+                    <tr>
+                        <td>Sunny</td>
+                        <td>Mild</td>
+                        <td>High</td>
+                        <td>True</td>
+                        <td>No</td>
+                    </tr>
+                </table>
+                <p>This dataset contains <strong>four predictor variables</strong> (Outlook, Temperature, Humidity, and
+                    Windy) and a target variable (<strong>Play Golf?</strong>), which the decision tree uses to classify
+                    whether playing golf is feasible or not.</p>
+
+                <hr>
+
+                <h3><strong>How the Decision Tree Works on This Dataset</strong></h3>
+                <ol>
+                    <li><strong>Step 1: Splitting on Outlook (First Decision Boundary)</strong>
+                        <ul>
+                            <li>The tree first checks <strong>Outlook</strong> because it is the most informative
+                                feature.</li>
+                            <li>This results in <strong>three distinct groups</strong> in the feature space:
+                                <ul>
+                                    <li>If <strong>Outlook = Overcast</strong> → <strong>Always "Yes"</strong> (No
+                                        further splitting needed).</li>
+                                    <li>If <strong>Outlook = Sunny</strong> → Further splits occur based on
+                                        <strong>Windy</strong>.
+                                    </li>
+                                    <li>If <strong>Outlook = Rainy</strong> → Further splits occur based on
+                                        <strong>Humidity</strong>.
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                    <li><strong>Step 2: Further Splitting on Other Features</strong>
+                        <ul>
+                            <li><strong>For Sunny Days:</strong>
+                                <ul>
+                                    <li>If it is <strong>Windy = False</strong> → <strong>"Yes"</strong> (can play
+                                        golf).</li>
+                                    <li>If it is <strong>Windy = True</strong> → <strong>"No"</strong> (not suitable).
+                                    </li>
+                                </ul>
+                            </li>
+                            <li><strong>For Rainy Days:</strong>
+                                <ul>
+                                    <li>If <strong>Humidity = High</strong> → <strong>"No"</strong> (too humid to play).
+                                    </li>
+                                    <li>If <strong>Humidity = Normal</strong> → <strong>"Yes"</strong> (good
+                                        conditions).</li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                    <li><strong>Final Decision Boundaries</strong>
+                        <ul>
+                            <li>The dataset is now divided into smaller <strong>rectangular decision regions</strong>,
+                                each corresponding to a final classification (Yes/No).</li>
+                            <li>Each <strong>leaf node in the decision tree represents a final classification</strong>
+                                for a set of feature values.</li>
+                        </ul>
+                    </li>
+                </ol>
+
+                <hr>
+
+                <h3><strong>Geometric Intuition: How the Tree Creates Decision Boundaries</strong></h3>
+                <ul>
+                    <li>The decision tree divides the <strong>feature space into axis-parallel regions</strong>.</li>
+                    <li>Each split corresponds to a <strong>vertical or horizontal boundary</strong> in the space of
+                        selected features.</li>
+                    <li>The resulting decision regions are <strong>rectangular</strong> and aligned with feature axes.
+                    </li>
+                    <li>This structure is different from models like logistic regression, which create <strong>diagonal
+                            decision boundaries</strong>.</li>
+                </ul>
+
+                <h4><strong>Example: Decision Boundaries for Outlook & Humidity</strong></h4>
+                <p>If we visualize a <strong>2D feature space</strong> with <strong>Outlook</strong> on the x-axis and
+                    <strong>Humidity</strong> on the y-axis:
+                </p>
+                <ul>
+                    <li>The first split at <strong>Outlook = Overcast</strong> creates a <strong>vertical
+                            boundary</strong> separating "Yes" from the rest.</li>
+                    <li>The second split at <strong>Humidity = High</strong> for Rainy days creates a <strong>horizontal
+                            boundary</strong> in the Rainy region.</li>
+                    <li>Further splits (like Windy for Sunny days) refine the classification into more
+                        <strong>rectangular</strong> segments.
+                    </li>
+                </ul>
+
+                <hr>
+
+                <h3><strong>Key Takeaways</strong></h3>
+                <ul>
+                    <li>✅ <strong>Decision Trees create axis-aligned decision boundaries</strong> (rectangular regions).
+                    </li>
+                    <li>✅ <strong>Each split represents an IF-ELSE condition</strong>, forming nested rules.</li>
+                    <li>✅ <strong>Deeper trees create more refined partitions</strong>, improving accuracy but risking
+                        overfitting.</li>
+                </ul>
+
+                <p>This makes Decision Trees <strong>intuitive</strong> and <strong>interpretable</strong>, but they may
+                    struggle when dealing with complex, non-rectangular patterns in data. Would you like a visual
+                    example of the decision regions? 🚀</p>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="failure-cases">
+        <div class="case">
+            <div>
+                <h2>Explain Entropy?</h2>
+                <h3>Entropy</h3>
+                <ul>
+                    <li>Entropy is a measure of unpredictability. A feature with higher entropy has more random values
+                        than the one with lower entropy.</li>
+                    <li>Suppose we tossed a coin 4 times,</li>
+                </ul>
+
+                <table border="1">
+                    <tr>
+                        <th>Output</th>
+                        <th>P(H)</th>
+                        <th>P(T)</th>
+                        <th>Entropy</th>
+                        <th>Interpretation</th>
+                    </tr>
+                    <tr>
+                        <td>{H, H, T, T}</td>
+                        <td>50%</td>
+                        <td>50%</td>
+                        <td>1</td>
+                        <td>Output is a random event</td>
+                    </tr>
+                    <tr>
+                        <td>{T, T, T, H}</td>
+                        <td>25%</td>
+                        <td>75%</td>
+                        <td>0.8113</td>
+                        <td>The result is less random i.e., biased coin</td>
+                    </tr>
+                </table>
+
+                <ul>
+                    <li>For a given random variable Y which has K values, then entropy of Y is:</li>
+                </ul>
+
+                <div>
+                    <p>H(y) = - Σ P(y<sub>i</sub>) log<sub>b</sub> (P(y<sub>i</sub>))</p>
+                    <p>P(y<sub>i</sub>) = P(Y = y<sub>i</sub>)</p>
+                    <p>typ. b = 2 (log) or b = e (ln)</p>
+                </div>
+
+                <ul>
+                    <li>For example, for the above play golf example, there are two classes:</li>
+                </ul>
+
+                <div>
+                    <p>H(y) = -P(y = yes) log (P(y = yes)) - P(y = no) log (P(y = no))</p>
+                    <p>H(y) = - (9/14) log (9/14) - (5/14) log (5/14) = 0.94</p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="failure-cases">
+        <div class="case">
+            <div style="font-family: 'Courier New', monospace;">
+
+                <!-- 2-Class Example Section -->
+                <h3>Comparing entropies for different cases for 2-class
+                    example<span style="background-color: yellow;"></span></h3>
+                <div class="content-container">
+                    <div class="image-container">
+                        <img src="../assets/images/entropy.png" alt="Entropy graph for 2-class example">
+                    </div>
+
+                    <div class="text-container">
+                        <!-- Right Side: Table and Explanation -->
+                        <div style="width: 60%; padding-left: 20px;">
+                            <table border="1" width="100%">
+                                <tr>
+                                    <th>Sr. No.</th>
+                                    <th>P(Y+)</th>
+                                    <th>P(Y-)</th>
+                                    <th>Entropy</th>
+                                </tr>
+                                <tr>
+                                    <td>1</td>
+                                    <td>99%</td>
+                                    <td>1%</td>
+                                    <td>0.08</td>
+                                </tr>
+                                <tr>
+                                    <td>2</td>
+                                    <td>50%</td>
+                                    <td>50%</td>
+                                    <td>1.00</td>
+                                </tr>
+                                <tr>
+                                    <td>3</td>
+                                    <td>100%</td>
+                                    <td>0%</td>
+                                    <td>0.00</td>
+                                </tr>
+                            </table>
+                            <p>If both classes are equally probable, we have a maximum entropy value of 1.</p>
+                            <p>If one class fully dominates, the entropy value becomes 0.</p>
+                        </div>
+                        <div class="image-container">
+                            <div style="width: 35%; padding-left: 2px;">
+                                <img src="../assets/images/entropy-formula.png" alt="Entropy graph for 2-class example">
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <h3>Comparing entropies for different cases for Multi-class example
+                    <span style="background-color: yellow;"></span>
+                </h3>
+
+                <ul>
+                    <li>If all classes are equiprobable, the entropy will be maximum, i.e., uniform distribution.</li>
+                </ul>
+
+                <div style="text-align: center;">
+                    <img src="../assets/images/continuous-uniform-distribution-graph.png"
+                        alt="Uniform distribution entropy graph" width="40%">
+                </div>
+
+                <ul>
+                    <li>If one class has 100% probability and others are zero, the entropy is minimum.</li>
+                    <li>In this figure, entropy of skewed distribution will be lesser than that of normally distributed.
+                        More peaked is the distribution, lesser will be the entropy.</li>
+                </ul>
+                <div style="font-family: 'Courier New', monospace;">
+                    <h3>• <b>Kullback-Leibler Divergence or relative entropy</b></h3>
+
+                    <div style="display: flex; align-items: center;">
+                        <div style="flex: 1;">
+                            <img src="../assets/images/KL.png" alt="KL Divergence Graph" width="100%">
+                        </div>
+                        <div style="flex: 1;">
+                            <ul>
+                                <li>KL Divergence measures the difference between two probability distributions over the
+                                    same variable <i>X</i>.</li>
+                                <li>For Discrete probability distributions <i>P</i> & <i>Q</i> on the same probability
+                                    space <i>X</i></li>
+                            </ul>
+                            <div style="width: 65%; text-align: right;">
+                                <p>
+                                    \( D_{KL}(P || Q) = \sum_{x \in X} p(x) \log \frac{p(x)}{q(x)} \)
+                                </p>
+                            </div>
+
+                            <ul>
+                                <li>For distributions <i>P</i> and <i>Q</i> of a continuous random variable</li>
+                            </ul>
+                            <div style="width: 65%; text-align: right;">
+                                <p>
+                                    \( D_{KL}(P || Q) = \int_{-\infty}^{\infty} p(x) \log \frac{p(x)}{q(x)} \,dx \)
+                                </p>
+                                <p>p(x) and q(x) are probability densities of P & Q</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+
+    </div>
+
+    <div class="failure-cases">
+        <div class="case">
+            <div>
+                <h2>Explain Information Gain</h2>
+
+                <div>
+                    <h3>Information Gain</h3>
+                    <p>
+                        The information gain is based on the decrease in entropy after a dataset is split on an
+                        attribute.
+                        Constructing a decision tree is all about finding the attribute that returns the highest
+                        information
+                        gain (i.e., the most homogeneous branches).
+                    </p>
+                    <p><strong>Example:</strong></p>
+                    <ul>
+                        <li>As we know, entropy of golf example was 0.94</li>
+                    </ul>
+
+                    <p>
+                        \[
+                        H(y) = -P(y = \text{yes}) \log P(y = \text{yes}) - P(y = \text{no}) \log P(y = \text{no})
+                        \]
+                    </p>
+
+                    <p>
+                        \[
+                        H(y) = - \left( \frac{9}{14} \log \frac{9}{14} + \frac{5}{14} \log \frac{5}{14} \right) = 0.94
+                        \]
+                    </p>
+
+                    <p>
+                        The dataset is then split on the different attributes. The entropy for each branch is
+                        calculated.
+                        Then it is added proportionally to get total entropy for the split. The resulting entropy is
+                        subtracted from the entropy before the split. The result is the <strong>Information
+                            Gain</strong>,
+                        or decrease in entropy.
+
+                    <div class="table-container">
+                        <div class="table-column">
+                            <!-- Outlook vs Play Golf -->
+                            <div class="table">
+                                <h3>Outlook vs Play Golf</h3>
+                                <table>
+                                    <tr>
+                                        <th>Outlook</th>
+                                        <th>Yes</th>
+                                        <th>No</th>
+                                        <th>Entropy</th>
+                                        <th>W.E(Play, Outlook)</th>
+                                    </tr>
+                                    <tr>
+                                        <td>Sunny</td>
+                                        <td>3</td>
+                                        <td>2</td>
+                                        <td>0.9710</td>
+                                        <td>0.3468</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Overcast</td>
+                                        <td>4</td>
+                                        <td>0</td>
+                                        <td>0.0000</td>
+                                        <td>0.0000</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Rainy</td>
+                                        <td>3</td>
+                                        <td>2</td>
+                                        <td>0.9710</td>
+                                        <td>0.3468</td>
+                                    </tr>
+                                    <tr class="gain">
+                                        <td><strong>Gain</strong></td>
+                                        <td colspan="4"><strong>0.246</strong></td>
+                                    </tr>
+                                </table>
+                            </div>
+
+                            <!-- Humidity vs Play Golf -->
+                            <div class="table">
+                                <h3>Humidity vs Play Golf</h3>
+                                <table>
+                                    <tr>
+                                        <th>Humidity</th>
+                                        <th>Yes</th>
+                                        <th>No</th>
+                                        <th>Entropy</th>
+                                        <th>W.E(Play, Humidity)</th>
+                                    </tr>
+                                    <tr>
+                                        <td>High</td>
+                                        <td>3</td>
+                                        <td>4</td>
+                                        <td>0.9852</td>
+                                        <td>0.4926</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Normal</td>
+                                        <td>6</td>
+                                        <td>1</td>
+                                        <td>0.5917</td>
+                                        <td>0.2958</td>
+                                    </tr>
+                                    <tr class="gain">
+                                        <td><strong>Gain</strong></td>
+                                        <td colspan="4"><strong>0.152</strong></td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="table-column">
+                            <!-- Temperature vs Play Golf -->
+                            <div class="table">
+                                <h3>Temperature vs Play Golf</h3>
+                                <table>
+                                    <tr>
+                                        <th>Temp</th>
+                                        <th>Yes</th>
+                                        <th>No</th>
+                                        <th>Entropy</th>
+                                        <th>W.E(Play, Temp)</th>
+                                    </tr>
+                                    <tr>
+                                        <td>Hot</td>
+                                        <td>2</td>
+                                        <td>2</td>
+                                        <td>1.0000</td>
+                                        <td>0.2857</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Mild</td>
+                                        <td>4</td>
+                                        <td>2</td>
+                                        <td>0.9183</td>
+                                        <td>0.3936</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Cool</td>
+                                        <td>3</td>
+                                        <td>1</td>
+                                        <td>0.8113</td>
+                                        <td>0.2318</td>
+                                    </tr>
+                                    <tr class="gain">
+                                        <td><strong>Gain</strong></td>
+                                        <td colspan="4"><strong>0.029</strong></td>
+                                    </tr>
+                                </table>
+                            </div>
+
+                            <!-- Windy vs Play Golf -->
+                            <div class="table">
+                                <h3>Windy vs Play Golf</h3>
+                                <table>
+                                    <tr>
+                                        <th>Windy</th>
+                                        <th>Yes</th>
+                                        <th>No</th>
+                                        <th>Entropy</th>
+                                        <th>W.E(Play, Windy)</th>
+                                    </tr>
+                                    <tr>
+                                        <td>FALSE</td>
+                                        <td>6</td>
+                                        <td>2</td>
+                                        <td>0.8113</td>
+                                        <td>0.4636</td>
+                                    </tr>
+                                    <tr>
+                                        <td>TRUE</td>
+                                        <td>3</td>
+                                        <td>3</td>
+                                        <td>1.0000</td>
+                                        <td>0.4286</td>
+                                    </tr>
+                                    <tr class="gain">
+                                        <td><strong>Gain</strong></td>
+                                        <td colspan="4"><strong>0.048</strong></td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <style>
+                        .table-container {
+                            display: flex;
+                            gap: 20px;
+                            justify-content: center;
+                            max-width: 1000px;
+                            margin: auto;
+                        }
+
+                        .table-column {
+                            display: flex;
+                            flex-direction: column;
+                            gap: 20px;
+                            width: 48%;
+                        }
+
+                        .table {
+                            background: rgba(255, 255, 255, 0.1);
+                            padding: 15px;
+                            border-radius: 8px;
+                            box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+                        }
+
+                        h3 {
+                            text-align: center;
+                            color: #ffcc00;
+                        }
+
+                        table {
+                            width: 100%;
+                            border-collapse: collapse;
+                            background: rgba(255, 255, 255, 0.1);
+                        }
+
+                        th,
+                        td {
+                            border: 1px solid #ccc;
+                            padding: 8px;
+                            text-align: center;
+                            font-size: 14px;
+                            color: white;
+                        }
+
+                        th {
+                            background: rgba(0, 0, 0, 0.2);
+                        }
+
+                        .gain {
+                            background: rgba(255, 255, 0, 0.3);
+                            font-weight: bold;
+                        }
+                    </style>
+                    </p>
+
+                    <div class="box-cases">
+
+                        <p>
+                            \[
+                            \text{Gain}(T, X) = \text{Entropy}(T) - W.\text{Entropy}(T, X)
+                            \]
+                        </p>
+
+                        <p>
+                            \[
+                            G(\text{Play Golf}, \text{Outlook}) = \text{Entropy}(\text{Play Golf}) -
+                            W.\text{Entropy}(\text{Play Golf}, \text{Outlook})
+                            \]
+                        </p>
+
+                        <p>
+                            \[
+                            0.94 - 0.693 = 0.247
+                            \]
+                        </p>
+                    </div>
+                    <style>
+                        .box-cases {
+                            font: courier-new;
+                            width: 90%;
+                            max-width: 1600px;
+                            background: rgba(255, 255, 255, 0.1);
+                            padding: 20px;
+                            border-radius: 8px;
+                            box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+                            margin: 20px auto;
+                            text-align: justify;
+                            font-size: 18px
+                        }
+
+
+                        .table-column {
+                            display: flex;
+                            flex-direction: column;
+                            gap: 20px;
+                            width: 48%;
+                        }
+                    </style>
+
+
+
+
+                </div>
+
+
+                <div class="box-cases">
+
+                    <p>
+                        \[
+                        IG(y, D_i) = \sum_{i=1}^{n} \frac{|D_i|}{|D|} H_{D_i}(y) - H_D(y)
+                        \]
+                    </p>
+                </div>
+                <div class="failure-cases">
+                    <div class="case">
+                        <div
+                            style="font-family: 'Courier New', monospace; padding: 15px; border-radius: 8px; border: 1px solid #ccc;">
+                            <h2 style="text-align: center; color: #333;">Build a Decision Tree using Information Gain
+                                with an Example</h2>
+
+                            <h3>Step 1: Compute Entropy for the Target Variable (Play Golf?)</h3>
+                            <p>Entropy formula:</p>
+                            <p style="text-align: center; font-weight: bold;">
+                                H(S) = - ∑ p(i) log₂ (p(i))
+                            </p>
+                            <p>From the dataset:</p>
+                            <ul>
+                                <li>Total samples = <strong>14</strong></li>
+                                <li>Yes (Play Golf) = <strong>9</strong></li>
+                                <li>No (Play Golf) = <strong>5</strong></li>
+                            </ul>
+                            <p style="text-align: center; font-weight: bold;">
+                                H(S) = - (9/14 log₂ (9/14) + 5/14 log₂ (5/14))
+                            </p>
+                            <p style="text-align: center; font-weight: bold;">
+                                H(S) = - (0.642 × -0.459 + 0.358 × -0.807) = <span style="color: #d9534f;">0.940</span>
+                            </p>
+
+                            <h3>Step 2: Compute Information Gain for Each Attribute</h3>
+
+                            <h4>(a) Information Gain for "Outlook"</h4>
+                            <p>Splitting based on Outlook:</p>
+                            <ul>
+                                <li>Sunny: (3 No, 2 Yes) → Entropy = <strong>0.970</strong></li>
+                                <li>Overcast: (4 Yes) → Entropy = <strong>0.000 (pure)</strong></li>
+                                <li>Rainy: (3 Yes, 2 No) → Entropy = <strong>0.970</strong></li>
+                            </ul>
+                            <p style="text-align: center; font-weight: bold;">
+                                H(Outlook) = (5/14 × 0.970) + (4/14 × 0.000) + (5/14 × 0.970) = <span
+                                    style="color: #d9534f;">0.693</span>
+                            </p>
+                            <p style="text-align: center; font-weight: bold;">
+                                IG(Outlook) = H(S) - H(Outlook) = 0.940 - 0.693 = <span
+                                    style="color: #5bc0de;">0.247</span>
+                            </p>
+
+                            <h4>(b) Information Gain for "Humidity"</h4>
+                            <ul>
+                                <li>High: (3 No, 4 Yes) → Entropy = <strong>0.985</strong></li>
+                                <li>Normal: (6 Yes, 1 No) → Entropy = <strong>0.592</strong></li>
+                            </ul>
+                            <p style="text-align: center; font-weight: bold;">
+                                H(Humidity) = (7/14 × 0.985) + (7/14 × 0.592) = <span
+                                    style="color: #d9534f;">0.788</span>
+                            </p>
+                            <p style="text-align: center; font-weight: bold;">
+                                IG(Humidity) = H(S) - H(Humidity) = 0.940 - 0.788 = <span
+                                    style="color: #5bc0de;">0.152</span>
+                            </p>
+
+                            <h4>(c) Information Gain for "Wind"</h4>
+                            <ul>
+                                <li>Weak: (6 Yes, 2 No) → Entropy = <strong>0.811</strong></li>
+                                <li>Strong: (3 Yes, 3 No) → Entropy = <strong>1.000</strong></li>
+                            </ul>
+                            <p style="text-align: center; font-weight: bold;">
+                                H(Wind) = (8/14 × 0.811) + (6/14 × 1.000) = <span style="color: #d9534f;">0.892</span>
+                            </p>
+                            <p style="text-align: center; font-weight: bold;">
+                                IG(Wind) = H(S) - H(Wind) = 0.940 - 0.892 = <span style="color: #5bc0de;">0.048</span>
+                            </p>
+
+                            <h3>Step 3: Choose the Best Attribute</h3>
+                            <ul>
+                                <li>Outlook: <span style="color: #5bc0de;">0.247</span> (Highest Information Gain)</li>
+                                <li>Humidity: <span style="color: #5bc0de;">0.152</span></li>
+                                <li>Wind: <span style="color: #5bc0de;">0.048</span></li>
+                            </ul>
+                            <p>Since Outlook has the highest IG, it becomes the root node.</p>
+
+                            <h3>Step 4: Split and Recursively Repeat</h3>
+                            <p>Now, we divide the dataset based on Outlook:</p>
+
+                            <h4>(a) Subtree for "Overcast"</h4>
+                            <p>All are Yes, so it's a leaf node.</p>
+
+                            <h4>(b) Subtree for "Rainy"</h4>
+                            <p>Choices:</p>
+                            <ul>
+                                <li>Humidity: <span style="color: #5bc0de;">0.151</span></li>
+                                <li>Wind: <span style="color: #5bc0de;">0.020</span></li>
+                            </ul>
+                            <p>Since Humidity has the highest IG, we split on Humidity.</p>
+
+                            <h4>(c) Subtree for "Sunny"</h4>
+                            <p>Humidity: <span style="color: #5bc0de;">0.970</span></p>
+                            <p>Splitting on Humidity.</p>
+
+
+                            <h2>Summary</h2>
+                            <ul>
+                                <li>Calculated Entropy for the target variable.</li>
+                                <li>Computed Information Gain for each feature.</li>
+                                <li>Chose the best attribute (Outlook) as the root node.</li>
+                                <li>Repeated the process recursively for sub-nodes.</li>
+                            </ul>
+                            <div style="display: flex; border: 2px dotted black; padding: 10px; font-family: 'Courier New', monospace;">
+                                <!-- Rules Section -->
+                                <div style="flex: 1; padding: 10px;">
+                                    <p><strong>R₁:</strong> IF (Outlook=Sunny) AND (Windy=FALSE) THEN Play=Yes</p>
+                                    <p><strong>R₂:</strong> IF (Outlook=Sunny) AND (Windy=TRUE) THEN Play=No</p>
+                                    <p><strong>R₃:</strong> IF (Outlook=Overcast) THEN Play=Yes</p>
+                                    <p><strong>R₄:</strong> IF (Outlook=Rainy) AND (Humidity=High) THEN Play=No</p>
+                                    <p><strong>R₅:</strong> IF (Outlook=Rainy) AND (Humidity=Normal) THEN Play=Yes</p>
+                                </div>
+                                
+                                <!-- Decision Tree Section -->
+                                <div style="flex: 2; text-align: center;">
+                                    <pre>
+                          <strong>Outlook</strong>
+                          //   ||  \\
+                                ________//    ||   \\_____________
+                                |            |                |
+                             Sunny         Overcast          Rainy
+                               |              |               |
+                              Windy        Play=Yes          Humidity
+                            ____|____                     ____|____
+                            |        |                    |         |
+                          False    True                High      Normal
+                        Play=Yes  Play=No           Play=No    Play=Yes
+                                    </pre>
+                                </div>
+                            </div>
+                        </div>
+
+                        
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="failure-cases">
+            <div class="case">
+                <div>
+                    <h2>Explain Gini Impurity</h2>
+                
+                    <div>
+                        <h3>Gini Impurity</h3>
+                        <p>
+                            Gini Impurity is a metric used to measure how often a randomly chosen element from the set
+                            would be incorrectly classified if it were randomly labeled according to the class distribution
+                            in the subset.
+                        </p>
+                        <p>
+                            It is used in decision trees, especially in algorithms like **CART (Classification and Regression Trees)**, 
+                            to decide the best split at each node.
+                        </p>
+                
+                        <p><strong>Formula:</strong></p>
+                        <p>
+                            \[
+                            Gini(D) = 1 - \sum_{i=1}^{c} P_i^2
+                            \]
+                        </p>
+                
+                        <p>Where:</p>
+                        <ul>
+                            <li>\(P_i\) is the probability of class \(i\) in the dataset.</li>
+                            <li>\(c\) is the total number of classes.</li>
+                        </ul>
+                
+                        <p><strong>Example:</strong></p>
+                        <ul>
+                            <li>In the Play Golf dataset, we have **Yes (9)** and **No (5)** instances.</li>
+                        </ul>
+                
+                        <p>
+                            \[
+                            Gini = 1 - \left( \left(\frac{9}{14}\right)^2 + \left(\frac{5}{14}\right)^2 \right)
+                            \]
+                        </p>
+                
+                        <p>
+                            \[
+                            Gini = 1 - \left(0.408 + 0.127\right) = 0.465
+                            \]
+                        </p>
+                
+                        <p>The lower the Gini Impurity, the purer the dataset.</p>
+                
+                        <div class="table-container">
+                            <div class="table-column">
+                                <!-- Outlook vs Play Golf -->
+                                <div class="table">
+                                    <h3>Outlook vs Play Golf</h3>
+                                    <table>
+                                        <tr>
+                                            <th>Outlook</th>
+                                            <th>Yes</th>
+                                            <th>No</th>
+                                            <th>Gini</th>
+                                            <th>W.G(Play, Outlook)</th>
+                                        </tr>
+                                        <tr>
+                                            <td>Sunny</td>
+                                            <td>3</td>
+                                            <td>2</td>
+                                            <td>0.48</td>
+                                            <td>0.171</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Overcast</td>
+                                            <td>4</td>
+                                            <td>0</td>
+                                            <td>0.00</td>
+                                            <td>0.000</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Rainy</td>
+                                            <td>3</td>
+                                            <td>2</td>
+                                            <td>0.48</td>
+                                            <td>0.171</td>
+                                        </tr>
+                                        <tr class="gain">
+                                            <td><strong>Gini Gain</strong></td>
+                                            <td colspan="4"><strong>0.122</strong></td>
+                                        </tr>
+                                    </table>
+                                </div>
+                
+                                <!-- Humidity vs Play Golf -->
+                                <div class="table">
+                                    <h3>Humidity vs Play Golf</h3>
+                                    <table>
+                                        <tr>
+                                            <th>Humidity</th>
+                                            <th>Yes</th>
+                                            <th>No</th>
+                                            <th>Gini</th>
+                                            <th>W.G(Play, Humidity)</th>
+                                        </tr>
+                                        <tr>
+                                            <td>High</td>
+                                            <td>3</td>
+                                            <td>4</td>
+                                            <td>0.49</td>
+                                            <td>0.245</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Normal</td>
+                                            <td>6</td>
+                                            <td>1</td>
+                                            <td>0.24</td>
+                                            <td>0.120</td>
+                                        </tr>
+                                        <tr class="gain">
+                                            <td><strong>Gini Gain</strong></td>
+                                            <td colspan="4"><strong>0.100</strong></td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                
+                            <div class="table-column">
+                                <!-- Temperature vs Play Golf -->
+                                <div class="table">
+                                    <h3>Temperature vs Play Golf</h3>
+                                    <table>
+                                        <tr>
+                                            <th>Temp</th>
+                                            <th>Yes</th>
+                                            <th>No</th>
+                                            <th>Gini</th>
+                                            <th>W.G(Play, Temp)</th>
+                                        </tr>
+                                        <tr>
+                                            <td>Hot</td>
+                                            <td>2</td>
+                                            <td>2</td>
+                                            <td>0.50</td>
+                                            <td>0.143</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Mild</td>
+                                            <td>4</td>
+                                            <td>2</td>
+                                            <td>0.44</td>
+                                            <td>0.189</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Cool</td>
+                                            <td>3</td>
+                                            <td>1</td>
+                                            <td>0.38</td>
+                                            <td>0.136</td>
+                                        </tr>
+                                        <tr class="gain">
+                                            <td><strong>Gini Gain</strong></td>
+                                            <td colspan="4"><strong>0.033</strong></td>
+                                        </tr>
+                                    </table>
+                                </div>
+                
+                                <!-- Windy vs Play Golf -->
+                                <div class="table">
+                                    <h3>Windy vs Play Golf</h3>
+                                    <table>
+                                        <tr>
+                                            <th>Windy</th>
+                                            <th>Yes</th>
+                                            <th>No</th>
+                                            <th>Gini</th>
+                                            <th>W.G(Play, Windy)</th>
+                                        </tr>
+                                        <tr>
+                                            <td>FALSE</td>
+                                            <td>6</td>
+                                            <td>2</td>
+                                            <td>0.38</td>
+                                            <td>0.218</td>
+                                        </tr>
+                                        <tr>
+                                            <td>TRUE</td>
+                                            <td>3</td>
+                                            <td>3</td>
+                                            <td>0.50</td>
+                                            <td>0.214</td>
+                                        </tr>
+                                        <tr class="gain">
+                                            <td><strong>Gini Gain</strong></td>
+                                            <td colspan="4"><strong>0.033</strong></td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                
+                        <div class="box-cases">
+                            <p>
+                                \[
+                                Gini\ Gain(T, X) = Gini(T) - W.Gini(T, X)
+                                \]
+                            </p>
+                
+                            <p>
+                                \[
+                                Gini(\text{Play Golf}, \text{Outlook}) = Gini(\text{Play Golf}) - W.Gini(\text{Play Golf}, \text{Outlook})
+                                \]
+                            </p>
+                
+                            <p>
+                                \[
+                                0.465 - 0.343 = 0.122
+                                \]
+                            </p>
+                        </div>
+                
+                        <h2>Summary</h2>
+                        <ul>
+                            <li>Gini Impurity measures how mixed the classes are in a dataset.</li>
+                            <li>The lower the Gini value, the purer the dataset.</li>
+                            <li>Decision trees using CART split on the attribute with the **lowest** weighted Gini Impurity.</li>
+                        </ul>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+
+
+        <div class="failure-cases">
+            <div class="case">
+                <div style="font-family: 'Courier New', monospace; padding: 10px; border: 1px solid #ddd;">
+                    <h2>Overfitting vs. Underfitting in Decision Trees</h2>
+                
+                    <h3 style="color: red;">Overfitting</h3>
+                    <ul>
+                        <li><strong>Definition:</strong> The model learns the training data too well, capturing noise and irrelevant patterns.</li>
+                        <li><strong>Causes:</strong> Very deep trees, lack of pruning, too many features.</li>
+                        <li><strong>Effects:</strong> High training accuracy but poor test accuracy.</li>
+                        <li><strong>Solutions:</strong> Pruning, limiting tree depth, using ensemble methods like Random Forest.</li>
+                    </ul>
+                
+                    <h3 style="color: blue;">Underfitting</h3>
+                    <ul>
+                        <li><strong>Definition:</strong> The model is too simple and fails to capture patterns in the data.</li>
+                        <li><strong>Causes:</strong> Shallow trees, too much pruning, not using enough features.</li>
+                        <li><strong>Effects:</strong> Poor performance on both training and test data.</li>
+                        <li><strong>Solutions:</strong> Increase tree depth, use more features, reduce pruning.</li>
+                    </ul>
+                
+                    <h3>Comparison Table</h3>
+                    <table border="1" cellpadding="8" cellspacing="0">
+                        <tr>
+                            <th>Criteria</th>
+                            <th style="color: red;">Overfitting</th>
+                            <th style="color: blue;">Underfitting</th>
+                        </tr>
+                        <tr>
+                            <td>Model Complexity</td>
+                            <td>Too complex</td>
+                            <td>Too simple</td>
+                        </tr>
+                        <tr>
+                            <td>Training Accuracy</td>
+                            <td>High</td>
+                            <td>Low</td>
+                        </tr>
+                        <tr>
+                            <td>Test Accuracy</td>
+                            <td>Low (poor generalization)</td>
+                            <td>Low (poor learning)</td>
+                        </tr>
+                        <tr>
+                            <td>Solution</td>
+                            <td>Pruning, limiting depth</td>
+                            <td>Increase depth, reduce pruning</td>
+                        </tr>
+                    </table>
+                </div>
+                
+            </div>
+        </div>
+        <div class="failure-cases">
+            <div class="case">
+            </div>
+        </div>        <div class="failure-cases">
+            <div class="case">
+            </div>
+        </div>
+
+
+
+</body>
+
+</html>

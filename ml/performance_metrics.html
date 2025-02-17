@@ -1,0 +1,1914 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Performance Metrics</title>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;700&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <!-- MathJax for Equations -->
+    <script type="text/javascript" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML">
+        </script>
+
+    <style>
+        /* Global Styles */
+        body {
+            font-family: 'Courier New', monospace;
+            margin: 0;
+            padding: 0;
+            color: #ffffff;
+            background: url('../assets/images/ml-background.jpg') no-repeat center center fixed;
+            background-size: cover;
+            position: relative;
+        }
+
+        /* Dark Overlay */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1;
+        }
+
+        /* Layout Containers */
+        header,
+        footer {
+            background: linear-gradient(135deg, #0829df, #04013c);
+            text-align: center;
+            padding: 20px;
+            font-size: 24px;
+            position: relative;
+            z-index: 10;
+        }
+
+        main {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 25px;
+            background: rgba(19, 50, 185, 0.85);
+            border-radius: 10px;
+            box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+            position: relative;
+            z-index: 10;
+        }
+
+        h1,
+        h2,
+        h3 {
+            color: #d9dcdf;
+        }
+
+        /* Styling for Key Sections */
+        .case h3 {
+            color: #ffcc00;
+        }
+
+        .case p {
+            color: #ffffff;
+        }
+
+        /* Table Styles */
+        table {
+            font-family: 'Courier New', monospace;
+            width: 100%;
+            border-collapse: collapse;
+            margin: 10px 0;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        th,
+        td {
+            border: 1px solid #ccc;
+            padding: 8px;
+            text-align: center;
+            font-size: 14px;
+        }
+
+        th {
+            background: rgba(0, 0, 0, 0.2);
+        }
+
+        /* Image Styling */
+        .image-container {
+            text-align: center;
+            margin: 10px 0;
+        }
+
+        .image-container img {
+            width: 35%;
+            border-radius: 5px;
+            box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Content Alignment */
+        .content-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+        }
+
+        .image-container {
+            flex: 1;
+        }
+
+        .image-container img {
+            width: 65%;
+            border-radius: 10px;
+        }
+
+        .text-container {
+            flex: 1;
+            width: 55%;
+        }
+
+        /* Failure Cases Section */
+        .failure-cases {
+            width: 90%;
+            max-width: 1600px;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+            margin: 20px auto;
+            text-align: justify;
+        }
+
+        .case {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.15);
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 6px;
+        }
+
+        /* Decision Tree Node Styles */
+        .node circle {
+            fill: #69b3a2;
+            stroke: #555;
+            stroke-width: 2px;
+        }
+
+        .node text {
+            font-size: 14px;
+            font-family: 'Courier New', monospace;
+            fill: white;
+        }
+
+        .link {
+            fill: none;
+            stroke: #ccc;
+            stroke-width: 2px;
+        }
+    </style>
+</head>
+
+<header>
+    <h1>Performance Metrics </h1>
+</header>
+
+<body>
+    <div class="failure-cases">
+        <div class="case" style="font-family: 'Courier New', monospace; padding: 10px; border: 1px solid #ddd;">
+            <div>
+                <h2>Performance Metrics in Machine Learning</h2>
+
+                <h3>1. Accuracy</h3>
+                <p><strong>Definition:</strong> Accuracy is the ratio of correctly predicted instances to the total
+                    number of instances.</p>
+                <p><strong>Formula:</strong> Accuracy = (TP + TN) / (TP + TN + FP + FN)</p>
+
+                <h4>Example:</h4>
+                <p>A model classifies 100 patients as having or not having a disease.</p>
+                <ul>
+                    <li>TP = 50 (Correctly detected as positive)</li>
+                    <li>TN = 30 (Correctly detected as negative)</li>
+                    <li>FP = 10 (Healthy but wrongly classified as sick)</li>
+                    <li>FN = 10 (Sick but wrongly classified as healthy)</li>
+                </ul>
+                <p>Accuracy = (50 + 30) / (50 + 30 + 10 + 10) = 80%</p>
+                <p><strong>Limitation:</strong> In imbalanced datasets (e.g., 95% class A, 5% class B), a model
+                    predicting only class A will have high accuracy but fail for class B.</p>
+
+                <h3>2. Precision</h3>
+                <p><strong>Definition:</strong> Precision measures how many of the predicted positive cases are actually
+                    correct.</p>
+                <p><strong>Formula:</strong> Precision = TP / (TP + FP)</p>
+
+                <h4>Example:</h4>
+                <p>In a spam detection model:</p>
+                <ul>
+                    <li>TP = 40 (Correctly identified spam emails)</li>
+                    <li>FP = 20 (Non-spam emails mistakenly marked as spam)</li>
+                </ul>
+                <p>Precision = 40 / (40 + 20) = 0.67 (67%)</p>
+                <p><strong>Use case:</strong> When false positives must be minimized, such as spam detection.</p>
+
+                <h3>3. Recall (Sensitivity)</h3>
+                <p><strong>Definition:</strong> Recall measures how many actual positive cases were correctly predicted.
+                </p>
+                <p><strong>Formula:</strong> Recall = TP / (TP + FN)</p>
+
+                <h4>Example:</h4>
+                <p>In a cancer detection model:</p>
+                <ul>
+                    <li>TP = 45 (Correctly identified cancer patients)</li>
+                    <li>FN = 5 (Cancer patients incorrectly classified as healthy)</li>
+                </ul>
+                <p>Recall = 45 / (45 + 5) = 0.90 (90%)</p>
+                <p><strong>Use case:</strong> Important in medical diagnosis where missing a positive case can be
+                    critical.</p>
+
+                <h3>4. F1-Score</h3>
+                <p><strong>Definition:</strong> The F1-score is the harmonic mean of precision and recall.</p>
+                <p><strong>Formula:</strong> F1 = 2 × (Precision × Recall) / (Precision + Recall)</p>
+
+                <h4>Example:</h4>
+                <p>For a model with:</p>
+                <ul>
+                    <li>Precision = 0.67</li>
+                    <li>Recall = 0.90</li>
+                </ul>
+                <p>F1 = 2 × (0.67 × 0.90) / (0.67 + 0.90) = 0.76 (76%)</p>
+                <p><strong>Use case:</strong> Useful for imbalanced datasets where both false positives and false
+                    negatives are important.</p>
+
+                <h3>5. ROC-AUC Score</h3>
+                <p><strong>Definition:</strong> The Receiver Operating Characteristic (ROC) curve plots the True
+                    Positive Rate (TPR) against the False Positive Rate (FPR) at various threshold settings.</p>
+                <p><strong>Formula:</strong> ROC-AUC measures the area under this curve, with values closer to 1 being
+                    better.</p>
+
+                <h4>Example:</h4>
+                <p>Consider two models:</p>
+                <ul>
+                    <li>Model A has an ROC-AUC of 0.95</li>
+                    <li>Model B has an ROC-AUC of 0.75</li>
+                </ul>
+                <p>Model A is better at distinguishing between positive and negative cases.</p>
+                <p><strong>Use case:</strong> Useful for evaluating classification models with probability scores.</p>
+
+                <h3>6. Log Loss (Logarithmic Loss)</h3>
+                <p><strong>Definition:</strong> Log Loss measures the difference between predicted probabilities and
+                    actual labels.</p>
+                <p><strong>Formula:</strong> Log Loss = - (1/N) Σ (y log(p) + (1-y) log(1-p))</p>
+
+                <h4>Example:</h4>
+                <p>If a model predicts probabilities for five samples:</p>
+                <ul>
+                    <li>True labels: [1, 0, 1, 1, 0]</li>
+                    <li>Predicted probabilities: [0.9, 0.1, 0.8, 0.7, 0.2]</li>
+                </ul>
+                <p>The log loss will be low, indicating good predictions.</p>
+                <p><strong>Use case:</strong> Commonly used in probabilistic models like logistic regression.</p>
+
+                <h3>Comparison Table</h3>
+                <table border="1">
+                    <tr>
+                        <th>Metric</th>
+                        <th>Formula</th>
+                        <th>Example Use Case</th>
+                        <th>Limitations</th>
+                    </tr>
+                    <tr>
+                        <td><strong>Accuracy</strong></td>
+                        <td>(TP + TN) / (TP + TN + FP + FN)</td>
+                        <td>General classification</td>
+                        <td>Misleading for imbalanced datasets</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Precision</strong></td>
+                        <td>TP / (TP + FP)</td>
+                        <td>Spam filtering</td>
+                        <td>Ignores false negatives</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Recall</strong></td>
+                        <td>TP / (TP + FN)</td>
+                        <td>Medical diagnosis</td>
+                        <td>Ignores false positives</td>
+                    </tr>
+                    <tr>
+                        <td><strong>F1-Score</strong></td>
+                        <td>2 × (Precision × Recall) / (Precision + Recall)</td>
+                        <td>Imbalanced datasets</td>
+                        <td>Harder to interpret than accuracy</td>
+                    </tr>
+                    <tr>
+                        <td><strong>ROC-AUC</strong></td>
+                        <td>Area under the ROC curve</td>
+                        <td>Evaluating probabilistic classifiers</td>
+                        <td>Not useful for multi-class classification</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Log Loss</strong></td>
+                        <td>- (1/N) Σ (y log(p) + (1-y) log(1-p))</td>
+                        <td>Probabilistic classification</td>
+                        <td>Hard to interpret directly</td>
+                    </tr>
+                </table>
+
+                <h3>Conclusion</h3>
+                <ul>
+                    <li>✅ Use <strong>Accuracy</strong> when the dataset is balanced.</li>
+                    <li>✅ Use <strong>Precision</strong> when false positives must be minimized.</li>
+                    <li>✅ Use <strong>Recall</strong> when false negatives must be minimized.</li>
+                    <li>✅ Use <strong>F1-Score</strong> for imbalanced datasets.</li>
+                    <li>✅ Use <strong>ROC-AUC</strong> for probability-based models.</li>
+                    <li>✅ Use <strong>Log Loss</strong> for probabilistic classification.</li>
+                </ul>
+            </div>
+
+
+
+        </div>
+    </div>
+    <div class="failure-cases">
+        <div class="case" style="font-family: 'Courier New', monospace; padding: 10px; border: 1px solid #ddd;">
+            <div>
+                <h1>Can We Use Accuracy for Imbalanced Data?</h1>
+
+                <h3>Is Accuracy a Good Metric for Imbalanced Data?</h3>
+                <p>Accuracy is not always the best metric for evaluating classification models, especially when dealing
+                    with <strong>imbalanced datasets</strong>. In such cases, other metrics like <strong>Precision,
+                        Recall, and F1-Score</strong> provide a better assessment of model performance.</p>
+
+                <h3>Example: Flight Accident Data</h3>
+                <p>Consider a dataset that predicts whether a flight <strong>Landed Safely (1)</strong> or
+                    <strong>Crashed (0)</strong>.
+                </p>
+                <ul>
+                    <li><strong>90% of flights land safely</strong></li>
+                    <li><strong>10% of flights crash</strong></li>
+                </ul>
+                <p>If a model predicts every flight as <strong>"Landed Safely (1)"</strong>, it would still achieve
+                    <strong>90% accuracy</strong>, even though it completely fails to detect any crashes. This makes
+                    accuracy a misleading metric in such cases.
+                </p>
+
+                <h3>Why Accuracy is Not Reliable for Imbalanced Data</h3>
+                <ul>
+                    <li><strong>Does not consider class distribution:</strong> When one class is dominant, accuracy
+                        remains high even if the model fails to predict the minority class.</li>
+                    <li><strong>Fails in real-world applications:</strong> In critical fields like fraud detection or
+                        medical diagnosis, missing minority class predictions can have severe consequences.</li>
+                    <li><strong>Ignores false positives and false negatives:</strong> A model with high accuracy may
+                        still have a high error rate in predicting minority class instances.</li>
+                </ul>
+
+                <h3>Better Alternatives to Accuracy</h3>
+                <ul>
+                    <li><strong>Precision:</strong> Measures how many of the predicted positive cases were actually
+                        positive.</li>
+                    <li><strong>Recall:</strong> Measures how many actual positive cases were correctly identified.</li>
+                    <li><strong>F1-Score:</strong> A balanced metric that combines Precision and Recall.</li>
+                    <li><strong>ROC-AUC:</strong> Evaluates the trade-off between sensitivity and specificity.</li>
+                </ul>
+
+                <h3>Conclusion</h3>
+                <p>For highly imbalanced datasets, accuracy is often misleading. Instead, metrics like <strong>Recall,
+                        Precision, and F1-Score</strong> provide a clearer picture of model performance, especially in
+                    cases where the minority class is critical.</p>
+            </div>
+
+        </div>
+    </div>
+    <div class="failure-cases">
+        <div class="case" style="font-family: 'Courier New', monospace; padding: 10px; border: 1px solid #ddd;">
+            <div>
+                <h2>Inputs Required to Calculate Average F1 Score</h2>
+
+                <p>The inputs required to calculate the average F1 Score are:</p>
+                <ul>
+                    <li><strong>TP (True Positives):</strong> Correctly predicted positive cases.</li>
+                    <li><strong>FP (False Positives):</strong> Incorrectly predicted positive cases.</li>
+                    <li><strong>FN (False Negatives):</strong> Incorrectly predicted negative cases.</li>
+                </ul>
+
+                <h3>Steps to Compute Average F1 Score</h3>
+
+                <h4>1. Calculate Precision for each class</h4>
+                <p>Precision measures how many of the predicted positive cases are actually correct.</p>
+                <p><strong>Formula:</strong></p>
+                <p>Precision = TP / (TP + FP)</p>
+
+                <h4>2. Calculate Recall for each class</h4>
+                <p>Recall measures how many actual positive cases were correctly predicted.</p>
+                <p><strong>Formula:</strong></p>
+                <p>Recall = TP / (TP + FN)</p>
+
+                <h4>3. Calculate F1 Score for each class</h4>
+                <p>The F1 Score is the harmonic mean of Precision and Recall.</p>
+                <p><strong>Formula:</strong></p>
+                <p>F1 = 2 × (Precision × Recall) / (Precision + Recall)</p>
+
+                <h3>Types of Average F1 Score</h3>
+
+                <h4>1. Macro F1 Score</h4>
+                <p>Macro F1 Score is the unweighted mean of the F1 Scores of all classes.</p>
+                <p><strong>Formula:</strong></p>
+                <p>Macro F1 = (F1<sub>1</sub> + F1<sub>2</sub> + ... + F1<sub>n</sub>) / n</p>
+                <p><strong>Use case:</strong> Suitable when all classes should be treated equally.</p>
+
+                <h4>2. Weighted F1 Score</h4>
+                <p>Weighted F1 Score considers the number of instances in each class.</p>
+                <p><strong>Formula:</strong></p>
+                <p>Weighted F1 = Σ (Samples in class × F1) / Total Samples</p>
+                <p><strong>Use case:</strong> Useful when classes are imbalanced.</p>
+
+                <h4>3. Micro F1 Score</h4>
+                <p>Micro F1 Score computes global TP, FP, and FN across all classes before calculating F1.</p>
+                <p><strong>Formula:</strong></p>
+                <p>Micro F1 = 2 × (Σ TP) / (2 × Σ TP + Σ FP + Σ FN)</p>
+                <p><strong>Use case:</strong> Preferred when class distribution is imbalanced and you want to evaluate
+                    overall performance.</p>
+
+                <h3>Conclusion</h3>
+                <ul>
+                    <li>✅ <strong>Use Macro F1</strong> when you want to treat all classes equally.</li>
+                    <li>✅ <strong>Use Weighted F1</strong> when dealing with imbalanced datasets.</li>
+                    <li>✅ <strong>Use Micro F1</strong> when evaluating overall classification performance.</li>
+                </ul>
+            </div>
+
+            <div>
+                <h2>Inputs Required to Calculate Average F1 Score</h2>
+
+                <p>The inputs required to calculate the average F1 Score are:</p>
+                <ul>
+                    <li><strong>TP (True Positives):</strong> Correctly predicted positive cases.</li>
+                    <li><strong>FP (False Positives):</strong> Incorrectly predicted positive cases.</li>
+                    <li><strong>FN (False Negatives):</strong> Incorrectly predicted negative cases.</li>
+                </ul>
+
+                <h3>Example: Multi-Class Classification</h3>
+                <p>Consider a classification model that predicts three classes: <strong>Cat, Dog, Rabbit</strong>.</p>
+
+                <table border="1">
+                    <tr>
+                        <th>Class</th>
+                        <th>TP</th>
+                        <th>FP</th>
+                        <th>FN</th>
+                    </tr>
+                    <tr>
+                        <td>Cat</td>
+                        <td>50</td>
+                        <td>10</td>
+                        <td>5</td>
+                    </tr>
+                    <tr>
+                        <td>Dog</td>
+                        <td>40</td>
+                        <td>20</td>
+                        <td>15</td>
+                    </tr>
+                    <tr>
+                        <td>Rabbit</td>
+                        <td>30</td>
+                        <td>5</td>
+                        <td>10</td>
+                    </tr>
+                </table>
+
+                <h3>Step 1: Calculate Precision & Recall for Each Class</h3>
+
+                <p><strong>For Cat:</strong></p>
+                <ul>
+                    <li>Precision = TP / (TP + FP) = 50 / (50 + 10) = 0.833</li>
+                    <li>Recall = TP / (TP + FN) = 50 / (50 + 5) = 0.909</li>
+                </ul>
+
+                <p><strong>For Dog:</strong></p>
+                <ul>
+                    <li>Precision = 40 / (40 + 20) = 0.667</li>
+                    <li>Recall = 40 / (40 + 15) = 0.727</li>
+                </ul>
+
+                <p><strong>For Rabbit:</strong></p>
+                <ul>
+                    <li>Precision = 30 / (30 + 5) = 0.857</li>
+                    <li>Recall = 30 / (30 + 10) = 0.750</li>
+                </ul>
+
+                <h3>Step 2: Calculate F1 Score for Each Class</h3>
+
+                <p><strong>For Cat:</strong></p>
+                <p>F1 = 2 × (0.833 × 0.909) / (0.833 + 0.909) = 0.869</p>
+
+                <p><strong>For Dog:</strong></p>
+                <p>F1 = 2 × (0.667 × 0.727) / (0.667 + 0.727) = 0.696</p>
+
+                <p><strong>For Rabbit:</strong></p>
+                <p>F1 = 2 × (0.857 × 0.750) / (0.857 + 0.750) = 0.800</p>
+
+                <h3>Step 3: Compute the Average F1 Score</h3>
+
+                <h4>1. Macro F1 Score (Unweighted Average)</h4>
+                <p>Macro F1 = (0.869 + 0.696 + 0.800) / 3 = 0.788</p>
+
+                <h4>2. Weighted F1 Score</h4>
+                <p>Weighted F1 = (55 × 0.869 + 55 × 0.696 + 40 × 0.800) / (55 + 55 + 40) = 0.778</p>
+
+                <h4>3. Micro F1 Score</h4>
+                <p>Micro F1 = 2 × (Σ TP) / (2 × Σ TP + Σ FP + Σ FN)</p>
+                <p>= 2 × (50 + 40 + 30) / (2 × (50 + 40 + 30) + (10 + 20 + 5) + (5 + 15 + 10))</p>
+                <p>= 2 × (120) / (2 × 120 + 35 + 30) = 240 / 275 = 0.873</p>
+
+                <h3>Conclusion</h3>
+                <ul>
+                    <li>✅ <strong>Macro F1 Score:</strong> 0.788 (Treats all classes equally)</li>
+                    <li>✅ <strong>Weighted F1 Score:</strong> 0.778 (Gives more weight to larger classes)</li>
+                    <li>✅ <strong>Micro F1 Score:</strong> 0.873 (Balances overall performance)</li>
+                </ul>
+            </div>
+
+        </div>
+    </div>
+    <div class="failure-cases">
+        <div class="case" style="font-family: 'Courier New', monospace; padding: 10px; border: 1px solid #ddd;">
+            <div>
+                <h1>Recall is More Important than Precision (and Vice Versa)</h1>
+
+                <p>The importance of <strong>recall</strong> versus <strong>precision</strong> depends on the specific
+                    problem and the consequences of false positives versus false negatives.</p>
+
+                <h3>When Recall is More Important</h3>
+                <p>Recall is crucial when missing a positive instance (false negative) is more costly than incorrectly
+                    flagging some negative instances (false positives).</p>
+                <ul>
+                    <li><strong>Medical Diagnoses:</strong> In diseases like cancer detection or COVID-19 testing,
+                        missing a positive case could be life-threatening, so high recall is preferred.</li>
+                    <li><strong>Fraud Detection:</strong> Banks and financial institutions prioritize recall to catch as
+                        many fraudulent transactions as possible, even if it means investigating some false alarms.</li>
+                    <li><strong>Search Engines & Information Retrieval:</strong> It’s better to show more search results
+                        (even with some irrelevant ones) than to miss valuable information.</li>
+                    <li><strong>Fire Alarm Systems:</strong> Missing a fire could be catastrophic, so it's better to
+                        raise a few false alarms than to miss a real fire.</li>
+                    <li><strong>Crime Surveillance:</strong> Security cameras analyzing threats should aim for high
+                        recall to avoid missing potential dangers.</li>
+                    <li><strong>Disaster Warning Systems:</strong> Early warnings for tsunamis, earthquakes, or
+                        hurricanes must prioritize recall to avoid missing real threats.</li>
+                </ul>
+
+                <h3>When Precision is More Important</h3>
+                <p>Precision is critical when false positives (incorrectly classifying negatives as positives) are more
+                    problematic than missing some positive instances.</p>
+                <ul>
+                    <li><strong>Spam Detection:</strong> If a legitimate email is incorrectly flagged as spam, it may
+                        cause users to miss important messages.</li>
+                    <li><strong>Autonomous Vehicles:</strong> A false alarm causing unnecessary braking could be
+                        dangerous, so precision is prioritized in object detection.</li>
+                    <li><strong>Online Advertising:</strong> Displaying ads to uninterested users wastes resources, so
+                        precision is crucial.</li>
+                    <li><strong>Drug Approval:</strong> Approving a harmful drug (false positive) is much worse than
+                        rejecting a potentially useful one.</li>
+                    <li><strong>Customer Support Chatbots:</strong> Incorrect automated responses reduce user trust, so
+                        precision is emphasized.</li>
+                </ul>
+
+                <h3>When a Balance is Needed</h3>
+                <p>In some scenarios, both false positives and false negatives have significant consequences, making it
+                    essential to find a balance between recall and precision.</p>
+                <ul>
+                    <li><strong>Recommendation Systems:</strong> Missing a good recommendation (false negative) is bad,
+                        but showing too many irrelevant ones (false positive) also affects user engagement.</li>
+                    <li><strong>Fraud Detection in Banking:</strong> While high recall is necessary, too many false
+                        positives (flagging legitimate transactions) can frustrate customers.</li>
+                    <li><strong>Sentiment Analysis:</strong> In business decisions, incorrectly classifying customer
+                        sentiment can lead to misguided strategies.</li>
+                </ul>
+
+                <h3>Conclusion</h3>
+                <p>Choosing between recall and precision depends on the problem at hand. In life-critical systems (e.g.,
+                    medical diagnoses, disaster warnings), recall is prioritized. In systems where incorrect
+                    classifications cause harm (e.g., spam filters, hiring decisions), precision is more important. When
+                    both false positives and false negatives matter, a balance between the two is required using metrics
+                    like the <strong>F1 Score</strong>.</p>
+            </div>
+
+        </div>
+    </div>
+    <div class="failure-cases">
+        <div class="case" style="font-family: 'Courier New', monospace; padding: 10px; border: 1px solid #ddd;">
+            <div>
+                <h2>When is Precision More Important Over Recall?</h2>
+
+                <h3>Understanding Precision vs. Recall</h3>
+                <ul>
+                    <li><strong>Precision:</strong> When the model predicts a positive case, how often is it actually
+                        correct?</li>
+                    <li><strong>Recall:</strong> Out of all actual positive cases, how many did the model correctly
+                        identify?</li>
+                </ul>
+
+                <h3>When Precision is More Important?</h3>
+                <p>Precision is prioritized when <strong>false positives</strong> are more costly or dangerous than
+                    false negatives.</p>
+
+                <h4>Example 1: Spam Email Detection</h4>
+                <ul>
+                    <li>If an email is falsely classified as spam (false positive), an important message might be lost.
+                    </li>
+                    <li>It is acceptable to let a few spam emails (false negatives) reach the inbox, rather than marking
+                        important emails as spam.</li>
+                    <li><strong>Priority:</strong> High precision ensures only actual spam emails are marked.</li>
+                </ul>
+
+                <h4>Example 2: Fraud Detection</h4>
+                <ul>
+                    <li>Blocking a genuine transaction (false positive) can frustrate customers.</li>
+                    <li>It is better to allow some fraudulent transactions (false negatives) rather than mistakenly
+                        blocking too many legitimate ones.</li>
+                    <li><strong>Priority:</strong> High precision prevents false fraud alerts.</li>
+                </ul>
+
+                <h4>Example 3: Medical Diagnosis (Non-Life-Threatening Diseases)</h4>
+                <ul>
+                    <li>Consider a test for mild allergies.</li>
+                    <li>If a person is incorrectly diagnosed as allergic (false positive), they may unnecessarily avoid
+                        certain foods.</li>
+                    <li>However, missing a real allergy (false negative) is not life-threatening.</li>
+                    <li><strong>Priority:</strong> High precision ensures fewer people are wrongly diagnosed.</li>
+                </ul>
+
+                <h3>Conclusion</h3>
+                <p>Choose <strong>precision over recall</strong> when the cost of a false positive is higher than a
+                    false negative.</p>
+                <ul>
+                    <li>✅ <strong>Spam detection:</strong> Avoid marking good emails as spam.</li>
+                    <li>✅ <strong>Fraud detection:</strong> Prevent blocking real transactions.</li>
+                    <li>✅ <strong>Medical diagnosis:</strong> Prevent unnecessary panic from wrong results.</li>
+                </ul>
+            </div>
+
+        </div>
+    </div>
+    <div class="failure-cases">
+        <div class="case" style="font-family: 'Courier New', monospace; padding: 10px; border: 1px solid #ddd;">
+            <div>
+                <h2>When is Recall More Important Over Precision?</h2>
+
+                <h3>Understanding Recall vs. Precision</h3>
+                <ul>
+                    <li><strong>Recall:</strong> Out of all actual positive cases, how many did the model correctly
+                        identify?</li>
+                    <li><strong>Precision:</strong> When the model predicts a positive case, how often is it actually
+                        correct?</li>
+                </ul>
+
+                <h3>When Recall is More Important?</h3>
+                <p>Recall is prioritized when <strong>false negatives</strong> are more costly or dangerous than false
+                    positives.</p>
+
+                <h4>Example 1: Medical Diagnosis (Life-Threatening Diseases)</h4>
+                <ul>
+                    <li>In diseases like cancer, missing a real case (false negative) can delay treatment and be
+                        life-threatening.</li>
+                    <li>It is better to have a few false alarms (false positives) than to miss actual patients.</li>
+                    <li><strong>Priority:</strong> High recall ensures all potential cases are detected.</li>
+                </ul>
+
+                <h4>Example 2: Fraud Detection</h4>
+                <ul>
+                    <li>Allowing a fraudulent transaction (false negative) can cause financial loss.</li>
+                    <li>It's okay to flag some legitimate transactions (false positives) if it means catching all
+                        fraudulent ones.</li>
+                    <li><strong>Priority:</strong> High recall minimizes undetected fraud.</li>
+                </ul>
+
+                <h4>Example 3: Fire or Intrusion Detection</h4>
+                <ul>
+                    <li>If a fire or burglary alarm fails to trigger (false negative), the consequences can be severe.
+                    </li>
+                    <li>It's acceptable to have some false alarms (false positives) rather than missing a real
+                        emergency.</li>
+                    <li><strong>Priority:</strong> High recall ensures every real emergency is detected.</li>
+                </ul>
+
+                <h4>Example 4: Search Engines & Information Retrieval</h4>
+                <ul>
+                    <li>A search engine should return all relevant documents (high recall), even if some irrelevant ones
+                        appear.</li>
+                    <li>Missing important search results (false negatives) is worse than showing a few extra ones.</li>
+                    <li><strong>Priority:</strong> High recall improves user experience.</li>
+                </ul>
+
+                <h3>Conclusion</h3>
+                <p>Choose <strong>recall over precision</strong> when missing a positive case is riskier than a false
+                    alarm.</p>
+                <ul>
+                    <li>✅ <strong>Medical diagnosis:</strong> Detect all possible patients.</li>
+                    <li>✅ <strong>Fraud detection:</strong> Catch all fraudulent activities.</li>
+                    <li>✅ <strong>Security systems:</strong> Never miss a fire or burglary alert.</li>
+                    <li>✅ <strong>Search engines:</strong> Retrieve all relevant results.</li>
+                </ul>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="failure-cases">
+        <div class="case" style="font-family: 'Courier New', monospace; padding: 10px; border: 1px solid #ddd;">
+            <div>
+                <h1>What is Cross-Validation and Why is it Needed?</h1>
+
+                <h3>1. What is Cross-Validation?</h3>
+                <p>Cross-validation (CV) is a technique used in <strong>machine learning and statistics</strong> to
+                    evaluate the performance of a model on unseen data. Instead of using a single train-test split,
+                    cross-validation <strong>splits the dataset multiple times</strong> to ensure the model generalizes
+                    well.</p>
+
+                <h3>2. Why is Cross-Validation Needed?</h3>
+                <ul>
+                    <li><strong>Avoids Overfitting:</strong> It prevents models from being too specific to the training
+                        data and ensures they perform well on new data.</li>
+                    <li><strong>More Reliable Performance Metrics:</strong> Instead of depending on a single test set,
+                        multiple validations provide a better estimate of model accuracy.</li>
+                    <li><strong>Efficient Use of Data:</strong> Useful when you have <strong>limited data</strong>, as
+                        it allows every sample to be used for training and testing.</li>
+                    <li><strong>Hyperparameter Tuning:</strong> Helps in selecting the best model parameters using
+                        techniques like Grid Search or Random Search.</li>
+                </ul>
+
+                <h3>3. Types of Cross-Validation</h3>
+                <ul>
+                    <li>
+                        <strong>K-Fold Cross-Validation:</strong>
+                        <ul>
+                            <li>The dataset is split into <strong>K equal-sized folds</strong> (e.g., K=5).</li>
+                            <li>The model is trained on <strong>K-1 folds</strong> and tested on the remaining fold.
+                            </li>
+                            <li>This process is repeated <strong>K times</strong>, with each fold used once for testing.
+                            </li>
+                            <li>The final performance is the <strong>average of all K iterations</strong>.</li>
+                        </ul>
+                    </li>
+                    <li>
+                        <strong>Stratified K-Fold Cross-Validation:</strong>
+                        <ul>
+                            <li>Similar to K-Fold but ensures <strong>class distribution</strong> remains consistent
+                                across all folds.</li>
+                            <li>Useful for imbalanced datasets.</li>
+                        </ul>
+                    </li>
+                    <li>
+                        <strong>Leave-One-Out Cross-Validation (LOO-CV):</strong>
+                        <ul>
+                            <li>Each data point is used once as a test set, while the rest are used for training.</li>
+                            <li>Computationally expensive but useful when the dataset is very small.</li>
+                        </ul>
+                    </li>
+                    <li>
+                        <strong>Leave-P-Out Cross-Validation (LPO-CV):</strong>
+                        <ul>
+                            <li>Similar to LOO-CV but leaves out <strong>P</strong> data points instead of just one.
+                            </li>
+                            <li>Even more computationally expensive than LOO.</li>
+                        </ul>
+                    </li>
+                    <li>
+                        <strong>Time Series Cross-Validation (Rolling Window CV):</strong>
+                        <ul>
+                            <li>Used for <strong>time-dependent</strong> data (e.g., stock prices, weather forecasting).
+                            </li>
+                            <li>Ensures that past data is used to predict future outcomes without data leakage.</li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <h3>4. When to Use Cross-Validation?</h3>
+                <ul>
+                    <li>When you <strong>don’t have a large dataset</strong> and want to make the best use of available
+                        data.</li>
+                    <li>When tuning hyperparameters to get <strong>the best model configuration</strong>.</li>
+                    <li>When you need a <strong>reliable estimate</strong> of model performance before deploying it.
+                    </li>
+                </ul>
+
+                <h3>Conclusion</h3>
+                <p>Cross-validation is an essential technique for evaluating machine learning models, ensuring they
+                    generalize well to new data. It prevents overfitting, improves reliability, and helps in model
+                    selection. Choosing the right type of cross-validation depends on the dataset and the problem at
+                    hand.</p>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="failure-cases">
+        <div class="case" style="font-family: 'Courier New', monospace; padding: 10px; border: 1px solid #ddd;">
+            <div>
+                <h1>Difference Between One-Vs-Rest (OvR) and One-Vs-One (OvO)</h1>
+
+                <h2>Why Use OvR or OvO?</h2>
+                <p>Not all classification algorithms support multi-class classification. Some algorithms, like the
+                    Perceptron, Logistic Regression, and Support Vector Machines (SVMs), are designed for binary
+                    classification.</p>
+                <p>To use these binary classifiers for multi-class problems, we split the dataset into multiple binary
+                    classification problems. Two common approaches are:</p>
+                <ul>
+                    <li><strong>One-vs-Rest (OvR) or One-vs-All (OvA)</strong></li>
+                    <li><strong>One-vs-One (OvO)</strong></li>
+                </ul>
+
+                <h2>One-Vs-Rest (OvR) for Multi-Class Classification</h2>
+                <p>One-vs-Rest (OvR) is a method where the multi-class dataset is split into multiple binary
+                    classification problems. Each classifier is trained to distinguish one class from all the others.
+                    The final prediction is made by the classifier that is most confident.</p>
+
+                <h3>Example</h3>
+                <p>Consider a dataset with three classes: <strong>red</strong>, <strong>blue</strong>, and
+                    <strong>green</strong>. The OvR approach creates the following binary classification problems:
+                </p>
+                <ul>
+                    <li><strong>Binary Classification Problem 1:</strong> red vs. [blue, green]</li>
+                    <li><strong>Binary Classification Problem 2:</strong> blue vs. [red, green]</li>
+                    <li><strong>Binary Classification Problem 3:</strong> green vs. [red, blue]</li>
+                </ul>
+
+                <h3>Advantages of One-Vs-Rest</h3>
+                <ul>
+                    <li>Faster training since it requires only <strong>K</strong> models (where K is the number of
+                        classes).</li>
+                    <li>Works well when one class is significantly different from others.</li>
+                </ul>
+
+                <h3>Disadvantages of One-Vs-Rest</h3>
+                <ul>
+                    <li>Can be affected by <strong>imbalanced data</strong> (if one class has far fewer examples than
+                        others).</li>
+                    <li>Predictions can be inconsistent when multiple classifiers give similar confidence scores.</li>
+                </ul>
+
+                <h2>One-Vs-One (OvO) for Multi-Class Classification</h2>
+                <p>One-vs-One (OvO) is a method where the dataset is split into multiple binary classification problems,
+                    but instead of comparing one class against all others, it compares every pair of classes
+                    individually. The final prediction is made using a voting system among all classifiers.</p>
+
+                <h3>Example</h3>
+                <p>Consider a dataset with four classes: <strong>red</strong>, <strong>blue</strong>,
+                    <strong>green</strong>, and <strong>yellow</strong>. The OvO approach creates the following binary
+                    classification problems:
+                </p>
+                <ul>
+                    <li><strong>Binary Classification Problem 1:</strong> red vs. blue</li>
+                    <li><strong>Binary Classification Problem 2:</strong> red vs. green</li>
+                    <li><strong>Binary Classification Problem 3:</strong> red vs. yellow</li>
+                    <li><strong>Binary Classification Problem 4:</strong> blue vs. green</li>
+                    <li><strong>Binary Classification Problem 5:</strong> blue vs. yellow</li>
+                    <li><strong>Binary Classification Problem 6:</strong> green vs. yellow</li>
+                </ul>
+
+                <h3>Advantages of One-Vs-One</h3>
+                <ul>
+                    <li>Better for models that don't scale well with large datasets (e.g., SVMs), since each classifier
+                        sees only two classes.</li>
+                    <li>More accurate when classes are well-separated.</li>
+                </ul>
+
+                <h3>Disadvantages of One-Vs-One</h3>
+                <ul>
+                    <li>Requires <strong>K(K-1)/2</strong> models, making it computationally expensive.</li>
+                    <li>Can be slow for large numbers of classes.</li>
+                </ul>
+
+                <h2>Comparison Table</h2>
+                <table border="1">
+                    <tr>
+                        <th>Feature</th>
+                        <th>One-Vs-Rest (OvR)</th>
+                        <th>One-Vs-One (OvO)</th>
+                    </tr>
+                    <tr>
+                        <td><strong>Number of Classifiers</strong></td>
+                        <td>K</td>
+                        <td>K(K-1)/2</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Training Speed</strong></td>
+                        <td>Faster</td>
+                        <td>Slower (more classifiers)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Inference Speed</strong></td>
+                        <td>Faster</td>
+                        <td>Slower</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Best for Large Datasets?</strong></td>
+                        <td>Yes</td>
+                        <td>No</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Best for Algorithms like SVM?</strong></td>
+                        <td>No</td>
+                        <td>Yes</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Accuracy</strong></td>
+                        <td>Good, but may struggle with close decision boundaries.</td>
+                        <td>Higher, since each classifier focuses on two specific classes.</td>
+                    </tr>
+                </table>
+
+                <h2>Conclusion</h2>
+                <p>Both One-Vs-Rest and One-Vs-One are useful techniques for adapting binary classifiers to multi-class
+                    problems.</p>
+                <ul>
+                    <li><strong>Use One-Vs-Rest:</strong> When you need faster training and have a large dataset.</li>
+                    <li><strong>Use One-Vs-One:</strong> When using SVMs or when higher accuracy is needed, even if it
+                        is computationally expensive.</li>
+                </ul>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="failure-cases">
+        <div class="case" style="font-family: 'Courier New', monospace; padding: 10px; border: 1px solid #ddd;">
+            <div>
+                <h1>Mean Average Precision (mAP)?</h1>
+
+                <h3>1. Understanding Average Precision (AP)</h3>
+                <p><strong>Average Precision (AP)</strong> measures the area under the <strong>Precision-Recall (PR)
+                        curve</strong>. It evaluates how well a classification or object detection model balances
+                    precision and recall.</p>
+
+                <h3>2. What is Mean Average Precision (mAP)?</h3>
+                <p><strong>Mean Average Precision (mAP)</strong> is the average of AP scores across all categories in a
+                    dataset. It is commonly used in <strong>object detection</strong> and <strong>information
+                        retrieval</strong> tasks.</p>
+                <p>Mathematically, mAP is calculated as:</p>
+                <pre>mAP = (AP₁ + AP₂ + ... + APₙ) / N</pre>
+                <p>where:</p>
+                <ul>
+                    <li><strong>AP₁, AP₂, ..., APₙ</strong> are the average precision values for each class.</li>
+                    <li><strong>N</strong> is the total number of classes.</li>
+                </ul>
+
+                <h3>3. How is mAP Used?</h3>
+                <p><strong>mAP is widely used in:</strong></p>
+                <ul>
+                    <li><strong>Object Detection:</strong> Evaluating models like YOLO, Faster R-CNN, and SSD.</li>
+                    <li><strong>Information Retrieval:</strong> Measuring ranking effectiveness in search engines.</li>
+                    <li><strong>Recommendation Systems:</strong> Assessing ranking quality of suggested items.</li>
+                </ul>
+
+                <h3>4. Why is mAP Important?</h3>
+                <ul>
+                    <li><strong>Balances Precision & Recall:</strong> Unlike accuracy, mAP considers both false
+                        positives and false negatives.</li>
+                    <li><strong>Useful for Imbalanced Data:</strong> Works well even when some classes are
+                        underrepresented.</li>
+                    <li><strong>Standard Benchmark:</strong> Common metric in computer vision and ranking tasks.</li>
+                </ul>
+
+                <h3>5. Conclusion</h3>
+                <p>mAP provides a robust evaluation metric for tasks where ranking and precision-recall trade-offs
+                    matter. It is a key metric in <strong>object detection, retrieval systems, and recommendation
+                        engines</strong>.</p>
+            </div>
+
+        </div>
+    </div>
+    <div class="failure-cases">
+        <div class="case" style="font-family: 'Courier New', monospace; padding: 10px; border: 1px solid #ddd;">
+            <div>
+                <h1>Best Performance Metric for Highly Imbalanced Data</h1>
+
+                <h3>1. Understanding the Problem</h3>
+                <p>When dealing with a dataset where the number of <strong>positive samples (minority class)</strong> is
+                    much lower than the number of <strong>negative samples (majority class)</strong>, traditional
+                    metrics like accuracy become unreliable.</p>
+
+                <h3>2. Why Precision is a Better Choice?</h3>
+                <p>If the dataset is highly imbalanced, precision is a more suitable metric because:</p>
+                <ul>
+                    <li>Precision measures the proportion of <strong>true positives</strong> among all predicted
+                        positives: <br>
+                        <pre>Precision = TP / (TP + FP)</pre>
+                    </li>
+                    <li>It is <strong>not affected</strong> by the large number of negative samples, unlike False
+                        Positive Rate (FPR).</li>
+                    <li>It focuses on the correct detection of the minority class (positive class).</li>
+                </ul>
+
+                <h3>3. Why Not Use False Positive Rate (FPR)?</h3>
+                <p>False Positive Rate (FPR) is defined as:</p>
+                <pre>FPR = FP / (FP + TN)</pre>
+                <p>When the number of <strong>negative samples (TN) is very large</strong>, FPR remains low even if the
+                    model makes many false positives, making it a less reliable metric.</p>
+
+                <h3>4. Alternative Metrics for Imbalanced Data</h3>
+                <p>Besides precision, other useful metrics include:</p>
+                <ul>
+                    <li><strong>Recall:</strong> Measures how many actual positives were correctly identified.</li>
+                    <li><strong>F1-Score:</strong> Harmonic mean of Precision and Recall, balancing both.</li>
+                    <li><strong>Precision-Recall (PR) Curve:</strong> More informative than ROC in highly imbalanced
+                        cases.</li>
+                    <li><strong>ROC-AUC:</strong> Measures the model's ability to distinguish between classes.</li>
+                </ul>
+
+                <h3>5. Conclusion</h3>
+                <p>For datasets with a large number of negative samples, <strong>precision</strong> is a better metric
+                    than FPR because it focuses on the correct identification of positive cases without being affected
+                    by the abundance of negative samples.</p>
+            </div>
+            <div class="failure-cases">
+                <div class="case" style="font-family: 'Courier New', monospace; padding: 10px; border: 1px solid #ddd;">
+                    <div>
+                        <h1>Few Scenarios</h1>
+
+                        <h3>Example 1.a: Majority Positive Samples – All Detected, But False Positives Exist</h3>
+                        <p>Dataset: 9 positive samples, 1 negative sample.</p>
+                        <p><strong>Model Prediction:</strong> Predicts all samples as positive.</p>
+                        <ul>
+                            <li>TP = 9, FP = 1, TN = 0, FN = 0</li>
+                            <li>Precision = 9/10 = 0.9, Recall = 9/9 = 1.0</li>
+                            <li>TPR = 1.0, FPR = 1.0</li>
+                        </ul>
+                        <p>Since FPR is very high, the model is not reliable despite high precision and recall.
+                            <strong>ROC is a better metric here.</strong>
+                        </p>
+
+                        <h3>Example 1.b: Opposite Labels – No Detection</h3>
+                        <p>Dataset: 9 negative samples, 1 positive sample.</p>
+                        <p><strong>Model Prediction:</strong> Predicts all as negative.</p>
+                        <ul>
+                            <li>TP = 0, FP = 0, TN = 9, FN = 1</li>
+                            <li>Precision, Recall, TPR, and FPR are all 0.</li>
+                        </ul>
+                        <p>This model fails entirely.</p>
+
+                        <h3>Example 2.a: Majority Positive Samples – All Detected, Some False Positives</h3>
+                        <p>Dataset: 8 positive samples, 2 negative samples.</p>
+                        <p><strong>Model Prediction:</strong> Predicts 9 as positive, 1 as negative.</p>
+                        <ul>
+                            <li>TP = 8, FP = 1, TN = 1, FN = 0</li>
+                            <li>Precision = 8/9 = 0.89, Recall = 1.0</li>
+                            <li>TPR = 1.0, FPR = 0.5</li>
+                        </ul>
+                        <p>FPR is high (0.5), showing poor performance for negative class. <strong>ROC is better in this
+                                case.</strong></p>
+
+                        <h3>Example 2.b: Opposite Labels</h3>
+                        <p>Dataset: 8 negative samples, 2 positive samples.</p>
+                        <p><strong>Model Prediction:</strong> Predicts 1 as positive, rest as negative.</p>
+                        <ul>
+                            <li>TP = 1, FP = 0, TN = 8, FN = 1</li>
+                            <li>Precision = 1.0, Recall = 0.5</li>
+                            <li>TPR = 0.5, FPR = 0</li>
+                        </ul>
+                        <p>Low recall (0.5) but good precision.</p>
+
+                        <h3>Example 3.a: Majority Positive Samples – Some Missed</h3>
+                        <p>Dataset: 9 positive samples, 1 negative sample.</p>
+                        <p><strong>Model Prediction:</strong> Predicts 7 as positive, 3 as negative.</p>
+                        <ul>
+                            <li>TP = 7, FP = 0, TN = 1, FN = 2</li>
+                            <li>Precision = 1.0, Recall = 7/9 = 0.78</li>
+                            <li>TPR = 0.78, FPR = 0</li>
+                        </ul>
+                        <p>Both metrics indicate strong performance.</p>
+
+                        <h3>Example 3.b: Opposite Labels – Precision and Recall Are Better</h3>
+                        <p>Dataset: 9 negative samples, 1 positive sample.</p>
+                        <p><strong>Model Prediction:</strong> Predicts 3 as positive (1 correct), 7 as negative.</p>
+                        <ul>
+                            <li>TP = 1, FP = 2, TN = 7, FN = 0</li>
+                            <li>Precision = 1/3 = 0.33, Recall = 1.0</li>
+                            <li>TPR = 1.0, FPR = 2/9 = 0.22</li>
+                        </ul>
+                        <p>FPR is low, but poor detection is reflected in low precision.</p>
+
+                        <h3>Final Conclusion: Choosing the Right Metric</h3>
+                        <ul>
+                            <li><strong>Use Precision & Recall:</strong> When the positive class is small and detecting
+                                positives is the priority.</li>
+                            <li><strong>Use ROC:</strong> When both classes are equally important.</li>
+                            <li><strong>Use ROC for Majority Positives:</strong> Since precision and recall focus mostly
+                                on the positive class.</li>
+                            <li><strong>Switch Labels:</strong> If the minority class is more important, swap labels and
+                                use precision & recall.</li>
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="failure-cases">
+        <div class="case" style="font-family: 'Courier New', monospace; padding: 10px; border: 1px solid #ddd;">
+            <div>
+                <h2>Regularization in Machine Learning</h2>
+                <p><strong>Regularization</strong> is a technique used to prevent <strong>overfitting</strong> in
+                    machine learning models. Overfitting occurs when a model learns the training data too well,
+                    including noise and outliers, and performs poorly on unseen data. Regularization introduces
+                    additional constraints or penalties to the model's learning process to ensure it generalizes better
+                    to new data.</p>
+
+                <h3>Why Regularization is Needed</h3>
+                <ul>
+                    <li><strong>Overfitting</strong>: Models with high complexity may fit training data perfectly but
+                        fail on new data.</li>
+                    <li><strong>High Variance</strong>: Overfit models are sensitive to small fluctuations in training
+                        data.</li>
+                    <li>Regularization balances the trade-off between <strong>bias</strong> (underfitting) and
+                        <strong>variance</strong> (overfitting).
+                    </li>
+                </ul>
+
+                <h3>Types of Regularization</h3>
+                <h4>1. L1 Regularization (Lasso Regression)</h4>
+                <ul>
+                    <li><strong>Concept</strong>: Adds a penalty equal to the absolute value of the coefficients.</li>
+                    <li><strong>Effect</strong>: Encourages sparsity by shrinking some coefficients to zero, performing
+                        feature selection.</li>
+                </ul>
+
+                <h4>2. L2 Regularization (Ridge Regression)</h4>
+                <ul>
+                    <li><strong>Concept</strong>: Adds a penalty equal to the square of the coefficients.</li>
+                    <li><strong>Effect</strong>: Shrinks all coefficients proportionally but does not set them to zero.
+                    </li>
+                </ul>
+
+                <h4>3. Elastic Net Regularization</h4>
+                <ul>
+                    <li><strong>Concept</strong>: Combines L1 and L2 regularization.</li>
+                    <li><strong>Effect</strong>: Balances the benefits of both L1 and L2 regularization.</li>
+                </ul>
+
+                <h4>4. Dropout (for Neural Networks)</h4>
+                <ul>
+                    <li><strong>Concept</strong>: Randomly ignores a fraction of neurons during training.</li>
+                    <li><strong>Effect</strong>: Reduces co-adaptation of neurons, making the network more robust.</li>
+                </ul>
+
+                <h4>5. Early Stopping</h4>
+                <ul>
+                    <li><strong>Concept</strong>: Stops training when validation performance degrades.</li>
+                    <li><strong>Effect</strong>: Prevents the model from learning noise in the training data.</li>
+                </ul>
+
+                <h3>Key Concepts in Regularization</h3>
+                <ul>
+                    <li><strong>Regularization Parameter (λ)</strong>: Controls the strength of regularization.</li>
+                    <li><strong>Bias-Variance Trade-off</strong>: Regularization introduces bias to reduce variance.
+                    </li>
+                    <li><strong>Feature Selection</strong>: L1 regularization can shrink some coefficients to zero.</li>
+                </ul>
+
+                <h3>When to Use Regularization</h3>
+                <ul>
+                    <li>When the model is <strong>overfitting</strong> (high variance).</li>
+                    <li>When the dataset has <strong>high dimensionality</strong> (many features).</li>
+                    <li>When there is <strong>multicollinearity</strong> (correlated features).</li>
+                </ul>
+
+                <h3>Advantages of Regularization</h3>
+                <ul>
+                    <li>Improves generalization to unseen data.</li>
+                    <li>Reduces model complexity.</li>
+                    <li>Helps handle multicollinearity.</li>
+                    <li>Can perform feature selection (L1 regularization).</li>
+                </ul>
+
+                <h3>Disadvantages of Regularization</h3>
+                <ul>
+                    <li>Introduces bias into the model.</li>
+                    <li>Requires tuning of the regularization parameter (λ).</li>
+                    <li>May not always improve performance if the model is already simple.</li>
+                </ul>
+
+                <h3>Conclusion</h3>
+                <p>Regularization is a powerful tool to prevent overfitting and improve the generalization of machine
+                    learning models. By adding a penalty to the loss function, it balances the trade-off between bias
+                    and variance, ensuring the model performs well on both training and unseen data. The choice of
+                    regularization technique (L1, L2, Elastic Net, etc.) depends on the specific problem and dataset.
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="failure-cases">
+        <div class="case" style="font-family: 'Courier New', monospace; padding: 10px; border: 1px solid #ddd;">
+            <div class="failure-cases">
+                <div class="case" style="font-family: 'Courier New', monospace; padding: 10px; border: 1px solid #ddd;">
+                    <h2>Bias-Variance Tradeoff</h2>
+                    <p>In order to understand how the deviation of the function is varied, <strong>bias</strong> and
+                        <strong>variance</strong> can be adopted. Bias is the measurement of deviation or error from the
+                        real value of the function, while variance is the measurement of deviation in the response
+                        variable function when estimating it over different training samples of the dataset.
+                    </p>
+
+                    <p>Therefore, for a generalized data model, we must keep bias as low as possible to achieve high
+                        accuracy. Additionally, the model should not produce greatly varied results, so low variance is
+                        recommended for good performance.</p>
+
+                    <p>The relationship between bias and variance is closely related to <strong>overfitting</strong>,
+                        <strong>underfitting</strong>, and <strong>model capacity</strong>. When calculating the
+                        generalization error (where bias and variance are crucial elements), an increase in model
+                        capacity can lead to an increase in variance and a decrease in bias.
+                    </p>
+
+                    <p>The trade-off is the tension between the error introduced by bias and variance. The image below
+                        shows the bias-variance tradeoff as a function of model capacity.</p>
+
+                    <h3>Bias-Variance Tradeoff Graph</h3>
+                    <p>From the graph, it can be observed that:</p>
+                    <ul>
+                        <li>While reducing bias, the model fits well on a particular sample of training data but fails
+                            to generalize to unseen data, leading to high variance.</li>
+                        <li>If we aim to keep variance low, the model may not fit the data well, resulting in high bias.
+                        </li>
+                    </ul>
+
+                    <h3>Graphical Representation of Underfitting, Exact Fit, and Overfitting</h3>
+                    <p>The graph below depicts the conditions of underfitting, exact fit, and overfitting.</p>
+
+                    <h3>Examples of Bias-Variance Tradeoff</h3>
+                    <ul>
+                        <li><strong>Support Vector Machine (SVM)</strong>: Has low bias and high variance. The trade-off
+                            can be altered by increasing the cost (C) parameter, which decreases variance and increases
+                            bias.</li>
+                        <li><strong>k-Nearest Neighbors (k-NN)</strong>: Has low bias and high variance. The trade-off
+                            can be modified by increasing the k-value, which increases bias.</li>
+                    </ul>
+
+                    <h3>Overfitting and Underfitting</h3>
+                    <p><strong>Overfitting</strong> occurs when a model has low bias and high variance, fitting the
+                        training data too well but failing to generalize to new data. This often happens when the model
+                        considers too many features, including insignificant ones.</p>
+                    <p><strong>Underfitting</strong> occurs when a model has high bias and low variance, failing to
+                        capture the underlying patterns in the data.</p>
+                </div>
+            </div>
+            <div class="failure-cases">
+                <div class="case" style="font-family: 'Courier New', monospace; padding: 10px; border: 1px solid #ddd;">
+                    <h2>What is Regularization?</h2>
+                    <p>Regularization is a technique used to prevent overfitting by penalizing complex models. It
+                        achieves this by adding a regularization term to the loss function, which shrinks the model's
+                        coefficients towards zero. This reduces the impact of insignificant features and stabilizes the
+                        model.</p>
+
+                    <h3>Regularization Techniques</h3>
+                    <ul>
+                        <li><strong>L1 Regularization (Lasso)</strong>: Adds a penalty equal to the absolute value of
+                            the coefficients. It encourages sparsity and performs feature selection.</li>
+                        <li><strong>L2 Regularization (Ridge)</strong>: Adds a penalty equal to the square of the
+                            coefficients. It shrinks all coefficients but does not set them to zero.</li>
+                        <li><strong>Elastic Net</strong>: Combines L1 and L2 regularization.</li>
+                        <li><strong>Dropout</strong>: Randomly ignores neurons during training in neural networks.</li>
+                        <li><strong>Early Stopping</strong>: Stops training when validation performance degrades.</li>
+                    </ul>
+
+                    <h3>Regularization Term</h3>
+                    <p>Regularization adds a penalty term to the cost function to penalize complex models. This reduces
+                        the weights of the model, making it simpler and less prone to overfitting.</p>
+
+                    <h3>Penalty Terms</h3>
+                    <ul>
+                        <li><strong>L1 Penalty</strong>: Adds the absolute value of coefficients (used in Lasso
+                            Regression).</li>
+                        <li><strong>L2 Penalty</strong>: Adds the squared value of coefficients (used in Ridge
+                            Regression).</li>
+                        <li><strong>Elastic Net</strong>: Combines L1 and L2 penalties.</li>
+                    </ul>
+
+                    <h3>L1 Regularization</h3>
+                    <p>L1 regularization is preferred when dealing with high-dimensional data, as it provides sparse
+                        solutions by shrinking some coefficients to zero. The regression model using L1 regularization
+                        is called <strong>Lasso Regression</strong>.</p>
+
+                    <h4>Mathematical Formula for L1 Regularization</h4>
+                    <p>The loss function with L1 regularization is:</p>
+                    <p>\[
+                        \text{Loss} = \text{Error}(Y, \hat{Y}) + \lambda \sum_{i=1}^n |w_i|
+                        \]</p>
+                    <p>Where \( \lambda \) is the regularization parameter.</p>
+
+                    <h3>L2 Regularization</h3>
+                    <p>L2 regularization is used to handle multicollinearity by shrinking all coefficients
+                        proportionally. The regression model using L2 regularization is called <strong>Ridge
+                            Regression</strong>.</p>
+
+                    <h4>Mathematical Formula for L2 Regularization</h4>
+                    <p>The loss function with L2 regularization is:</p>
+                    <p>\[
+                        \text{Loss} = \text{Error}(Y, \hat{Y}) + \lambda \sum_{i=1}^n w_i^2
+                        \]</p>
+
+                    <h3>L1 vs L2 Regularization</h3>
+                    <p>Key differences between L1 and L2 regularization:</p>
+                    <ul>
+                        <li><strong>L1</strong>: Produces sparse solutions, performs feature selection, and is robust to
+                            outliers.</li>
+                        <li><strong>L2</strong>: Produces non-sparse solutions, does not perform feature selection, and
+                            is computationally efficient.</li>
+                    </ul>
+
+                    <h3>Conclusion</h3>
+                    <p>Regularization is a powerful technique to prevent overfitting by penalizing complex models. L1
+                        regularization is useful for feature selection, while L2 regularization is better for handling
+                        multicollinearity. The choice between L1 and L2 depends on the specific problem and dataset.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="failure-cases">
+        <div class="case" style="font-family: 'Courier New', monospace; padding: 10px; border: 1px solid #ddd;">
+            <div>
+                <h2>Why L1 Regularization Creates Sparsity in the Weight Vector</h2>
+
+                <h3>1. Mathematical Formulation</h3>
+                <p><strong>L1 Regularization (Lasso):</strong></p>
+                <p>The loss function with L1 regularization is:</p>
+                <p>\[
+                    \mathcal{L}_1 = \text{Logistic Loss} + \lambda \sum_{i=1}^d |W_i|
+                    \]</p>
+                <p>The gradient of the L1 penalty is:</p>
+                <p>\[
+                    \frac{\partial \mathcal{L}_1}{\partial W_i} =
+                    \begin{cases}
+                    +\lambda & \text{if } W_i > 0 \\
+                    -\lambda & \text{if } W_i < 0 \end{cases} \]</p>
+
+                        <p><strong>L2 Regularization (Ridge):</strong></p>
+                        <p>The loss function with L2 regularization is:</p>
+                        <p>\[
+                            \mathcal{L}_2 = \text{Logistic Loss} + \lambda \sum_{i=1}^d W_i^2
+                            \]</p>
+                        <p>The gradient of the L2 penalty is:</p>
+                        <p>\[
+                            \frac{\partial \mathcal{L}_2}{\partial W_i} = 2\lambda W_i
+                            \]</p>
+
+                        <h3>2. Gradient Descent Behavior</h3>
+                        <p><strong>L1 Regularization:</strong></p>
+                        <ul>
+                            <li>Weight update rule:
+                                \[
+                                W_i^{(t+1)} = W_i^{(t)} - \eta \left( \frac{\partial \text{Logistic Loss}}{\partial W_i}
+                                + \lambda \cdot \text{sign}(W_i) \right)
+                                \]
+                            </li>
+                            <li>The L1 penalty subtracts a <strong>fixed value</strong> (\(\eta \lambda\)) from \(W_i\)
+                                at each step, regardless of its magnitude.</li>
+                            <li>Small weights can be pushed past zero, leading to <strong>exact sparsity</strong>.</li>
+                        </ul>
+
+                        <p><strong>L2 Regularization:</strong></p>
+                        <ul>
+                            <li>Weight update rule:
+                                \[
+                                W_i^{(t+1)} = W_i^{(t)} - \eta \left( \frac{\partial \text{Logistic Loss}}{\partial W_i}
+                                + 2\lambda W_i \right)
+                                \]
+                            </li>
+                            <li>The L2 penalty shrinks \(W_i\) proportionally to its current value (\(2\lambda W_i\)).
+                            </li>
+                            <li>Small weights are reduced slightly but <strong>never reach zero</strong>.</li>
+                        </ul>
+
+                        <h3>3. Geometric Interpretation</h3>
+                        <p><strong>L1 Constraint (Diamond Shape):</strong></p>
+                        <ul>
+                            <li>The feasible region is a polyhedron with corners on the axes.</li>
+                            <li>Optimal solutions often lie at corners where weights are <strong>exactly zero</strong>.
+                            </li>
+                        </ul>
+
+                        <p><strong>L2 Constraint (Sphere Shape):</strong></p>
+                        <ul>
+                            <li>The feasible region is a smooth sphere.</li>
+                            <li>Optimal solutions rarely lie on the axes, resulting in <strong>non-sparse</strong>
+                                weights.</li>
+                        </ul>
+
+                        <h3>4. Example: Gradient Descent Updates</h3>
+                        <p>Assume \(W_1 = 0.1\), \(\lambda = 0.1\), and \(\eta = 0.01\):</p>
+                        <p><strong>L1 Regularization:</strong></p>
+                        <ul>
+                            <li>Gradient of penalty: \(\frac{\partial \mathcal{L}_1}{\partial W_1} = +0.1\) (since \(W_1
+                                > 0\)).</li>
+                            <li>Update: \(W_1 \leftarrow 0.1 - 0.01 \times 0.1 = 0.099\).</li>
+                            <li>Repeated updates drive \(W_1\) to <strong>0</strong>.</li>
+                        </ul>
+
+                        <p><strong>L2 Regularization:</strong></p>
+                        <ul>
+                            <li>Gradient of penalty: \(\frac{\partial \mathcal{L}_2}{\partial W_1} = 2 \times 0.1 \times
+                                0.1 = 0.02\).</li>
+                            <li>Update: \(W_1 \leftarrow 0.1 - 0.01 \times 0.02 = 0.0998\).</li>
+                            <li>\(W_1\) shrinks gradually but <strong>never reaches zero</strong>.</li>
+                        </ul>
+
+                        <h3>5. Comparison Table</h3>
+                        <table border="1">
+                            <tr>
+                                <th>Aspect</th>
+                                <th>L1 Regularization</th>
+                                <th>L2 Regularization</th>
+                            </tr>
+                            <tr>
+                                <td><strong>Gradient</strong></td>
+                                <td>Constant (\(\pm \lambda\))</td>
+                                <td>Proportional to \(W_i\) (\(2\lambda W_i\))</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Sparsity</strong></td>
+                                <td>Yes (weights reach <strong>exactly zero</strong>)</td>
+                                <td>No (weights remain non-zero)</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Use Case</strong></td>
+                                <td>Feature selection, high-dimensional data</td>
+                                <td>Handling multicollinearity</td>
+                            </tr>
+                        </table>
+
+                        <h3>Conclusion</h3>
+                        <p>L1 regularization creates sparsity because:</p>
+                        <ol>
+                            <li>Its constant gradient pushes small weights past zero during updates.</li>
+                            <li>The non-differentiable "kink" at zero traps weights at zero.</li>
+                            <li>Geometric constraints favor corner solutions with sparse weights.</li>
+                        </ol>
+                        <p>L2 regularization, in contrast, shrinks weights smoothly but never achieves exact sparsity.
+                        </p>
+            </div>
+        </div>
+    </div>
+    <div class="failure-cases">
+        <div class="case" style="font-family: 'Courier New', monospace; padding: 10px; border: 1px solid #ddd;">
+            <div>
+                <h2>Bias-Variance Tradeoff</h2>
+
+                <div style="display: flex; gap: 30px; align-items: flex-start;">
+                    <!-- Text Content (Left Side) -->
+                    <div style="flex: 2;">
+                        <h3>1. Definitions</h3>
+                        <ul>
+                            <li><strong>Bias</strong>:
+                                <ul>
+                                    <li>Error from erroneous assumptions in the learning algorithm.</li>
+                                    <li>High bias causes <em>underfitting</em> (model misses relevant patterns in data).
+                                    </li>
+                                </ul>
+                            </li>
+                            <li><strong>Variance</strong>:
+                                <ul>
+                                    <li>Error from sensitivity to small changes in the training set.</li>
+                                    <li>High variance causes <em>overfitting</em> (model learns noise and fails on
+                                        unseen data).</li>
+                                </ul>
+                            </li>
+                        </ul>
+
+                        <h3>2. Goal of Model Selection</h3>
+                        <p>Choose a model that:</p>
+                        <ol>
+                            <li>Accurately captures patterns in training data.</li>
+                            <li>Generalizes well to unseen data.</li>
+                        </ol>
+                        <p><em>Key Challenge:</em> Balancing these goals is often contradictory.</p>
+
+                        <h3>3. Tradeoff Dynamics</h3>
+                        <ul>
+                            <li><strong>High-Variance Models</strong>:
+                                <ul>
+                                    <li>Complex models (e.g., deep neural networks).</li>
+                                    <li>Excel on training data but overfit to noise.</li>
+                                    <li>Poor test performance.</li>
+                                </ul>
+                            </li>
+                            <li><strong>High-Bias Models</strong>:
+                                <ul>
+                                    <li>Simple models (e.g., linear regression).</li>
+                                    <li>Underfit by missing key patterns.</li>
+                                    <li>Consistent but inaccurate predictions.</li>
+                                </ul>
+                            </li>
+                        </ul>
+
+                        <h3>4. Impact of Model Complexity</h3>
+                        <ul>
+                            <li><strong>Increased Complexity</strong>:
+                                <ul>
+                                    <li>Reduces <em>bias</em> (captures more patterns).</li>
+                                    <li>Increases <em>variance</em> (sensitive to noise).</li>
+                                    <li>Example: Flexible model \( \hat{f}(x) \) fits training data closely but
+                                        overfits.</li>
+                                </ul>
+                            </li>
+                            <li><strong>Reduced Complexity</strong>:
+                                <ul>
+                                    <li>Increases <em>bias</em> (misses patterns).</li>
+                                    <li>Reduces <em>variance</em> (stable predictions).</li>
+                                    <li>Example: Rigid model ignores subtle relationships.</li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Image (Right Side) -->
+                    <div style="flex: 1; margin-top: 20px;">
+                        <div style="text-align: center;">
+                            <img src="../assets/images/Bias_and_variance.png" alt="Bias-Variance Tradeoff Graph"
+                                style="max-width: 100%; height: auto;">
+                            <p><em>As model complexity increases, bias decreases but variance increases. The optimal
+                                    balance minimizes total error.</em></p>
+                        </div>
+                    </div>
+                </div>
+
+                <h3>5. Conclusion</h3>
+                <ul>
+                    <li><strong>Underfitting</strong>: High bias, low variance (too simple).</li>
+                    <li><strong>Overfitting</strong>: Low bias, high variance (too complex).</li>
+                    <li><strong>Optimal Model</strong>: Balances bias and variance for minimal generalization error.
+                    </li>
+                </ul>
+            </div>
+            <div class="failure-cases">
+                <div class="case" style="font-family: 'Courier New', monospace; padding: 10px; border: 1px solid #ddd;">
+                    <div>
+                        <h2>Mathematical Derivation of Bias-Variance Tradeoff</h2>
+
+                        <h3>1. Mathematical Setup</h3>
+                        <p>Let \( Y \) be the target variable and \( X \) be the predictor variable:</p>
+                        <p>\[
+                            Y = f(X) + e
+                            \]</p>
+                        <ul>
+                            <li>\( e \) is the error term, normally distributed with \( \text{mean} = 0 \).</li>
+                            <li>We build a model \( \hat{f}(X) \) to approximate \( f(X) \).</li>
+                        </ul>
+
+                        <h3>2. Expected Squared Error Decomposition</h3>
+                        <p>The expected squared error at a point \( x \) is:</p>
+                        <p>\[
+                            \text{Err}(x) = E\left[ (Y - \hat{f}(x))^2 \right]
+                            \]</p>
+                        <p>This error can be decomposed into three components:</p>
+                        <p>\[
+                            \text{Err}(x) = \underbrace{\left( E[\hat{f}(x)] - f(x) \right)^2}_{\text{Bias}^2} +
+                            \underbrace{E\left[ (\hat{f}(x) - E[\hat{f}(x)])^2 \right]}_{\text{Variance}} +
+                            \underbrace{\sigma_e^2}_{\text{Irreducible Error}}
+                            \]</p>
+
+                        <h3>3. Components of Error</h3>
+                        <ul>
+                            <li><strong>Bias²</strong>:
+                                <ul>
+                                    <li>Measures the difference between the expected model prediction \( E[\hat{f}(x)]
+                                        \) and the true value \( f(x) \).</li>
+                                    <li>Formula: \( \text{Bias} = E[\hat{f}(x)] - f(x) \).</li>
+                                </ul>
+                            </li>
+                            <li><strong>Variance</strong>:
+                                <ul>
+                                    <li>Measures the variability of model predictions around their mean.</li>
+                                    <li>Formula: \( \text{Variance} = E\left[ (\hat{f}(x) - E[\hat{f}(x)])^2 \right] \).
+                                    </li>
+                                </ul>
+                            </li>
+                            <li><strong>Irreducible Error</strong>:
+                                <ul>
+                                    <li>Error caused by noise (\( \sigma_e^2 \)) in the data.</li>
+                                    <li>Cannot be reduced by improving the model.</li>
+                                </ul>
+                            </li>
+                        </ul>
+
+                        <h3>4. Key Takeaways</h3>
+                        <ul>
+                            <li><strong>Bias</strong>: High bias indicates underfitting (model oversimplifies the true
+                                relationship).</li>
+                            <li><strong>Variance</strong>: High variance indicates overfitting (model is too sensitive
+                                to noise).</li>
+                            <li><strong>Irreducible Error</strong>: Represents the inherent noise in the data.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="failure-cases">
+        <div class="case" style="font-family: 'Courier New', monospace; padding: 10px; border: 1px solid #ddd;">
+            <h1>Word Embedding Techniques</h1>
+            <div class="failure-cases">
+                <div class="case" style="font-family: 'Courier New', monospace; padding: 10px; border: 1px solid #ddd;">
+                    <h2>1. One Hot Encoding</h2>
+                    <p>
+                        One Hot Encoding converts categorical text data into numerical vectors. For a vocabulary of size
+                        \( N \),
+                        each word is represented as an \( N \)-dimensional vector where:
+                    <ul>
+                        <li>The index corresponding to the word is <strong>1</strong></li>
+                        <li>All other indices are <strong>0</strong></li>
+                    </ul>
+                    <em>Example:</em> For vocabulary ["apple", "banana", "orange"], "banana" is encoded as [0, 1, 0].
+                    </p>
+                </div>
+            </div>
+
+            <div class="failure-cases">
+                <div class="case" style="font-family: 'Courier New', monospace; padding: 10px; border: 1px solid #ddd;">
+
+                    <h2>2. TF-IDF (Term Frequency-Inverse Document Frequency)</h2>
+                    <p>
+                        TF-IDF quantifies the importance of a word in a document relative to a corpus. It combines:
+                    </p>
+
+                    <h3>Term Frequency (TF)</h3>
+                    <p>
+                        \[
+                        \text{TF}(t, d) = \frac{\text{Number of times term } t \text{ appears in document }
+                        d}{\text{Total terms in } d}
+                        \]
+                        <em>Example:</em> For the document "He is Walter":
+                    <ul>
+                        <li>TF("He") = 1/3 ≈ 0.33</li>
+                        <li>TF("Walter") = 1/3 ≈ 0.33</li>
+                    </ul>
+                    </p>
+
+                    <h3>Inverse Document Frequency (IDF)</h3>
+                    <p>
+                        \[
+                        \text{IDF}(t) = \log\left(\frac{\text{Total documents}}{\text{Documents containing } t}\right)
+                        \]
+                        <em>Example (base 10 log):</em>
+                    <ul>
+                        <li>For "He" (appears in all 3 documents): \(\log_{10}(3/3) = 0\)</li>
+                        <li>For "is" (appears in 2 documents): \(\log_{10}(3/2) ≈ 0.176\)</li>
+                        <li>For "Peter" (appears in 1 document): \(\log_{10}(3/1) ≈ 0.477\)</li>
+                    </ul>
+                    </p>
+
+                    <h3>TF-IDF Calculation</h3>
+                    <p>
+                        \[
+                        \text{TF-IDF}(t, d) = \text{TF}(t, d) \times \text{IDF}(t)
+                        \]
+                        <em>Example with Smoothing (add 1 to avoid zeros):</em>
+                    <div style="margin-left: 20px;">
+                        <strong>Document 1 ("He is Walter"):</strong><br>
+                        [1.0, 1.176, 1.477, 0.0, 0.0, 0.0, 0.0, 0.0]<br><br>
+
+                        <strong>Document 2 ("He is William"):</strong><br>
+                        [1.0, 1.176, 0.0, 1.477, 0.0, 0.0, 0.0, 0.0]<br><br>
+
+                        <strong>Document 3 ("He isn’t Peter or September"):</strong><br>
+                        [1.0, 0.0, 0.0, 0.0, 1.477, 1.477, 1.477, 1.477]
+                    </div>
+                    </p>
+
+                    <h2>Key Differences</h2>
+                    <table border="1">
+                        <tr>
+                            <th>Technique</th>
+                            <th>Use Case</th>
+                            <th>Limitations</th>
+                        </tr>
+                        <tr>
+                            <td>One Hot Encoding</td>
+                            <td>Simple categorical data</td>
+                            <td>High dimensionality for large vocabularies</td>
+                        </tr>
+                        <tr>
+                            <td>TF-IDF</td>
+                            <td>Text classification, information retrieval</td>
+                            <td>Does not capture semantic meaning</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="failure-cases">
+                <div class="case" style="font-family: 'Courier New', monospace; padding: 10px; border: 1px solid #ddd;">
+                    <div>
+                        <h2>Word2Vec: Word Embedding Technique</h2>
+
+                        <h3>Introduction</h3>
+                        <p>
+                            Word2Vec is a neural network-based method for generating dense vector representations of
+                            words. Unlike sparse methods like One Hot Encoding,
+                            Word2Vec captures semantic and syntactic relationships between words by mapping them to
+                            vectors in a continuous vector space. Words with similar
+                            meanings or contexts are positioned closer together in this space.
+                        </p>
+
+                        <h3>Key Architectures</h3>
+                        <ul>
+                            <li><strong>Continuous Bag of Words (CBOW)</strong>:
+                                <ul>
+                                    <li>Predicts a <strong>target word</strong> given its <strong>context
+                                            words</strong>.</li>
+                                    <li>Faster training, suitable for smaller datasets.</li>
+                                    <li>Example: For the sentence "The cat sits on the mat", CBOW uses ["The", "cat",
+                                        "on", "the", "mat"] to predict "sits".</li>
+                                </ul>
+                            </li>
+                            <li><strong>Skip-Gram</strong>:
+                                <ul>
+                                    <li>Predicts <strong>context words</strong> given a <strong>target word</strong>.
+                                    </li>
+                                    <li>Better for rare words and large datasets.</li>
+                                    <li>Example: Uses "sits" to predict ["The", "cat", "on", "the", "mat"].</li>
+                                </ul>
+                            </li>
+                        </ul>
+
+                        <h3>Mathematical Formulation</h3>
+                        <p>
+                            The objective is to maximize the log-likelihood of observing context words given a target
+                            word (Skip-Gram) or vice versa (CBOW). For Skip-Gram:
+                        </p>
+                        <p>\[
+                            \text{Maximize } \frac{1}{T} \sum_{t=1}^T \sum_{-c \leq j \leq c, j \neq 0} \log p(w_{t+j} |
+                            w_t)
+                            \]</p>
+                        <p>Where:</p>
+                        <ul>
+                            <li>\( T \): Total words in the corpus.</li>
+                            <li>\( c \): Context window size.</li>
+                            <li>\( p(w_{t+j} | w_t) \): Probability calculated using the <strong>softmax</strong>
+                                function:
+                                \[
+                                p(w_O | w_I) = \frac{\exp(v_{w_O}^T v_{w_I})}{\sum_{w=1}^W \exp(v_w^T v_{w_I})}
+                                \]
+                            </li>
+                        </ul>
+
+                        <h3>Key Features</h3>
+                        <ul>
+                            <li><strong>Dense Vectors</strong>: Typically 100-300 dimensions.</li>
+                            <li><strong>Semantic Relationships</strong>:
+                                <ul>
+                                    <li>Analogies: \( \text{King} - \text{Man} + \text{Woman} ≈ \text{Queen} \).</li>
+                                    <li>Similar words: \( \text{Dog} ≈ \text{Puppy} \).</li>
+                                </ul>
+                            </li>
+                            <li><strong>Efficiency</strong>: Uses techniques like <em>Negative Sampling</em> or
+                                <em>Hierarchical Softmax</em> to reduce computational cost.</li>
+                        </ul>
+
+                        <h3>Applications</h3>
+                        <ul>
+                            <li>Text classification</li>
+                            <li>Named Entity Recognition (NER)</li>
+                            <li>Machine translation</li>
+                            <li>Recommendation systems</li>
+                        </ul>
+
+                        <h3>Advantages vs. Limitations</h3>
+                        <table border="1">
+                            <tr>
+                                <th>Advantages</th>
+                                <th>Limitations</th>
+                            </tr>
+                            <tr>
+                                <td>Captures semantic relationships</td>
+                                <td>Fails to handle polysemy (e.g., "bank" as river vs. financial)</td>
+                            </tr>
+                            <tr>
+                                <td>Low-dimensional embeddings</td>
+                                <td>Fixed context window size</td>
+                            </tr>
+                            <tr>
+                                <td>Works well with small datasets</td>
+                                <td>Cannot handle out-of-vocabulary words</td>
+                            </tr>
+                        </table>
+
+                        <h3>Conclusion</h3>
+                        <p>
+                            Word2Vec revolutionized NLP by enabling machines to understand word semantics through vector
+                            arithmetic. While newer models like BERT and GPT
+                            have emerged, Word2Vec remains foundational for tasks requiring lightweight, interpretable
+                            word embeddings.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="failure-cases">
+        <div class="case" style="font-family: 'Courier New', monospace; padding: 10px; border: 1px solid #ddd;"><div>
+            <h2>Comparison of Word Embedding Techniques</h2>
+            <table border="1" style="width: 100%; border-collapse: collapse; margin: 20px 0;">
+                <thead>
+                    <tr style="background-color: #f2f2f2;">
+                        <th style="padding: 12px;">Word Embedding Technique</th>
+                        <th style="padding: 12px;">Main Characteristics</th>
+                        <th style="padding: 12px;">Use Cases</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- TF-IDF -->
+                    <tr>
+                        <td style="padding: 10px;"><strong>TF-IDF</strong></td>
+                        <td style="padding: 10px;">
+                            <ul>
+                                <li>Statistical method to measure word relevance relative to a corpus.</li>
+                                <li>Does <em>not</em> capture semantic relationships between words.</li>
+                            </ul>
+                        </td>
+                        <td style="padding: 10px;">
+                            <ul>
+                                <li>Information retrieval</li>
+                                <li>Keyword extraction</li>
+                            </ul>
+                        </td>
+                    </tr>
+                    
+                    <!-- Word2Vec -->
+                    <tr>
+                        <td style="padding: 10px;"><strong>Word2Vec</strong></td>
+                        <td style="padding: 10px;">
+                            <ul>
+                                <li>Neural network-based (CBOW and Skip-gram architectures).</li>
+                                <li>Captures semantic and syntactic relationships between words.</li>
+                            </ul>
+                        </td>
+                        <td style="padding: 10px;">
+                            <ul>
+                                <li>Semantic analysis (e.g., word analogies like <code>King - Man + Woman ≈ Queen</code>)</li>
+                                <li>Document similarity</li>
+                            </ul>
+                        </td>
+                    </tr>
+                    
+                    <!-- GloVe -->
+                    <tr>
+                        <td style="padding: 10px;"><strong>GloVe</strong></td>
+                        <td style="padding: 10px;">
+                            <ul>
+                                <li>Uses matrix factorization based on global word-word co-occurrence statistics.</li>
+                                <li>Addresses local context limitations of Word2Vec.</li>
+                            </ul>
+                        </td>
+                        <td style="padding: 10px;">
+                            <ul>
+                                <li>Word analogy tasks</li>
+                                <li>Named-entity recognition (NER)</li>
+                                <li>Comparable to Word2Vec in some tasks, superior in others.</li>
+                            </ul>
+                        </td>
+                    </tr>
+                    
+                    <!-- BERT -->
+                    <tr>
+                        <td style="padding: 10px;"><strong>BERT</strong></td>
+                        <td style="padding: 10px;">
+                            <ul>
+                                <li>Transformer-based architecture with attention mechanisms.</li>
+                                <li>Captures bidirectional contextual information.</li>
+                            </ul>
+                        </td>
+                        <td style="padding: 10px;">
+                            <ul>
+                                <li>Language translation</li>
+                                <li>Question-answering systems</li>
+                                <li>Contextual search query understanding (e.g., Google Search)</li>
+                            </ul>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        
+            <h3>Key Takeaways</h3>
+            <ul>
+                <li><strong>TF-IDF</strong>: Best for simple relevance scoring without semantic understanding.</li>
+                <li><strong>Word2Vec</strong>: Balances semantic understanding with computational efficiency.</li>
+                <li><strong>GloVe</strong>: Enhances global context handling compared to Word2Vec.</li>
+                <li><strong>BERT</strong>: State-of-the-art for tasks requiring deep contextual understanding.</li>
+            </ul>
+        </div>
+        </div>
+    </div>
+    <div class="failure-cases">
+        <div class="case" style="font-family: 'Courier New', monospace; padding: 10px; border: 1px solid #ddd;">
+        </div>
+    </div>
+    <div class="failure-cases">
+        <div class="case" style="font-family: 'Courier New', monospace; padding: 10px; border: 1px solid #ddd;">
+        </div>
+    </div>
+</body>
+
+</html>

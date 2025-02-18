@@ -38,7 +38,7 @@
             width: 100%;
             height: 100%;
             background: rgba(0, 0, 0, 0.5);
-            z-index: 1;
+            z-index: -1;
         }
 
         /* Layout Containers */
@@ -171,6 +171,10 @@
             stroke: #ccc;
             stroke-width: 2px;
         }
+
+        * {
+            user-select: text;
+        }
     </style>
 </head>
 
@@ -179,6 +183,129 @@
 </header>
 
 <body>
+
+    <div class="failure-cases">
+        <div class="case" style="font-family: 'Courier New', monospace; padding: 10px; border: 1px solid #ddd;">
+            <div class="failure-cases">
+                <div class="case" style="font-family: 'Courier New', monospace; padding: 10px; border: 1px solid #ddd;">
+                    <div>
+                        <h2>Electricity Demand Forecasting for London</h2>
+
+                        <h3>Introduction</h3>
+                        <p>Accurate electricity demand forecasts are crucial for electric utilities and regional
+                            transmission organizations. Long-term forecasts reduce investment risk, medium-term
+                            forecasts aid in planning fuel purchases and scheduling plant maintenance, and short-term
+                            forecasts are essential for matching electricity generation with demand to ensure grid
+                            reliability.</p>
+                        <p>This project focused on medium-term forecasting, specifically making one-week-out forecasts
+                            at an hourly resolution for London. Historical electricity demand and weather data from
+                            2002-2020 were used. A combination of time series analysis and regression models were
+                            employed to make forecasting predictions, which were compared against the observed hourly
+                            electricity demand for a series of one-week intervals.</p>
+
+                        <h3>Data Collection</h3>
+                        <ul>
+                            <li><strong>Electricity Demand Data:</strong> Historical electricity demand data was
+                                provided by the County of London Electric Supply Company (C.L.E.S.Co) Limited. The data
+                                for each year was segmented by weather zones. Initial processing included converting
+                                timestamps to datetime indexes, removing duplicate entries by averaging values with the
+                                same timestamp, and filling missing values by backfilling from the next available entry.
+                                This resulted in a dataframe of time and load.</li>
+                            <li><strong>Weather Data:</strong> Weather features like temperature and humidity impact
+                                electricity consumption. Weather data was sourced from Weather Underground. A parser was
+                                built to extract relevant data from a single API endpoint, and the data scraping script
+                                was extended to compile hourly weather data from 2002-2020 into a single dataframe. The
+                                data included time, temperature, humidity, wind speed, and weather conditions. Missing
+                                wind speed data was converted to the mean or lowest observed wind speed, weather
+                                conditions were converted to integers, and humidity values were converted to
+                                percentages. Hourly frequency of the data was enforced by removing duplicate entries.
+                            </li>
+                        </ul>
+
+                        <h3>Feature Engineering</h3>
+                        <p>The categorical feature "condition" was converted into a one-hot encoding. The original
+                            dataset from Weather Underground used 17 different weather conditions, which were grouped
+                            into 6 broad categories: clear, cloud, rain, tstorm, fog, and snow. The electricity demand
+                            and weather data were merged into a single dataframe, with missing values filled in by
+                            back-filling for one-hot encoding features and interpolation for continuous features.</p>
+                        <p>Additional temporal features were created, such as a boolean feature "weekday" to indicate
+                            whether it was a weekday, and sine/cosine transformations for the hour of the day to capture
+                            time-of-day effects. Continuous features were normalized to the range [0, 1] to facilitate
+                            model training.</p>
+
+                        <h3>Designing Models</h3>
+                        <p>Time series forecasting becomes more challenging as the forecasting period decreases.
+                            Therefore, the original electricity demand time series was decomposed into two components:
+                            monthly average electricity demand and hourly residuals. The monthly averages were modeled
+                            using traditional time series methods, while the hourly residuals (the amount above or below
+                            the monthly average at each hour) were modeled using various regression models. The
+                            predictions from both models were combined to get a full prediction for hourly electricity
+                            demand.</p>
+
+                        <h3>Summary: Electricity Demand Forecasting Models</h3>
+                        <h4>Monthly Averages (SARIMA)</h4>
+                        <ul>
+                            <li><strong>Model:</strong> SARIMA (seasonal ARIMA) captures yearly seasonality (m=12) and
+                                trends in monthly demand.</li>
+                            <li><strong>Data Split:</strong> Sequential training (2002–2014), validation (2015–2016),
+                                test (2017–2020) sets.</li>
+                            <li><strong>Tuning:</strong> Grid search for hyperparameters (values 0/1) using MAE (to
+                                avoid issues with normalized MAPE).</li>
+                            <li><strong>Insights:</strong> Clear upward trend (population growth) and seasonality
+                                (summer peaks, smaller winter spikes). Winter peaks correlate with holidays/cold
+                                weather.</li>
+                        </ul>
+
+                        <h4>Hourly Residuals (Regression)</h4>
+                        <ul>
+                            <li><strong>Approach:</strong> Residuals (actual – monthly average) modeled via regression
+                                for 1-week-ahead hourly forecasts.</li>
+                            <li><strong>Baseline:</strong> Persistence model (last week’s value as forecast).</li>
+                            <li><strong>Models Tested:</strong>
+                                <ol>
+                                    <li>Linear Regression: Outperformed baseline but lacked nuance (overweighted
+                                        time-of-day features).</li>
+                                    <li>Gradient Boosting (GBR): Best performance (61% MAPE improvement), captured daily
+                                        peaks.</li>
+                                    <li>MLP: Better than linear regression but lagged GBR due to hyperparameter tuning
+                                        challenges.</li>
+                                </ol>
+                            </li>
+                            <li><strong>Validation:</strong> Weekly forecasts concatenated to avoid error snowballing.
+                            </li>
+                        </ul>
+
+                        <h4>Key Takeaways</h4>
+                        <ul>
+                            <li>SARIMA + GBR combo delivered optimal accuracy.</li>
+                            <li>Future Improvements: Deeper hyperparameter tuning (especially MLP), adding contextual
+                                features (e.g., events).</li>
+                        </ul>
+
+                        <h3>Evaluating Final Models</h3>
+                        <p>The predictions from both the monthly and hourly models were combined and evaluated against
+                            the test data. The MAPE was computed for each model. All three models performed better than
+                            the baseline, with GBR performing best, followed by MLP, and linear regression significantly
+                            worse. Visualizations of one-week-out forecasts for each model over a span of two weeks on
+                            the test set showed GBR with the best performance, followed by MLP and linear regression.
+                        </p>
+
+                        <h3>Summary & Future Work</h3>
+                        <p>This project addressed the issue of forecasting electricity demand at one-week intervals with
+                            an hourly resolution. The original time series data was decomposed into monthly averages and
+                            hourly residuals. The monthly averages were modeled using a SARIMA model, and the hourly
+                            residuals were modeled using three different regression models. Gradient boosting regression
+                            showed the best performance on the test set, with a 61% improvement over the baseline
+                            persistence model.</p>
+                        <p>The accuracy of the gradient boosting regression model is quite good and could be used for
+                            one-week-out forecasting as a first-order estimate. For higher accuracy, further study is
+                            suggested, including a more thorough investigation of hyperparameters and adding contextual
+                            features to improve model accuracy.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="failure-cases">
         <div class="case">
             <div style="font-family: 'Courier New', monospace; padding: 10px; border: 1px solid #ddd;">
@@ -559,194 +686,7 @@
 
         </div>
     </div>
-    <div class="failure-cases">
-        <div class="case" style="font-family: 'Courier New', monospace; padding: 10px; border: 1px solid #ddd;">
-            <div>
-                <h2>Electricity Demand Forecasting for London</h2>
 
-                <h3>Introduction</h3>
-                <p>Accurate forecasts for electricity demand are important for electric utilities and regional
-                    transmission organizations. Long term forecasts can reduce investment risk, medium term forecasts
-                    help in planning fuel purchases and scheduling plant maintenance, and short term forecasts are
-                    essential in matching electricity generation and demand for grid reliability.
-
-                    This project focused on medium term forecasting, specifically making one-week-out forecasts at a
-                    resolution of one hour for London. Historical electricity demand and weather data from 2002-2020 is
-                    used. A combination of timeseries analysis and regression models are used to make forecasting
-                    predictions, which are compared against the observed hourly electricity demand for a series of
-                    one-week intervals.
-                <h3>Data Collection</h3>
-
-                <ul>
-                    <p>Electricity Demand Data</p>
-                    <li>County of London Electric Supply Company(C.L.E.S.Co) Limited provides historical
-                        electricity demand data. The demand data for each year is segmented by weather zones, as seen in
-                        the
-                        schematic below.
-
-                        At first we performed some basic processing on the raw data, such as converting timestamps to
-                        datetime indexes, removing duplicate entries (by taking an average of values with the same
-                        timestamp), and filling missing values (by backfilling from the next available entry).
-
-                        So afterpreprocessing we got a dataframe of time and load</li>
-
-
-
-                    <p>Weather Data</p>
-                    <li>Next from domain knowledge we get to know that weather features like temp, humidity had an
-                        impact on electricity consumption. So to analyse load we need weatheric data.
-
-                        After searching for a while and as suggested by client we tried to get the weather information
-                        from Weather Underground. Next, we built a parser to extract relevant data from a single API
-                        endpoint. Finally, the data scraping script is extended to page through all dates of interest to
-                        compile hourly weather data from 2002-2020 into a single dataframe.
-
-                        Through a series of wrapper functions we collected data from individual webpages for entire span
-                        of 2002-2020 and processed the data into a nice csv format to get time, temp, hum, wind_spd &
-                        cond.
-
-                        The following code are a series of wrapper functions and helper functions which iteratively
-                        collect data from individual webpages for the entire span from 2002-2017, process this data into
-                        the a nice format, and save all data to a single CSV file for later use. Some notes on data
-                        processing:
-
-                        Most wind speed data is numeric, but some is missing or simply "calm". These are converted to
-                        the mean and lowest observed wind speed, respectively.
-                        Weather condition is a categorical feature. The string representation from the API is converted
-                        to an integer.
-                        Humidity values are converted to percentages on the range [0, 1].
-                        Hourly frequency of the data is enformced (i.e. duplicate entries are removed).</li>
-                    </li>
-                </ul>
-                </p>
-
-                <h3>Feature Engineering</h3>
-                <p>First, the categorical feature "condtion" is converted into a one-hot encoding. The original dataset
-                    from Weather Underground uses a convention of 17 different weather condtions, many of which are
-                    quite similar. The 17 original categories are grouped into 6 broad categories, as described below:
-
-                    Weather Group Original Conditions
-                    clear clear
-                    cloud scattered clouds, partly cloudy, mostly cloudy, overcast
-                    rain rain, light rain, heavy rain
-                    tstorm thunderstorm, thunderstorms and rain, light thunderstorm and rain, heavy thunderstorm and
-                    rain
-                    fog fog, haze, mist
-                    snow light snow
-                    Next, the electricity demand and weather data are merged into a single dataframe. Missing values
-                    created by the merge need to be filled in: for the one-hot encoding features back-filling is used,
-                    for the continuous features interpolation is used.
-
-                    Next, we created some more temporal features. For instance, whether it is a weekday or not likely
-                    has an impact on electricity consumption, so a boolean feature "weekday" is created. Similarly, the
-                    time of day certainly has a large impact on electricity consumption. Even though this is a time
-                    series problem, in the next section the model in this project is decomposed into two parts. To
-                    capture time of day effects in the second part an explicit feature must be created. Since time is a
-                    cyclic variable, a sine/cosine transformation is used on the hour the day.
-
-                    sin_theta = np.sin(2*np.pi*hour.values/24)
-                    cosine_theta = np.cos(2*np.pi*hour.values/24)
-                    Finally, continuous features must be normalized, as models are generally easier to train if all
-                    features are on roughly the same scale. The simplest method for normalizing is to simply transform
-                    each continous feature to be on the range [0, 1]. Note that the minimum and maximum values for each
-                    feature are saved in order to transform them back to their original scale later.</p>
-
-                <h3>Designing Models</h3>
-                <p>In general, time series forecasting becomes quite difficult as the period of forecasting decreases.
-                    Therefore, this project decomposes the original electricity demand timeseries into two components.
-                    The first component is the monthly average electricity demand, which is modeled using traditional
-                    timeseries methods. The second component is what this project will refer to as the "hourly
-                    residuals". In other words, after removing the monthly averages from the orignal timeseries, what is
-                    left over is the amount above or below the monthly average at each hour (hence, hourly residual).
-                    The hourly residuals are modeled using various regression models, and are what the engineered
-                    features are used to help predict. After building two models (monthly and hourly), the predictions
-                    from each can be added together to get a full prediction for the electrcity demand at hourly
-                    frequency.
-
-                </p>
-                **Summary: Electricity Demand Forecasting Models**
-
-                ### **Monthly Averages (SARIMA)**
-                - **Model**: SARIMA (seasonal ARIMA) captures **yearly seasonality** (`m=12`) and trends in monthly
-                demand.
-                - **Data Split**: Sequential training (`2002–2014`), validation (`2015–2016`), test (`2017–2020`) sets.
-                - **Tuning**: Grid search for hyperparameters (values 0/1) using **MAE** (to avoid issues with
-                normalized MAPE).
-                - **Insights**:
-                - Clear **upward trend** (population growth) and **seasonality** (summer peaks, smaller winter spikes).
-                - Winter peaks correlate with holidays/cold weather.
-
-                ---
-
-                ### **Hourly Residuals (Regression)**
-                - **Approach**: Residuals (actual – monthly average) modeled via regression for **1-week-ahead hourly
-                forecasts**.
-                - **Baseline**: Persistence model (last week’s value as forecast).
-                - **Models Tested**:
-                1. **Linear Regression**: Outperformed baseline but lacked nuance (overweighted time-of-day features).
-                2. **Gradient Boosting (GBR)**: Best performance (61% MAPE improvement), captured daily peaks.
-                3. **MLP**: Better than linear regression but lagged GBR due to hyperparameter tuning challenges.
-                - **Validation**: Weekly forecasts concatenated to avoid error snowballing.
-
-                ---
-
-                ### **Key Takeaways**
-                - **SARIMA + GBR combo** delivered optimal accuracy.
-                - **Future Improvements**: Deeper hyperparameter tuning (especially MLP), adding contextual features
-                (e.g., events).
-
-                <h3>Evaluating Final Models</h3>
-                <p>The predictions from both the monthly and hourly models are combined and evaluated against the test
-                    data. The first block of code gets all of the required forecast predictions on the test set for each
-                    model. The second block of code adds the hourly and monthly models to get the full electricity
-                    demand prediction, and also unnormalizes these predictions back to the scale of the original
-                    dataset.
-
-                    With the full predictions for each model, the performance of each of them can now be evaluated. The
-                    MAPE is computed for each model below.
-
-                    All three models perform better than the baseline. The GBR performs best, followed by MLP, and
-                    linear regression is significantly worse than both of these. To visualize the forecasting
-                    predictions, below are plots of one-week-out forecasts for each model over a span of two weeks on
-                    the test set.
-
-                    In agreement with the MAPE results, GBR clearly has the best performance, followed by MLP. Linear
-                    regression performs quite poorly, making almost no attempt to follow the weekly trend as it rises
-                    and falls. For completeness, the GBR model predictions are plotted below for the full time span of
-                    the test data.</p>
-
-                <h3>Summary & Future Work</h3>
-                <p>This project considered the issue of forecasting electricity demand at one week intervals with a
-                    resolution of one hour. This is an important application for utilities and power plant operators so
-                    that they can make informed fuel purchase decisions and schedule maintenece at optimal times. In
-                    order to make more accurate forecasts, the original timeseries data was decomposed into monthly
-                    averages and hourly residuals. The monthly averages were modeled using a SARIMA model, and the
-                    hourly residuals were modeled using three different regression models. Of these, gradient boosting
-                    regression showed the best performance on the test set, with a 61% improvement over the baseline
-                    persistance model.
-
-                    The accuracy of the best model (gradient boosting regression) is actually quite good. This model
-                    could certainly be used for one-week-out forecasting, at least as a first-order estimate. If a
-                    higher accuracy model is required, the authors present two suggestions for further study:
-
-                    For both GBR and MLP, only a very rough grid search over hyperparameters was performed, and the
-                    possible values of hyperparameters were chosen somewhat arbitrarily. A more thorough investigation
-                    of hyperparameters is strongly suggested, especially for MLP.
-                    The most obvious features for predicting electricity demand were used in this project:
-                    autoregressive features, temporal features, and weather features. A study of where the model is
-                    predicting with the lowest accuracies could be interesting, with the hope of finding a pattern which
-                    could be fixed with additional features. For example, if one found that the model was consistently
-                    under-predicting electricity demand during major sporting events, adding a boolean feature of
-                    "major_event" could help improve model accuracy.</p>
-            </div>
-
-
-        </div>
-    </div>
-    <div class="failure-cases">
-        <div class="case" style="font-family: 'Courier New', monospace; padding: 10px; border: 1px solid #ddd;">
-        </div>
-    </div>
     <div class="failure-cases">
         <div class="case" style="font-family: 'Courier New', monospace; padding: 10px; border: 1px solid #ddd;">
 

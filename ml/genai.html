@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Era of GEN AI</title>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;700&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <!-- MathJax for Equations -->
+    <script type="text/javascript" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML">
+        </script>
+
+    <style>
+        /* Global Styles */
+        body {
+            font-family: 'Courier New', monospace;
+            margin: 0;
+            padding: 0;
+            color: #ffffff;
+            background: url('../assets/images/ml-background.jpg') no-repeat center center fixed;
+            background-size: cover;
+            position: relative;
+        }
+
+        /* Dark Overlay */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1;
+        }
+
+        /* Layout Containers */
+        header,
+        footer {
+            background: linear-gradient(135deg, #0829df, #04013c);
+            text-align: center;
+            padding: 20px;
+            font-size: 24px;
+            position: relative;
+            z-index: 10;
+        }
+
+        main {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 25px;
+            background: rgba(19, 50, 185, 0.85);
+            border-radius: 10px;
+            box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+            position: relative;
+            z-index: 10;
+        }
+
+        h1,
+        h2,
+        h3 {
+            color: #d9dcdf;
+        }
+
+        /* Styling for Key Sections */
+        .case h3 {
+            color: #ffcc00;
+        }
+
+        .case p {
+            color: #ffffff;
+        }
+
+        /* Table Styles */
+        table {
+            font-family: 'Courier New', monospace;
+            width: 100%;
+            border-collapse: collapse;
+            margin: 10px 0;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        th,
+        td {
+            border: 1px solid #ccc;
+            padding: 8px;
+            text-align: center;
+            font-size: 14px;
+        }
+
+        th {
+            background: rgba(0, 0, 0, 0.2);
+        }
+
+        /* Image Styling */
+        .image-container {
+            text-align: center;
+            margin: 10px 0;
+        }
+
+        .image-container img {
+            width: 35%;
+            border-radius: 5px;
+            box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Content Alignment */
+        .content-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+        }
+
+        .image-container {
+            flex: 1;
+        }
+
+        .image-container img {
+            width: 65%;
+            border-radius: 10px;
+        }
+
+        .text-container {
+            flex: 1;
+            width: 55%;
+        }
+
+        /* Failure Cases Section */
+        .failure-cases {
+            width: 90%;
+            max-width: 1600px;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+            margin: 20px auto;
+            text-align: justify;
+        }
+
+        .case {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.15);
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 6px;
+        }
+
+        /* Decision Tree Node Styles */
+        .node circle {
+            fill: #69b3a2;
+            stroke: #555;
+            stroke-width: 2px;
+        }
+
+        .node text {
+            font-size: 14px;
+            font-family: 'Courier New', monospace;
+            fill: white;
+        }
+
+        .link {
+            fill: none;
+            stroke: #ccc;
+            stroke-width: 2px;
+        }
+    </style>
+</head>
+
+<header>
+    <h1>Generative AI </h1>
+</header>
+
+<body>
+    <div class="failure-cases">
+        <div class="case" style="font-family: 'Courier New', monospace; padding: 10px; border: 1px solid #ddd;">
+            <!DOCTYPE html>
+            <html lang="en">
+
+            <head>
+                <meta charset="UTF-8">
+                <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                <title>Building Generative AI from Scratch</title>
+            </head>
+
+            <body>
+                <h1>Building Generative AI from Scratch: A Technical Deep Dive</h1>
+
+                <p>Generative AI (GenAI) has revolutionized various industries, from creative content generation to
+                    advanced data augmentation. But how exactly was Generative AI built from scratch? In this blog, we
+                    will explore the fundamental building blocks of GenAI, tracing its evolution from basic neural
+                    networks to state-of-the-art transformer architectures.</p>
+
+                <h2>1. Foundations of Generative AI</h2>
+                <p>Before deep diving into the technical aspects, let's outline the foundational concepts required to
+                    build Generative AI:</p>
+                <ul>
+                    <li><b>Neural Networks:</b> The fundamental units of deep learning, consisting of layers of neurons
+                        trained on data.</li>
+                    <li><b>Probability and Statistics:</b> Essential for understanding likelihood estimation in
+                        generative models.</li>
+                    <li><b>Optimization Algorithms:</b> Techniques like Stochastic Gradient Descent (SGD) and Adam used
+                        to train models.</li>
+                    <li><b>Backpropagation:</b> The core algorithm for updating neural network weights based on
+                        gradients.</li>
+                </ul>
+
+                <h2>2. How ChatGPT Was Trained</h2>
+                <p>ChatGPT, one of the most widely used generative AI models, was trained using a multi-stage process
+                    that involved large-scale datasets, self-supervised learning, and reinforcement learning with human
+                    feedback. The training process can be broken down into the following steps:</p>
+
+                <h3>a. Pretraining on Large Text Corpora</h3>
+                <p>The model was trained on a diverse dataset containing books, articles, websites, and other publicly
+                    available text sources. Using a process called <b>causal language modeling</b>, the model learned to
+                    predict the next word in a sentence, enabling it to generate coherent text.</p>
+
+                <h3>b. Supervised Fine-Tuning</h3>
+                <p>Once pretraining was completed, the model was fine-tuned using human-annotated datasets. This step
+                    helped refine its ability to generate accurate and contextually relevant responses.</p>
+
+                <h3>c. Reinforcement Learning from Human Feedback (RLHF)</h3>
+                <p>To further improve response quality, OpenAI employed Reinforcement Learning from Human Feedback
+                    (RLHF). This process involved:</p>
+                <ul>
+                    <li><b>Human Labeling:</b> Human annotators ranked multiple responses from the model.</li>
+                    <li><b>Reward Model:</b> A secondary model learned from human preferences to rate responses.</li>
+                    <li><b>Optimization:</b> Using Proximal Policy Optimization (PPO), the model was fine-tuned to
+                        prioritize higher-rated responses.</li>
+                </ul>
+
+                <h3>d. Sample Text Training Through All Stages</h3>
+                <p>Let’s take an example text and walk through how it would be processed at each stage of training:</p>
+
+                <h4>1. Pretraining Stage:</h4>
+                <pre>
+                    Raw text: "Transformers have changed AI by introducing self-attention mechanisms."
+                    
+                    Model learns patterns by predicting the next word:
+                    Input: "Transformers have"
+                    Output: "changed"
+                </pre>
+                <p>The model is trained on massive amounts of text using this process, gradually improving its ability
+                    to generate fluent and contextually relevant sentences.</p>
+
+                <h4>2. Supervised Fine-Tuning Stage:</h4>
+                <pre>
+                    Annotators provide a more detailed and structured response:
+                    Input: "Explain transformers in AI."
+                    Target Output: "Transformers are deep learning models that use self-attention to process entire sequences efficiently."
+                </pre>
+                <p>The model is then adjusted to generate more human-like and informative responses.</p>
+
+                <h4>3. Reinforcement Learning from Human Feedback (RLHF) Stage:</h4>
+                <pre>
+                    Multiple model responses are generated and ranked by human reviewers:
+                    
+                    Response 1: "Transformers are great for AI."
+                    Response 2: "Transformers revolutionized AI by enabling parallel processing of sequences."
+                    Response 3: "Transformers use self-attention to improve deep learning architectures."
+                    
+                    Ranking by human annotators:
+                    - Best: Response 2
+                    - Worst: Response 1
+                </pre>
+                <p>The reward model learns from these rankings and optimizes the system to produce more useful
+                    responses.</p>
+
+                <h2>3. Future Developments</h2>
+                <p>With ongoing research, future iterations of ChatGPT and other generative AI models aim to improve
+                    efficiency, reduce biases, and enhance their ability to generate human-like responses. Techniques
+                    such as model distillation and smaller, efficient architectures will help make generative AI more
+                    accessible.</p>
+            </body>
+
+            </html>
+
+
+        </div>
+    </div>
+    <div class="failure-cases">
+        <div class="case" style="font-family: 'Courier New', monospace; padding: 10px; border: 1px solid #ddd;">
+        </div>
+    </div>
+    <div class="failure-cases">
+        <div class="case" style="font-family: 'Courier New', monospace; padding: 10px; border: 1px solid #ddd;">
+        </div>
+    </div>
+    <div class="failure-cases">
+        <div class="case" style="font-family: 'Courier New', monospace; padding: 10px; border: 1px solid #ddd;">
+        </div>
+    </div>
+    <div class="failure-cases">
+        <div class="case" style="font-family: 'Courier New', monospace; padding: 10px; border: 1px solid #ddd;">
+        </div>
+    </div>
+    <div class="failure-cases">
+        <div class="case" style="font-family: 'Courier New', monospace; padding: 10px; border: 1px solid #ddd;">
+        </div>
+    </div>
+</body>
+
+</html>

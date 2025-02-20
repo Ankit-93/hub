@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Era of GEN AI</title>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;700&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <!-- MathJax for Equations -->
+    <script type="text/javascript" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML">
+        </script>
+
+    <style>
+        /* Global Styles */
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            color: #ffffff;
+            background: url('../assets/images/ml-background.webp') no-repeat center center fixed;
+            background-size: cover;
+            position: relative;
+        }
+
+        /* Dark Overlay */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            z-index: -1;
+        }
+
+        /* Layout Containers */
+        header,
+        footer {
+            background: linear-gradient(135deg, #0829df, #04013c);
+            text-align: center;
+            padding: 20px;
+            font-size: 24px;
+            position: relative;
+            z-index: 10;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        main {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 30px;
+            background: rgba(19, 50, 185, 0.9);
+            border-radius: 12px;
+            box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.3);
+            position: relative;
+            z-index: 10;
+        }
+
+        h1,
+        h2,
+        h3 {
+            color: #ffcc00;
+            text-align: left;
+        }
+
+        /* Styling for Key Sections */
+        .case h3 {
+            color: #ffcc00;
+        }
+
+        .case p {
+            color: #e0e0e0;
+            line-height: 1.6;
+        }
+
+        /* Table Styles */
+        table {
+            font-family: 'Courier New', monospace;
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        th,
+        td {
+            border: 1px solid #ccc;
+            padding: 12px;
+            text-align: center;
+            font-size: 14px;
+        }
+
+        th {
+            background: rgba(0, 0, 0, 0.3);
+        }
+
+        /* Image Styling */
+        .image-container {
+            text-align: left;
+            margin: 20px 0;
+        }
+
+        .image-container img {
+            width: 50%;
+            border-radius: 10px;
+            box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Content Alignment */
+        .content-container {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: left;
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+        .text-container {
+            flex: 1;
+            width: 50%;
+        }
+
+        /* Failure Cases Section */
+        .failure-cases {
+            width: 90%;
+            max-width: 1200px;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.3);
+            margin: 40px auto;
+            text-align: left;
+        }
+
+        .case {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.15);
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Decision Tree Node Styles */
+        .node circle {
+            fill: #69b3a2;
+            stroke: #555;
+            stroke-width: 2px;
+        }
+
+        .node text {
+            font-size: 14px;
+            font-family: 'Courier New', monospace;
+            fill: white;
+        }
+
+        .link {
+            fill: none;
+            stroke: #ccc;
+            stroke-width: 2px;
+        }
+
+        a {
+            color: #ffcc00;
+            text-decoration: underline;
+            font-weight: bold;
+        }
+
+        a:hover {
+            color: #ffffff;
+            text-decoration: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="failure-cases">
+        <div class="case" style="font-family: 'Courier New', monospace; padding: 10px; border: 1px solid #ddd;">
+            <div>
+                <div>
+                    <h2>🌟 1. High-Level Overview</h2>
+                    <p>The Transformer consists of an <strong>Encoder-Decoder</strong> structure:</p>
+                    <ul>
+                        <li><strong>Encoder</strong>: Processes the input sequence and converts it into a continuous
+                            representation.</li>
+                        <li><strong>Decoder</strong>: Uses the encoder’s output to generate the target sequence (e.g.,
+                            translation, summarization).</li>
+                    </ul>
+                    <p>For many tasks like NER or document classification, <strong>only the encoder</strong> (e.g.,
+                        BERT) or <strong>only the decoder</strong> (e.g., GPT) is used.</p>
+
+                    <h2>⚙ 2. Transformer Components</h2>
+
+                    <div class="encoder">
+                        <h3>🏗 A. Encoder</h3>
+                        <ul>
+                            <li>Composed of <strong>N</strong> identical layers (typically 6-12).</li>
+                            <li>Each layer has two sub-layers:
+                                <ul>
+                                    <li><strong>Multi-Head Self-Attention</strong> mechanism.</li>
+                                    <li><strong>Position-wise Feed-Forward Network (FFN)</strong>.</li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="decoder">
+                        <h3>🏗 B. Decoder</h3>
+                        <ul>
+                            <li>Also has <strong>N</strong> identical layers.</li>
+                            <li>Each layer has three sub-layers:
+                                <ul>
+                                    <li><strong>Masked Multi-Head Self-Attention</strong> (to prevent attending to
+                                        future tokens during training).</li>
+                                    <li><strong>Multi-Head Attention</strong> over the encoder's output.</li>
+                                    <li><strong>Position-wise Feed-Forward Network (FFN)</strong>.</li>
+                                </ul>
+                            </li>
+                        </ul>
+                        <p>Both encoder and decoder use <strong>residual connections</strong> and <strong>layer
+                                normalization</strong> after each sub-layer.</p>
+                    </div>
+
+                    <h2>🔥 3. Key Components in Detail</h2>
+
+                    <div class="multi-head-attention">
+                        <h3>✅ A. Multi-Head Self-Attention</h3>
+                        <p>Allows the model to focus on different parts of a sequence simultaneously.</p>
+                        <p><strong>Scaled Dot-Product Attention</strong>:</p>
+                        <pre>
+                  Attention(Q, K, V) = softmax((QK<sup>T</sup>) / √d<sub>k</sub>)V
+                      </pre>
+                        <ul>
+                            <li><strong>Q</strong>: Queries, <strong>K</strong>: Keys, <strong>V</strong>: Values.</li>
+                            <li><strong>d<sub>k</sub></strong>: Dimension of keys (used for scaling).</li>
+                        </ul>
+                        <p>In <strong>Multi-Head Attention</strong>, multiple attention mechanisms (heads) run in
+                            parallel and their outputs are concatenated and linearly transformed.</p>
+                    </div>
+
+                    <div class="positional-encoding">
+                        <h3>✅ B. Positional Encoding</h3>
+                        <p>Since Transformers don’t process tokens sequentially, they need <strong>positional
+                                information</strong>.</p>
+                        <p>Positional encodings (sine/cosine functions) are added to input embeddings to incorporate
+                            order.</p>
+                        <pre>
+                  PE(pos, 2i) = sin(pos / 10000^(2i / d_model))
+                  PE(pos, 2i+1) = cos(pos / 10000^(2i / d_model))
+                      </pre>
+                    </div>
+
+                    <div class="ffn">
+                        <h3>✅ C. Feed-Forward Networks (FFN)</h3>
+                        <p>Applied independently to each token with two linear transformations and a ReLU activation.
+                        </p>
+                        <pre>
+                  FFN(x) = max(0, xW1 + b1)W2 + b2
+                      </pre>
+                    </div>
+
+                    <div class="masking">
+                        <h3>✅ D. Masking</h3>
+                        <ul>
+                            <li><strong>Padding Mask</strong>: Ensures that padding tokens don’t influence attention
+                                scores.</li>
+                            <li><strong>Look-Ahead Mask</strong> (Decoder): Prevents attending to future tokens during
+                                training.</li>
+                        </ul>
+                    </div>
+
+                    <h2>📈 4. Advantages of Transformers</h2>
+                    <ul>
+                        <li><strong>Parallelization</strong>: Processes sequences in parallel (unlike RNNs).</li>
+                        <li><strong>Long-Range Dependencies</strong>: Self-attention captures relationships between
+                            distant tokens.</li>
+                        <li><strong>Scalability</strong>: Easily scaled up (e.g., GPT-4, BERT-large).</li>
+                    </ul>
+
+                    <h2>⚡ 5. Transformer Variants</h2>
+                    <ul>
+                        <li><strong>BERT</strong> (Bidirectional Encoder Representations from Transformers): Uses only
+                            the encoder for tasks like NER and classification.</li>
+                        <li><strong>GPT</strong> (Generative Pretrained Transformer): Decoder-only for language
+                            generation.</li>
+                        <li><strong>T5</strong> (Text-To-Text Transfer Transformer): Full encoder-decoder, treating all
+                            tasks as text-to-text.</li>
+                        <li><strong>RoBERTa</strong>, <strong>DistilBERT</strong>, <strong>XLNet</strong>: Optimized
+                            BERT variants.</li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="case">
+            <div class="case" style="font-family: 'Courier New', monospace; padding: 10px; border: 1px solid #ddd;">
+                <h2>🧠 Transformer Architecture Breakdown</h2>
+
+                <h3>🌐 Core Components</h3>
+                <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px;">
+                    <div>
+                        <img src="https://miro.medium.com/v2/resize:fit:1400/1*BHzGVskWGS_3jEcYYi6miQ.png"
+                            alt="Transformer Architecture" style="width: 60%; border: 1px solid #ccc;">
+                    </div>
+                    <div>
+                        <h4>1. Encoder-Decoder Structure</h4>
+                        <ul>
+                            <li><strong>Encoder (Left):</strong> Processes input sequence</li>
+                            <li><strong>Decoder (Right):</strong> Generates output sequence</li>
+                            <li>6 identical layers in each stack</li>
+                        </ul>
+
+                        <h4>2. Key Innovations</h4>
+                        <ul>
+                            <li>Self-attention mechanisms</li>
+                            <li>Positional encoding</li>
+                            <li>Parallel processing (no RNN)</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <h3>⚙️ Detailed Mechanism</h3>
+                <div style="margin-left: 20px;">
+                    <h4>A. Input Processing</h4>
+                    <pre>
+            1. Token Embedding → [d_model dimension]
+            2. Positional Encoding → Add positional information
+               PE(pos,2i) = sin(pos/10000^(2i/d_model))
+               PE(pos,2i+1) = cos(pos/10000^(2i/d_model))</pre>
+
+                    <h4>B. Multi-Head Attention</h4>
+                    <div style="display: grid; grid-template-columns: 60% 40%; gap: 15px;">
+                        <div>
+                            <pre>
+            For each head:
+            1. Q = XW<sup>Q</sup>, K = XW<sup>K</sup>, V = XW<sup>V</sup>
+            2. Attention(Q,K,V) = softmax(QK<sup>T</sup>/√d_k)V
+            3. Concatenate heads → Linear transformation</pre>
+                        </div>
+                        <div>
+                            <img src="https://jalammar.github.io/images/t/transformer_multi-headed_self-attention-recap.png"
+                                style="width: 80%; border: 1px solid #ccc;" alt="Multi-head Attention">
+                        </div>
+                    </div>
+
+                    <h4>C. Feed-Forward Network</h4>
+                    <pre>
+            FFN(x) = max(0, xW<sub>1</sub> + b<sub>1</sub>)W<sub>2</sub> + b<sub>2</sub>
+            (Typical dimension expansion: d_model → 4d_model → d_model)</pre>
+
+                    <h4>D. Add & Norm</h4>
+                    <ul>
+                        <li>Residual connection: x + Sublayer(x)</li>
+                        <li>Layer Normalization</li>
+                    </ul>
+                </div>
+
+                <h3>🔑 Mathematical Foundation</h3>
+                <div style="columns: 2;">
+                    <div>
+                        <h4>Self-Attention Formula</h4>
+                        <pre padding: 10px;">
+            Attention(Q,K,V) = softmax(\frac{QK^T}{\sqrt{d_k}})V</pre>
+                        <p>Where:</p>
+                        <ul>
+                            <li>Q: Query matrix</li>
+                            <li>K: Key matrix</li>
+                            <li>V: Value matrix</li>
+                            <li>d_k: Dimension of keys</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4>Multi-Head Attention</h4>
+                        <pre padding: 10px;">
+            MultiHead(Q,K,V) = Concat(head_1,...,head_h)W^O
+            head_i = Attention(QW_i^Q, KW_i^K, VW_i^V)</pre>
+                        <p>Typical setup: h=8 attention heads</p>
+                    </div>
+                </div>
+
+                <h3>🔄 Training Process</h3>
+                <ol>
+                    <li>Input embedding + positional encoding</li>
+                    <li>Encoder processing (N layers):
+                        <ul>
+                            <li>Multi-head self-attention</li>
+                            <li>FFN → LayerNorm</li>
+                        </ul>
+                    </li>
+                    <li>Decoder processing (N layers):
+                        <ul>
+                            <li>Masked multi-head attention</li>
+                            <li>Encoder-decoder attention</li>
+                            <li>FFN → LayerNorm</li>
+                        </ul>
+                    </li>
+                    <li>Final linear layer + softmax</li>
+                </ol>
+
+                <h3>💡 Key Advantages</h3>
+                <div style="columns: 2;">
+                    <ul>
+                        <li>Parallel computation</li>
+                        <li>Long-range dependencies</li>
+                        <li>Context-aware representations</li>
+                        <li>Scalability</li>
+                        <li>Transfer learning friendly</li>
+                    </ul>
+                </div>
+
+                <h3>🎯 Applications</h3>
+                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px;">
+                    <div class="app-box" style="background: #f0f0f0; padding: 10px;">
+                        <strong>NLP Tasks</strong>
+                        <ul>
+                            <li>Translation</li>
+                            <li>Summarization</li>
+                            <li>QA Systems</li>
+                        </ul>
+                    </div>
+                    <div class="app-box" style="background: #f0f0f0; padding: 10px;">
+                        <strong>Generative AI</strong>
+                        <ul>
+                            <li>Text Generation</li>
+                            <li>Code Completion</li>
+                            <li>Chatbots</li>
+                        </ul>
+                    </div>
+                    <div class="app-box" style="background: #f0f0f0; padding: 10px;">
+                        <strong>Multimodal</strong>
+                        <ul>
+                            <li>Vision Transformers</li>
+                            <li>Audio Processing</li>
+                            <li>Cross-modal RL</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <h3>📈 Evolutionary Context</h3>
+                <pre padding: 10px;">
+            2017: Original Transformer (Attention Is All You Need)
+            2018: BERT (Bidirectional)
+            2019: GPT-2 (Large-scale)
+            2020: Vision Transformers
+            2021: Switch Transformers
+            2022: Foundation Models
+            2023: Multimodal Transformers</pre>
+                <div class="case" style="font-family: 'Courier New', monospace; padding: 10px; border: 1px solid #ddd;">
+                    <h2>🧠 Transformer Architecture Breakdown</h2>
+
+                    <h3>🌐 Core Components</h3>
+                    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px;">
+                        <div>
+                            <img src="https://miro.medium.com/v2/resize:fit:1400/1*BHzGVskWGS_3jEcYYi6miQ.png"
+                                alt="Transformer Architecture" style="width: 60%; border: 1px solid #ccc;">
+                        </div>
+                        <div>
+                            <h4>1. Encoder-Decoder Structure</h4>
+                            <ul>
+                                <li><strong>Encoder (Left):</strong> Processes input sequence</li>
+                                <li><strong>Decoder (Right):</strong> Generates output sequence</li>
+                                <li>6 identical layers in each stack</li>
+                            </ul>
+
+                            <h4>2. Key Innovations</h4>
+                            <ul>
+                                <li>Self-attention mechanisms</li>
+                                <li>Positional encoding</li>
+                                <li>Parallel processing (no RNN)</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <h3>⚙️ Detailed Mechanism</h3>
+                    <div style="margin-left: 20px;">
+                        <h4>A. Input Processing</h4>
+                        <pre>
+            1. Token Embedding → [d<sub>model</sub> dimension]
+            2. Positional Encoding → Add positional information
+               PE<sub>(pos,2i)</sub> = sin(pos/10000<sup>2i/d<sub>model</sub></sup>)
+               PE<sub>(pos,2i+1)</sub> = cos(pos/10000<sup>2i/d<sub>model</sub></sup>)</pre>
+
+                        <h4>B. Multi-Head Attention</h4>
+                        <div style="display: grid; grid-template-columns: 60% 40%; gap: 15px;">
+                            <div>
+                                <pre>
+            For each head:
+            1. Q = XW<sup>Q</sup>, K = XW<sup>K</sup>, V = XW<sup>V</sup>
+            2. Attention(Q,K,V) = softmax(QK<sup>T</sup>/√d<sub>k</sub>)V
+            3. Concatenate heads → Linear transformation</pre>
+                            </div>
+                            <div>
+                                <img src="https://jalammar.github.io/images/t/transformer_multi-headed_self-attention-recap.png"
+                                    style="width: 80%; border: 1px solid #ccc;" alt="Multi-head Attention">
+                            </div>
+                        </div>
+
+                        <h4>C. Feed-Forward Network</h4>
+                        <pre>
+            FFN(x) = max(0, xW<sub>1</sub> + b<sub>1</sub>)W<sub>2</sub> + b<sub>2</sub>
+            (Typical dimension expansion: d<sub>model</sub> → 4d<sub>model</sub> → d<sub>model</sub>)</pre>
+
+                        <h4>D. Add & Norm</h4>
+                        <ul>
+                            <li>Residual connection: x + Sublayer(x)</li>
+                            <li>Layer Normalization</li>
+                        </ul>
+                    </div>
+
+                    <h3>🔑 Mathematical Foundation</h3>
+                    <div style="columns: 2;">
+                        <div>
+                            <h4>Self-Attention Formula</h4>
+                            <pre style="background: #f5f5f5; padding: 10px;">
+            Attention(Q,K,V) = softmax(<span style="font-size: 1.1em;">(</span>QK<sup>T</sup>/√d<sub>k</sub><span style="font-size: 1.1em;">)</span>V</pre>
+                            <p>Where:</p>
+                            <ul>
+                                <li>Q: Query matrix</li>
+                                <li>K: Key matrix</li>
+                                <li>V: Value matrix</li>
+                                <li>d<sub>k</sub>: Dimension of keys</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4>Multi-Head Attention</h4>
+                            <pre style="background: #f5f5f5; padding: 10px;">
+            MultiHead(Q,K,V) = Concat(head<sub>1</sub>,...,head<sub>h</sub>)W<sup>O</sup>
+            head<sub>i</sub> = Attention(QW<sub>i</sub><sup>Q</sup>, KW<sub>i</sub><sup>K</sup>, VW<sub>i</sub><sup>V</sup>)</pre>
+                            <p>Typical setup: h=8 attention heads</p>
+                        </div>
+                    </div>
+
+                    <h3>🔄 Training Process</h3>
+                    <ol>
+                        <li>Input embedding + positional encoding</li>
+                        <li>Encoder processing (N layers):
+                            <ul>
+                                <li>Multi-head self-attention</li>
+                                <li>FFN → LayerNorm</li>
+                            </ul>
+                        </li>
+                        <li>Decoder processing (N layers):
+                            <ul>
+                                <li>Masked multi-head attention</li>
+                                <li>Encoder-decoder attention</li>
+                                <li>FFN → LayerNorm</li>
+                            </ul>
+                        </li>
+                        <li>Final linear layer + softmax</li>
+                    </ol>
+
+                    <h3>💡 Key Advantages</h3>
+                    <div style="columns: 2;">
+                        <ul>
+                            <li>Parallel computation</li>
+                            <li>Long-range dependencies</li>
+                            <li>Context-aware representations</li>
+                            <li>Scalability</li>
+                            <li>Transfer learning friendly</li>
+                        </ul>
+                    </div>
+
+                    <h3>🎯 Applications</h3>
+                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px;">
+                        <div class="app-box" style="background: #f0f0f0; padding: 10px;">
+                            <strong>NLP Tasks</strong>
+                            <ul>
+                                <li>Translation</li>
+                                <li>Summarization</li>
+                                <li>QA Systems</li>
+                            </ul>
+                        </div>
+                        <div class="app-box" style="background: #f0f0f0; padding: 10px;">
+                            <strong>Generative AI</strong>
+                            <ul>
+                                <li>Text Generation</li>
+                                <li>Code Completion</li>
+                                <li>Chatbots</li>
+                            </ul>
+                        </div>
+                        <div class="app-box" style="background: #f0f0f0; padding: 10px;">
+                            <strong>Multimodal</strong>
+                            <ul>
+                                <li>Vision Transformers</li>
+                                <li>Audio Processing</li>
+                                <li>Cross-modal RL</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <h3>📈 Evolutionary Context</h3>
+                    <pre style="background: #f5f5f5; padding: 10px;">
+            2017: Original Transformer (Attention Is All You Need)
+            2018: BERT (Bidirectional)
+            2019: GPT-2 (Large-scale)
+            2020: Vision Transformers
+            2021: Switch Transformers
+            2022: Foundation Models
+            2023: Multimodal Transformers</pre>
+                </div>
+            </div>
+
+
+            <div class="case" style="font-family: 'Courier New', monospace; padding: 10px; border: 1px solid #ddd;">
+                <h2>🔍 Complete Calculation for "the cat sat"</h2>
+                <h3>📚 Vocabulary & Sentence</h3>
+                <ul>
+                    <li>the: 0</li>
+                    <li>cat: 1</li>
+                    <li>sat: 2</li>
+                    <li>on: 3</li>
+                    <li>wall: 4</li>
+                </ul>
+                <p><strong>Input Tokens:</strong> [0 ("the"), 1 ("cat"), 2 ("sat")]</p>
+
+                <h3>🔢 Embedding Matrix (X)</h3>
+                <pre>[[1,0,0,0],  <em># "the"</em>
+             [0,1,0,0],  <em># "cat"</em>
+             [0,0,1,0]]  <em># "sat"</em> (3×4)</pre>
+
+                <h3>⚙️ Corrected Weight Matrices (4×2)</h3>
+                <p><em>Adjusted for valid matrix multiplication (X:3×4 → W:4×2)</em></p>
+                <ul>
+                    <li><strong>Wq:</strong> [[0.1,0.2], [0.3,0.4], [0.5,0.6], [0.0,0.0]]</li>
+                    <li><strong>Wk:</strong> [[0.1,0.4], [0.2,0.5], [0.3,0.6], [0.0,0.0]]</li>
+                    <li><strong>Wv:</strong> [[0.1,0.2], [0.3,0.4], [0.5,0.6], [0.0,0.0]]</li>
+                </ul>
+
+                <h3>🚀 Forward Pass</h3>
+                <div style="margin-left: 20px;">
+                    <p><strong>1. Compute Q, K, V:</strong></p>
+                    <pre>
+            Q = X × Wq = [[1*0.1 + 0*0.3 + 0*0.5 + 0*0.0, 1*0.2 + 0*0.4 + 0*0.6 + 0*0.0], 
+                       [0*0.1 + 1*0.3 + 0*0.5 + 0*0.0, 0*0.2 + 1*0.4 + 0*0.6 + 0*0.0],
+                       [0*0.1 + 0*0.3 + 1*0.5 + 0*0.0, 0*0.2 + 0*0.4 + 1*0.6 + 0*0.0]]
+              = [[0.1, 0.2], [0.3, 0.4], [0.5, 0.6]] (3×2)</pre>
+
+                    <p><strong>2. Attention Scores (Q × Kᵀ):</strong></p>
+                    <pre>
+            Q × Kᵀ = [[0.1*0.1 + 0.2*0.4, 0.1*0.2 + 0.2*0.5, 0.1*0.3 + 0.2*0.6],
+                      [0.3*0.1 + 0.4*0.4, 0.3*0.2 + 0.4*0.5, 0.3*0.3 + 0.4*0.6],
+                      [0.5*0.1 + 0.6*0.4, 0.5*0.2 + 0.6*0.5, 0.5*0.3 + 0.6*0.6]]
+                   = [[0.09, 0.12, 0.15], [0.19, 0.26, 0.33], [0.29, 0.40, 0.51]] (3×3)</pre>
+
+                    <p><strong>3. Scaled Scores (÷√2):</strong></p>
+                    <pre>
+            [[0.09/1.414 ≈ 0.0636, 0.12/1.414 ≈ 0.0849, 0.15/1.414 ≈ 0.1061],
+             [0.19/1.414 ≈ 0.1344, 0.26/1.414 ≈ 0.1839, 0.33/1.414 ≈ 0.2334],
+             [0.29/1.414 ≈ 0.2051, 0.40/1.414 ≈ 0.2829, 0.51/1.414 ≈ 0.3607]]</pre>
+
+                    <p><strong>4. Softmax:</strong></p>
+                    <pre>
+            Row 1: e^0.0636=1.066, e^0.0849=1.089, e^0.1061=1.112 → Sum=3.267
+            Softmax: [1.066/3.267≈0.326, 1.089/3.267≈0.333, 1.112/3.267≈0.340]
+            
+            Row 2: e^0.1344=1.144, e^0.1839=1.202, e^0.2334=1.263 → Sum=3.609
+            Softmax: [1.144/3.609≈0.317, 1.202/3.609≈0.333, 1.263/3.609≈0.350]
+            
+            Row 3: e^0.2051=1.227, e^0.2829=1.327, e^0.3607=1.434 → Sum=3.988
+            Softmax: [1.227/3.988≈0.308, 1.327/3.988≈0.333, 1.434/3.988≈0.359]</pre>
+
+                    <p><strong>5. Output (Softmax × V):</strong></p>
+                    <pre>
+            Row 1: 0.326*[0.1,0.2] + 0.333*[0.3,0.4] + 0.340*[0.5,0.6] 
+                   = [0.0326+0.0999+0.170, 0.0652+0.1332+0.204] 
+                   = [0.3025, 0.4024]
+            
+            Row 2: 0.317*[0.1,0.2] + 0.333*[0.3,0.4] + 0.350*[0.5,0.6]
+                   = [0.0317+0.0999+0.175, 0.0634+0.1332+0.210]
+                   = [0.3066, 0.4066]
+            
+            Row 3: 0.308*[0.1,0.2] + 0.333*[0.3,0.4] + 0.359*[0.5,0.6]
+                   = [0.0308+0.0999+0.1795, 0.0616+0.1332+0.2154]
+                   = [0.3102, 0.4102]</pre>
+                </div>
+
+                <h3>📉 Loss & Gradient (Simplified)</h3>
+                <div style="margin-left: 20px;">
+                    <p><strong>Assuming Targets:</strong> Next token prediction ("cat", "sat", [EOS])</p>
+                    <pre>
+            Loss = -ln(0.326) -ln(0.333) -ln(0.359) ≈ 1.123 + 1.100 + 1.025 = 3.248
+            Average Loss = 3.248 / 3 ≈ 1.083</pre>
+
+                    <p><strong>Gradient w.r.t. Attention Weights (∂L/∂Wq):</strong></p>
+                    <pre>
+            [[ 0.012,  0.024],
+             [-0.001, -0.007],
+             [ 0.011,  0.027],
+             [ 0.000,  0.000]]  <em># Unused 4th row</em></pre>
+                </div>
+
+                <h3>🔄 Weight Update (Learning Rate η=0.1)</h3>
+                <pre>
+            Updated Wq:
+            [[0.1 - 0.1*0.012, 0.2 - 0.1*0.024],
+             [0.3 - 0.1*(-0.001), 0.4 - 0.1*(-0.007)],
+             [0.5 - 0.1*0.011, 0.6 - 0.1*0.027],
+             [0.0, 0.0]]
+            = [[0.0988, 0.1976], [0.3001, 0.4007], [0.4989, 0.5973], [0.0, 0.0]]</pre>
+            </div>
+
+        </div>
+    </div>
+</body>

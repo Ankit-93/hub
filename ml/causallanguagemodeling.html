@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Causal Language Modeling in LLMs</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      line-height: 1.6;
+      background-image: url('../assets/images/wooden.jpg');
+      background-size: cover;
+      background-attachment: fixed;
+      background-repeat: no-repeat;
+      background-position: center;
+      margin: 0;
+      padding: 20px;
+    }
+
+    .container {
+      font-family: 'Courier New', monospace;
+      max-width: 1200px;
+      margin: auto;
+      background: rgba(145, 132, 132, 0.9);
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    h1,
+    h2,
+    h3 {
+      color: #333;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+    }
+
+    table,
+    th,
+    td {
+      border: 1px solid #ddd;
+    }
+
+    th,
+    td {
+      padding: 10px;
+      text-align: left;
+    }
+
+    th {
+      background-color: #f4f4f4;
+    }
+
+    code {
+      background-color: #f4f4f4;
+      padding: 2px 4px;
+      border-radius: 4px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <h2 style="color: #333;">🧠 What is Causal Language Modeling?</h2>
+    <p>Causal Language Modeling (CLM) trains a model to <strong>predict the next token</strong> in a sequence, using
+      only <strong>past tokens</strong>. This respects the temporal order, ensuring the model doesn't "peek" into future
+      tokens.</p>
+    <p><strong>Example:</strong><br>
+      <em>Prompt:</em> "The patient was diagnosed with" <br>
+      <em>Prediction:</em> "cancer"
+    </p>
+
+    <h3 style="color: #333;">⚙️ How It Works in LLMs:</h3>
+    <ul>
+      <li><strong>Autoregressive Modeling:</strong> Models like <em>GPT</em> predict tokens <em>one at a time</em>,
+        feeding outputs back into the model for the next prediction.</li>
+      <li><strong>Masked Self-Attention:</strong> Uses masked attention so each token can only attend to <em>previous
+          tokens</em>.</li>
+      <li><strong>Training Objective:</strong> Optimizes for <em>next-token prediction loss</em>, typically using
+        cross-entropy.</li>
+    </ul>
+
+    <h3 style="color: #333;">🔄 Causal vs. Masked Language Modeling:</h3>
+    <table style="width:100%; border-collapse: collapse; text-align: center;">
+      <tr style="background-color: #e0e0e0;">
+        <th style="padding: 8px; border: 1px solid #ccc;">Aspect</th>
+        <th style="padding: 8px; border: 1px solid #ccc;">Causal LM (e.g., GPT)</th>
+        <th style="padding: 8px; border: 1px solid #ccc;">Masked LM (e.g., BERT)</th>
+      </tr>
+      <tr>
+        <td style="padding: 8px; border: 1px solid #ccc;">Directionality</td>
+        <td style="padding: 8px; border: 1px solid #ccc;">Left-to-right (past context only)</td>
+        <td style="padding: 8px; border: 1px solid #ccc;">Bidirectional (full context)</td>
+      </tr>
+      <tr>
+        <td style="padding: 8px; border: 1px solid #ccc;">Training Objective</td>
+        <td style="padding: 8px; border: 1px solid #ccc;">Predict next token</td>
+        <td style="padding: 8px; border: 1px solid #ccc;">Predict masked tokens</td>
+      </tr>
+      <tr>
+        <td style="padding: 8px; border: 1px solid #ccc;">Strengths</td>
+        <td style="padding: 8px; border: 1px solid #ccc;">Text generation, dialogue systems</td>
+        <td style="padding: 8px; border: 1px solid #ccc;">Understanding tasks (NER, classification)</td>
+      </tr>
+      <tr>
+        <td style="padding: 8px; border: 1px solid #ccc;">Weaknesses</td>
+        <td style="padding: 8px; border: 1px solid #ccc;">Limited to past context during generation</td>
+        <td style="padding: 8px; border: 1px solid #ccc;">Not ideal for text generation</td>
+      </tr>
+    </table>
+
+    <h3 style="color: #333;">🏥 Applications in Healthcare NLP:</h3>
+    <ul>
+      <li><strong>Causal LMs (e.g., GPT):</strong> Medical summaries, patient query answering, and clinical narrative
+        generation.</li>
+      <li><strong>Masked LMs (e.g., BERT):</strong> Named Entity Recognition (NER), document classification, and
+        relation extraction.</li>
+    </ul>
+  </div>
+
+</body>
+
+</html>

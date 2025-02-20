@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Causal Language Modeling in LLMs</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            background-image: url('../assets/images/wooden.jpg');
+            background-size: cover;
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+            background-position: center;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            font-family: 'Courier New', monospace;
+            max-width: 1200px;
+            margin: auto;
+            background: rgba(145, 132, 132, 0.9);
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1,
+        h2,
+        h3 {
+            color: #333;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        table,
+        th,
+        td {
+            border: 1px solid #ddd;
+        }
+
+        th,
+        td {
+            padding: 10px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f4f4f4;
+        }
+
+        code {
+            background-color: #f4f4f4;
+            padding: 2px 4px;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="supervised-fine-tuning">
+            <h2>What is Supervised Fine-Tuning?</h2>
+            <p>
+                <strong>Supervised Fine-Tuning (SFT)</strong> is a key step in training Large Language Models (LLMs)
+                after the initial pretraining phase. Here's how it works:
+            </p>
+            <h3>How It Works:</h3>
+            <ol>
+                <li><strong>Pretraining:</strong> The model learns general language patterns from vast datasets (e.g.,
+                    books, web pages) using self-supervised tasks like <strong>causal language modeling</strong>.</li>
+                <li><strong>Supervised Fine-Tuning:</strong> The pretrained model is fine-tuned on curated,
+                    task-specific data where both <strong>inputs</strong> and <strong>expected outputs</strong> are
+                    provided.
+                    <ul>
+                        <li><strong>Example tasks:</strong>
+                            <ul>
+                                <li><strong>Question-Answering:</strong> Given a question, generate a correct answer.
+                                </li>
+                                <li><strong>Summarization:</strong> Turn a long document into a concise summary.</li>
+                                <li><strong>NER/Classification:</strong> Identify named entities or classify documents.
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <li><strong>Loss Function:</strong> The model uses a supervised loss function, typically
+                    <strong>cross-entropy</strong>, to minimize the difference between its outputs and the ground-truth
+                    annotations.</li>
+            </ol>
+
+            <h3>Benefits of Supervised Fine-Tuning:</h3>
+            <ul>
+                <li><strong>Contextual Relevance:</strong> Improves the model’s ability to generate accurate, on-topic
+                    responses.</li>
+                <li><strong>Domain Adaptation:</strong> Helps the model specialize in certain areas (e.g., healthcare,
+                    legal) by fine-tuning on domain-specific datasets.</li>
+                <li><strong>Performance Boost:</strong> Enhances the model's results on specific downstream tasks
+                    compared to its general pretrained version.</li>
+            </ul>
+        </div>
+
+    </div>
+</body>
+
+</html>

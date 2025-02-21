@@ -186,8 +186,7 @@
 
     <div class="failure-cases">
         <div class="case" style="font-family: 'Courier New', monospace; padding: 10px; border: 1px solid #ddd;">
-            <div class="failure-cases">
-                <div class="case" style="font-family: 'Courier New', monospace; padding: 10px; border: 1px solid #ddd;">
+        
                     <div>
                         <h2>Electricity Demand Forecasting for London</h2>
 
@@ -527,182 +526,715 @@
 
         </div>
     </div>
+
     <div class="failure-cases">
         <div class="case" style="font-family: 'Courier New', monospace; padding: 10px; border: 1px solid #ddd;">
-            <div class="healthcare-ai-project">
-                <h2>Agentic Bot Framework for Healthcare Data Analysis</h2>
+            <div class="project-pitch">
+                <h2>Agentic Bot Framework for Healthcare Account Plan Analysis</h2>
+                <p>"One of my most impactful projects was developing an Agentic Bot Framework that streamlined
+                    healthcare account plan data analysis using LlamaIndex. The goal was to create an intelligent system
+                    comprised of specialized agents to analyze Elevance Health data through structured workflows,
+                    enabling comprehensive healthcare data analysis and natural language query processing."</p>
 
-                <div class="project-overview">
-                    <h3>Project Overview</h3>
-                    <p>A sophisticated framework combining LLMs and specialized agents to analyze Elevance Health data
-                        through structured workflows, enabling comprehensive healthcare data analysis and natural
-                        language query processing.</p>
+                <h3>Problem Statement:</h3>
+                <p>Healthcare account plans often contain vast amounts of fragmented data—ranging from benefit names to
+                    cost shares across different network types. Navigating this data, validating its distribution, and
+                    extracting meaningful insights manually is not only time-consuming but also prone to errors.</p>
+
+                <p><strong>Our mission?</strong> Build an intelligent, agent-driven framework that simplifies plan
+                    information access, enables real-time data validation, and even integrates operational tools like
+                    Jira for task management.</p>
+
+                <h3>Architecture Overview:</h3>
+
+                <h4>Data Ingestion & Storage:</h4>
+                <ul>
+                    <li>Since the FOBS data was stored in MongoDB with each benefit name as a key, there was no need for
+                        data chunking.</li>
+                    <li>Using OpenAI embeddings, we processed the benefit name data directly, enabling semantic
+                        understanding and allowing the system to retrieve data contextually rather than relying on
+                        simple keyword matching.</li>
+                    <li>The processed embeddings were stored in Postgres as a Vector DB, providing fast and accurate
+                        similarity searches for user queries.</li>
+                </ul>
+
+                <h4>Validation Layer:</h4>
+                <p>Before making the data available to end-users, it passed through a robust validation engine that
+                    ensured data quality and accuracy:</p>
+                <ul>
+                    <li>Group ID Validation – Verifying correct group associations.</li>
+                    <li>Benefit Name Validation – Ensuring benefit names match across datasets.</li>
+                    <li>Effective Date Validation – Validating plan timelines and coverage periods.</li>
+                </ul>
+
+                <h4>Agentic Bot – User Interaction:</h4>
+                <p>The Agentic Bot served as the primary interface for users, offering several powerful tools:</p>
+                <ul>
+                    <li><strong>Tool 1:</strong> Get Plan Info – Users could input any benefit name and instantly
+                        retrieve detailed plan information.</li>
+                    <li><strong>Tool 2:</strong> Get Statistics – This tool allowed users to generate statistical
+                        summaries for specific groups, plans, or benefits, helping them make data-driven decisions.</li>
+                    <li><strong>Tool 3:</strong> Engage Advisor via Jira – Using a Java API for Jira, users could create
+                        tickets, track issue statuses, or escalate tasks directly from the bot.</li>
+                </ul>
+
+                <h4>Seamless Jira Integration:</h4>
+                <p>The Java API for Jira was crucial in connecting our system with project management workflows. It
+                    allowed the bot to not only log issues but also monitor ticket progress, ensuring smooth
+                    communication between data teams and operational staff.</p>
+
+                <h3>Workflows:</h3>
+                <ul>
+                    <p>User is assigned with a session ID to track interactions with the bot.</p>
+                    <li><strong>User Query:</strong> Any information requested related to a benefit name.</li>
+                    <li><strong>Bot Internal:</strong> Analyzes the query and extracts entities like benefit name, group
+                        ID, plan name, and contract code.
+                        <ul>
+                            <li>If group ID is missing:
+                                <ul>
+                                    <li><strong>Bot Response:</strong> Requests the user to provide the group ID.</li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                    <li><strong>User Query:</strong> Provides group ID.</li>
+                    <li><strong>Bot Internal:</strong> Validates the group ID, checks its association with the account,
+                        and stores it in Redis for session management.
+                        <ul>
+                            <li>Once all mandatory metadata is available, the bot queries the database to retrieve
+                                benefit details.</li>
+                            <li>The top 5 results are sent to the LLM along with the user’s question.</li>
+                        </ul>
+                    </li>
+                    <li><strong>Bot Response:</strong> The LLM generates an answer based on the top 5 results.</li>
+                    <li><strong>User Query:</strong> If the user requests statistics for a group.</li>
+                    <li><strong>Bot Internal:</strong> Executes stored procedures using the metadata, retrieves the
+                        data, and sends it to the LLM to generate statistics in a specified format.</li>
+                </ul>
+
+                <h3>How It All Comes Together:</h3>
+                <p>"Picture a healthcare analyst needing to verify cost-sharing details for a specific benefit. With the
+                    Agentic Bot, they simply input the benefit name, and within seconds, the bot fetches validated plan
+                    information, complete with timelines and cost breakdowns. If discrepancies arise, the analyst can
+                    create a Jira ticket directly through the bot, streamlining issue tracking and resolution—all
+                    without switching between multiple systems."</p>
+
+                <h3>Key Technologies & Methodologies:</h3>
+                <ul>
+                    <li>LlamaIndex for structuring and querying complex healthcare data.</li>
+                    <li>OpenAI Embeddings for semantic understanding and data processing.</li>
+                    <li>Oracle, MongoDB & Postgres Vector DB for efficient data storage and retrieval.</li>
+                    <li>Java API for seamless Jira integration.</li>
+                    <li>Robust validation pipelines ensuring data integrity.</li>
+                </ul>
+
+                <h3>Impact & Achievements:</h3>
+                <ul>
+                    <li>60% reduction in data retrieval and validation time.</li>
+                    <li>Improved data accuracy through multi-layered validation.</li>
+                    <li>Enhanced user experience with intuitive tools, leading to faster decision-making.</li>
+                    <li>Streamlined operations by integrating Jira, reducing communication gaps between analysts and
+                        technical teams.</li>
+                </ul>
+
+                <h3>Final Thought:</h3>
+                <p>"This project showcased my ability to blend AI, data engineering, and workflow automation to solve
+                    real-world problems. It wasn’t just about building a bot; it was about creating a system that
+                    empowered users to interact with complex healthcare data effortlessly while ensuring operational
+                    efficiency."</p>
+            </div>
+
+        </div>
+    </div>
+    <div class="failure-cases">
+        <div class="case" style="font-family: 'Courier New', monospace; padding: 10px; border: 1px solid #ddd;">
+            <div>
+                <h2>Project Overview: FOBS Data - Intent Prediction and Classification</h2>
+                <p><strong>Objective:</strong><br>
+                    The project aimed to process user-submitted "change text" from the FOBS system, predict its intent
+                    using ELECTRA, and classify the text into two categories: <strong>"Benefit"</strong> or
+                    <strong>"GBA"</strong>. This helped in automating workflows and reducing manual review.
+                </p>
+                <div>
+                    <h2>Project Overview: FOBS Data - Intent Prediction, Classification, and Entity Extraction</h2>
+                    <p><strong>Objective:</strong><br>
+                        The project aimed to process user-submitted "change text" from the FOBS system, predict its
+                        intent using ELECTRA, classify the text into two categories: <strong>"Benefit"</strong> or
+                        <strong>"GBA"</strong>, and extract key entities using Rasa for deeper insights and downstream
+                        processing.
+                    </p>
                 </div>
 
-                <div class="architecture-components">
-                    <h3>Architectural Components</h3>
-
-                    <div class="component">
-                        <h4>Core Modules</h4>
-                        <ul>
-                            <li><strong>GenAI Chat API</strong>: Natural language interface powered by LLMs</li>
-                            <li><strong>Agentic Controller</strong>: Central orchestration module</li>
-                            <li><strong>LLM Gateway</strong>: Interface for model interactions</li>
-                        </ul>
-                    </div>
-
-                    <div class="component">
-                        <h4>Specialized Agents</h4>
-                        <ul>
-                            <li><strong>Benefit Agent</strong>: Insurance & coverage data processor</li>
-                            <li><strong>Jira Agent</strong>: Workflow integration manager</li>
-                            <li><strong>Future Agent</strong>: Modular expansion slot</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <div class="data-workflow">
-                    <h3>Data Processing Pipeline</h3>
+                <div>
+                    <h3>Solution Approach</h3>
                     <ol>
-                        <li>User query via GenAI Chat API</li>
-                        <li>Intent parsing by Agentic Controller</li>
-                        <li>Task delegation to specialized agents</li>
-                        <li>Multi-source data retrieval:
+                        <li><strong>Data Preprocessing:</strong>
                             <ul>
-                                <li>Elevance Health Data (PHI)</li>
-                                <li>Fobs MongoDB (unstructured)</li>
-                                <li>Oracle Stats (aggregated)</li>
+                                <li>Collected and cleaned the FOBS "change text" data.</li>
+                                <li>Performed tokenization, removed special characters, and handled class imbalance.
+                                </li>
                             </ul>
                         </li>
-                        <li>LLM-powered synthesis & response</li>
+                        <li><strong>Intent Prediction using ELECTRA:</strong>
+                            <ul>
+                                <li>Fine-tuned the ELECTRA model to predict the user's intent behind the change text.
+                                </li>
+                            </ul>
+                        </li>
+                        <li><strong>Benefit vs. GBA Classification:</strong>
+                            <ul>
+                                <li>Built a custom classifier on top of the intent prediction to classify the change
+                                    text into <strong>"Benefit"</strong> or <strong>"GBA"</strong>.</li>
+                            </ul>
+                        </li>
+                        <li><strong>Entity Extraction using Rasa:</strong>
+                            <ul>
+                                <li>Integrated Rasa NLU to extract key entities such as dates, benefit types, GBA codes,
+                                    and user-specific fields from the change text.</li>
+                            </ul>
+                        </li>
+                        <li><strong>Evaluation & Optimization:</strong>
+                            <ul>
+                                <li>Used metrics like <strong>F1-score</strong>, <strong>Precision</strong>, and
+                                    <strong>Recall</strong> to evaluate model performance.
+                                </li>
+                                <li>Addressed challenges like data imbalance, ambiguous text, and entity overlap through
+                                    advanced techniques.</li>
+                            </ul>
+                        </li>
                     </ol>
                 </div>
 
-                <div class="tech-specs">
-                    <h3>Technical Specifications</h3>
-                    <div class="spec-section">
-                        <h4>Technology Stack</h4>
-                        <ul>
-                            <li>Python-based LLM frameworks</li>
-                            <li>MongoDB + Oracle hybrid database</li>
-                            <li>LangChain agent architecture</li>
-                        </ul>
-                    </div>
+                <div>
+                    <h3>Code Examples</h3>
 
-                    <div class="spec-section">
-                        <h4>Key Capabilities</h4>
-                        <ul>
-                            <li>Natural language query resolution</li>
-                            <li>Multi-agent task coordination</li>
-                            <li>Context-aware session management</li>
-                        </ul>
-                    </div>
+                    <h4>1. Data Preprocessing</h4>
+                    <pre><code>
+                  import pandas as pd
+                  from sklearn.model_selection import train_test_split
+                  from transformers import ElectraTokenizer
+                  
+                  # Load FOBS change text data
+                  data = pd.read_csv("fobs_change_text.csv")
+                  
+                  # Sample preprocessing
+                  data['clean_text'] = data['change_text'].str.replace('[^a-zA-Z0-9 ]', '').str.lower()
+                  
+                  # Train-test split
+                  train_texts, val_texts, train_labels, val_labels = train_test_split(
+                      data['clean_text'], data['intent_label'], test_size=0.2, random_state=42
+                  )
+                  
+                  # Tokenize using ELECTRA tokenizer
+                  tokenizer = ElectraTokenizer.from_pretrained('google/electra-small-discriminator')
+                  train_encodings = tokenizer(list(train_texts), truncation=True, padding=True)
+                  val_encodings = tokenizer(list(val_texts), truncation=True, padding=True)
+                    </code></pre>
+
+                    <h4>2. Fine-Tuning ELECTRA for Intent Prediction</h4>
+                    <pre><code>
+                  import torch
+                  from transformers import ElectraForSequenceClassification, Trainer, TrainingArguments
+                  
+                  # Prepare ELECTRA model
+                  model = ElectraForSequenceClassification.from_pretrained('google/electra-small-discriminator', num_labels=3)
+                  
+                  # Prepare dataset class
+                  class FOBSDataset(torch.utils.data.Dataset):
+                      def __init__(self, encodings, labels):
+                          self.encodings = encodings
+                          self.labels = labels
+                  
+                      def __getitem__(self, idx):
+                          item = {key: torch.tensor(val[idx]) for key, val in self.encodings.items()}
+                          item['labels'] = torch.tensor(self.labels[idx])
+                          return item
+                  
+                      def __len__(self):
+                          return len(self.labels)
+                  
+                  # Create datasets
+                  train_dataset = FOBSDataset(train_encodings, train_labels.tolist())
+                  val_dataset = FOBSDataset(val_encodings, val_labels.tolist())
+                  
+                  # Training arguments
+                  training_args = TrainingArguments(
+                      output_dir='./results',
+                      evaluation_strategy="epoch",
+                      per_device_train_batch_size=16,
+                      per_device_eval_batch_size=16,
+                      num_train_epochs=4,
+                      weight_decay=0.01,
+                      logging_dir='./logs',
+                  )
+                  
+                  # Trainer
+                  trainer = Trainer(
+                      model=model,
+                      args=training_args,
+                      train_dataset=train_dataset,
+                      eval_dataset=val_dataset,
+                  )
+                  
+                  # Fine-tune ELECTRA
+                  trainer.train()
+                    </code></pre>
+
+                    <h4>3. Benefit vs. GBA Classification</h4>
+                    <pre><code>
+                  from sklearn.linear_model import LogisticRegression
+                  from sklearn.metrics import classification_report
+                  
+                  # Get ELECTRA embeddings for the clean text
+                  def get_embeddings(texts):
+                      inputs = tokenizer(texts, return_tensors="pt", truncation=True, padding=True)
+                      with torch.no_grad():
+                          outputs = model.electra(**inputs)
+                      return outputs.last_hidden_state.mean(dim=1).numpy()
+                  
+                  # Generate embeddings
+                  train_embeddings = get_embeddings(list(train_texts))
+                  val_embeddings = get_embeddings(list(val_texts))
+                  
+                  # Train Logistic Regression classifier
+                  clf = LogisticRegression(max_iter=1000)
+                  clf.fit(train_embeddings, data.loc[train_texts.index, 'benefit_gba_label'])
+                  
+                  # Evaluate classifier
+                  preds = clf.predict(val_embeddings)
+                  print(classification_report(data.loc[val_texts.index, 'benefit_gba_label'], preds))
+                    </code></pre>
+
+                    <h4>4. Entity Extraction using Rasa</h4>
+                    <pre><code>
+                  # Sample Rasa NLU pipeline configuration (config.yml)
+                  pipeline:
+                    - name: WhitespaceTokenizer
+                    - name: RegexFeaturizer
+                    - name: CRFEntityExtractor
+                    - name: DIETClassifier
+                      epochs: 100
+                    - name: EntitySynonymMapper
+                  
+                  # Sample NLU training data (nlu.yml)
+                  nlu:
+                  - intent: change_benefit
+                    examples: |
+                      - Change the benefit amount to $500 starting from [March 1st](start_date)
+                      - Update the [GBA1234](gba_code) plan for user [John Doe](user_name)
+                  
+                  # Python Code to Run Entity Extraction
+                  from rasa.nlu.model import Interpreter
+                  
+                  # Load trained Rasa model
+                  interpreter = Interpreter.load("./models")
+                  
+                  # Parse new change text
+                  message = "Please update benefit coverage starting from April 5th for user Sarah Connor."
+                  result = interpreter.parse(message)
+                  
+                  # Output extracted entities
+                  print("Intent:", result['intent']['name'])
+                  print("Entities:", result['entities'])
+                    </code></pre>
+
+                    <h4>5. Evaluation Metrics</h4>
+                    <pre><code>
+                  from sklearn.metrics import accuracy_score, precision_recall_fscore_support
+                  
+                  # For ELECTRA intent prediction
+                  intent_preds = trainer.predict(val_dataset)
+                  intent_labels = intent_preds.label_ids
+                  intent_predictions = intent_preds.predictions.argmax(axis=1)
+                  
+                  acc = accuracy_score(intent_labels, intent_predictions)
+                  precision, recall, f1, _ = precision_recall_fscore_support(intent_labels, intent_predictions, average='weighted')
+                  
+                  print(f"Intent Prediction - Accuracy: {acc:.2f}, Precision: {precision:.2f}, Recall: {recall:.2f}, F1: {f1:.2f}")
+                  
+                  # For Benefit vs. GBA classification
+                  print("Benefit vs. GBA Classification Report:")
+                  print(classification_report(data.loc[val_texts.index, 'benefit_gba_label'], preds))
+                    </code></pre>
                 </div>
 
-                <div class="compliance-security">
-                    <h3>Security Implementation</h3>
+                <div>
+                    <h3>Challenges & Solutions</h3>
                     <ul>
-                        <li>HIPAA-compliant data handling</li>
-                        <li>PHI anonymization layers</li>
-                        <li>Enterprise-grade encryption</li>
+                        <li><strong>Ambiguous Change Texts:</strong><br>
+                            <em>Solution:</em> Fine-tuned ELECTRA with domain-specific data to better handle ambiguous
+                            intents.
+                        </li>
+                        <li><strong>Class Imbalance:</strong><br>
+                            <em>Solution:</em> Used class weights in the Benefit/GBA classifier and applied data
+                            augmentation for underrepresented classes.
+                        </li>
+                        <li><strong>Complex Entity Structures:</strong><br>
+                            <em>Solution:</em> Leveraged Rasa's CRFEntityExtractor and DIETClassifier to accurately
+                            extract overlapping entities and handle complex entity relationships.
+                        </li>
+                        <li><strong>Pipeline Integration:</strong><br>
+                            <em>Solution:</em> Built a modular pipeline combining intent prediction, classification, and
+                            entity extraction for seamless processing.
+                        </li>
                     </ul>
                 </div>
 
-                <div class="performance-metrics">
-                    <h3>System Performance</h3>
-                    <div class="metric-grid">
-                        <div class="metric">
-                            <span class="value">98%</span>
-                            <span class="label">Query Accuracy</span>
-                        </div>
-                        <div class="metric">
-                            <span class="value">2.4s</span>
-                            <span class="label">Avg Response Time</span>
-                        </div>
-                        <div class="metric">
-                            <span class="value">50+</span>
-                            <span class="label">Simultaneous Agents</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="challenges">
-                    <h3>Technical Challenges Overcome</h3>
+                <div>
+                    <h3>Impact of the Project</h3>
                     <ul>
-                        <li>LLM hallucination mitigation</li>
-                        <li>Multi-database synchronization</li>
-                        <li>Real-time PHI processing</li>
+                        <li><strong>Accuracy Improvements:</strong> Intent prediction achieved <strong>~90%</strong>
+                            accuracy, Benefit/GBA classification had an F1-score of <strong>~88%</strong>, and entity
+                            extraction reached <strong>~85%</strong> accuracy.</li>
+                        <li><strong>Efficiency Gains:</strong> The pipeline reduced processing time by
+                            <strong>40%</strong>, leading to faster decision-making.
+                        </li>
+                        <li><strong>Enhanced Data Insights:</strong> Entity extraction provided granular data points for
+                            downstream processes, improving overall data usability.</li>
+                        <li><strong>Scalability:</strong> Designed the solution to be scalable, allowing integration
+                            into existing FOBS workflows.</li>
                     </ul>
                 </div>
             </div>
-
-            <style>
-                .healthcare-ai-project {
-                    max-width: 1200px;
-                    margin: 2rem auto;
-                    padding: 2rem;
-                    border-radius: 10px;
-                    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-                }
-
-                .component {
-                    padding: 1.5rem;
-                    margin: 1rem 0;
-                    border-radius: 8px;
-                    border-left: 4px solid #004d40;
-                }
-
-                .metric-grid {
-                    display: grid;
-                    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-                    gap: 1rem;
-                }
-
-                .metric {
-                    text-align: center;
-                    padding: 1rem;
-                    background: white;
-                    border-radius: 8px;
-                }
-
-                .value {
-                    display: block;
-                    font-size: 2rem;
-                    font-weight: bold;
-                    color: #004d40;
-                }
-
-                .label {
-                    color: #666;
-                    font-size: 0.9rem;
-                }
-
-                h3 {
-                    color: #004d40;
-                    border-bottom: 2px solid #00bfa5;
-                    padding-bottom: 0.5rem;
-                }
-            </style>
-
-        </div>
-    </div>
-
-    <div class="failure-cases">
-        <div class="case" style="font-family: 'Courier New', monospace; padding: 10px; border: 1px solid #ddd;">
-
         </div>
     </div>
     <div class="failure-cases">
         <div class="case" style="font-family: 'Courier New', monospace; padding: 10px; border: 1px solid #ddd;">
+            <div>
+                <h2>Here’s a detailed explanation of the <strong>ELECTRA</strong> and <strong>Rasa</strong>
+                    architectures, including how they work under the hood.</h2>
+                <hr />
+
+                <h3>⚡ <strong>ELECTRA Architecture (Efficiently Learning an Encoder that Classifies Token
+                        Replacements Accurately)</strong></h3>
+                <p>ELECTRA introduces a new pretraining method called <strong>Replaced Token Detection</strong> as
+                    an alternative to traditional masked language modeling (like BERT).</p>
+
+                <h4>🏛 <strong>Architecture Overview:</strong></h4>
+                <p>ELECTRA consists of two main components:</p>
+                <ol>
+                    <li><strong>Generator</strong> (Small masked language model - MLM)</li>
+                    <li><strong>Discriminator</strong> (Main model that detects replaced tokens)</li>
+                </ol>
+                <pre>
+              [ Input Text ] → [ Generator (MLM) ] → [ Corrupted Text ] → [ Discriminator ] → [ Real or Fake Tokens? ]
+                </pre>
+
+                <hr />
+
+                <h4>🔄 <strong>Step-by-Step Workflow:</strong></h4>
+                <ol>
+                    <li><strong>Input Processing:</strong>
+                        <ul>
+                            <li>The input text is tokenized and masked randomly (like BERT).</li>
+                            <li>Example:
+                                <pre>
+              Original: The cat sat on the mat.
+              Masked: The [MASK] sat on the mat.
+                        </pre>
+                            </li>
+                        </ul>
+                    </li>
+                    <li><strong>Generator (Small MLM):</strong>
+                        <ul>
+                            <li>Predicts masked tokens (like BERT).</li>
+                            <li>Example Output:
+                                <pre>
+              "The [dog] sat on the mat."
+                        </pre>
+                            </li>
+                        </ul>
+                    </li>
+                    <li><strong>Corrupted Text Formation:</strong>
+                        <ul>
+                            <li>The predicted tokens from the generator are used to create a "corrupted" version of
+                                the input.</li>
+                            <li>Some tokens are replaced with generated tokens, others remain untouched.</li>
+                        </ul>
+                    </li>
+                    <li><strong>Discriminator (Core ELECTRA Model):</strong>
+                        <ul>
+                            <li>The corrupted text is fed into the discriminator.</li>
+                            <li>The discriminator predicts whether each token is <strong>Original</strong> or
+                                <strong>Replaced</strong>.
+                            </li>
+                        </ul>
+                    </li>
+                    <li><strong>Loss Functions:</strong>
+                        <ul>
+                            <li><strong>Generator:</strong> Uses cross-entropy loss (same as BERT's MLM loss).</li>
+                            <li><strong>Discriminator:</strong> Uses binary cross-entropy to predict real vs. fake
+                                tokens.</li>
+                        </ul>
+                    </li>
+                    <li><strong>Pretraining Objective - Replaced Token Detection:</strong>
+                        <ul>
+                            <li>ELECTRA focuses on teaching the discriminator to be highly sensitive to token
+                                replacements.</li>
+                        </ul>
+                    </li>
+                </ol>
+
+                <hr />
+
+                <h4>🛠 <strong>Advantages of ELECTRA:</strong></h4>
+                <ul>
+                    <li><strong>Efficiency:</strong> Trains faster than BERT while achieving similar or better
+                        performance.</li>
+                    <li><strong>Token-Level Discrimination:</strong> Learns from all tokens (not just masked ones),
+                        leading to richer representations.</li>
+                    <li><strong>Smaller Pretraining Cost:</strong> A smaller generator reduces compute needs.</li>
+                </ul>
+
+                <h4>🧑‍💻 <strong>Code Snippet - Using ELECTRA for Intent Classification</strong></h4>
+                <pre><code class="language-python">
+              from transformers import ElectraTokenizer, ElectraForSequenceClassification
+              import torch
+              
+              # Load ELECTRA tokenizer and model
+              tokenizer = ElectraTokenizer.from_pretrained("google/electra-small-discriminator")
+              model = ElectraForSequenceClassification.from_pretrained("google/electra-small-discriminator", num_labels=3)
+              
+              # Sample text for intent prediction
+              text = "Update the benefit coverage starting next month."
+              inputs = tokenizer(text, return_tensors="pt")
+              outputs = model(**inputs)
+              
+              # Get intent prediction
+              predictions = torch.softmax(outputs.logits, dim=1)
+              predicted_intent = torch.argmax(predictions, dim=1)
+              print("Predicted Intent:", predicted_intent.item())
+                </code></pre>
+
+                <hr />
+
+                <h3>🤖 <strong>Rasa Architecture (Open-Source Conversational AI)</strong></h3>
+                <p>Rasa is a powerful open-source framework for building conversational agents, with two main
+                    components:</p>
+                <ol>
+                    <li><strong>Rasa NLU</strong> (Natural Language Understanding) – Handles intent classification &
+                        entity extraction.</li>
+                    <li><strong>Rasa Core</strong> (Dialogue Management) – Manages conversation flow and responses.
+                    </li>
+                </ol>
+                <pre>
+              [ User Input ] → [ Rasa NLU ] → [ Parsed Intent & Entities ] → [ Rasa Core ] → [ Bot Response ]
+                </pre>
+
+                <hr />
+
+                <h4>🏛 <strong>Rasa NLU Pipeline:</strong></h4>
+                <p>Rasa NLU processes the raw user input and converts it into structured data.</p>
+                <ol>
+                    <li><strong>Tokenizer:</strong> Splits the text into tokens.</li>
+                    <li><strong>Featurizer:</strong> Converts tokens into feature vectors.</li>
+                    <li><strong>Intent Classification:</strong> Identifies the user's intent using
+                        <strong>DIETClassifier</strong>.
+                    </li>
+                    <li><strong>Entity Extraction:</strong> Detects entities in the text.</li>
+                </ol>
+
+                <h4>🔍 <strong>Key Components:</strong></h4>
+                <ul>
+                    <li><strong>DIETClassifier:</strong> Multi-task transformer that predicts both intents and
+                        entities.</li>
+                    <li><strong>CRFEntityExtractor:</strong> Sequence labeling model that extracts entities based on
+                        token-level features.</li>
+                    <li><strong>RegexFeaturizer:</strong> Identifies predefined patterns (e.g., emails, phone
+                        numbers).</li>
+                </ul>
+
+                <h4>🔄 <strong>Rasa Core - Dialogue Management:</strong></h4>
+                <p>Uses a policy-based system to manage dialogue flow, tracking conversation state using
+                    <strong>stories</strong> and guiding actions with policies like
+                    <strong>MemoizationPolicy</strong> and <strong>TEDPolicy</strong>.
+                </p>
+
+                <h4>🧑‍💻 <strong>Code Snippet - Entity Extraction with Rasa</strong></h4>
+                <pre><code class="language-yaml">
+              nlu:
+              - intent: change_benefit
+                examples: |
+                  - Change the benefit amount to $500 starting from [March 1st](start_date)
+                  - Update the [GBA1234](gba_code) plan for user [John Doe](user_name)
+                  - Modify coverage effective [April 5th](start_date)
+                </code></pre>
+
+                <pre><code class="language-yaml">
+              pipeline:
+                - name: WhitespaceTokenizer
+                - name: RegexFeaturizer
+                - name: DIETClassifier
+                  epochs: 100
+                - name: EntitySynonymMapper
+                </code></pre>
+
+                <pre><code class="language-python">
+              from rasa.nlu.model import Interpreter
+              
+              # Load trained Rasa model
+              interpreter = Interpreter.load("./models")
+              
+              # Parse user message
+              message = "Please update benefit coverage starting from May 10th for user Sarah Connor."
+              result = interpreter.parse(message)
+              
+              # Output
+              print("Intent:", result['intent']['name'])
+              print("Confidence:", result['intent']['confidence'])
+              print("Entities:", result['entities'])
+                </code></pre>
+
+                <h4>🛠 <strong>Advantages of Rasa:</strong></h4>
+                <ul>
+                    <li><strong>Custom NLU Pipelines:</strong> Easily customizable for domain-specific needs.</li>
+                    <li><strong>Multi-Task Learning:</strong> DIETClassifier handles both intents and entities.</li>
+                    <li><strong>Open-Source & Extensible:</strong> Supports custom components and integrations.</li>
+                    <li><strong>Modular Architecture:</strong> Can use only NLU or Core independently.</li>
+                </ul>
+
+                <h3>🚀 <strong>Combining ELECTRA + Rasa in Your Project:</strong></h3>
+                <p><strong>ELECTRA</strong>: Handles <strong>intent prediction</strong> with fine-tuned
+                    accuracy.<br />
+                    <strong>Rasa</strong>: Focuses on <strong>entity extraction</strong> from the same input text.
+                </p>
+                <pre>
+              [ User Input ]
+                    ↓
+              [ ELECTRA ] → Predict Intent
+                    ↓
+              [ Rasa NLU ] → Extract Entities
+                    ↓
+              [ Output ] → Intent + Entities for downstream processing
+                </pre>
+            </div>
 
         </div>
     </div>
     <div class="failure-cases">
         <div class="case" style="font-family: 'Courier New', monospace; padding: 10px; border: 1px solid #ddd;">
-        </div>
-    </div>
-    <div class="failure-cases">
-        <div class="case" style="font-family: 'Courier New', monospace; padding: 10px; border: 1px solid #ddd;">
+            <div>
+                <h2>📈 <strong>Time Series Analysis: A Detailed Explanation</strong></h2>
+                <hr />
+
+                <h3>⏳ <strong>What is Time Series Analysis?</strong></h3>
+                <p>
+                    Time Series Analysis involves analyzing data points collected or recorded at specific time
+                    intervals.
+                    The goal is to identify meaningful patterns, trends, and seasonalities in the data to make forecasts
+                    and informed decisions.
+                </p>
+
+                <h3>🏛 <strong>Key Components of Time Series Data:</strong></h3>
+                <ul>
+                    <li><strong>Trend (T):</strong> Long-term upward or downward movement in the data.</li>
+                    <li><strong>Seasonality (S):</strong> Repeating short-term cycles in the data (e.g., daily,
+                        monthly).</li>
+                    <li><strong>Cyclic Patterns (C):</strong> Long-term fluctuations not of a fixed period.</li>
+                    <li><strong>Irregular/Noise (I):</strong> Random variations or anomalies that cannot be explained.
+                    </li>
+                </ul>
+
+                <h3>🔄 <strong>Decomposition of Time Series:</strong></h3>
+                <p>
+                    A time series can be decomposed into its components using two models:
+                </p>
+                <ul>
+                    <li><strong>Additive Model:</strong> Y(t) = T(t) + S(t) + C(t) + I(t)</li>
+                    <li><strong>Multiplicative Model:</strong> Y(t) = T(t) * S(t) * C(t) * I(t)</li>
+                </ul>
+
+                <h3>📐 <strong>Mathematical Explanation:</strong></h3>
+                <p>
+                    Time series models often rely on autoregression and moving averages.
+                </p>
+                <ul>
+                    <li><strong>Autoregressive (AR) Model:</strong> Y<sub>t</sub> = c + &phi;<sub>1</sub>Y<sub>t-1</sub>
+                        + &phi;<sub>2</sub>Y<sub>t-2</sub> + ... + &phi;<sub>p</sub>Y<sub>t-p</sub> +
+                        &epsilon;<sub>t</sub></li>
+                    <li><strong>Moving Average (MA) Model:</strong> Y<sub>t</sub> = &mu; +
+                        &theta;<sub>1</sub>&epsilon;<sub>t-1</sub> + &theta;<sub>2</sub>&epsilon;<sub>t-2</sub> + ... +
+                        &theta;<sub>q</sub>&epsilon;<sub>t-q</sub> + &epsilon;<sub>t</sub></li>
+                    <li><strong>ARIMA Model:</strong> Combines AR and MA with differencing (I) to make data stationary.
+                        <br />
+                        ARIMA(p, d, q): p = AR terms, d = differencing order, q = MA terms.
+                    </li>
+                </ul>
+
+                <h3>📊 <strong>Key Techniques in Time Series Analysis:</strong></h3>
+                <ul>
+                    <li><strong>Stationarity Check:</strong> Ensures constant mean and variance over time (e.g., ADF
+                        Test).</li>
+                    <li><strong>Autocorrelation & Partial Autocorrelation:</strong> Helps determine lags for AR/MA
+                        models.</li>
+                    <li><strong>Seasonal Decomposition:</strong> Separates trend, seasonality, and noise.</li>
+                    <li><strong>Cross-Correlation:</strong> Identifies relationships between two time series.</li>
+                </ul>
+
+                <h3>🧑‍💻 <strong>Code Snippet - Basic Time Series Analysis Using Python</strong></h3>
+                <pre><code class="language-python">
+              import pandas as pd
+              import matplotlib.pyplot as plt
+              from statsmodels.tsa.seasonal import seasonal_decompose
+              
+              # Load time series data
+              data = pd.read_csv('timeseries.csv', parse_dates=['date'], index_col='date')
+              
+              # Plot the time series
+              data.plot(title='Time Series Data')
+              plt.xlabel('Date')
+              plt.ylabel('Value')
+              plt.show()
+              
+              # Decompose the time series
+              result = seasonal_decompose(data['value'], model='additive')
+              
+              # Plot decomposition
+              result.plot()
+              plt.show()
+                </code></pre>
+
+                <h3>📉 <strong>Graphical Representation:</strong></h3>
+                <p>
+                    The above code will produce two plots:
+                </p>
+                <ul>
+                    <li><strong>Original Time Series:</strong> Displays the raw data over time.</li>
+                    <li><strong>Decomposition Plot:</strong> Separates the data into Trend, Seasonality, and Residuals.
+                    </li>
+                </ul>
+
+                <h3>🚀 <strong>Advanced Techniques:</strong></h3>
+                <ul>
+                    <li><strong>LSTM (Long Short-Term Memory):</strong> Recurrent neural networks for sequential data.
+                    </li>
+                    <li><strong>GRU (Gated Recurrent Units):</strong> A lighter version of LSTM.</li>
+                    <li><strong>Transformer Models:</strong> Applied for time series forecasting (e.g., Time Series
+                        Transformer).</li>
+                </ul>
+
+                <h3>✅ <strong>Applications of Time Series Analysis:</strong></h3>
+                <ul>
+                    <li>Stock Market Prediction 📉📈</li>
+                    <li>Weather Forecasting 🌦</li>
+                    <li>Sales Forecasting 🛍</li>
+                    <li>Healthcare Monitoring 🏥</li>
+                    <li>Anomaly Detection 🔍</li>
+                </ul>
+
+                <h3>💡 <strong>Best Practices:</strong></h3>
+                <ul>
+                    <li>Ensure data quality and handle missing values.</li>
+                    <li>Use rolling statistics for stationarity checks.</li>
+                    <li>Always validate the model using out-of-sample testing.</li>
+                </ul>
+
+                <p>
+                    Would you like a deeper dive into <strong>ARIMA</strong> modeling or advanced
+                    <strong>LSTM</strong>-based forecasting techniques? 🚀
+                </p>
+            </div>
+
         </div>
     </div>
     <div class="failure-cases">

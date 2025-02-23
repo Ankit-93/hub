@@ -127,6 +127,171 @@
 
 <body>
     <div class="container">
+        <div>
+            <h2>🚀 Training a Large Language Model (LLM)</h2>
+            <p>The training of an LLM involves two major stages: <strong>Pre-Training</strong> and
+                <strong>Fine-Tuning</strong>. This process helps transform a general-purpose language model into a
+                specialized tool tailored for specific tasks or domains.
+            </p>
+
+            <h3>🔹 1. Pre-Training Stage (Base Model)</h3>
+            <p><strong>📌 What It Is:</strong><br>
+                The LLM is trained on vast datasets sourced from the <em>Internet, books, articles</em>, etc., using
+                <strong>FP32 precision</strong>. This helps the model build a broad understanding of language patterns,
+                grammar, facts, and reasoning.
+            </p>
+
+            <p><strong>🛠️ Examples of Pre-Trained Models:</strong><br>
+                GPT-4 Turbo, GPT-3.5 — trained on massive datasets to become versatile general-purpose models.</p>
+
+            <p><strong>⚡ Key Characteristics:</strong><br>
+                - Unsupervised learning on diverse data.<br>
+                - Foundation for all downstream fine-tuning.</p>
+
+            <h3>🔹 2. Fine-Tuning Stage</h3>
+            <p>After pre-training, LLMs undergo fine-tuning to specialize them for <strong>specific tasks</strong> or
+                <strong>domains</strong>. There are various types of fine-tuning, each optimized for different goals and
+                resource constraints.
+            </p>
+
+            <h2>🔥 Types of Fine-Tuning</h2>
+
+            <h4>A. Full Parameter Fine-Tuning (FPFT)</h4>
+            <p><strong>📌 What It Is:</strong><br>
+                Fine-tunes <strong>all model parameters</strong> for maximum adaptability. Used when you need
+                significant shifts from the base model.</p>
+
+            <p><strong>⚡ Example:</strong><br>
+                ChatGPT is a fine-tuned version of GPT-3.5/4 with enhanced conversational abilities.</p>
+
+            <p><strong>💡 Pros & Cons:</strong><br>
+                ✅ High accuracy.<br>
+                ❌ Resource-intensive (requires lots of compute and memory).</p>
+
+            <h4>B. Domain-Specific Fine-Tuning</h4>
+            <p><strong>📌 What It Is:</strong><br>
+                Tailors the LLM to specific industries or fields like <strong>Finance</strong> or
+                <strong>Healthcare</strong>. Trains on domain-relevant data for better contextual understanding.
+            </p>
+
+            <p><strong>⚡ Example Domains:</strong><br>
+                - Finance – Fine-tuning on stock market data.<br>
+                - Sales – Optimizing the model for customer interaction.</p>
+
+            <p><strong>💡 Pros & Cons:</strong><br>
+                ✅ Improves domain relevance.<br>
+                ❌ May overfit to domain data if not managed carefully.</p>
+
+            <h4>C. Specific Task Fine-Tuning</h4>
+            <p><strong>📌 What It Is:</strong><br>
+                Focuses the model on a <strong>single, well-defined task</strong> (e.g., text classification,
+                summarization). Fine-tuned using labeled datasets.</p>
+
+            <p><strong>⚡ Examples:</strong><br>
+                - Text Summarization<br>
+                - Sentiment Analysis<br>
+                - Question Answering (QA)</p>
+
+            <p><strong>💡 Pros & Cons:</strong><br>
+                ✅ High task-specific accuracy.<br>
+                ❌ Limited generalization.</p>
+
+            <h4>D. Parameter-Efficient Fine-Tuning (PEFT)</h4>
+            <p>Instead of updating all parameters, PEFT techniques focus on <strong>small subsets</strong> of the model
+                to reduce computational costs.</p>
+
+            <h5>🔸 1. LoRA (Low-Rank Adaptation)</h5>
+            <p>Injects <strong>trainable low-rank matrices</strong> into attention layers. Efficient and reduces
+                fine-tuning costs.<br>
+                ✅ Example: Fine-tuning LLaMA models using minimal resources.</p>
+
+            <h5>🔸 2. QLoRA (Quantized LoRA)</h5>
+            <p>Combines <strong>LoRA</strong> with <strong>quantization</strong> (e.g., 4-bit precision) for even more
+                efficiency. Enables fine-tuning of massive models on limited hardware.<br>
+                ✅ Example: Fine-tuning billion-parameter LLMs on consumer hardware.</p>
+
+            <h5>🔸 3. Prompt-Tuning / Prefix-Tuning</h5>
+            <p>Uses <strong>learnable prompts</strong> without changing model weights. Highly efficient for <strong>task
+                    adaptation</strong> with minimal data.<br>
+                ✅ Example: Quick adaptation of GPT models for sentiment analysis.</p>
+
+            <h4>E. Instruction-Tuning</h4>
+            <p><strong>📌 What It Is:</strong><br>
+                Fine-tuning the model to follow <strong>human instructions</strong> better. Improves performance in
+                <strong>zero-shot</strong> and <strong>few-shot</strong> learning scenarios.
+            </p>
+
+            <p><strong>⚡ Examples:</strong><br>
+                - Alpaca, FLAN-T5 — trained to better follow user prompts.<br>
+                - Enhances reasoning and multi-step task-solving.</p>
+
+            <h3>⚖️ Comparison of Fine-Tuning Methods</h3>
+            <table border="1">
+                <tr>
+                    <th>Fine-Tuning Type</th>
+                    <th>Parameter Updates</th>
+                    <th>Efficiency</th>
+                    <th>Ideal Use Case</th>
+                </tr>
+                <tr>
+                    <td>Full Fine-Tuning</td>
+                    <td>🔥 All Params</td>
+                    <td>❌ High Cost</td>
+                    <td>Custom LLMs (e.g., ChatGPT)</td>
+                </tr>
+                <tr>
+                    <td>Domain-Specific Tuning</td>
+                    <td>🔥 All Params</td>
+                    <td>❌ Medium</td>
+                    <td>Legal, Finance, Healthcare AI</td>
+                </tr>
+                <tr>
+                    <td>Task-Specific Tuning</td>
+                    <td>🔥 All Params</td>
+                    <td>❌ Medium</td>
+                    <td>Summarization, QA, Sentiment Analysis</td>
+                </tr>
+                <tr>
+                    <td>LoRA</td>
+                    <td>⚡ Few Params</td>
+                    <td>✅ High</td>
+                    <td>Efficient LLM adaptation</td>
+                </tr>
+                <tr>
+                    <td>QLoRA</td>
+                    <td>⚡ Quantized + LoRA</td>
+                    <td>✅✅ Very High</td>
+                    <td>Billion-parameter model fine-tuning</td>
+                </tr>
+                <tr>
+                    <td>Prompt-Tuning</td>
+                    <td>🟢 No Weight Updates</td>
+                    <td>✅✅✅ Extreme</td>
+                    <td>Quick task-specific adaptation</td>
+                </tr>
+                <tr>
+                    <td>Instruction-Tuning</td>
+                    <td>🔥 All Params</td>
+                    <td>❌ Medium</td>
+                    <td>AI assistants (e.g., Alpaca, FLAN-T5)</td>
+                </tr>
+            </table>
+
+            <h3>💡 Key Takeaways:</h3>
+            <ul>
+                <li><strong>Full Fine-Tuning</strong> offers maximum adaptability but at a high cost.</li>
+                <li><strong>PEFT methods</strong> like <strong>LoRA</strong> and <strong>QLoRA</strong> offer
+                    significant efficiency improvements, enabling fine-tuning of large models on limited hardware.</li>
+                <li><strong>Domain and Task-Specific Fine-Tuning</strong> help models excel in specialized areas.</li>
+                <li><strong>Instruction-Tuning</strong> improves a model’s reasoning and following user prompts.</li>
+            </ul>
+
+            <p>🚀 <strong>Selecting the right fine-tuning approach depends on the use case, available resources, and
+                    desired model behavior.</strong></p>
+        </div>
+    </div><br>
+    </div>
+    <div class="container">
         <h1 style="color: #333;">Quantization in Large Language Models (LLMs)</h1>
 
         <div class="section">
@@ -196,586 +361,885 @@
                 </div>
             </div>
         </div>
-    </div>
-    <br>
 
-    <div class="container">
-        <div class="quantization-guide">
-            <!-- Number Storage Section -->
-            <div class="number-storage">
-                <h2>How Numbers Are Stored</h2>
-                <div class="container">
-                    <!-- FP32 Format -->
-                    <div class="format-section fp32">
-                        <h3>FP32 (IEEE 754 Standard)</h3>
+        <div class="container">
+            <div class="quantization-guide">
+                <!-- Number Storage Section -->
+                <div class="number-storage">
+                    <h2>How Numbers Are Stored</h2>
+                    <div class="container">
+                        <!-- FP32 Format -->
+                        <div class="format-section fp32">
+                            <h3>FP32 (IEEE 754 Standard)</h3>
 
-                        <div class="bit-layout">
-                            <div class="bit-segment sign">Sign (1 bit)</div>
-                            <div class="bit-segment exponent">Exponent (8 bits)</div>
-                            <div class="bit-segment mantissa">Mantissa (23 bits)</div>
-                        </div>
+                            <div class="bit-layout">
+                                <div class="bit-segment sign">Sign (1 bit)</div>
+                                <div class="bit-segment exponent">Exponent (8 bits)</div>
+                                <div class="bit-segment mantissa">Mantissa (23 bits)</div>
+                            </div>
 
-                        <div class="components">
-                            <h4>Components Explained</h4>
-                            <ul>
-                                <li><strong>Sign Bit (S):</strong> 0 = Positive, 1 = Negative</li>
-                                <li><strong>Exponent (E):</strong> Stored with bias=127 (Actual exponent = E - 127)</li>
-                                <li><strong>Mantissa (M):</strong> Implicit leading 1 (1.M format)</li>
-                            </ul>
-                        </div>
+                            <div class="components">
+                                <h4>Components Explained</h4>
+                                <ul>
+                                    <li><strong>Sign Bit (S):</strong> 0 = Positive, 1 = Negative</li>
+                                    <li><strong>Exponent (E):</strong> Stored with bias=127 (Actual exponent = E - 127)
+                                    </li>
+                                    <li><strong>Mantissa (M):</strong> Implicit leading 1 (1.M format)</li>
+                                </ul>
+                            </div>
 
-                        <div class="calculation">
-                            <h4>FP32 Value Formula</h4>
-                            <div class="formula">
-                                Value = (-1)<sup>S</sup> × 1.M × 2<sup>(E - 127)</sup>
+                            <div class="calculation">
+                                <h4>FP32 Value Formula</h4>
+                                <div class="formula">
+                                    Value = (-1)<sup>S</sup> × 1.M × 2<sup>(E - 127)</sup>
+                                </div>
+                            </div>
+
+                            <div class="example">
+                                <h4>Example: -6.75 in FP32</h4>
+                                <table class="representation-table">
+                                    <tr>
+                                        <th>Component</th>
+                                        <th>Value</th>
+                                        <th>Bits</th>
+                                    </tr>
+                                    <tr>
+                                        <td>Sign (S)</td>
+                                        <td>1</td>
+                                        <td>1</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Exponent (E)</td>
+                                        <td>129</td>
+                                        <td>10000001</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Mantissa (M)</td>
+                                        <td>10110000000000000000000</td>
+                                        <td>23 bits</td>
+                                    </tr>
+                                </table>
                             </div>
                         </div>
 
-                        <div class="example">
-                            <h4>Example: -6.75 in FP32</h4>
-                            <table class="representation-table">
+                        <!-- FP16 Format -->
+                        <div class="format-section fp16">
+                            <h3>FP16 (Half Precision)</h3>
+
+                            <div class="bit-layout">
+                                <div class="bit-segment sign">Sign (1 bit)</div>
+                                <div class="bit-segment exponent">Exponent (5 bits)</div>
+                                <div class="bit-segment mantissa">Mantissa (10 bits)</div>
+                            </div>
+
+                            <div class="specs">
+                                <h4>Key Specifications</h4>
+                                <table class="spec-table">
+                                    <tr>
+                                        <th>Feature</th>
+                                        <th>Value</th>
+                                    </tr>
+                                    <tr>
+                                        <td>Exponent Range</td>
+                                        <td>-14 to +15</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Largest Positive Value</td>
+                                        <td>~65504</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Precision</td>
+                                        <td>~3 decimal digits</td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+
+
+                        <!-- Special Values Section -->
+                        <div class="special-values">
+                            <h3>Special Values</h3>
+                            <table class="special-values-table">
                                 <tr>
-                                    <th>Component</th>
-                                    <th>Value</th>
-                                    <th>Bits</th>
+                                    <th>Exponent</th>
+                                    <th>Mantissa</th>
+                                    <th>Representation</th>
                                 </tr>
                                 <tr>
-                                    <td>Sign (S)</td>
-                                    <td>1</td>
-                                    <td>1</td>
+                                    <td>All 0s</td>
+                                    <td>All 0s</td>
+                                    <td>Zero</td>
                                 </tr>
                                 <tr>
-                                    <td>Exponent (E)</td>
-                                    <td>129</td>
-                                    <td>10000001</td>
+                                    <td>All 0s</td>
+                                    <td>Non-zero</td>
+                                    <td>Denormalized</td>
                                 </tr>
                                 <tr>
-                                    <td>Mantissa (M)</td>
-                                    <td>10110000000000000000000</td>
-                                    <td>23 bits</td>
+                                    <td>All 1s</td>
+                                    <td>All 0s</td>
+                                    <td>Infinity</td>
+                                </tr>
+                                <tr>
+                                    <td>All 1s</td>
+                                    <td>Non-zero</td>
+                                    <td>NaN</td>
                                 </tr>
                             </table>
                         </div>
                     </div>
+                </div>
+                <br>
+                <div class="container">
+                    <div class="fp16-storage">
+                        <h3>How Numbers Are Stored in FP16 (Half Precision - IEEE 754 Standard)</h3>
 
-                    <!-- FP16 Format -->
-                    <div class="format-section fp16">
-                        <h3>FP16 (Half Precision)</h3>
-
-                        <div class="bit-layout">
-                            <div class="bit-segment sign">Sign (1 bit)</div>
-                            <div class="bit-segment exponent">Exponent (5 bits)</div>
-                            <div class="bit-segment mantissa">Mantissa (10 bits)</div>
+                        <div class="description">
+                            <p><strong>FP16</strong> (16-bit floating-point) is a lower-precision format than
+                                <strong>FP32</strong>,
+                                using only 16 bits to represent a real number. It is widely used in deep learning for
+                                faster
+                                computations and reduced memory usage, especially during training and inference.
+                            </p>
                         </div>
 
-                        <div class="specs">
-                            <h4>Key Specifications</h4>
+                        <div class="bit-layout">
+                            <h4>1. FP16 Bit Layout:</h4>
+                            <div class="bit-box">
+                                <span class="sign-bit">Sign (1 bit)</span> |
+                                <span class="exponent-bits">Exponent (5 bits)</span> |
+                                <span class="mantissa-bits">Mantissa (10 bits)</span>
+                            </div>
+                            <ul class="bit-details">
+                                <li><strong>Total Bits:</strong> 16</li>
+                                <li><strong>Sign Bit (S):</strong> 1 bit</li>
+                                <li><strong>Exponent (E):</strong> 5 bits (Bias = 15)</li>
+                                <li><strong>Mantissa (M):</strong> 10 bits</li>
+                            </ul>
+                        </div>
+
+                        <div class="formula-section">
+                            <h4>2. FP16 Formula:</h4>
+                            <div class="formula">
+                                Value = (-1)<sup>S</sup> × 1.M × 2<sup>(E - 15)</sup>
+                            </div>
+                            <ul class="variables">
+                                <li><em>S</em> → Sign bit</li>
+                                <li><em>E</em> → Exponent (with a bias of <strong>15</strong>)</li>
+                                <li><em>M</em> → Mantissa (with an implicit leading <strong>1</strong> for normalized
+                                    numbers)
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="range-precision">
+                            <h4>3. FP16 Range and Precision:</h4>
                             <table class="spec-table">
                                 <tr>
-                                    <th>Feature</th>
-                                    <th>Value</th>
+                                    <th>Aspect</th>
+                                    <th>FP16</th>
                                 </tr>
                                 <tr>
                                     <td>Exponent Range</td>
                                     <td>-14 to +15</td>
                                 </tr>
                                 <tr>
-                                    <td>Largest Positive Value</td>
-                                    <td>~65504</td>
+                                    <td>Smallest Positive</td>
+                                    <td>≈6.1×10<sup>-5</sup></td>
+                                </tr>
+                                <tr>
+                                    <td>Largest Positive</td>
+                                    <td>≈65504</td>
                                 </tr>
                                 <tr>
                                     <td>Precision</td>
-                                    <td>~3 decimal digits</td>
+                                    <td>≈3 decimal digits</td>
+                                </tr>
+                            </table>
+                            <p class="note">FP16 is less precise than FP32 and prone to underflow/overflow but offers
+                                significant
+                                speed and memory benefits.</p>
+                        </div>
+
+                        <div class="example-section">
+                            <h4>4. Example: Representing -6.75 in FP16</h4>
+                            <div class="step">
+                                <h4>Step 1: Convert to Binary</h4>
+                                <p>6.75 in decimal → 110.11 in binary</p>
+                            </div>
+
+                            <div class="step">
+                                <h4>Step 2: Normalize</h4>
+                                <div class="formula">
+                                    110.11 = 1.1011 × 2<sup>2</sup>
+                                </div>
+                            </div>
+
+                            <div class="step">
+                                <h4>Step 3: Assemble FP16 Representation</h4>
+                                <table class="representation-table">
+                                    <tr>
+                                        <th>Component</th>
+                                        <th>Value</th>
+                                        <th>Bits</th>
+                                    </tr>
+                                    <tr>
+                                        <td>Sign (S)</td>
+                                        <td>1</td>
+                                        <td>1</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Exponent (E)</td>
+                                        <td>17</td>
+                                        <td>10001</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Mantissa (M)</td>
+                                        <td>1011000000</td>
+                                        <td>10 bits</td>
+                                    </tr>
+                                </table>
+                            </div>
+
+                            <div class="final-binary">
+                                <p>Final FP16 binary:</p>
+                                <code>1 | 10001 | 1011000000</code>
+                            </div>
+                        </div>
+
+                        <div class="special-values">
+                            <h4>5. Special Values in FP16:</h4>
+                            <table class="special-table">
+                                <tr>
+                                    <th>Exponent (E)</th>
+                                    <th>Mantissa (M)</th>
+                                    <th>Representation</th>
+                                </tr>
+                                <tr>
+                                    <td><code>00000</code></td>
+                                    <td><code>0000000000</code></td>
+                                    <td>0 (±0)</td>
+                                </tr>
+                                <tr>
+                                    <td><code>00000</code></td>
+                                    <td>Non-zero</td>
+                                    <td>Denormalized numbers</td>
+                                </tr>
+                                <tr>
+                                    <td><code>11111</code></td>
+                                    <td><code>0000000000</code></td>
+                                    <td>Infinity (±∞)</td>
+                                </tr>
+                                <tr>
+                                    <td><code>11111</code></td>
+                                    <td>Non-zero</td>
+                                    <td>NaN (Not a Number)</td>
                                 </tr>
                             </table>
                         </div>
-                    </div>
-                
 
-                <!-- Special Values Section -->
-                <div class="special-values">
-                    <h3>Special Values</h3>
-                    <table class="special-values-table">
-                        <tr>
-                            <th>Exponent</th>
-                            <th>Mantissa</th>
-                            <th>Representation</th>
-                        </tr>
-                        <tr>
-                            <td>All 0s</td>
-                            <td>All 0s</td>
-                            <td>Zero</td>
-                        </tr>
-                        <tr>
-                            <td>All 0s</td>
-                            <td>Non-zero</td>
-                            <td>Denormalized</td>
-                        </tr>
-                        <tr>
-                            <td>All 1s</td>
-                            <td>All 0s</td>
-                            <td>Infinity</td>
-                        </tr>
-                        <tr>
-                            <td>All 1s</td>
-                            <td>Non-zero</td>
-                            <td>NaN</td>
-                        </tr>
-                    </table>
-                </div>
-            </div>
-        </div>
-        <br>
-        <div class="container">
-            <div class="fp16-storage">
-                <h3>How Numbers Are Stored in FP16 (Half Precision - IEEE 754 Standard)</h3>
-
-                <div class="description">
-                    <p><strong>FP16</strong> (16-bit floating-point) is a lower-precision format than
-                        <strong>FP32</strong>,
-                        using only 16 bits to represent a real number. It is widely used in deep learning for faster
-                        computations and reduced memory usage, especially during training and inference.</p>
-                </div>
-
-                <div class="bit-layout">
-                    <h4>1. FP16 Bit Layout:</h4>
-                    <div class="bit-box">
-                        <span class="sign-bit">Sign (1 bit)</span> |
-                        <span class="exponent-bits">Exponent (5 bits)</span> |
-                        <span class="mantissa-bits">Mantissa (10 bits)</span>
-                    </div>
-                    <ul class="bit-details">
-                        <li><strong>Total Bits:</strong> 16</li>
-                        <li><strong>Sign Bit (S):</strong> 1 bit</li>
-                        <li><strong>Exponent (E):</strong> 5 bits (Bias = 15)</li>
-                        <li><strong>Mantissa (M):</strong> 10 bits</li>
-                    </ul>
-                </div>
-
-                <div class="formula-section">
-                    <h4>2. FP16 Formula:</h4>
-                    <div class="formula">
-                        Value = (-1)<sup>S</sup> × 1.M × 2<sup>(E - 15)</sup>
-                    </div>
-                    <ul class="variables">
-                        <li><em>S</em> → Sign bit</li>
-                        <li><em>E</em> → Exponent (with a bias of <strong>15</strong>)</li>
-                        <li><em>M</em> → Mantissa (with an implicit leading <strong>1</strong> for normalized numbers)
-                        </li>
-                    </ul>
-                </div>
-
-                <div class="range-precision">
-                    <h4>3. FP16 Range and Precision:</h4>
-                    <table class="spec-table">
-                        <tr>
-                            <th>Aspect</th>
-                            <th>FP16</th>
-                        </tr>
-                        <tr>
-                            <td>Exponent Range</td>
-                            <td>-14 to +15</td>
-                        </tr>
-                        <tr>
-                            <td>Smallest Positive</td>
-                            <td>≈6.1×10<sup>-5</sup></td>
-                        </tr>
-                        <tr>
-                            <td>Largest Positive</td>
-                            <td>≈65504</td>
-                        </tr>
-                        <tr>
-                            <td>Precision</td>
-                            <td>≈3 decimal digits</td>
-                        </tr>
-                    </table>
-                    <p class="note">FP16 is less precise than FP32 and prone to underflow/overflow but offers
-                        significant
-                        speed and memory benefits.</p>
-                </div>
-
-                <div class="example-section">
-                    <h4>4. Example: Representing -6.75 in FP16</h4>
-                    <div class="step">
-                        <h4>Step 1: Convert to Binary</h4>
-                        <p>6.75 in decimal → 110.11 in binary</p>
-                    </div>
-
-                    <div class="step">
-                        <h4>Step 2: Normalize</h4>
-                        <div class="formula">
-                            110.11 = 1.1011 × 2<sup>2</sup>
+                        <div class="use-cases">
+                            <h4>6. Use Cases in Deep Learning:</h4>
+                            <ul class="case-list">
+                                <li><strong>Mixed Precision Training:</strong> FP16 with FP32 gradients for faster
+                                    training</li>
+                                <li><strong>Reduced Memory Footprint:</strong> Enables larger batch sizes</li>
+                                <li><strong>Tensor Cores:</strong> Optimized for NVIDIA GPUs (Volta+)</li>
+                            </ul>
                         </div>
                     </div>
+                </div><br>
+                <div class="container">
+                    <div class="quantization-methods">
+                        <div class="quantization-methods">
+                            <h2>How to Perform Quantization?</h2>
 
-                    <div class="step">
-                        <h4>Step 3: Assemble FP16 Representation</h4>
-                        <table class="representation-table">
-                            <tr>
-                                <th>Component</th>
-                                <th>Value</th>
-                                <th>Bits</th>
-                            </tr>
-                            <tr>
-                                <td>Sign (S)</td>
-                                <td>1</td>
-                                <td>1</td>
-                            </tr>
-                            <tr>
-                                <td>Exponent (E)</td>
-                                <td>17</td>
-                                <td>10001</td>
-                            </tr>
-                            <tr>
-                                <td>Mantissa (M)</td>
-                                <td>1011000000</td>
-                                <td>10 bits</td>
-                            </tr>
-                        </table>
-                    </div>
+                            <div class="methods-container">
+                                <div class="method symmetric">
+                                    <h3>1. Symmetric Quantization</h3>
+                                    <ul>
+                                        <li>Uses equal positive/negative ranges</li>
+                                        <li>Zero-point fixed at 0</li>
+                                        <li>Formula:
+                                            <div class="formula">q = round(r/s)</div>
+                                        </li>
+                                    </ul>
+                                </div>
 
-                    <div class="final-binary">
-                        <p>Final FP16 binary:</p>
-                        <code>1 | 10001 | 1011000000</code>
-                    </div>
-                </div>
+                                <div class="method-asymmetric">
+                                    <h3>2. Asymmetric Quantization</h3>
+                                    <ul>
+                                        <li>Uses flexible zero-point</li>
+                                        <li>Formula:
+                                            <div class="formula">q = round(r/s) + z</div>
+                                        </li>
+                                        <li>Better for non-zero-centered data</li>
+                                    </ul>
+                                </div>
+                            </div>
 
-                <div class="special-values">
-                    <h4>5. Special Values in FP16:</h4>
-                    <table class="special-table">
-                        <tr>
-                            <th>Exponent (E)</th>
-                            <th>Mantissa (M)</th>
-                            <th>Representation</th>
-                        </tr>
-                        <tr>
-                            <td><code>00000</code></td>
-                            <td><code>0000000000</code></td>
-                            <td>0 (±0)</td>
-                        </tr>
-                        <tr>
-                            <td><code>00000</code></td>
-                            <td>Non-zero</td>
-                            <td>Denormalized numbers</td>
-                        </tr>
-                        <tr>
-                            <td><code>11111</code></td>
-                            <td><code>0000000000</code></td>
-                            <td>Infinity (±∞)</td>
-                        </tr>
-                        <tr>
-                            <td><code>11111</code></td>
-                            <td>Non-zero</td>
-                            <td>NaN (Not a Number)</td>
-                        </tr>
-                    </table>
-                </div>
+                            <div class="batch-normalization-note">
+                                <div class="connection"></div>
+                                <div class="batch-norm-label">(Batch Normalization)</div>
+                                <p>Symmetric unsigned int8 quantization</p>
+                            </div>
+                        </div>
+                        <h2>How to Perform Quantization?</h2>
 
-                <div class="use-cases">
-                    <h4>6. Use Cases in Deep Learning:</h4>
-                    <ul class="case-list">
-                        <li><strong>Mixed Precision Training:</strong> FP16 with FP32 gradients for faster training</li>
-                        <li><strong>Reduced Memory Footprint:</strong> Enables larger batch sizes</li>
-                        <li><strong>Tensor Cores:</strong> Optimized for NVIDIA GPUs (Volta+)</li>
-                    </ul>
-                </div>
-            </div>
-        </div><br>
-        <div class="container">
-            <div class="quantization-methods">
-                <div class="quantization-methods">
-                    <h2>How to Perform Quantization?</h2>
 
-                    <div class="methods-container">
+                        <p>Quantization maps high-precision floating-point numbers (e.g., FP32) to lower-precision
+                            integers
+                            (e.g.,
+                            INT8) to optimize memory usage and computational efficiency. Two primary methods are
+                            <strong>Symmetric</strong> and <strong>Asymmetric</strong> quantization.
+                        </p>
+
                         <div class="method symmetric">
                             <h3>1. Symmetric Quantization</h3>
-                            <ul>
-                                <li>Uses equal positive/negative ranges</li>
-                                <li>Zero-point fixed at 0</li>
-                                <li>Formula:
-                                    <div class="formula">q = round(r/s)</div>
-                                </li>
-                            </ul>
+
+                            <div class="formula">
+                                <code>q = round(r/s)</code>
+                                <div class="variables">
+                                    <p>Where:</p>
+                                    <ul>
+                                        <li><em>q</em> = Quantized integer value</li>
+                                        <li><em>r</em> = Original floating-point value</li>
+                                        <li><em>s</em> = Scale factor:
+                                            <code>s = max(|r<sub>min</sub>|, |r<sub>max</sub>|) / Q<sub>max</sub></code>
+                                        </li>
+                                        <li><em>Q<sub>max</sub></em> = Maximum quantized value (e.g., 127 for INT8)</li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="key-points">
+                                <h4>Key Characteristics:</h4>
+                                <ul>
+                                    <li>No zero-point offset</li>
+                                    <li>Ideal for zero-centered data (weights)</li>
+                                    <li>Faster computation</li>
+                                    <li>Simpler implementation</li>
+                                </ul>
+                            </div>
+
+                            <div class="example">
+                                <h4>Example Calculation:</h4>
+                                <p>Input range: [−5.0, 5.0]</p>
+                                <p>Scale factor: <code>s = 5.0 / 127 ≈ 0.0394</code></p>
+                                <p>Quantize <em>r</em> = −3.2:</p>
+                                <code>q = round(−3.2 / 0.0394) = −81</code>
+                            </div>
                         </div>
 
-                        <div class="method-asymmetric">
+                        <div class="method asymmetric">
                             <h3>2. Asymmetric Quantization</h3>
-                            <ul>
-                                <li>Uses flexible zero-point</li>
-                                <li>Formula:
-                                    <div class="formula">q = round(r/s) + z</div>
-                                </li>
-                                <li>Better for non-zero-centered data</li>
-                            </ul>
-                        </div>
-                    </div>
 
-                    <div class="batch-normalization-note">
-                        <div class="connection"></div>
-                        <div class="batch-norm-label">(Batch Normalization)</div>
-                        <p>Symmetric unsigned int8 quantization</p>
+                            <div class="formula">
+                                <code>q = round(r/s) + z</code>
+                                <div class="variables">
+                                    <p>Where:</p>
+                                    <ul>
+                                        <li><em>z</em> = Zero-point:
+                                            <code>z = round(−r<sub>min</sub>/s)</code>
+                                        </li>
+                                        <li><em>s</em> = Scale factor:
+                                            <code>s = (r<sub>max</sub> − r<sub>min</sub>) / (Q<sub>max</sub> − Q<sub>min</sub>)</code>
+                                        </li>
+                                        <li>Quantized range: [Q<sub>min</sub>, Q<sub>max</sub>] (e.g., [0, 255] for
+                                            UINT8)</li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="key-points">
+                                <h4>Key Characteristics:</h4>
+                                <ul>
+                                    <li>Includes zero-point adjustment</li>
+                                    <li>Handles non-symmetric distributions (activations)</li>
+                                    <li>Better for ReLU outputs</li>
+                                    <li>More computationally intensive</li>
+                                </ul>
+                            </div>
+
+                            <div class="example">
+                                <h4>Example Calculation:</h4>
+                                <p>Input range: [2.0, 10.0] → UINT8 [0, 255]</p>
+                                <p>Scale factor: <code>s = (10.0 − 2.0)/255 ≈ 0.0314</code></p>
+                                <p>Zero-point: <code>z = round(−2.0/0.0314) = −64 → clipped to 0</code></p>
+                                <p>Quantize <em>r</em> = 5.0:</p>
+                                <code>q = round(5.0/0.0314) + 0 = 159</code>
+                            </div>
+                        </div>
+
+                        <div class="comparison">
+                            <h3>3. Symmetric vs. Asymmetric Quantization</h3>
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Aspect</th>
+                                        <th>Symmetric</th>
+                                        <th>Asymmetric</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Zero-Point</td>
+                                        <td>Always 0</td>
+                                        <td>Non-zero</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Data Alignment</td>
+                                        <td>Zero-centered</td>
+                                        <td>Arbitrary range</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Typical Use</td>
+                                        <td>Weights</td>
+                                        <td>Activations</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Complexity</td>
+                                        <td>Low</td>
+                                        <td>Medium</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Accuracy</td>
+                                        <td>Requires centered data</td>
+                                        <td>Handles distributions</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
-                <h2>How to Perform Quantization?</h2>
+            </div>
+            <div class="container">
+                <div class="quantization-guide">
+                    <!-- PTQ Section -->
+                    <div class="ptq-section">
+                        <h2>🚀 Post-Training Quantization (PTQ) — Deep Dive</h2>
+
+                        <div class="workflow">
+                            <div class="boxed-flow">
+                                [Pre-Trained Model] → [Calibration] → [Quantized Model] → [Use Cases]
+                            </div>
+                        </div>
+
+                        <!-- Pre-Trained Model -->
+                        <div class="stage">
+                            <h3>1️⃣ Pre-Trained Model 🎯</h3>
+                            <p><strong>What Is It?</strong><br>
+                                A fully trained model using FP32 precision.</p>
+
+                            <div class="key-points">
+                                <h4>Key Points:</h4>
+                                <ul>
+                                    <li>Standard training workflows</li>
+                                    <li>Supports CV/NLP/any domain</li>
+                                    <li>Maximum pre-quantization accuracy</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <!-- Calibration -->
+                        <div class="stage">
+                            <h3>2️⃣ Calibration ⚖️</h3>
+                            <div class="process">
+                                <h4>Process:</h4>
+                                <ol>
+                                    <li>Select representative dataset (100-1000 samples)</li>
+                                    <li>Run forward pass without weight updates</li>
+                                    <li>Calculate scale (s) and zero-point (z)</li>
+                                </ol>
+                            </div>
+
+                            <div class="calibration-methods">
+                                <h4>Calibration Methods</h4>
+                                <table>
+                                    <tr>
+                                        <th>Method</th>
+                                        <th>Description</th>
+                                        <th>Use Case</th>
+                                    </tr>
+                                    <tr>
+                                        <td>Min-Max Scaling</td>
+                                        <td>Direct mapping of min/max values</td>
+                                        <td>Simple models</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Percentile Clipping</td>
+                                        <td>Ignores extreme outliers</td>
+                                        <td>Data with outliers</td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+
+                        <!-- Quantized Model -->
+                        <div class="stage">
+                            <h3>3️⃣ Quantized Model ⚡</h3>
+                            <div class="schemes">
+                                <div class="symmetric">
+                                    <h4>Symmetric Quantization</h4>
+                                    <code>q = round(r/s)</code>
+                                    <p>Zero-point = 0 (weights)</p>
+                                </div>
+                                <div class="asymmetric">
+                                    <h4>Asymmetric Quantization</h4>
+                                    <code>q = round(r/s) + z</code>
+                                    <p>Non-zero zero-point (activations)</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- QAT Section -->
+                    <div class="qat-section">
+                        <h2>🚀 Quantization Aware Training (QAT)</h2>
+
+                        <div class="workflow">
+                            <div class="boxed-flow">
+                                [Pre-Trained Model] → [Fake Quantization] → [Fine-Tuning] → [Quantized Model]
+                            </div>
+                        </div>
+
+                        <div class="components">
+                            <h3>Key Components</h3>
+                            <table>
+                                <tr>
+                                    <th>Component</th>
+                                    <th>Description</th>
+                                </tr>
+                                <tr>
+                                    <td>Fake Quantization</td>
+                                    <td>Simulates quantization during forward pass</td>
+                                </tr>
+                                <tr>
+                                    <td>Learnable Weights</td>
+                                    <td>Adapts to quantization noise</td>
+                                </tr>
+                                <tr>
+                                    <td>Gradient Handling</td>
+                                    <td>Uses Straight-Through Estimator (STE) to backpropagate through quantized nodes
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Fine-Tuning</td>
+                                    <td>Typically done on a pre-trained model with lower learning rates</td>
+                                </tr>
+                            </table>
+                            <h3>Advantages of QAT Over PTQ:</h3>
+                            <ul>
+                                <li><strong>Higher Accuracy:</strong> Especially for sensitive models (e.g.,
+                                    Transformers, Object Detectors)</li>
+                                <li><strong>Robustness to Quantization Noise:</strong> Model learns to compensate during
+                                    training</li>
+                                <li><strong>Better for Dynamic Ranges:</strong> Handles outliers and activation shifts
+                                    more effectively</li>
+                            </ul>
+
+                            <h3>QAT Workflow in Practice:</h3>
+                            <ol>
+                                <li><strong>Start with Pre-trained FP32 Model</strong></li>
+                                <li><strong>Insert Fake Quantization Nodes</strong> (framework-specific)</li>
+                                <li><strong>Fine-tune Model</strong> (small learning rate)</li>
+                                <li><strong>Convert to INT8</strong> for efficient deployment</li>
+                            </ol>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+    <div class="container">
+        <div>
+            <h2>🔗 LoRA (Low-Rank Adaptation)</h2>
+            <p><strong>LoRA</strong> is a parameter-efficient fine-tuning (PEFT) technique designed to adapt large
+                pre-trained language models (LLMs) without the need to update all model parameters. It introduces
+                <strong>low-rank matrices</strong> into specific layers (usually attention layers) during training,
+                significantly reducing computational overhead and memory usage.
+            </p>
+
+            <h3>🛠 How LoRA Works:</h3>
+            <ul>
+                <li><strong>Decomposition:</strong> Instead of fine-tuning full weight matrices (<strong>W</strong>),
+                    LoRA decomposes them into two smaller matrices (<strong>A</strong> and <strong>B</strong>) with a
+                    much lower rank (<strong>r</strong>):<br>
+                    <code>W' = W + ΔW = W + A * B</code><br>
+                    where A ∈ ℝ<sup>(d × r)</sup> and B ∈ ℝ<sup>(r × k)</sup>, with r ≪ min(d, k).
+                </li>
+                <li><strong>Frozen Base Model:</strong> The original model weights (<strong>W</strong>) remain frozen.
+                    Only the low-rank matrices (<strong>A</strong> and <strong>B</strong>) are trained.</li>
+                <li><strong>Benefits:</strong>
+                    <ul>
+                        <li>Drastically reduces trainable parameters.</li>
+                        <li>Lowers GPU memory usage.</li>
+                        <li>Enables fine-tuning large models on consumer hardware.</li>
+                    </ul>
+                </li>
+            </ul>
+
+            <h2>⚡ QLoRA (Quantized LoRA)</h2>
+            <p><strong>QLoRA</strong> extends LoRA by introducing <strong>quantization</strong> during fine-tuning,
+                making it even more memory-efficient and suitable for extremely large models (e.g., 65B+ parameters) on
+                limited hardware (single GPU setups).</p>
+
+            <h3>🛠 Key Components of QLoRA:</h3>
+            <ul>
+                <li><strong>4-bit Quantization:</strong> Base model weights are quantized to <strong>4-bit
+                        precision</strong> (e.g., using NF4 quantization), reducing memory usage while preserving
+                    performance.</li>
+                <li><strong>LoRA Adapters on Quantized Models:</strong> Low-rank matrices (<strong>A</strong>,
+                    <strong>B</strong>) are introduced into the attention layers of the <strong>4-bit quantized
+                        model</strong>, with adapters trained in higher precision (e.g., FP16/FP32).
+                </li>
+                <li><strong>Double Quantization (Optional):</strong> Further compresses quantization statistics to
+                    reduce memory overhead.</li>
+                <li><strong>Paged Optimizers:</strong> Optimizers like AdamW are adapted to handle quantized tensors
+                    efficiently.</li>
+            </ul>
+
+            <h3>⚖️ LoRA vs. QLoRA:</h3>
+            <table border="1" cellpadding="5">
+                <tr>
+                    <th>Aspect</th>
+                    <th>LoRA</th>
+                    <th>QLoRA</th>
+                </tr>
+                <tr>
+                    <td><strong>Base Model Precision</strong></td>
+                    <td>FP16/FP32</td>
+                    <td>4-bit Quantized (NF4)</td>
+                </tr>
+                <tr>
+                    <td><strong>Trainable Params</strong></td>
+                    <td>Low-rank matrices (A, B)</td>
+                    <td>Low-rank matrices (A, B)</td>
+                </tr>
+                <tr>
+                    <td><strong>Memory Usage</strong></td>
+                    <td>Moderate reduction</td>
+                    <td>Significant reduction</td>
+                </tr>
+                <tr>
+                    <td><strong>Hardware Needs</strong></td>
+                    <td>Multi-GPU setups for large LLMs</td>
+                    <td>Single GPU fine-tuning (e.g., 48GB VRAM)</td>
+                </tr>
+                <tr>
+                    <td><strong>Performance</strong></td>
+                    <td>High fidelity</td>
+                    <td>Near-LoRA performance with higher efficiency</td>
+                </tr>
+            </table>
+
+            <h3>🚀 Use Cases for LoRA/QLoRA:</h3>
+            <ul>
+                <li>Fine-tuning <strong>LLMs</strong> (e.g., LLaMA, GPT) for downstream tasks.</li>
+                <li>Domain-specific adaptations (e.g., medical, legal corpora).</li>
+                <li>Resource-constrained environments (e.g., consumer GPUs).</li>
+                <li>Rapid prototyping and experimentation on large-scale models.</li>
+            </ul>
+        </div>
 
 
-                <p>Quantization maps high-precision floating-point numbers (e.g., FP32) to lower-precision integers
-                    (e.g.,
-                    INT8) to optimize memory usage and computational efficiency. Two primary methods are
-                    <strong>Symmetric</strong> and <strong>Asymmetric</strong> quantization.
+        <div class="container">
+            <div>
+                <h2>📐 Mathematical Explanation of LoRA (Low-Rank Adaptation)</h2>
+                <p>The core idea of LoRA is to approximate a <strong>full-rank weight update</strong> (ΔW) using a
+                    <strong>low-rank decomposition</strong>.
                 </p>
 
-                <div class="method symmetric">
-                    <h3>1. Symmetric Quantization</h3>
+                <h3>🔸 1. Problem Setup</h3>
+                <p>Suppose we have a pre-trained weight matrix W₀ ∈ ℝ<sup>d × k</sup> used in a <strong>linear
+                        layer</strong>:</p>
+                <pre>y = W₀ x</pre>
+                <p>During standard fine-tuning, W₀ is updated to W = W₀ + ΔW. LoRA approximates ΔW as:</p>
+                <pre>ΔW ≈ B A</pre>
+                <ul>
+                    <li><strong>A</strong> ∈ ℝ<sup>r × k</sup></li>
+                    <li><strong>B</strong> ∈ ℝ<sup>d × r</sup></li>
+                    <li><strong>r</strong> ≪ min(d, k) is the <em>rank</em></li>
+                </ul>
 
-                    <div class="formula">
-                        <code>q = round(r/s)</code>
-                        <div class="variables">
-                            <p>Where:</p>
-                            <ul>
-                                <li><em>q</em> = Quantized integer value</li>
-                                <li><em>r</em> = Original floating-point value</li>
-                                <li><em>s</em> = Scale factor:
-                                    <code>s = max(|r<sub>min</sub>|, |r<sub>max</sub>|) / Q<sub>max</sub></code>
-                                </li>
-                                <li><em>Q<sub>max</sub></em> = Maximum quantized value (e.g., 127 for INT8)</li>
-                            </ul>
-                        </div>
-                    </div>
+                <h3>🔸 2. Example Walkthrough</h3>
+                <h4>Example Setup:</h4>
+                <p>Let’s consider:</p>
+                <ul>
+                    <li><strong>W₀</strong> ∈ ℝ<sup>4 × 4</sup>:</li>
+                </ul>
+                <pre>
+          W₀ = [[1, 2, 3, 4],
+                [2, 3, 4, 5],
+                [3, 4, 5, 6],
+                [4, 5, 6, 7]]
+            </pre>
+                <p>We aim to approximate ΔW with rank <strong>r = 2</strong>.</p>
 
-                    <div class="key-points">
-                        <h4>Key Characteristics:</h4>
-                        <ul>
-                            <li>No zero-point offset</li>
-                            <li>Ideal for zero-centered data (weights)</li>
-                            <li>Faster computation</li>
-                            <li>Simpler implementation</li>
-                        </ul>
-                    </div>
+                <h4>Step 1: Initialize Low-Rank Matrices</h4>
+                <p>Define matrices A and B:</p>
+                <pre>
+          A = [[1, 0, 1, 0],
+               [0, 1, 0, 1]]
+          
+          B = [[1, 0],
+               [0, 1],
+               [1, 0],
+               [0, 1]]
+            </pre>
 
-                    <div class="example">
-                        <h4>Example Calculation:</h4>
-                        <p>Input range: [−5.0, 5.0]</p>
-                        <p>Scale factor: <code>s = 5.0 / 127 ≈ 0.0394</code></p>
-                        <p>Quantize <em>r</em> = −3.2:</p>
-                        <code>q = round(−3.2 / 0.0394) = −81</code>
-                    </div>
-                </div>
+                <h4>Step 2: Compute Low-Rank Approximation</h4>
+                <p>Compute ΔW = B × A:</p>
+                <pre>
+          ΔW = [[1, 0, 1, 0],
+                [0, 1, 0, 1],
+                [1, 0, 1, 0],
+                [0, 1, 0, 1]]
+            </pre>
 
-                <div class="method asymmetric">
-                    <h3>2. Asymmetric Quantization</h3>
+                <h4>Step 3: Apply Weight Update</h4>
+                <p>Update the weight matrix:</p>
+                <pre>
+          W = W₀ + ΔW
+          
+          = [[2, 2, 4, 4],
+             [2, 4, 4, 6],
+             [4, 4, 6, 6],
+             [4, 6, 6, 8]]
+            </pre>
 
-                    <div class="formula">
-                        <code>q = round(r/s) + z</code>
-                        <div class="variables">
-                            <p>Where:</p>
-                            <ul>
-                                <li><em>z</em> = Zero-point:
-                                    <code>z = round(−r<sub>min</sub>/s)</code>
-                                </li>
-                                <li><em>s</em> = Scale factor:
-                                    <code>s = (r<sub>max</sub> − r<sub>min</sub>) / (Q<sub>max</sub> − Q<sub>min</sub>)</code>
-                                </li>
-                                <li>Quantized range: [Q<sub>min</sub>, Q<sub>max</sub>] (e.g., [0, 255] for UINT8)</li>
-                            </ul>
-                        </div>
-                    </div>
+                <h3>🔸 3. Parameter Efficiency</h3>
+                <ul>
+                    <li><strong>Full-Rank Update:</strong> 4 × 4 = 16 parameters.</li>
+                    <li><strong>LoRA Update:</strong> A (2 × 4) + B (4 × 2) = 8 + 8 = 16 parameters (in this toy
+                        example).
+                    </li>
+                </ul>
+                <p>In real scenarios (e.g., d = k = 1024, r = 8):</p>
+                <ul>
+                    <li><strong>Full-Rank:</strong> 1,048,576 parameters.</li>
+                    <li><strong>LoRA:</strong> 16,384 parameters (~98.4% reduction).</li>
+                </ul>
 
-                    <div class="key-points">
-                        <h4>Key Characteristics:</h4>
-                        <ul>
-                            <li>Includes zero-point adjustment</li>
-                            <li>Handles non-symmetric distributions (activations)</li>
-                            <li>Better for ReLU outputs</li>
-                            <li>More computationally intensive</li>
-                        </ul>
-                    </div>
-
-                    <div class="example">
-                        <h4>Example Calculation:</h4>
-                        <p>Input range: [2.0, 10.0] → UINT8 [0, 255]</p>
-                        <p>Scale factor: <code>s = (10.0 − 2.0)/255 ≈ 0.0314</code></p>
-                        <p>Zero-point: <code>z = round(−2.0/0.0314) = −64 → clipped to 0</code></p>
-                        <p>Quantize <em>r</em> = 5.0:</p>
-                        <code>q = round(5.0/0.0314) + 0 = 159</code>
-                    </div>
-                </div>
-
-                <div class="comparison">
-                    <h3>3. Symmetric vs. Asymmetric Quantization</h3>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Aspect</th>
-                                <th>Symmetric</th>
-                                <th>Asymmetric</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>Zero-Point</td>
-                                <td>Always 0</td>
-                                <td>Non-zero</td>
-                            </tr>
-                            <tr>
-                                <td>Data Alignment</td>
-                                <td>Zero-centered</td>
-                                <td>Arbitrary range</td>
-                            </tr>
-                            <tr>
-                                <td>Typical Use</td>
-                                <td>Weights</td>
-                                <td>Activations</td>
-                            </tr>
-                            <tr>
-                                <td>Complexity</td>
-                                <td>Low</td>
-                                <td>Medium</td>
-                            </tr>
-                            <tr>
-                                <td>Accuracy</td>
-                                <td>Requires centered data</td>
-                                <td>Handles distributions</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="container">
-        <div class="quantization-guide">
-            <!-- PTQ Section -->
-            <div class="ptq-section">
-                <h2>🚀 Post-Training Quantization (PTQ) — Deep Dive</h2>
-
-                <div class="workflow">
-                    <div class="boxed-flow">
-                        [Pre-Trained Model] → [Calibration] → [Quantized Model] → [Use Cases]
-                    </div>
-                </div>
-
-                <!-- Pre-Trained Model -->
-                <div class="stage">
-                    <h3>1️⃣ Pre-Trained Model 🎯</h3>
-                    <p><strong>What Is It?</strong><br>
-                        A fully trained model using FP32 precision.</p>
-
-                    <div class="key-points">
-                        <h4>Key Points:</h4>
-                        <ul>
-                            <li>Standard training workflows</li>
-                            <li>Supports CV/NLP/any domain</li>
-                            <li>Maximum pre-quantization accuracy</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <!-- Calibration -->
-                <div class="stage">
-                    <h3>2️⃣ Calibration ⚖️</h3>
-                    <div class="process">
-                        <h4>Process:</h4>
-                        <ol>
-                            <li>Select representative dataset (100-1000 samples)</li>
-                            <li>Run forward pass without weight updates</li>
-                            <li>Calculate scale (s) and zero-point (z)</li>
-                        </ol>
-                    </div>
-
-                    <div class="calibration-methods">
-                        <h4>Calibration Methods</h4>
-                        <table>
-                            <tr>
-                                <th>Method</th>
-                                <th>Description</th>
-                                <th>Use Case</th>
-                            </tr>
-                            <tr>
-                                <td>Min-Max Scaling</td>
-                                <td>Direct mapping of min/max values</td>
-                                <td>Simple models</td>
-                            </tr>
-                            <tr>
-                                <td>Percentile Clipping</td>
-                                <td>Ignores extreme outliers</td>
-                                <td>Data with outliers</td>
-                            </tr>
-                        </table>
-                    </div>
-                </div>
-
-                <!-- Quantized Model -->
-                <div class="stage">
-                    <h3>3️⃣ Quantized Model ⚡</h3>
-                    <div class="schemes">
-                        <div class="symmetric">
-                            <h4>Symmetric Quantization</h4>
-                            <code>q = round(r/s)</code>
-                            <p>Zero-point = 0 (weights)</p>
-                        </div>
-                        <div class="asymmetric">
-                            <h4>Asymmetric Quantization</h4>
-                            <code>q = round(r/s) + z</code>
-                            <p>Non-zero zero-point (activations)</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- QAT Section -->
-            <div class="qat-section">
-                <h2>🚀 Quantization Aware Training (QAT)</h2>
-
-                <div class="workflow">
-                    <div class="boxed-flow">
-                        [Pre-Trained Model] → [Fake Quantization] → [Fine-Tuning] → [Quantized Model]
-                    </div>
-                </div>
-
-                <div class="components">
-                    <h3>Key Components</h3>
-                    <table>
-                        <tr>
-                            <th>Component</th>
-                            <th>Description</th>
-                        </tr>
-                        <tr>
-                            <td>Fake Quantization</td>
-                            <td>Simulates quantization during forward pass</td>
-                        </tr>
-                        <tr>
-                            <td>Learnable Weights</td>
-                            <td>Adapts to quantization noise</td>
-                        </tr>
-                        <tr>
-                            <td>Gradient Handling</td>
-                            <td>Uses Straight-Through Estimator (STE) to backpropagate through quantized nodes</td>
-                        </tr>
-                        <tr>
-                            <td>Fine-Tuning</td>
-                            <td>Typically done on a pre-trained model with lower learning rates</td>
-                        </tr>
-                    </table>
-                    <h3>Advantages of QAT Over PTQ:</h3>
-                    <ul>
-                      <li><strong>Higher Accuracy:</strong> Especially for sensitive models (e.g., Transformers, Object Detectors)</li>
-                      <li><strong>Robustness to Quantization Noise:</strong> Model learns to compensate during training</li>
-                      <li><strong>Better for Dynamic Ranges:</strong> Handles outliers and activation shifts more effectively</li>
-                    </ul>
-                  
-                    <h3>QAT Workflow in Practice:</h3>
-                    <ol>
-                      <li><strong>Start with Pre-trained FP32 Model</strong></li>
-                      <li><strong>Insert Fake Quantization Nodes</strong> (framework-specific)</li>
-                      <li><strong>Fine-tune Model</strong> (small learning rate)</li>
-                      <li><strong>Convert to INT8</strong> for efficient deployment</li>
-                    </ol>
-                </div>
+                <h3>🔸 4. Why Does This Work?</h3>
+                <ul>
+                    <li>Weight updates often lie in a <strong>low-dimensional manifold</strong>.</li>
+                    <li>Low-rank decomposition <strong>regularizes</strong> the update and prevents overfitting.</li>
+                    <li>LoRA captures the <strong>essential transformations</strong> with fewer parameters.</li>
+                </ul>
             </div>
 
         </div>
-    </div>
+        <div class="container">
+            <div>
+                <h2>🧮 QLoRA (Quantized Low-Rank Adaptation) Explained</h2>
+                <p><strong>QLoRA</strong> combines <em>quantization</em> and <em>Low-Rank Adaptation (LoRA)</em> to
+                    fine-tune large models efficiently while using minimal GPU memory.</p>
+
+                <h3>🔸 1. Core Idea</h3>
+                <p>QLoRA enhances LoRA by applying <strong>quantization</strong> to the base model weights, reducing
+                    memory usage while preserving fine-tuning performance through low-rank updates.</p>
+
+                <ul>
+                    <li><strong>Quantization:</strong> Compresses pre-trained model weights (e.g., from FP16 to 4-bit or
+                        8-bit).</li>
+                    <li><strong>LoRA Layers:</strong> Add low-rank adapters (matrices A and B) to fine-tune the model.
+                    </li>
+                </ul>
+
+                <h3>🔸 2. Mathematical Explanation</h3>
+                <p>For a linear layer with weight matrix W₀ ∈ ℝ<sup>d × k</sup>:</p>
+                <pre>y = W₀ x</pre>
+
+                <h4>Step 1: Quantize W₀</h4>
+                <p>Quantize W₀ into Q(W₀) using 4-bit or 8-bit quantization:</p>
+                <pre>Q(W₀) ≈ round(W₀ / s) + z</pre>
+                <ul>
+                    <li><strong>s:</strong> scale factor</li>
+                    <li><strong>z:</strong> zero-point for asymmetric quantization</li>
+                </ul>
+
+                <h4>Step 2: Apply Low-Rank Adaptation (LoRA)</h4>
+                <p>Approximate the weight update ΔW as:</p>
+                <pre>ΔW ≈ B A</pre>
+                <ul>
+                    <li><strong>A</strong> ∈ ℝ<sup>r × k</sup></li>
+                    <li><strong>B</strong> ∈ ℝ<sup>d × r</sup></li>
+                    <li><strong>r</strong> ≪ min(d, k) is the low rank</li>
+                </ul>
+
+                <h4>Final Adapted Output:</h4>
+                <pre>y = Q(W₀) x + α (B A) x</pre>
+                <ul>
+                    <li><strong>α:</strong> LoRA scaling factor</li>
+                </ul>
+
+                <h3>🔸 3. Example Walkthrough</h3>
+
+                <h4>Example Setup:</h4>
+                <ul>
+                    <li><strong>W₀</strong> ∈ ℝ<sup>4 × 4</sup>:</li>
+                </ul>
+                <pre>
+          W₀ = [[1.1, 2.3, 3.5, 4.7],
+                [2.2, 3.3, 4.4, 5.5],
+                [3.3, 4.4, 5.5, 6.6],
+                [4.4, 5.5, 6.6, 7.7]]
+            </pre>
+
+                <h4>Step 1: Quantization (4-bit)</h4>
+                <p>Using min-max scaling, quantize W₀ to 4-bit:</p>
+                <pre>
+          Q(W₀) ≈ [[1, 2, 4, 5],
+                    [2, 3, 4, 6],
+                    [3, 4, 5, 7],
+                    [4, 5, 6, 7]]
+            </pre>
+
+                <h4>Step 2: Low-Rank Decomposition</h4>
+                <p>Choose rank r = 2, and define:</p>
+                <pre>
+          A = [[1, 0, 1, 0],
+               [0, 1, 0, 1]]
+          
+          B = [[1, 0],
+               [0, 1],
+               [1, 0],
+               [0, 1]]
+            </pre>
+
+                <p>Compute ΔW = B × A:</p>
+                <pre>
+          ΔW = [[1, 0, 1, 0],
+                [0, 1, 0, 1],
+                [1, 0, 1, 0],
+                [0, 1, 0, 1]]
+            </pre>
+
+                <h4>Step 3: Final Adapted Weights</h4>
+                <p>Apply the low-rank update with scaling factor α = 0.1:</p>
+                <pre>
+          W_final = Q(W₀) + α ΔW
+                  ≈ [[1.1, 2.0, 4.1, 5.0],
+                      [2.0, 3.1, 4.0, 6.1],
+                      [3.1, 4.0, 5.1, 7.0],
+                      [4.0, 5.1, 6.0, 7.1]]
+            </pre>
+
+                <h3>🔸 4. Benefits of QLoRA</h3>
+                <ul>
+                    <li>💾 <strong>Memory-Efficient:</strong> Quantizing the base model reduces GPU memory usage
+                        significantly.</li>
+                    <li>⚡ <strong>Compute-Efficient:</strong> Fine-tuning only low-rank matrices A and B.</li>
+                    <li>🎯 <strong>High Accuracy:</strong> Retains performance close to full-precision fine-tuning.</li>
+                    <li>🚀 <strong>Scalability:</strong> Enables fine-tuning large LLMs (e.g., 65B) on consumer
+                        hardware.</li>
+                </ul>
+            </div>
+
+        </div>
 </body>
 
 </html>

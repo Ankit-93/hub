@@ -17,178 +17,232 @@
         src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML">
         </script>
 
-    <style>
-        /* Global Styles */
-        body {
-            font-family: 'Courier New', monospace;
-            margin: 0;
-            padding: 0;
-            color: #ffffff;
-            background: url('../assets/images/ml-background.webp') no-repeat center center fixed;
-            background-size: cover;
-            position: relative;
-        }
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Era of GEN AI</title>
 
-        /* Dark Overlay */
-        body::before {
-            content: "";
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            z-index: -1;
-        }
+        <!-- Google Fonts -->
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;700&display=swap" rel="stylesheet">
 
-        /* Layout Containers */
-        header,
-        footer {
-            background: linear-gradient(135deg, #0829df, #04013c);
-            text-align: center;
-            padding: 20px;
-            font-size: 24px;
-            position: relative;
-            z-index: 10;
-        }
+        <!-- Font Awesome Icons -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
-        main {
-            max-width: 900px;
-            margin: 40px auto;
-            padding: 25px;
-            background: rgba(19, 50, 185, 0.85);
-            border-radius: 10px;
-            box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
-            position: relative;
-            z-index: 10;
-        }
+        <!-- MathJax for Equations -->
+        <script type="text/javascript" async
+            src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML"></script>
 
-        h1,
-        h2,
-        h3 {
-            color: #d9dcdf;
-        }
+        <style>
+            /* Global Styles */
+            body {
+                font-family: 'Courier New', monospace;
+                margin: 0;
+                padding: 0;
+                color: #ffffff;
+                background: url('../assets/images/ml-background.webp') no-repeat center center fixed;
+                background-size: cover;
+                position: relative;
+            }
 
-        /* Styling for Key Sections */
-        .case h3 {
-            color: #ffcc00;
-        }
+            /* Dark Overlay */
+            body::before {
+                content: "";
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0, 0, 0, 0.5);
+                z-index: -1;
+            }
 
-        .case p {
-            color: #ffffff;
-        }
+            /* Layout Containers */
+            header,
+            footer {
+                background: linear-gradient(135deg, #0829df, #04013c);
+                text-align: center;
+                padding: 20px;
+                font-size: 24px;
+                position: relative;
+                z-index: 10;
+            }
 
-        /* Table Styles */
-        table {
-            font-family: 'Courier New', monospace;
-            width: 100%;
-            border-collapse: collapse;
-            margin: 10px 0;
-            background: rgba(255, 255, 255, 0.1);
-        }
+            main {
+                max-width: 900px;
+                margin: 40px auto;
+                padding: 25px;
+                background: rgba(19, 50, 185, 0.85);
+                border-radius: 10px;
+                box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+                position: relative;
+                z-index: 10;
+            }
 
-        th,
-        td {
-            border: 1px solid #ccc;
-            padding: 8px;
-            text-align: center;
-            font-size: 14px;
-        }
+            h1,
+            h2,
+            h3 {
+                color: #d9dcdf;
+            }
 
-        th {
-            background: rgba(0, 0, 0, 0.2);
-        }
+            /* Styling for Key Sections */
+            .case h3 {
+                color: #ffcc00;
+            }
 
-        /* Image Styling */
-        .image-container {
-            text-align: center;
-            margin: 10px 0;
-        }
+            .case p {
+                color: #ffffff;
+            }
 
-        .image-container img {
-            width: 35%;
-            border-radius: 5px;
-            box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
-        }
+            /* Table Styles */
+            table {
+                font-family: 'Courier New', monospace;
+                width: 100%;
+                border-collapse: collapse;
+                margin: 10px 0;
+                background: rgba(255, 255, 255, 0.1);
+            }
 
-        /* Content Alignment */
-        .content-container {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 10px;
-        }
+            th,
+            td {
+                border: 1px solid #ccc;
+                padding: 8px;
+                text-align: center;
+                font-size: 14px;
+            }
 
-        .image-container {
-            flex: 1;
-        }
+            th {
+                background: rgba(0, 0, 0, 0.2);
+            }
 
-        .image-container img {
-            width: 65%;
-            border-radius: 10px;
-        }
+            /* Image Styling */
+            .image-container {
+                text-align: center;
+                margin: 10px 0;
+            }
 
-        .text-container {
-            flex: 1;
-            width: 55%;
-        }
+            .image-container img {
+                width: 35%;
+                border-radius: 5px;
+                box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+            }
 
-        /* Failure Cases Section */
-        .failure-cases {
-            width: 90%;
-            max-width: 1600px;
-            background: rgba(255, 255, 255, 0.1);
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
-            margin: 20px auto;
-            text-align: justify;
-        }
+            /* Content Alignment */
+            .content-container {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                gap: 10px;
+            }
 
-        .case {
-            width: 100%;
-            background: rgba(255, 255, 255, 0.15);
-            padding: 15px;
-            margin-bottom: 15px;
-            border-radius: 6px;
-        }
+            .image-container {
+                flex: 1;
+            }
 
-        /* Decision Tree Node Styles */
-        .node circle {
-            fill: #69b3a2;
-            stroke: #555;
-            stroke-width: 2px;
-        }
+            .image-container img {
+                width: 65%;
+                border-radius: 10px;
+            }
 
-        .node text {
-            font-size: 14px;
-            font-family: 'Courier New', monospace;
-            fill: white;
-        }
+            .text-container {
+                flex: 1;
+                width: 55%;
+            }
 
-        .link {
-            fill: none;
-            stroke: #ccc;
-            stroke-width: 2px;
-        }
+            /* Failure Cases Section */
+            .failure-cases {
+                width: 90%;
+                max-width: 1600px;
+                background: rgba(255, 255, 255, 0.1);
+                padding: 20px;
+                border-radius: 8px;
+                box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+                margin: 20px auto;
+                text-align: justify;
+            }
 
-        a {
-            color: #ffcc00;
-            text-decoration: underline;
-            font-weight: bold;
+            .case {
+                width: 100%;
+                background: rgba(255, 255, 255, 0.15);
+                padding: 15px;
+                margin-bottom: 15px;
+                border-radius: 6px;
+            }
 
-        }
+            /* Decision Tree Node Styles */
+            .node circle {
+                fill: #69b3a2;
+                stroke: #555;
+                stroke-width: 2px;
+            }
 
-        a:hover {
-            color: #ffffff;
-            text-decoration: none;
-        }
-    </style>
-</head>
+            .node text {
+                font-size: 14px;
+                font-family: 'Courier New', monospace;
+                fill: white;
+            }
 
-<header>
-    <h1>Generative AI </h1>
-</header>
+            .link {
+                fill: none;
+                stroke: #ccc;
+                stroke-width: 2px;
+            }
+
+            a {
+                color: #ffcc00;
+                text-decoration: underline;
+                font-weight: bold;
+            }
+
+            a:hover {
+                color: #ffffff;
+                text-decoration: none;
+            }
+
+            .floating-sidebar {
+                position: fixed;
+                top: 50%;
+                left: -120px;
+                /* Partially hidden */
+                width: 150px;
+                /* Explicit width */
+                transform: translateY(-50%);
+                background-color: rgba(143, 137, 137, 0.5);
+                padding: 15px;
+                border-radius: 0 10px 10px 0;
+                box-shadow: 2px 2px 10px rgb(255, 255, 255);
+                transition: left 0.3s ease;
+                /* Smooth slide */
+            }
+
+            /* Reveal sidebar on hover */
+            .floating-sidebar:hover {
+                left: 0;
+                /* Fully visible */
+            }
+
+            /* Sidebar Link */
+            .floating-sidebar a {
+                color: white;
+                text-decoration: none;
+                font-size: 18px;
+                font-family: Arial, sans-serif;
+                display: block;
+                padding: 10px 0;
+                transition: color 0.3s ease;
+            }
+
+            /* Hover effect for links */
+            .floating-sidebar a:hover {
+                color: #FFD700;
+                /* Golden color on hover */
+            }
+        </style>
+
+    </head>
+
+    <header>
+        <h1>Generative AI </h1>
+    </header>
 
 <body>
     <div class="failure-cases">
@@ -302,18 +356,26 @@
             </html>
         </div>
     </div>
+    <!-- Floating Sidebar -->
+    <div class="floating-sidebar">
+        <a href="../ml/finetunellm.html">LLM Fine Tuning</a>
+        <!-- <a href="../ml/causallanguagemodeling.html">Causal Language Modeling</a>
+        <a href="../ml/finetuning.html">SuperVised Fine Tuning</a> -->
+    </div>
     <div class="failure-cases">
         <div class="case" style="font-family: 'Courier New', monospace; padding: 10px; border: 1px solid #ddd;">
             <div class="prompt-engineering">
                 <h2>Prompt Engineering Techniques</h2>
                 <h3>1. Zero-Shot Prompting:</h3>
-                <p><strong>What it is:</strong> Directly asking the model to perform a task without any examples.</p>
+                <p><strong>What it is:</strong> Directly asking the model to perform a task without any examples.
+                </p>
                 <p><strong>Example:</strong> “Summarize the following text: [text]”</p>
                 <p><strong>Use case:</strong> Quick tasks where the model leverages general pretraining.</p>
 
                 <h3>2. One-Shot Prompting:</h3>
                 <p><strong>What it is:</strong> Providing one example in the prompt to guide the model.</p>
-                <p><strong>Example:</strong> “Translate the following sentence to French. Example: ‘Hello’ → ‘Bonjour’.
+                <p><strong>Example:</strong> “Translate the following sentence to French. Example: ‘Hello’ →
+                    ‘Bonjour’.
                     Now translate: ‘Goodbye’”</p>
                 <p><strong>Use case:</strong> When minimal context is enough to improve performance.</p>
 
@@ -332,14 +394,16 @@
 
                 <h3>4. Chain-of-Thought Prompting:</h3>
                 <p><strong>What it is:</strong> Encouraging the model to explain its reasoning step-by-step.</p>
-                <p><strong>Example:</strong> “If there are 5 apples and you eat 2, how many are left? Let’s think step
+                <p><strong>Example:</strong> “If there are 5 apples and you eat 2, how many are left? Let’s think
+                    step
                     by step.”</p>
                 <p><strong>Use case:</strong> Tasks requiring logical reasoning or multi-step solutions.</p>
 
                 <h3>5. Instruction Tuning:</h3>
                 <p><strong>What it is:</strong> Fine-tuning LLMs on instruction-based datasets to follow commands
                     better.</p>
-                <p><strong>Example:</strong> Models like <strong>InstructGPT</strong> or <strong>ChatGPT</strong>.</p>
+                <p><strong>Example:</strong> Models like <strong>InstructGPT</strong> or <strong>ChatGPT</strong>.
+                </p>
                 <p><strong>Use case:</strong> Enhancing model adherence to user instructions.</p>
             </div>
         </div>
@@ -515,7 +579,8 @@
                     RAG retrieves relevant documents or context from an external knowledge base (like a vector store or
                     search
                     engine) and feeds this information into a generative model (like GPT) to produce more accurate,
-                    grounded, and up-to-date responses.</p>
+                    grounded, and up-to-date responses.
+                </p>
 
                 <p>💡 <strong>Key Benefit:</strong> It bridges the gap between static knowledge in LLMs and dynamic,
                     external

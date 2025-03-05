@@ -4,158 +4,134 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Measures of Central Tendency, Dispersion, Percentiles, and Quartiles</title>
-    <style>
-        /* Global Styles */
-        body {
-            font-family: 'Courier New', monospace;
-            line-height: 1.8;
-            margin: 0;
-            padding: 0;
-            color: #ffffff;
-            background: url('../assets/images/Background.webp') no-repeat center center fixed;
-            background-size: cover;
-            position: relative;
-        }
+  <style>
+    /* Global Styles */
+    body {
+      font-family: 'Courier New', monospace;
+      margin: 0;
+      padding: 0;
+      color: #ced0d1; /* Changed font color to black */
+      background: url('../assets/images/Background.jpg') no-repeat center center fixed;
+      background-size: cover;
+      position: relative;
+    }
 
-        /* Dark Overlay to Improve Readability */
-        body::before {
-            content: "";
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5); /* 50% Dark overlay */
-            z-index: 1;
-        }
+    /* Dark Overlay */
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 1;
+    }
 
-        /* Header */
-        header {
-            background: linear-gradient(135deg, #002c26, #002c26);
-            color: white;
-            padding: 30px 0;
-            text-align: center;
-            font-size: 28px;
-            font-weight: bold;
-            animation: fadeIn 1.5s ease-in-out;
-            position: relative;
-            z-index: 10;
-        }
+    /* Layout Containers */
+    header,
+    footer {
+      background: linear-gradient(135deg, #002c26, #004d40);
+      text-align: center;
+      padding: 20px;
+      font-size: 24px;
+      position: relative;
+      z-index: 10;
+    }
 
-        /* Main Content */
-        main {
-            max-width: 900px;
-            margin: 40px auto;
-            padding: 25px;
-            background: rgba(11, 11, 11, 0.9); /* Light semi-transparent background */
-            border-radius: 10px;
-            box-shadow: 0px 5px 10px rgba(83, 82, 82, 0.05);
-            animation: slideUp 1s ease-in-out;
-            position: relative;
-            z-index: 10;
-        }
+    main {
+      max-width: 900px;
+      margin: 40px auto;
+      padding: 25px;
+      background: rgba(116, 124, 123, 0.85);
+      border-radius: 10px;
+      box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+      position: relative;
+      z-index: 10;
+    }
 
-        h2, h3 {
-            color: #ffffff;
-        }
+    h2,
+    h3 {
+      color: #e9e63b; /* Changed text color to black */
+    }
 
-        /* List Styles */
-        ul {
-            list-style-type: none;
-            padding: 0;
-        }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+      background: rgba(255, 255, 255, 0.1);
+    }
 
-        ul li {
-            background: #4e5867;
-            margin: 10px 0;
-            padding: 12px;
-            border-radius: 6px;
-            transition: transform 0.3s ease-in-out;
-        }
+    th,
+    td {
+      border: 1px solid rgba(255, 255, 255, 0.43);
+      padding: 12px;
+      text-align: center;
+      color: #000000; /* Changed text color to black */
+    }
 
-        ul li:hover {
-            transform: scale(1.05);
-        }
+    th {
+      background: rgba(255, 255, 255, 0.2);
+      font-weight: bold;
+    }
 
-        /* Links */
-        a {
-            color: #ffffff;
-            text-decoration: none;
-            font-weight: bold;
-        }
+    .image-container {
+      text-align: center;
+      margin: 30px 0;
+    }
 
-        a:hover {
-            text-decoration: underline;
-        }
+    .image-container img {
+      width: 85%;
+      border-radius: 10px;
+      box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+    }
 
-        /* Footer */
-        footer {
-            text-align: center;
-            padding: 20px;
-            background: linear-gradient(135deg, #002c26, #002c26);
-            color: white;
-            margin-top: 30px;
-            position: relative;
-            z-index: 10;
-        }
+    .result {
+      background: rgba(255, 255, 255, 0.2);
+      padding: 15px;
+      margin: 10px 0;
+      border-radius: 8px;
+      font-weight: bold;
+    }
 
-        /* Image Container */
-        .image-container {
-            text-align: center;
-            margin: 30px 0;
-        }
+    .failure-cases {
+      width: 90%;
+      max-width: 1600px;
+      background: rgba(255, 255, 255, 0.1);
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+      margin: 20px auto;
+      display: block;
+      text-align: justify;
+    }
 
-        .image-container img {
-            width: 85%;
-            border-radius: 10px;
-            box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
-            animation: fadeIn 2s ease-in-out;
-        }
+    .case {
+      width: 100%;
+      background: rgba(7, 7, 7, 0.15);
+      padding: 15px;
+      margin-bottom: 15px;
+      border-radius: 6px;
+    }
 
-        /* Animations */
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
+    .case h3 {
+      color: #000000; /* Changed text color to black */
+      margin-bottom: 5px;
+    }
 
-        @keyframes slideUp {
-            from { transform: translateY(20px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
-        }        .failure-cases {
-            width: 90%;
-            max-width: 1600px;
-            background: rgba(255, 255, 255, 0.1);
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
-            margin: 20px auto;
-            display: block;
-            /* Stack elements instead of flex */
-            text-align: justify;
-        }
-
-        /* Individual Case Boxes */
-        .case {
-            width: 100%;
-            background: rgba(255, 255, 255, 0.15);
-            padding: 15px;
-            margin-bottom: 15px;
-            border-radius: 6px;
-        }
-
-        .case h3 {
-            color: #ffcc00;
-            margin-bottom: 5px;
-        }
-
-        .case p {
-            color: #ffffff;
-        }
-
-        body::before {
-            pointer-events: none;
-        }
-    </style>
+    .case p {
+      color: #000000; /* Changed text color to black */
+    }
+    li{
+      color: #000000;
+    }
+    pre{
+        color: #2f0774;
+    }
+    body::before {
+      pointer-events: none;
+    }
+  </style>
 </head>
 <header>
     <h1>Measures of Central Tendency, Dispersion, Percentiles, and Quartiles</h1>
@@ -164,14 +140,14 @@
 <body>
     <div class="failure-cases">
         <div class="case">
-    <p><i>Central tendency refers to the statistical concept that describes the center or typical value of a dataset. It provides a single value that summarizes the entire distribution of data, representing a point around which most of the data points tend to cluster. The goal is to find the "center" of the data to understand the overall trend or typical value.</i><br>
+    <p><i><strong>Central tendency refers to the statistical concept that describes the center or typical value of a dataset. It provides a single value that summarizes the entire distribution of data, representing a point around which most of the data points tend to cluster. The goal is to find the "center" of the data to understand the overall trend or typical value.</strong></i><br>
         There are three main measures of central tendency:
         <br>
         Mean: The average of all values in the dataset.<br>
         Median: The middle value when the data is arranged in order.<br>
         Mode: The value that appears most frequently in the dataset.</p>
 
-    <h1>Measures of Central Tendency</h1>
+    <h2>Measures of Central Tendency</h2>
     <div class="measure">
         <h3>Mean (Average)</h3>
         <p>The mean is calculated by adding all the values in the dataset and dividing by the number of values. It is the most commonly used measure of central tendency.</p>
@@ -203,7 +179,7 @@
         </pre>
     </div>
 
-    <h1>Measures of Dispersion</h1>
+    <h2>Measures of Dispersion</h2>
     <p><i>Measures of dispersion describe the spread or variability of a dataset. They give us an understanding of how spread out or clustered the values are in relation to the central tendency.</i></p>
     
     <div class="measure">
@@ -238,7 +214,7 @@
         </pre>
     </div>
 
-    <h1>Percentiles and Quartiles</h1>
+    <h2>Percentiles and Quartiles</h2>
     <p><i>Percentiles and quartiles help to understand the distribution of data by dividing the dataset into specific parts based on the values of the data.</i></p>
 
     <div class="measure">

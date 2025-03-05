@@ -17,161 +17,131 @@
         src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML">
         </script>
 
-    <style>
-        /* Global Styles */
-        body {
-            font-family: 'Courier New', monospace;
-            margin: 0;
-            padding: 0;
-            color: #ffffff;
-            background: url('../assets/images/ml-background.webp') no-repeat center center fixed;
-            background-size: cover;
-            position: relative;
-        }
+  <style>
+    /* Global Styles */
+    body {
+      font-family: 'Courier New', monospace;
+      margin: 0;
+      padding: 0;
+      color: #ced0d1; /* Changed font color to black */
+      background: url('../assets/images/Background.jpg') no-repeat center center fixed;
+      background-size: cover;
+      position: relative;
+    }
 
-        /* Dark Overlay */
-        body::before {
-            content: "";
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            z-index: 1;
-        }
+    /* Dark Overlay */
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 1;
+    }
 
-        /* Layout Containers */
-        header,
-        footer {
-            background: linear-gradient(135deg, #0829df, #04013c);
-            text-align: center;
-            padding: 20px;
-            font-size: 24px;
-            position: relative;
-            z-index: 10;
-        }
+    /* Layout Containers */
+    header,
+    footer {
+      background: linear-gradient(135deg, #002c26, #004d40);
+      text-align: center;
+      padding: 20px;
+      font-size: 24px;
+      position: relative;
+      z-index: 10;
+    }
 
-        main {
-            max-width: 900px;
-            margin: 40px auto;
-            padding: 25px;
-            background: rgba(19, 50, 185, 0.85);
-            border-radius: 10px;
-            box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
-            position: relative;
-            z-index: 10;
-        }
+    main {
+      max-width: 900px;
+      margin: 40px auto;
+      padding: 25px;
+      background: rgba(116, 124, 123, 0.85);
+      border-radius: 10px;
+      box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+      position: relative;
+      z-index: 10;
+    }
 
-        h1,
-        h2,
-        h3 {
-            color: #d9dcdf;
-        }
+    h2,
+    h3 {
+      color: #e9e63b; /* Changed text color to black */
+    }
 
-        /* Styling for Key Sections */
-        .case h3 {
-            color: #ffcc00;
-        }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+      background: rgba(255, 255, 255, 0.1);
+    }
 
-        .case p {
-            color: #ffffff;
-        }
+    th,
+    td {
+      border: 1px solid rgba(255, 255, 255, 0.43);
+      padding: 12px;
+      text-align: center;
+      color: #000000; /* Changed text color to black */
+    }
 
-        /* Table Styles */
-        table {
-            font-family: 'Courier New', monospace;
-            width: 100%;
-            border-collapse: collapse;
-            margin: 10px 0;
-            background: rgba(255, 255, 255, 0.1);
-        }
+    th {
+      background: rgba(255, 255, 255, 0.2);
+      font-weight: bold;
+    }
 
-        th,
-        td {
-            border: 1px solid #ccc;
-            padding: 8px;
-            text-align: center;
-            font-size: 14px;
-        }
+    .image-container {
+      text-align: center;
+      margin: 30px 0;
+    }
 
-        th {
-            background: rgba(0, 0, 0, 0.2);
-        }
+    .image-container img {
+      width: 85%;
+      border-radius: 10px;
+      box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+    }
 
-        /* Image Styling */
-        .image-container {
-            text-align: center;
-            margin: 10px 0;
-        }
+    .result {
+      background: rgba(255, 255, 255, 0.2);
+      padding: 15px;
+      margin: 10px 0;
+      border-radius: 8px;
+      font-weight: bold;
+    }
 
-        .image-container img {
-            width: 35%;
-            border-radius: 5px;
-            box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
-        }
+    .failure-cases {
+      width: 90%;
+      max-width: 1600px;
+      background: rgba(255, 255, 255, 0.1);
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+      margin: 20px auto;
+      display: block;
+      text-align: justify;
+    }
 
-        /* Content Alignment */
-        .content-container {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 10px;
-        }
+    .case {
+      width: 100%;
+      background: rgba(7, 7, 7, 0.15);
+      padding: 15px;
+      margin-bottom: 15px;
+      border-radius: 6px;
+    }
 
-        .image-container {
-            flex: 1;
-        }
+    .case h3 {
+      color: #000000; /* Changed text color to black */
+      margin-bottom: 5px;
+    }
 
-        .image-container img {
-            width: 65%;
-            border-radius: 10px;
-        }
-
-        .text-container {
-            flex: 1;
-            width: 55%;
-        }
-
-        /* Failure Cases Section */
-        .failure-cases {
-            width: 90%;
-            max-width: 1600px;
-            background: rgba(255, 255, 255, 0.1);
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
-            margin: 20px auto;
-            text-align: justify;
-        }
-
-        .case {
-            width: 100%;
-            background: rgba(255, 255, 255, 0.15);
-            padding: 15px;
-            margin-bottom: 15px;
-            border-radius: 6px;
-        }
-
-        /* Decision Tree Node Styles */
-        .node circle {
-            fill: #69b3a2;
-            stroke: #555;
-            stroke-width: 2px;
-        }
-
-        .node text {
-            font-size: 14px;
-            font-family: 'Courier New', monospace;
-            fill: white;
-        }
-
-        .link {
-            fill: none;
-            stroke: #ccc;
-            stroke-width: 2px;
-        }
-    </style>
+    .case p {
+      color: #000000; /* Changed text color to black */
+    }
+    li{
+      color: #000000;
+    }
+    body::before {
+      pointer-events: none;
+    }
+  </style>
 </head>
 
 <header>

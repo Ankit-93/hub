@@ -10,6 +10,7 @@
 
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.min.js"></script>
     <style>
         /* Global Styles */
         body {
@@ -160,6 +161,95 @@
             <h2>Understanding Covariance and Correlation</h2>
             <p>Covariance and correlation are two statistical tools that are used to determine the relationship between
                 two variables.</p>
+
+                <div class="correlation-section">
+                    <div class="page-36">
+                        <h2>CORRELATION</h2>
+                        <p>Correlation is the technical term used to describe the joint variability between Random Variables (Random Variables that vary together are said to be correlated). Correlation is said to exist between 2 Random Variables if:</p>
+                        <ol>
+                            <li>The greater values of one variable generally correspond with the greater values of the other variable, and the same correspondence holds true for the lesser values.</li>
+                            <li>The greater values of one variable generally correspond to the lesser values of the other and the same correspondence holds true for the lesser values.</li>
+                        </ol>
+                        <p>In the first case the correlation is said to be <strong>positive</strong>, and in the latter case, it is said to be <strong>negative</strong>.</p>
+                        <p><em>Correlation does not imply causation.</em> Just because 2 Random Variables are correlated, it does not mean one of them is the cause of the other.</p>
+                    </div>
+                
+                    <div class="measures-of-correlation">
+                        <h3>MEASURES OF CORRELATION</h3>
+                        
+                        <!-- Covariance -->
+                        <div class="covariance">
+                            <h4>1. COVARIANCE</h4>
+                            <p>Covariance is a measure of the correlation between two random variables. Mathematically defined as:</p>
+                            <pre>\[\text{Cov}(X,Y) = \frac{1}{n} \sum_{i=1}^{n} (x_i - \overline{x})(y_i - \overline{y}) \]</pre>
+                            <p>It is the average of the product of the differences of each random variable with their own 
+                                mean. Covariance can be expressed in python code as shown below:</p><br>
+                                 <p>Python implementation:</p>
+                            <pre><code>
+                def fn_covariance(rv1, rv2):
+                    rv1 = np.array([*rv1])
+                    rv2 = np.array([*rv2])
+                    diff_1 = rv1 - rv1.mean()
+                    diff_2 = rv2 - rv2.mean()
+                    cov = (diff_1 * diff_2).mean()
+                    return cov
+                            </code></pre>
+                            <p><em>Example output:</em> Covariance = 3.969 (positive correlation between heights & weights).</p>
+                        </div>
+                
+                        <!-- Pearson’s Correlation -->
+                        <div class="pearson">
+                            <h4>2. PEARSON’S CORRELATION COEFFICIENT (PCC)</h4>
+                            <p>Normalized covariance:</p>
+                            <pre>\[ \text{Corr}(X,Y) = \frac{\text{Cov}(X,Y)}{\sigma_x \sigma_y} \]</pre>
+                            <p>Values range: <strong>[-1, 1]</strong>. Python code:</p>
+                            <pre><code>
+                def fn_PCC(rv1, rv2):
+                    covariance = fn_covariance(rv1, rv2)
+                    std_dev1 = rv1.std()
+                    std_dev2 = rv2.std()
+                    PCC = covariance / (std_dev1 * std_dev2)
+                    return PCC
+                            </code></pre>
+                            <p><em>Example result:</em> PCC = 0.925 (strong positive correlation).</p>
+                        </div>
+                
+                        <!-- Spearman’s Correlation -->
+                        <div class="spearman">
+                            <h4>3. SPEARMAN’S RANKED CORRELATION COEFFICIENT (SRCC)</h4>
+                            <p>Uses ranked scores to detect monotonic relationships. Python code:</p>
+                            <pre><code>
+                def fn_SRCC(rv1, rv2):
+                    from scipy import stats
+                    rank_rv1 = stats.rankdata(rv1, method='ordinal')
+                    rank_rv2 = stats.rankdata(rv2, method='ordinal')
+                    SRCC = fn_PCC(rank_rv1, rank_rv2)
+                    return SRCC
+                            </code></pre>
+                            <p><em>Example output:</em> SRCC = 0.944 (strong monotonic correlation).</p>
+                        </div>
+                
+                        <!-- ANOVA -->
+                        <div class="anova">
+                            <h4>4. ANOVA FOR CATEGORICAL-NUMERIC CORRELATION</h4>
+                            <p>Uses F-statistic to compare group variances. Python code:</p>
+                            <pre><code>
+                def fn_var_between(sample_mean, group_means, group_sizes):
+                    sq_dists = sum([(mean - sample_mean)**2 * n for mean, n in zip(group_means, group_sizes)])
+                    var_between = sq_dists / (len(group_means) - 1)
+                    return var_between
+                
+                def fn_var_within(group_rvs):
+                    variances = [np.var(rv, ddof=1) for rv in group_rvs]
+                    avg_var = np.mean(variances)
+                    return avg_var
+                
+                # Compute F-statistic
+                fstat = var_between / var_within  # Example: F = 280.87 (significant correlation)
+                            </code></pre>
+                        </div>
+                    </div>
+                </div>
         </section>
     </main>
     <div class="failure-cases">

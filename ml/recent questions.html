@@ -1,0 +1,2442 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Miscelleanous Concepts</title>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;700&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <!-- MathJax for Equations -->
+    <script type="text/javascript" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML">
+        </script>
+
+    <style>
+        /* Global Styles */
+        body {
+            font-family: 'Courier New', monospace;
+            margin: 0;
+            padding: 0;
+            color: #ced0d1;
+            /* Changed font color to black */
+            background: url('../assets/images/Background.jpg') no-repeat center center fixed;
+            background-size: cover;
+            position: relative;
+        }
+
+        /* Dark Overlay */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1;
+        }
+
+        /* Layout Containers */
+        header,
+        footer {
+            background: linear-gradient(135deg, #002c26, #004d40);
+            text-align: center;
+            padding: 20px;
+            font-size: 24px;
+            position: relative;
+            z-index: 10;
+        }
+
+        main {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 25px;
+            background: rgba(116, 124, 123, 0.85);
+            border-radius: 10px;
+            box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+            position: relative;
+            z-index: 10;
+        }
+
+        h2,
+        h3,
+        h4 {
+            color: #073e7ee5;
+            /* Changed text color to black */
+        }
+
+        p,
+        h5,
+        pre {
+            color: #163b65e5;
+            /* Changed text color to black */
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        th,
+        td {
+            border: 1px solid rgba(255, 255, 255, 0.43);
+            padding: 12px;
+            text-align: center;
+            color: #000000;
+            /* Changed text color to black */
+        }
+
+        th {
+            background: rgba(255, 255, 255, 0.2);
+            font-weight: bold;
+        }
+
+        .image-container {
+            text-align: center;
+            margin: 30px 0;
+        }
+
+        .image-container img {
+            width: 85%;
+            border-radius: 10px;
+            box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .result {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 8px;
+            font-weight: bold;
+        }
+
+        .failure-cases {
+            width: 90%;
+            max-width: 1600px;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+            margin: 20px auto;
+            display: block;
+            text-align: justify;
+        }
+
+        .case {
+            width: 100%;
+            background: rgba(7, 7, 7, 0.15);
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 6px;
+        }
+
+        .case h3 {
+            color: #000000;
+            /* Changed text color to black */
+            margin-bottom: 5px;
+        }
+
+        .case p {
+            color: #000000;
+            /* Changed text color to black */
+        }
+
+        li {
+            color: #000000;
+        }
+
+        body::before {
+            pointer-events: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="failure-cases">
+        <div>
+            <h3>How to Choose the Correct Model: ML, DL, or LLM?</h3>
+            <p>Choosing the right model depends on the problem type, data availability, and computational resources.
+                Here's how to decide:</p>
+
+            <h4>1. When to Choose a Machine Learning (ML) Model?</h4>
+            <ul>
+                <li><strong>Structured Data:</strong> Works well with tabular, numerical, and categorical data.</li>
+                <li><strong>Smaller Datasets:</strong> Can be trained with limited data (hundreds to thousands of
+                    examples).</li>
+                <li><strong>Interpretability:</strong> Decision Trees, Random Forests, and Logistic Regression provide
+                    explainable results.</li>
+                <li><strong>Use Cases:</strong> Fraud detection, customer segmentation, predictive maintenance.</li>
+            </ul>
+
+            <h4>2. When to Choose a Deep Learning (DL) Model?</h4>
+            <ul>
+                <li><strong>Unstructured Data:</strong> Suitable for images, audio, video, and raw text.</li>
+                <li><strong>Large Datasets:</strong> Requires millions of samples to perform effectively.</li>
+                <li><strong>Computational Power:</strong> Needs GPUs/TPUs for efficient training.</li>
+                <li><strong>Use Cases:</strong> Image classification (CNNs), speech recognition (RNNs/LSTMs), autonomous
+                    driving.</li>
+            </ul>
+
+            <h4>3. When to Choose a Large Language Model (LLM)?</h4>
+            <ul>
+                <li><strong>Natural Language Understanding & Generation:</strong> Ideal for chatbot development, text
+                    summarization, and document processing.</li>
+                <li><strong>Zero-shot/Few-shot Capabilities:</strong> Can perform tasks without explicit training
+                    examples.</li>
+                <li><strong>Complex Reasoning & Knowledge-Based Tasks:</strong> Useful for legal document analysis,
+                    medical report summarization, and research insights.</li>
+                <li><strong>Use Cases:</strong> Conversational AI, sentiment analysis, code generation, knowledge
+                    retrieval.</li>
+            </ul>
+
+            <h4>Final Decision Guide:</h4>
+            <table border="1">
+                <tr>
+                    <th>Criteria</th>
+                    <th>ML</th>
+                    <th>DL</th>
+                    <th>LLM</th>
+                </tr>
+                <tr>
+                    <td>Data Type</td>
+                    <td>Structured (Tabular)</td>
+                    <td>Unstructured (Images, Audio, Video)</td>
+                    <td>Text-based</td>
+                </tr>
+                <tr>
+                    <td>Data Size</td>
+                    <td>Small to Medium</td>
+                    <td>Large</td>
+                    <td>Extremely Large</td>
+                </tr>
+                <tr>
+                    <td>Computational Cost</td>
+                    <td>Low</td>
+                    <td>High (GPUs required)</td>
+                    <td>Very High (TPUs, multi-GPU)</td>
+                </tr>
+                <tr>
+                    <td>Interpretability</td>
+                    <td>High</td>
+                    <td>Moderate</td>
+                    <td>Low</td>
+                </tr>
+                <tr>
+                    <td>Training Time</td>
+                    <td>Fast</td>
+                    <td>Slow</td>
+                    <td>Very Slow</td>
+                </tr>
+                <tr>
+                    <td>Example Use Cases</td>
+                    <td>Fraud detection, Predictive modeling</td>
+                    <td>Image recognition, Speech processing</td>
+                    <td>Chatbots, Text summarization</td>
+                </tr>
+            </table>
+
+            <p><strong>Rule of Thumb:</strong></p>
+            <ul>
+                <li>If working with structured data ➝ Start with <strong>ML</strong>.</li>
+                <li>If dealing with unstructured images/audio ➝ Choose <strong>DL</strong>.</li>
+                <li>If handling text-based complex reasoning ➝ Use an <strong>LLM</strong>.</li>
+            </ul>
+        </div>
+    </div>
+    <div class="failure-cases">
+        <div>
+            <h3>When to Choose the Right Machine Learning Model?</h3>
+            <p>Choosing the right model depends on the problem type, dataset characteristics, and computational
+                resources. Below is a guide to help you decide.</p>
+
+            <h4>1. Classification Models (When Output is Categorical)</h4>
+
+            <h5>📌 When to Choose Logistic Regression?</h5>
+            <ul>
+                <li>For binary classification (Yes/No, Spam/Not Spam, Disease/No Disease).</li>
+                <li>When features are linearly separable.</li>
+                <li>When interpretability is important (e.g., knowing how each feature affects the outcome).</li>
+                <li>When the dataset is small to medium-sized.</li>
+            </ul>
+
+            <h5>📌 When to Choose Support Vector Machine (SVM)?</h5>
+            <ul>
+                <li>For high-dimensional data (e.g., text classification, image classification).</li>
+                <li>When data is not linearly separable (SVM with kernel trick handles complex decision boundaries).
+                </li>
+                <li>When dataset size is moderate (not too large, as SVMs can be slow).</li>
+                <li>When dealing with small datasets that need strong classification boundaries.</li>
+            </ul>
+
+            <h5>📌 When to Choose Decision Trees?</h5>
+            <ul>
+                <li>When interpretability is required (easy to understand decision paths).</li>
+                <li>When dataset has missing values or mixed data types (numerical + categorical).</li>
+                <li>When feature importance analysis is needed.</li>
+                <li>For small to medium-sized datasets.</li>
+            </ul>
+
+            <h5>📌 When to Choose Random Forest?</h5>
+            <ul>
+                <li>When accuracy is more important than interpretability.</li>
+                <li>When dataset is large, noisy, and contains missing values.</li>
+                <li>When you need to reduce overfitting compared to decision trees.</li>
+                <li>For ensemble-based classification problems (multiple weak learners improving accuracy).</li>
+            </ul>
+
+            <h5>📌 When to Choose Gradient Boosting (XGBoost, LightGBM, CatBoost)?</h5>
+            <ul>
+                <li>For highly imbalanced data (e.g., fraud detection).</li>
+                <li>When maximizing accuracy is a priority.</li>
+                <li>For structured/tabular data where boosting techniques can outperform deep learning models.</li>
+                <li>When handling large datasets with high feature interactions.</li>
+            </ul>
+
+            <h5>📌 When to Choose K-Nearest Neighbors (KNN)?</h5>
+            <ul>
+                <li>For small datasets with clear clusters.</li>
+                <li>For problems where decision boundaries are not easily defined.</li>
+                <li>When interpretability is needed (similarity-based classification).</li>
+                <li>For recommendation systems and anomaly detection.</li>
+            </ul>
+
+            <h4>2. Regression Models (When Output is Continuous)</h4>
+
+            <h5>📌 When to Choose Linear Regression?</h5>
+            <ul>
+                <li>When the relationship between features and output is linear.</li>
+                <li>For simple problems with a small number of features.</li>
+                <li>When interpretability is key (e.g., how much each feature affects the target).</li>
+            </ul>
+
+            <h5>📌 When to Choose Ridge/Lasso Regression?</h5>
+            <ul>
+                <li>When there is multicollinearity between features.</li>
+                <li>When feature selection or regularization is needed (Lasso performs feature selection).</li>
+                <li>For preventing overfitting in linear regression models.</li>
+            </ul>
+
+            <h5>📌 When to Choose Decision Tree Regression?</h5>
+            <ul>
+                <li>When data has non-linear relationships.</li>
+                <li>For small datasets that need simple interpretability.</li>
+                <li>When handling missing values and categorical data.</li>
+            </ul>
+
+            <h5>📌 When to Choose Random Forest Regression?</h5>
+            <ul>
+                <li>When accuracy is more important than interpretability.</li>
+                <li>For handling large datasets with noisy features.</li>
+                <li>For financial predictions, healthcare data modeling.</li>
+            </ul>
+
+            <h5>📌 When to Choose Gradient Boosting Regression (XGBoost, LightGBM)?</h5>
+            <ul>
+                <li>When working with structured/tabular data.</li>
+                <li>When predicting highly complex, non-linear trends (e.g., house prices).</li>
+                <li>When accuracy is a higher priority than speed.</li>
+            </ul>
+
+            <h4>3. Clustering Models (For Unsupervised Learning)</h4>
+
+            <h5>📌 When to Choose K-Means Clustering?</h5>
+            <ul>
+                <li>When dataset has well-defined, separable clusters.</li>
+                <li>For customer segmentation, market analysis.</li>
+                <li>When computational efficiency is important.</li>
+            </ul>
+
+            <h5>📌 When to Choose DBSCAN (Density-Based Clustering)?</h5>
+            <ul>
+                <li>When dataset has noise and varying cluster sizes.</li>
+                <li>For anomaly detection (e.g., fraud detection).</li>
+                <li>When number of clusters is unknown.</li>
+            </ul>
+
+            <h5>📌 When to Choose Hierarchical Clustering?</h5>
+            <ul>
+                <li>When you need a hierarchy of clusters.</li>
+                <li>For small datasets where computational cost is not an issue.</li>
+                <li>For biological taxonomies, social network analysis.</li>
+            </ul>
+
+            <h4>4. Dimensionality Reduction (For High-Dimensional Data)</h4>
+
+            <h5>📌 When to Choose Principal Component Analysis (PCA)?</h5>
+            <ul>
+                <li>When reducing the number of features while preserving variance.</li>
+                <li>For improving computational efficiency before applying ML models.</li>
+                <li>For image compression, noise reduction.</li>
+            </ul>
+
+            <h5>📌 When to Choose Linear Discriminant Analysis (LDA)?</h5>
+            <ul>
+                <li>When the goal is classification, not just feature reduction.</li>
+                <li>When maximizing class separability is important.</li>
+                <li>For facial recognition, text classification.</li>
+            </ul>
+
+            <h4>5. Reinforcement Learning (When an Agent Learns from Interactions)</h4>
+
+            <h5>📌 When to Choose Q-Learning?</h5>
+            <ul>
+                <li>For game AI and self-learning agents.</li>
+                <li>For decision-making in uncertain environments.</li>
+            </ul>
+
+            <h5>📌 When to Choose Deep Q-Networks (DQN)?</h5>
+            <ul>
+                <li>For complex decision-making in high-dimensional environments.</li>
+                <li>For self-driving cars, robotics.</li>
+            </ul>
+
+            <h4>Summary Guide</h4>
+            <ul>
+                <li><strong>For binary classification</strong> ➝ Logistic Regression, SVM, Random Forest</li>
+                <li><strong>For multi-class classification</strong> ➝ Random Forest, XGBoost, SVM</li>
+                <li><strong>For regression tasks</strong> ➝ Linear Regression, Random Forest, XGBoost</li>
+                <li><strong>For clustering</strong> ➝ K-Means, DBSCAN, Hierarchical Clustering</li>
+                <li><strong>For dimensionality reduction</strong> ➝ PCA, LDA</li>
+                <li><strong>For reinforcement learning</strong> ➝ Q-Learning, DQN</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="failure-cases">
+        <div class="failure-cases">
+            <div>
+                <h3>Architecture and Training Differences Between GPT-2, GPT-3, GPT-4, and DeepSeek</h3>
+                <h4>1. GPT-2</h4>
+                <ul>
+                    <li><strong>Architecture</strong>: Transformer-based (decoder-only), 1.5 billion parameters, 48
+                        layers.</li>
+                    <li><strong>Training Data</strong>: Trained on WebText (40GB of text from Reddit links).</li>
+                    <li><strong>Key Features</strong>: Focused on text generation, limited contextual understanding, no
+                        task-specific fine-tuning required.</li>
+                    <li><strong>Applications</strong>: Text completion, basic dialogue systems, and content generation.
+                    </li>
+                </ul>
+                <h4>2. GPT-3</h4>
+                <ul>
+                    <li><strong>Architecture</strong>: Scaled-up transformer (175B parameters), same decoder-only
+                        structure but with sparse attention patterns.</li>
+                    <li><strong>Training Data</strong>: Diverse datasets including Common Crawl, books, Wikipedia, and
+                        filtered web content (570GB).</li>
+                    <li><strong>Key Features</strong>: Introduced few-shot/zero-shot learning, improved coherence, but
+                        prone to factual errors.</li>
+                    <li><strong>Applications</strong>: Advanced NLP tasks (translation, summarization), chatbots, and
+                        code generation.</li>
+                </ul>
+                <h4>3. GPT-4</h4>
+                <ul>
+                    <li><strong>Architecture</strong>: Speculated to use a hybrid dense/sparse (Mixture of Experts, MoE)
+                        architecture. Multimodal (text and image inputs). Exact parameter count undisclosed (rumored
+                        ~1.8T).</li>
+                    <li><strong>Training Data</strong>: Larger and more diverse, including updated web content up to
+                        September 2023.</li>
+                    <li><strong>Key Features</strong>: Enhanced reasoning, reliability, and alignment with human values.
+                        Supports multimodal inputs.</li>
+                    <li><strong>Applications</strong>: Complex problem-solving, creative writing, enterprise
+                        integrations, and vision-language tasks.</li>
+                </ul>
+                <h4>4. DeepSeek</h4>
+                <ul>
+                    <li><strong>Architecture</strong>: Transformer-based with optimizations (e.g., dynamic computation,
+                        sparse attention). Focus on efficiency and scalability.</li>
+                    <li><strong>Training Data</strong>: Multilingual datasets (including Chinese), domain-specific data
+                        for vertical applications (e.g., finance, healthcare).</li>
+                    <li><strong>Key Features</strong>: Emphasis on low-resource language support, edge deployment via
+                        model compression, and task-specific adaptation.</li>
+                    <li><strong>Applications</strong>: Cross-lingual NLP, industrial automation, and lightweight
+                        deployment on devices.</li>
+                </ul>
+                <h4>Key Differences</h4>
+                <ul>
+                    <li><strong>Scale</strong>: GPT-3 (175B) ≪ GPT-4 (rumored ~1.8T) > GPT-2 (1.5B). DeepSeek scales
+                        variably for efficiency.</li>
+                    <li><strong>Training</strong>: GPT-4 uses advanced alignment techniques; DeepSeek prioritizes
+                        multilingual and edge optimization.</li>
+                    <li><strong>Modality</strong>: GPT-4 is multimodal; others are text-only (unless customized).</li>
+                    <li><strong>Efficiency</strong>: DeepSeek emphasizes compression and dynamic computation, unlike
+                        OpenAI's dense scaling.</li>
+                </ul>
+            </div>
+            <div>
+                <h3>Detailed Breakdown of GPT-4 and DeepSeek</h3>
+
+                <h4>GPT-4</h4>
+                <ul>
+                    <li><strong>Architecture</strong>:
+                        <ul>
+                            <li>Likely uses a <strong>Mixture of Experts (MoE)</strong> architecture, combining
+                                specialized sub-networks ("experts") for efficiency. This allows scaling to trillions of
+                                parameters (rumored ~1.8T) without proportionally increasing computational costs.</li>
+                            <li><strong>Multimodal</strong>: Accepts both text and image inputs (though output remains
+                                text-only as of public releases). Vision integration likely involves separate encoders
+                                for images fused with the language model.</li>
+                            <li>Improved attention mechanisms and longer context windows (up to 128k tokens in some
+                                versions), enabling deeper coherence in long-form tasks.</li>
+                        </ul>
+                    </li>
+                    <li><strong>Training</strong>:
+                        <ul>
+                            <li>Data: Trained on a vast corpus including books, academic papers, code repositories, and
+                                web content up to late 2023. Emphasis on quality filtering to reduce biases/errors.</li>
+                            <li><strong>Alignment</strong>: Uses advanced reinforcement learning from human feedback
+                                (RLHF) and synthetic data (e.g., model-generated critiques) to improve safety and
+                                factual accuracy.</li>
+                            <li>Multimodal training: Combines text-image pairs (e.g., captioned images, diagrams) to
+                                ground visual understanding in language.</li>
+                        </ul>
+                    </li>
+                    <li><strong>Key Innovations</strong>:
+                        <ul>
+                            <li><strong>Steerability</strong>: Users can guide outputs via system-level instructions
+                                (e.g., "act as a lawyer") for task-specific behavior.</li>
+                            <li><strong>Calibration</strong>: Better at acknowledging uncertainty (e.g., "I don't know"
+                                responses) and avoiding hallucinations.</li>
+                            <li><strong>Cross-domain reasoning</strong>: Excels at connecting concepts from science,
+                                law, and creative domains.</li>
+                        </ul>
+                    </li>
+                    <li><strong>Applications</strong>:
+                        <ul>
+                            <li>Enterprise: Legal document analysis, medical report generation, code debugging with
+                                context.</li>
+                            <li>Creative: Screenplay drafting with scene descriptions, image-to-text analysis (e.g.,
+                                explaining charts).</li>
+                            <li>Education: Personalized tutoring with diagrams/math support.</li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <h4>DeepSeek</h4>
+                <ul>
+                    <li><strong>Architecture</strong>:
+                        <ul>
+                            <li><strong>Efficiency-first design</strong>: Prioritizes inference speed and memory
+                                footprint. Techniques include:
+                                <ul>
+                                    <li><strong>Dynamic computation</strong>: Allocates more resources to complex
+                                        queries (e.g., math problems) and less to simple ones (e.g., greetings).</li>
+                                    <li><strong>Model compression</strong>: Distillation/pruning to create smaller
+                                        variants (e.g., for mobile devices).</li>
+                                </ul>
+                            </li>
+                            <li><strong>Sparse attention</strong>: Reduces redundant token interactions for faster
+                                processing.</li>
+                            <li><strong>Modularity</strong>: Plug-and-play components for domain adaptation (e.g.,
+                                adding a medical module).</li>
+                        </ul>
+                    </li>
+                    <li><strong>Training</strong>:
+                        <ul>
+                            <li>Data: Heavy focus on <strong>non-English languages</strong> (e.g., Chinese, Arabic) and
+                                low-resource dialects. Combines general web data with domain-specific corpora (e.g.,
+                                financial reports, engineering manuals).</li>
+                            <li><strong>Multi-task learning</strong>: Jointly trains on diverse objectives (translation,
+                                summarization, Q&A) to improve generalization.</li>
+                            <li><strong>Edge-aware training</strong>: Simulates real-world deployment constraints (e.g.,
+                                intermittent connectivity) during training.</li>
+                        </ul>
+                    </li>
+                    <li><strong>Key Innovations</strong>:
+                        <ul>
+                            <li><strong>Low-resource optimization</strong>: Performs well with minimal fine-tuning data,
+                                critical for niche industries.</li>
+                            <li><strong>Energy efficiency</strong>: Designed for sustainability, reducing carbon
+                                footprint per inference.</li>
+                            <li><strong>Privacy</strong>: Supports federated learning for on-device training without
+                                data leakage.</li>
+                        </ul>
+                    </li>
+                    <li><strong>Applications</strong>:
+                        <ul>
+                            <li>Edge AI: Real-time translation on smartphones, IoT device control via voice/text.</li>
+                            <li>Industry 4.0: Predictive maintenance logs in manufacturing, supply chain optimization.
+                            </li>
+                            <li>Localization: Culturally adapted chatbots for regional markets (e.g., Southeast Asia).
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <h4>GPT-4 vs. DeepSeek: Core Differences</h4>
+                <table>
+                    <tr>
+                        <th></th>
+                        <th>GPT-4</th>
+                        <th>DeepSeek</th>
+                    </tr>
+                    <tr>
+                        <td><strong>Focus</strong></td>
+                        <td>Maximizing capability, generality</td>
+                        <td>Efficiency, domain specialization</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Modality</strong></td>
+                        <td>Text + Vision (input)</td>
+                        <td>Primarily text (unless customized)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Deployment</strong></td>
+                        <td>Cloud-centric (high compute)</td>
+                        <td>Hybrid (cloud + edge devices)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Use Case</strong></td>
+                        <td>Research, enterprise creativity</td>
+                        <td>Industry automation, lightweight apps</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Languages</strong></td>
+                        <td>English-centric, some multilingual</td>
+                        <td>Strong non-English support</td>
+                    </tr>
+                </table>
+
+                <p><strong>Why Choose DeepSeek Over GPT-4?</strong><br>
+                    DeepSeek suits scenarios requiring low latency (e.g., real-time translation on a phone), strict data
+                    privacy (e.g., hospital records), or specialized domain knowledge (e.g., mining industry jargon).
+                    GPT-4 excels in open-ended tasks needing broad knowledge or multimodal reasoning.</p>
+            </div>
+        </div>
+    </div>
+    <div class="failure-cases">
+        <div class="failure-cases">
+            <div>
+                <h3>📌 Word Hallucination in Language Models</h3>
+                <p>Word hallucination occurs when a language model generates incorrect, misleading, or fabricated
+                    content that is not present in the input data. This can be a significant issue in applications where
+                    accuracy and factual correctness are crucial.</p>
+
+                <h4>🔍 Causes of Word Hallucination</h4>
+                <ul>
+                    <li><strong>Training Data Bias:</strong> The model learns patterns from a large dataset, which may
+                        contain biases or inconsistencies.</li>
+                    <li><strong>Overgeneralization:</strong> The model tries to generate coherent responses by filling
+                        in missing information, leading to plausible but incorrect details.</li>
+                    <li><strong>Next-Token Prediction Limitation:</strong> Since LLMs predict the most likely next word,
+                        they may fabricate information to maintain fluency.</li>
+                    <li><strong>Lack of Context Retention:</strong> Long-range dependencies in text can be difficult for
+                        models, leading to incorrect responses when context is lost.</li>
+                    <li><strong>Reinforcement Learning Trade-offs:</strong> RLHF (Reinforcement Learning from Human
+                        Feedback) improves alignment but may introduce biases by favoring certain outputs.</li>
+                    <li><strong>Dataset Contamination:</strong> If the training data contains incorrect facts or
+                        synthetic text, the model may generate hallucinated outputs.</li>
+                </ul>
+
+                <h4>🚀 How to Reduce Word Hallucination?</h4>
+                <ul>
+                    <li><strong>Use Retrieval-Augmented Generation (RAG):</strong> Instead of relying solely on
+                        pre-trained data, integrate real-time retrieval from verified knowledge bases (e.g., Wikipedia,
+                        internal databases).</li>
+                    <li><strong>Fact-Checking Mechanisms:</strong> Implement post-processing methods to verify model
+                        outputs against trusted sources.</li>
+                    <li><strong>Improve Training Data Quality:</strong> Curate datasets with verified and diverse
+                        sources to minimize biases and inaccuracies.</li>
+                    <li><strong>Fine-Tuning with Domain-Specific Data:</strong> Fine-tune models using industry-specific
+                        knowledge to reduce misinformation.</li>
+                    <li><strong>Confidence Scoring:</strong> Assign confidence scores to model outputs to help users
+                        assess reliability.</li>
+                    <li><strong>Human-in-the-Loop (HITL):</strong> Implement human feedback loops to correct model
+                        errors and refine responses.</li>
+                    <li><strong>Prompt Engineering:</strong> Use structured prompts to guide model responses and reduce
+                        ambiguity.</li>
+                    <li><strong>Use External Verification Models:</strong> Cross-check generated text with another AI
+                        model trained for verification tasks.</li>
+                </ul>
+
+                <h4>💡 Examples of Hallucination</h4>
+                <table border="1">
+                    <tr>
+                        <th>Hallucination Type</th>
+                        <th>Example</th>
+                        <th>Issue</th>
+                    </tr>
+                    <tr>
+                        <td>Fabricated Facts</td>
+                        <td>"Albert Einstein won a Nobel Prize for his work on black holes."</td>
+                        <td>Incorrect claim (he won for the photoelectric effect).</td>
+                    </tr>
+                    <tr>
+                        <td>Non-Existent References</td>
+                        <td>"According to Smith et al. (2022), AI models improve by 90% in accuracy."</td>
+                        <td>Fictitious citation with no real source.</td>
+                    </tr>
+                    <tr>
+                        <td>Incorrect Numerical Data</td>
+                        <td>"The Eiffel Tower is 500 meters tall."</td>
+                        <td>Actual height is 330 meters.</td>
+                    </tr>
+                    <tr>
+                        <td>Logical Inconsistencies</td>
+                        <td>"The sun sets in the east in some parts of the world."</td>
+                        <td>Contradicts fundamental physics.</td>
+                    </tr>
+                </table>
+
+                <h4>🔮 Future Developments</h4>
+                <ul>
+                    <li><strong>Advanced RAG Models:</strong> Integrating real-time search and fact verification.</li>
+                    <li><strong>Improved RLHF:</strong> Using better reward models to prioritize factual accuracy.</li>
+                    <li><strong>Hybrid AI Approaches:</strong> Combining rule-based and neural methods for more
+                        controlled text generation.</li>
+                    <li><strong>Better Evaluation Metrics:</strong> Developing benchmarks like factual consistency
+                        scores to assess model reliability.</li>
+                </ul>
+
+                <h3>📢 Conclusion</h3>
+                <p>Word hallucination remains a major challenge in AI models. Techniques like RAG, fact-checking, and
+                    fine-tuning can help mitigate it, but ongoing research is needed for completely reliable
+                    AI-generated content.</p>
+            </div>
+
+        </div>
+    </div>
+    <div class="failure-cases">
+        <div class="failure-cases">
+            <div>
+                <h2>📌 Comprehensive Evaluation of an LLM Model in a RAG Pipeline</h2>
+                <p>Evaluating a Large Language Model (LLM) built using a <strong>Retrieval-Augmented Generation
+                        (RAG)</strong> pipeline involves assessing two core components:</p>
+                <ul>
+                    <li><strong>Retrieval Performance:</strong> Ensuring that the correct documents are retrieved.</li>
+                    <li><strong>Generation Quality:</strong> Ensuring that the model produces factually accurate,
+                        coherent, and relevant responses.</li>
+                </ul>
+
+                <h3>🔍 1. Evaluating the Retrieval Component</h3>
+                <p>The retrieval component is responsible for fetching relevant documents from a knowledge base. Its
+                    effectiveness is evaluated using:</p>
+
+                <h4>📊 Key Metrics:</h4>
+                <ul>
+                    <li><strong>Recall@K:</strong> Measures whether the correct document appears in the top-K retrieved
+                        results.
+                        <ul>
+                            <li>Example: If a user asks about “heart disease symptoms” and the relevant document is in
+                                the top 3 retrieved documents, Recall@3 is high.</li>
+                        </ul>
+                    </li>
+                    <li><strong>Precision@K:</strong> Evaluates how many of the retrieved documents are actually
+                        relevant.</li>
+                    <li><strong>MRR (Mean Reciprocal Rank):</strong> Determines how early the most relevant document
+                        appears in the ranked list.</li>
+                    <li><strong>NDCG (Normalized Discounted Cumulative Gain):</strong> Assigns a score based on the
+                        ranking and relevance of retrieved documents.</li>
+                </ul>
+
+                <h3>📝 2. Evaluating the Generation Component</h3>
+                <p>Once the relevant documents are retrieved, the LLM generates responses based on them. Evaluation
+                    metrics focus on:</p>
+
+                <h4>📈 Quality Metrics:</h4>
+                <ul>
+                    <li><strong>BLEU (Bilingual Evaluation Understudy):</strong> Measures text similarity to reference
+                        responses (useful for structured responses).</li>
+                    <li><strong>ROUGE (Recall-Oriented Understudy for Gisting Evaluation):</strong> Evaluates overlap
+                        between generated text and ground truth.
+                        <ul>
+                            <li>ROUGE-N: Measures n-gram overlap.</li>
+                            <li>ROUGE-L: Measures longest common subsequence overlap.</li>
+                        </ul>
+                    </li>
+                    <li><strong>METEOR:</strong> Accounts for synonyms and stemming variations in generated text.</li>
+                    <li><strong>Faithfulness Score:</strong> Checks if the generated response correctly represents the
+                        retrieved facts.</li>
+                    <li><strong>Hallucination Rate:</strong> Measures the frequency of incorrect or fabricated
+                        information.</li>
+                </ul>
+
+                <h4>⚠️ Error Analysis:</h4>
+                <ul>
+                    <li><strong>Fact Verification:</strong> Comparing generated output with external knowledge sources.
+                    </li>
+                    <li><strong>Contradictions:</strong> Identifying if the response contradicts retrieved facts.</li>
+                    <li><strong>Bias Analysis:</strong> Checking for model-generated biases in responses.</li>
+                </ul>
+
+                <h3>⚡ 3. Evaluating Speed & Latency</h3>
+                <p>Performance evaluation is crucial to ensure real-time usability. Key factors include:</p>
+                <ul>
+                    <li><strong>Response Time:</strong> Measuring the time taken from query input to final response.
+                    </li>
+                    <li><strong>Token Efficiency:</strong> Ensuring the model does not generate unnecessary text.</li>
+                    <li><strong>Compute Cost:</strong> Measuring the resource consumption of retrieval and generation.
+                    </li>
+                </ul>
+
+                <h3>🧑‍🔬 4. Human-in-the-Loop (HITL) Evaluation</h3>
+                <p>While automated metrics are useful, human evaluation remains essential for subjective assessments:
+                </p>
+                <ul>
+                    <li><strong>Expert Review:</strong> Domain experts verify factual correctness.</li>
+                    <li><strong>User Feedback:</strong> Collecting ratings from real users.</li>
+                    <li><strong>A/B Testing:</strong> Comparing different model versions.</li>
+                </ul>
+
+                <h3>🛠️ 5. Debugging & Continuous Improvement</h3>
+                <ul>
+                    <li><strong>Failure Case Analysis:</strong> Studying incorrect outputs to refine retrieval and
+                        generation.</li>
+                    <li><strong>Bias Detection:</strong> Ensuring the model remains neutral and unbiased.</li>
+                    <li><strong>Edge Case Testing:</strong> Checking performance on ambiguous or adversarial queries.
+                    </li>
+                </ul>
+
+                <h3>📢 Conclusion</h3>
+                <p>To evaluate an LLM model in a RAG pipeline effectively, a multi-layered approach combining
+                    <strong>retrieval accuracy, generation quality, latency, and human validation</strong> should be
+                    used. This ensures reliability, factual correctness, and efficiency in real-world applications.</p>
+            </div>
+
+        </div>
+    </div>
+    <div class="failure-cases">
+        <div class="failure-cases">
+            <div>
+                <h2>📌 Foundational Model vs. Sort of Model</h2>
+
+                <h3>🔹 What is a Foundational Model?</h3>
+                <p>A <strong>Foundational Model</strong> is a large-scale AI model trained on vast datasets using
+                    self-supervised learning. These models serve as the base for various downstream applications.</p>
+
+                <h4>⚡ Key Characteristics:</h4>
+                <ul>
+                    <li>Trained on massive datasets (text, images, code, etc.).</li>
+                    <li>Uses deep learning architectures (e.g., transformers).</li>
+                    <li>Can be fine-tuned for specific tasks.</li>
+                    <li>General-purpose and adaptable (e.g., ChatGPT, BERT, LLaMA).</li>
+                </ul>
+
+                <h4>📌 Examples of Foundational Models:</h4>
+                <ul>
+                    <li><strong>GPT (Generative Pre-trained Transformer):</strong> Used for text generation and
+                        chatbots.</li>
+                    <li><strong>BERT (Bidirectional Encoder Representations from Transformers):</strong> Used for NLP
+                        tasks like sentiment analysis.</li>
+                    <li><strong>CLIP (Contrastive Language-Image Pretraining):</strong> Used for vision-language
+                        understanding.</li>
+                </ul>
+
+                <h3>🔹 What is a "Sort of" Model?</h3>
+                <p>The phrase "<strong>sort of model</strong>" is not a standard technical term. However, it can refer
+                    to:</p>
+
+                <ul>
+                    <li><strong>Different Categories of Models:</strong> Classification, regression, generative models,
+                        etc.</li>
+                    <li><strong>Variations of a Base Model:</strong> Distilled, fine-tuned, or specialized versions of a
+                        foundational model.</li>
+                    <li><strong>Task-Specific Models:</strong> Custom models trained for domain-specific applications.
+                    </li>
+                </ul>
+
+                <h3>🔍 Comparison Table</h3>
+                <table border="1">
+                    <tr>
+                        <th>Feature</th>
+                        <th>Foundational Model</th>
+                        <th>Sort of Model</th>
+                    </tr>
+                    <tr>
+                        <td><strong>Purpose</strong></td>
+                        <td>General-purpose, large-scale AI model</td>
+                        <td>Specific use case or variation of a foundational model</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Training Data</strong></td>
+                        <td>Trained on massive, diverse datasets</td>
+                        <td>Trained on domain-specific or fine-tuned data</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Examples</strong></td>
+                        <td>GPT-4, BERT, DALL·E</td>
+                        <td>Fine-tuned GPT for healthcare, customer support chatbots</td>
+                    </tr>
+                </table>
+
+                <h3>📢 Conclusion</h3>
+                <p><strong>Foundational models</strong> are large, general-purpose models that can be adapted for
+                    different applications, while "<strong>sort of models</strong>" typically refer to specific
+                    variations, fine-tuned versions, or task-specific models built on foundational models.</p>
+            </div>
+
+        </div>
+    </div>
+    <div class="failure-cases">
+        <div class="failure-cases">
+            <div>
+                <h2>📌 What Happens If You Don’t Use an Activation Function in a Neural Network?</h2>
+
+                <h3>🔹 Role of Activation Functions</h3>
+                <p>Activation functions introduce <strong>non-linearity</strong> into a neural network, allowing it to
+                    learn complex patterns. Without activation functions, a neural network behaves like a simple linear
+                    function.</p>
+
+                <h3>⚠️ Consequences of Not Using an Activation Function</h3>
+
+                <h4>1️⃣ The Entire Neural Network Becomes a Linear Model</h4>
+                <p>If we remove activation functions from all layers, the output of each layer is just a weighted sum of
+                    the previous layer:</p>
+                <pre>Output = W2 * (W1 * X) = W_final * X</pre>
+                <p>This collapses the network into a <strong>single-layer linear model</strong>, no matter how many
+                    layers it has.</p>
+
+                <h4>2️⃣ Inability to Learn Complex Patterns</h4>
+                <p>Neural networks with activation functions can model non-linear relationships. Without them, the
+                    network can only learn linear mappings, which limits its usefulness for real-world problems like
+                    image recognition and NLP.</p>
+
+                <h4>3️⃣ No Representation Power in Deep Networks</h4>
+                <p>A deep network without activation functions is equivalent to a single-layer perceptron, making the
+                    depth meaningless.</p>
+
+                <h4>4️⃣ No Universal Approximation Capability</h4>
+                <p>With activation functions, neural networks can approximate any function (Universal Approximation
+                    Theorem). Without them, this capability is lost.</p>
+
+                <h3>🔍 Example Comparison</h3>
+                <table border="1">
+                    <tr>
+                        <th>With Activation Function</th>
+                        <th>Without Activation Function</th>
+                    </tr>
+                    <tr>
+                        <td>Can model non-linear decision boundaries.</td>
+                        <td>Can only model linear relationships.</td>
+                    </tr>
+                    <tr>
+                        <td>Capable of deep learning and hierarchical feature learning.</td>
+                        <td>Becomes equivalent to a linear regression model.</td>
+                    </tr>
+                    <tr>
+                        <td>Used in complex tasks like image classification and NLP.</td>
+                        <td>Fails at complex tasks due to lack of non-linearity.</td>
+                    </tr>
+                </table>
+
+                <h3>✅ Conclusion</h3>
+                <p>Activation functions are <strong>crucial</strong> for deep learning. Without them, neural networks
+                    lose their ability to learn and model complex patterns, effectively reducing them to simple linear
+                    models.</p>
+            </div>
+
+        </div>
+    </div>
+    <div class="failure-cases">
+        <div class="failure-cases">
+            <div>
+                <h2>📌 Dimensionality Reduction: PCA and LDA</h2>
+
+                <h3>🔹 What is Dimensionality Reduction?</h3>
+                <p>Dimensionality reduction is the process of reducing the number of input variables (features) while
+                    preserving important information. This helps in:</p>
+                <ul>
+                    <li>Reducing computational complexity</li>
+                    <li>Eliminating redundant features</li>
+                    <li>Improving model performance and interpretability</li>
+                    <li>Handling the "curse of dimensionality"</li>
+                </ul>
+
+                <h3>📌 1. Principal Component Analysis (PCA)</h3>
+                <p><strong>PCA</strong> is an unsupervised technique used to find new axes (principal components) that
+                    maximize variance in the data.</p>
+
+                <h4>🛠️ How PCA Works:</h4>
+                <ol>
+                    <li>Computes the covariance matrix of the data.</li>
+                    <li>Finds eigenvectors and eigenvalues of the covariance matrix.</li>
+                    <li>Selects the top k eigenvectors (principal components) with the highest variance.</li>
+                    <li>Projects data onto these new axes.</li>
+                </ol>
+
+                <h4>📊 Example Use Cases:</h4>
+                <ul>
+                    <li>Image compression (reducing pixel dimensions)</li>
+                    <li>Feature extraction for machine learning models</li>
+                    <li>Noise reduction in datasets</li>
+                </ul>
+
+                <h4>⚠️ Key Points:</h4>
+                <ul>
+                    <li>PCA is used for feature extraction, not classification.</li>
+                    <li>Works best when features are correlated.</li>
+                    <li>Does not consider class labels (unsupervised).</li>
+                </ul>
+
+                <h3>📌 2. Linear Discriminant Analysis (LDA)</h3>
+                <p><strong>LDA</strong> is a supervised technique used to find a lower-dimensional space that best
+                    separates different classes.</p>
+
+                <h4>🛠️ How LDA Works:</h4>
+                <ol>
+                    <li>Computes the mean of each class.</li>
+                    <li>Finds the within-class and between-class scatter matrices.</li>
+                    <li>Solves the eigenvalue problem to maximize class separability.</li>
+                    <li>Projects data onto the new feature space.</li>
+                </ol>
+
+                <h4>📊 Example Use Cases:</h4>
+                <ul>
+                    <li>Facial recognition</li>
+                    <li>Spam classification</li>
+                    <li>Medical diagnosis</li>
+                </ul>
+
+                <h4>⚠️ Key Points:</h4>
+                <ul>
+                    <li>LDA is used for classification, unlike PCA.</li>
+                    <li>Works best when classes are well-separated.</li>
+                    <li>Uses class labels (supervised).</li>
+                </ul>
+
+                <h3>🔍 Comparison Table</h3>
+                <table border="1">
+                    <tr>
+                        <th>Feature</th>
+                        <th>PCA (Principal Component Analysis)</th>
+                        <th>LDA (Linear Discriminant Analysis)</th>
+                    </tr>
+                    <tr>
+                        <td><strong>Type</strong></td>
+                        <td>Unsupervised</td>
+                        <td>Supervised</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Objective</strong></td>
+                        <td>Maximizes variance</td>
+                        <td>Maximizes class separability</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Works on</strong></td>
+                        <td>Feature extraction</td>
+                        <td>Classification problems</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Uses class labels?</strong></td>
+                        <td>No</td>
+                        <td>Yes</td>
+                    </tr>
+                </table>
+
+                <h3>✅ Conclusion</h3>
+                <p><strong>PCA</strong> is used for dimensionality reduction without considering class labels, while
+                    <strong>LDA</strong> is used for reducing dimensions while maximizing class separability.</p>
+            </div>
+
+        </div>
+    </div>
+    <div class="failure-cases">
+        <div class="failure-cases">
+            <div>
+                <h2>📌 Docker and Its Role in Deployment</h2>
+
+                <h3>🔹 What is Docker?</h3>
+                <p><strong>Docker</strong> is an open-source platform that enables developers to build, package, and
+                    distribute applications using <strong>containers</strong>. Containers ensure that applications run
+                    consistently across different environments.</p>
+
+                <h4>🛠️ Key Features of Docker:</h4>
+                <ul>
+                    <li><strong>Containerization:</strong> Packages applications and dependencies together.</li>
+                    <li><strong>Portability:</strong> Runs consistently across various operating systems and cloud
+                        providers.</li>
+                    <li><strong>Scalability:</strong> Easily deploys multiple instances for load balancing.</li>
+                    <li><strong>Isolation:</strong> Ensures applications do not interfere with each other.</li>
+                </ul>
+
+                <h3>📌 Why is Docker Used in Deployment?</h3>
+                <p>Docker simplifies the deployment process by ensuring that applications work the same way in different
+                    environments.</p>
+
+                <h4>⚡ Key Benefits:</h4>
+                <ul>
+                    <li><strong>Eliminates "It Works on My Machine" Issues:</strong> Containers package everything,
+                        making deployments consistent.</li>
+                    <li><strong>Faster Deployment:</strong> Containers start quickly compared to virtual machines.</li>
+                    <li><strong>Efficient Resource Utilization:</strong> Uses fewer resources than traditional VMs.</li>
+                    <li><strong>Easy Rollbacks:</strong> Can revert to previous container versions easily.</li>
+                    <li><strong>Cloud & CI/CD Integration:</strong> Seamlessly integrates with AWS, Azure, Kubernetes,
+                        and CI/CD pipelines.</li>
+                </ul>
+
+                <h3>📌 Docker in Deployment Workflow</h3>
+                <ol>
+                    <li>Developer writes code and creates a <code>Dockerfile</code> (blueprint for the container).</li>
+                    <li>Builds a Docker image using <code>docker build</code>.</li>
+                    <li>Pushes the image to a container registry (Docker Hub, AWS ECR, etc.).</li>
+                    <li>Deploys the container using <code>docker run</code> or an orchestration tool like Kubernetes.
+                    </li>
+                </ol>
+
+                <h3>🔍 Example: Simple Dockerfile</h3>
+                <pre>
+                # Use an official Python runtime as a parent image
+                FROM python:3.9
+              
+                # Set the working directory
+                WORKDIR /app
+              
+                # Copy the current directory contents into the container
+                COPY . .
+              
+                # Install dependencies
+                RUN pip install -r requirements.txt
+              
+                # Run the application
+                CMD ["python", "app.py"]
+                </pre>
+
+                <h3>✅ Conclusion</h3>
+                <p>Docker simplifies deployment by packaging applications and dependencies into isolated containers.
+                    This ensures consistency, portability, and scalability in software development and cloud
+                    environments.</p>
+            </div>
+
+        </div>
+    </div>
+    <div class="failure-cases">
+        <div class="failure-cases">
+            <div>
+                <h2>📌 TF-IDF, Word Embeddings, and BM25 Encoder</h2>
+
+                <h3>🔹 1. TF-IDF (Term Frequency-Inverse Document Frequency)</h3>
+                <p>TF-IDF is a statistical method used to evaluate the importance of a word in a document relative to a
+                    collection (corpus). It helps in text retrieval and feature extraction.</p>
+
+                <h4>🛠️ How TF-IDF Works:</h4>
+                <ol>
+                    <li><strong>Term Frequency (TF):</strong> Measures how often a word appears in a document.</li>
+                    <li><strong>Inverse Document Frequency (IDF):</strong> Reduces the weight of common words and boosts
+                        rare words.</li>
+                    <li>Formula: <code>TF-IDF = TF * IDF</code></li>
+                </ol>
+
+                <h4>📊 Example:</h4>
+                <p>If "machine" appears 3 times in a document of 100 words, its TF is <code>3/100 = 0.03</code>. If
+                    "machine" appears in 10 out of 1000 documents, its IDF is:</p>
+                <pre>IDF = log(1000/10) = 2</pre>
+                <p>TF-IDF score = <code>0.03 * 2 = 0.06</code></p>
+
+                <h4>⚠️ Limitations of TF-IDF:</h4>
+                <ul>
+                    <li>Does not capture word meaning or relationships.</li>
+                    <li>Sensitive to long documents.</li>
+                    <li>Works well for keyword-based retrieval but not for contextual understanding.</li>
+                </ul>
+
+                <hr>
+
+                <h3>🔹 2. Word Embedding Techniques</h3>
+                <p>Word embeddings represent words as dense numerical vectors, capturing semantic meanings and
+                    relationships.</p>
+
+                <h4>📌 Popular Word Embedding Models:</h4>
+                <ul>
+                    <li><strong>Word2Vec:</strong> Uses Skip-gram & CBOW models to learn word relationships.</li>
+                    <li><strong>GloVe:</strong> Captures co-occurrence patterns across a large corpus.</li>
+                    <li><strong>FastText:</strong> Handles out-of-vocabulary (OOV) words by using subword information.
+                    </li>
+                    <li><strong>BERT Embeddings:</strong> Contextualized embeddings that consider the surrounding words.
+                    </li>
+                </ul>
+
+                <h4>📊 Example of Word2Vec:</h4>
+                <p>If "king" is similar to "queen", Word2Vec can learn relationships like:</p>
+                <pre>Vector("king") - Vector("man") + Vector("woman") ≈ Vector("queen")</pre>
+
+                <h4>⚡ Advantages:</h4>
+                <ul>
+                    <li>Captures semantic meaning.</li>
+                    <li>Works well for NLP tasks like sentiment analysis, machine translation.</li>
+                </ul>
+
+                <h4>⚠️ Limitations:</h4>
+                <ul>
+                    <li>Requires large training data.</li>
+                    <li>Context-independent (except BERT and transformer-based embeddings).</li>
+                </ul>
+
+                <hr>
+
+                <h3>🔹 3. BM25 Encoder</h3>
+                <p>BM25 (Best Matching 25) is an advanced ranking function used in information retrieval. It improves
+                    upon TF-IDF by considering term saturation and document length.</p>
+
+                <h4>🛠️ How BM25 Works:</h4>
+                <ul>
+                    <li>Modifies TF-IDF by normalizing term frequency.</li>
+                    <li>Uses a free parameter <code>k1</code> to control term saturation.</li>
+                    <li>Applies <code>b</code> to adjust for document length.</li>
+                </ul>
+
+                <h4>📊 BM25 Formula:</h4>
+                <pre>
+                  BM25 = IDF * [(TF * (k1 + 1)) / (TF + k1 * (1 - b + b * (doc length / avg doc length)))]
+                </pre>
+
+                <h4>📌 BM25 vs. TF-IDF</h4>
+                <table border="1">
+                    <tr>
+                        <th>Feature</th>
+                        <th>TF-IDF</th>
+                        <th>BM25</th>
+                    </tr>
+                    <tr>
+                        <td>Scoring</td>
+                        <td>Simple multiplication of TF & IDF</td>
+                        <td>Adjusts for term saturation & document length</td>
+                    </tr>
+                    <tr>
+                        <td>Normalization</td>
+                        <td>No normalization</td>
+                        <td>Length normalization improves ranking</td>
+                    </tr>
+                    <tr>
+                        <td>Use Case</td>
+                        <td>Basic keyword search</td>
+                        <td>More accurate document retrieval</td>
+                    </tr>
+                </table>
+
+                <h4>✅ When to Use BM25?</h4>
+                <ul>
+                    <li>When ranking search results in a retrieval system.</li>
+                    <li>For document ranking in a search engine.</li>
+                    <li>When document length varies significantly.</li>
+                </ul>
+
+                <hr>
+                <h3>✅ Conclusion</h3>
+                <ul>
+                    <li><strong>TF-IDF</strong> is a simple text-weighting technique used for keyword-based retrieval.
+                    </li>
+                    <li><strong>Word Embeddings</strong> capture deep semantic relationships and are useful for deep
+                        learning models.</li>
+                    <li><strong>BM25</strong> is an advanced ranking function that improves upon TF-IDF for search
+                        engines and document retrieval.</li>
+                </ul>
+
+            </div>
+        </div>
+        <div class="failure-cases">
+            <div class="failure-cases">
+                <div>
+                    <h2>📌 Standardization vs. Normalization</h2>
+
+                    <h3>🔹 1. Standardization (Z-Score Normalization)</h3>
+                    <p>Standardization transforms data to have a <strong>mean of 0</strong> and a <strong>standard
+                            deviation of 1</strong>. It is useful when data follows a normal (Gaussian) distribution.
+                    </p>
+
+                    <h4>📊 Formula:</h4>
+                    <pre>
+                  X_standardized = (X - mean) / standard deviation
+                </pre>
+
+                    <h4>✅ When to Use Standardization?</h4>
+                    <ul>
+                        <li>When the data has varying scales.</li>
+                        <li>For algorithms that assume normally distributed data (e.g., Linear Regression, Logistic
+                            Regression).</li>
+                        <li>For ML models that rely on distances like KNN, PCA, and SVM.</li>
+                    </ul>
+
+                    <h4>⚠️ Example:</h4>
+                    <p>Original Data:</p>
+                    <pre>[50, 100, 150, 200]</pre>
+                    <p>After Standardization (assuming mean = 125, std = 50):</p>
+                    <pre>[-1.5, -0.5, 0.5, 1.5]</pre>
+
+                    <hr>
+
+                    <h3>🔹 2. Normalization (Min-Max Scaling)</h3>
+                    <p>Normalization scales data between a fixed range, usually <code>[0, 1]</code> or
+                        <code>[-1, 1]</code>. It is useful when data does not follow a normal distribution.</p>
+
+                    <h4>📊 Formula:</h4>
+                    <pre>
+                  X_normalized = (X - min) / (max - min)
+                </pre>
+
+                    <h4>✅ When to Use Normalization?</h4>
+                    <ul>
+                        <li>When features have different scales.</li>
+                        <li>For algorithms that use gradient descent (e.g., Neural Networks, Deep Learning).</li>
+                        <li>When the data does not have a normal distribution.</li>
+                    </ul>
+
+                    <h4>⚠️ Example:</h4>
+                    <p>Original Data:</p>
+                    <pre>[50, 100, 150, 200]</pre>
+                    <p>After Min-Max Normalization:</p>
+                    <pre>[0, 0.33, 0.66, 1]</pre>
+
+                    <hr>
+
+                    <h3>📌 Standardization vs. Normalization</h3>
+                    <table border="1">
+                        <tr>
+                            <th>Feature</th>
+                            <th>Standardization</th>
+                            <th>Normalization</th>
+                        </tr>
+                        <tr>
+                            <td>Formula</td>
+                            <td>(X - mean) / std dev</td>
+                            <td>(X - min) / (max - min)</td>
+                        </tr>
+                        <tr>
+                            <td>Range</td>
+                            <td>Centered around 0</td>
+                            <td>Scales between [0,1] or [-1,1]</td>
+                        </tr>
+                        <tr>
+                            <td>Best for</td>
+                            <td>Normally distributed data</td>
+                            <td>Non-Gaussian data</td>
+                        </tr>
+                        <tr>
+                            <td>Used in</td>
+                            <td>Linear Regression, PCA, KNN, SVM</td>
+                            <td>Neural Networks, Deep Learning</td>
+                        </tr>
+                    </table>
+
+                    <h3>✅ Conclusion</h3>
+                    <ul>
+                        <li><strong>Use Standardization</strong> when data follows a normal distribution and for
+                            distance-based models.</li>
+                        <li><strong>Use Normalization</strong> when data has different scales and does not follow a
+                            normal distribution.</li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+        <div class="failure-cases">
+            <div class="failure-cases">
+                <div>
+                    <h2>📌 Gaussian Distribution (Normal Distribution)</h2>
+
+                    <h3>🔹 What is Gaussian Distribution?</h3>
+                    <p>Gaussian Distribution, also called <strong>Normal Distribution</strong>, is a symmetric,
+                        bell-shaped probability distribution that is widely used in statistics and machine learning.</p>
+
+                    <h4>🛠️ Key Properties:</h4>
+                    <ul>
+                        <li>Symmetric around the mean (μ).</li>
+                        <li>The total area under the curve is 1.</li>
+                        <li>Defined by <strong>mean (μ)</strong> and <strong>standard deviation (σ)</strong>.</li>
+                        <li>68% of data falls within 1σ, 95% within 2σ, and 99.7% within 3σ (Empirical Rule).</li>
+                    </ul>
+
+                    <h4>📊 Probability Density Function (PDF):</h4>
+                    <pre>
+                  f(x) = (1 / (σ * sqrt(2π))) * exp(- (x - μ)² / (2σ²))
+                </pre>
+                    <p>Where:</p>
+                    <ul>
+                        <li><strong>μ</strong> = Mean (center of distribution)</li>
+                        <li><strong>σ</strong> = Standard deviation (spread of distribution)</li>
+                        <li><strong>π</strong> = Mathematical constant (3.1416)</li>
+                        <li><strong>exp</strong> = Exponential function</li>
+                    </ul>
+
+                    <h3>🔹 Applications of Gaussian Distribution</h3>
+                    <ul>
+                        <li>Used in statistical analysis and hypothesis testing.</li>
+                        <li>Forms the basis of algorithms like <strong>Naïve Bayes, PCA, and Gaussian Mixture
+                                Models</strong>.</li>
+                        <li>Helps in outlier detection and anomaly detection.</li>
+                        <li>Essential for feature scaling (e.g., Standardization in Machine Learning).</li>
+                    </ul>
+
+                    <h3>📊 Example of Gaussian Distribution</h3>
+                    <p>Consider students' heights in a class:</p>
+                    <pre>
+                  μ = 170 cm, σ = 10 cm
+                </pre>
+                    <p>Most students have heights around 170 cm, with fewer students at extreme heights.</p>
+
+                    <h3>📌 Standard Normal Distribution</h3>
+                    <p>When <strong>μ = 0</strong> and <strong>σ = 1</strong>, it is called the <strong>Standard Normal
+                            Distribution</strong>. It is used to calculate <strong>z-scores</strong>:</p>
+                    <pre>
+                  Z = (X - μ) / σ
+                </pre>
+
+                    <h3>✅ Conclusion</h3>
+                    <ul>
+                        <li>Gaussian Distribution is fundamental in statistics and ML.</li>
+                        <li>It helps in probability estimation, hypothesis testing, and data modeling.</li>
+                        <li>Many real-world data distributions follow a normal distribution.</li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+        <div class="failure-cases">
+            <div class="failure-cases">
+                <div>
+                    <h2>📌 Role of an Optimizer in Neural Networks</h2>
+
+                    <h3>🔹 What is an Optimizer?</h3>
+                    <p>An <strong>optimizer</strong> in a neural network is an algorithm that adjusts the model’s
+                        parameters (weights and biases) to <strong>minimize the loss function</strong> and improve
+                        accuracy.</p>
+
+                    <h3>🛠️ How Does an Optimizer Work?</h3>
+                    <ul>
+                        <li>Computes the <strong>gradient</strong> of the loss function using
+                            <strong>backpropagation</strong>.</li>
+                        <li>Updates the model's weights to reduce the error.</li>
+                        <li>Iterates until the loss is minimized or reaches convergence.</li>
+                    </ul>
+
+                    <h3>📊 Types of Optimizers</h3>
+
+                    <h4>1️⃣ Gradient Descent (GD)</h4>
+                    <p><strong>Formula:</strong></p>
+                    <pre>
+                  W_new = W_old - α * ∇Loss
+                </pre>
+                    <p>Where:</p>
+                    <ul>
+                        <li><strong>W_new</strong> = Updated weights</li>
+                        <li><strong>W_old</strong> = Current weights</li>
+                        <li><strong>α</strong> = Learning rate</li>
+                        <li><strong>∇Loss</strong> = Gradient of the loss function</li>
+                    </ul>
+                    <h4>🔹 Variants of Gradient Descent:</h4>
+                    <ul>
+                        <li><strong>Batch Gradient Descent:</strong> Uses the entire dataset for each update (slow but
+                            stable).</li>
+                        <li><strong>Stochastic Gradient Descent (SGD):</strong> Updates weights after each data point
+                            (faster but noisy).</li>
+                        <li><strong>Mini-Batch Gradient Descent:</strong> Uses small batches for updates (a balance
+                            between speed and stability).</li>
+                    </ul>
+
+                    <h4>2️⃣ Advanced Optimizers</h4>
+
+                    <h5>🔹 Momentum</h5>
+                    <p>Reduces oscillations by adding past gradients.</p>
+                    <pre>
+                  v = β * v_old + α * ∇Loss
+                  W_new = W_old - v
+                </pre>
+
+                    <h5>🔹 RMSprop</h5>
+                    <p>Adapts learning rate for each parameter.</p>
+                    <pre>
+                  E[g²] = β * E[g²]_old + (1 - β) * g²
+                  W_new = W_old - α / sqrt(E[g²] + ϵ) * ∇Loss
+                </pre>
+
+                    <h5>🔹 Adam (Adaptive Moment Estimation)</h5>
+                    <p>Combines Momentum and RMSprop for faster convergence.</p>
+                    <pre>
+                  m = β1 * m_old + (1 - β1) * ∇Loss
+                  v = β2 * v_old + (1 - β2) * (∇Loss)²
+                  W_new = W_old - α * m / (sqrt(v) + ϵ)
+                </pre>
+
+                    <h3>✅ Choosing the Right Optimizer</h3>
+                    <ul>
+                        <li><strong>SGD:</strong> Simple models, general optimization.</li>
+                        <li><strong>Momentum:</strong> Avoids local minima, speeds up training.</li>
+                        <li><strong>RMSprop:</strong> Good for recurrent networks (RNNs, LSTMs).</li>
+                        <li><strong>Adam:</strong> Works well in most deep learning problems.</li>
+                    </ul>
+
+                    <h3>📌 Conclusion</h3>
+                    <ul>
+                        <li>Optimizers help neural networks <strong>converge faster</strong> and <strong>improve
+                                accuracy</strong>.</li>
+                        <li>Different optimizers work better for different problems.</li>
+                        <li>Choosing the right optimizer is crucial for training efficiency.</li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+        <div class="failure-cases">
+            <div class="failure-cases">
+                <div>
+                    <h2>Evaluation Metrics for NLP Models</h2>
+
+                    <h3>1️⃣ BLEU (Bilingual Evaluation Understudy)</h3>
+                    <p>BLEU measures n-gram precision with a brevity penalty.</p>
+                    <p><b>Example Calculation:</b></p>
+                    <ul>
+                        <li><b>Reference:</b> "The cat sits on the mat."</li>
+                        <li><b>Predicted:</b> "The cat is sitting in the mat."</li>
+                        <li><b>Unigram Matches:</b> 4/7 = 0.57</li>
+                        <li><b>Bigram Matches:</b> 2/6 = 0.33</li>
+                    </ul>
+                    <p><b>Final BLEU Score:</b> 0.43 (43%)</p>
+
+                    <h3>2️⃣ ROUGE (Recall-Oriented Understudy for Gisting Evaluation)</h3>
+                    <p>ROUGE measures recall, checking how much of the reference text appears in the generated text.</p>
+                    <ul>
+                        <li><b>ROUGE-1 (Unigram Recall):</b> 4/6 = 0.67</li>
+                        <li><b>ROUGE-2 (Bigram Recall):</b> 2/5 = 0.4</li>
+                    </ul>
+                    <p><b>Final ROUGE Scores:</b> ROUGE-1: 0.67, ROUGE-2: 0.4</p>
+
+                    <h3>3️⃣ METEOR (Metric for Evaluation of Translation with Explicit ORdering)</h3>
+                    <p>METEOR improves BLEU by considering stemming, synonyms, and word order.</p>
+                    <p><b>Final METEOR Score:</b> 0.55 (55%)</p>
+
+                    <h3>4️⃣ Perplexity (PPL)</h3>
+                    <p>Perplexity measures how well a language model predicts a sequence of words. Lower is better.</p>
+                    <p><b>Formula:</b></p>
+                    <p>PPL = exp(- (1/N) * Σ log P(wi))</p>
+                    <p><b>Example Score:</b> PPL = 50 (lower is better)</p>
+
+                    <h3>5️⃣ BERTScore</h3>
+                    <p>BERTScore compares embeddings using cosine similarity.</p>
+                    <p><b>Final BERTScore:</b> 0.89 (89%)</p>
+
+                    <h3>6️⃣ Frechet Inception Distance (FID)</h3>
+                    <p>FID compares text embeddings to measure realism.</p>
+                    <p><b>Lower FID = Better generated text.</b></p>
+                    <p><b>Example FID Score:</b> 4.5</p>
+
+                    <h3>Final Summary Table</h3>
+                    <table border="1">
+                        <tr>
+                            <th>Metric</th>
+                            <th>Measures</th>
+                            <th>Best Score</th>
+                            <th>Example Value</th>
+                        </tr>
+                        <tr>
+                            <td>BLEU</td>
+                            <td>N-gram precision</td>
+                            <td>High</td>
+                            <td>0.43</td>
+                        </tr>
+                        <tr>
+                            <td>ROUGE</td>
+                            <td>Recall-based match</td>
+                            <td>High</td>
+                            <td>0.67</td>
+                        </tr>
+                        <tr>
+                            <td>METEOR</td>
+                            <td>Semantic similarity</td>
+                            <td>High</td>
+                            <td>0.55</td>
+                        </tr>
+                        <tr>
+                            <td>Perplexity (PPL)</td>
+                            <td>Language model confidence</td>
+                            <td>Low</td>
+                            <td>50</td>
+                        </tr>
+                        <tr>
+                            <td>BERTScore</td>
+                            <td>Meaning similarity</td>
+                            <td>High</td>
+                            <td>0.89</td>
+                        </tr>
+                        <tr>
+                            <td>FID</td>
+                            <td>Text realism</td>
+                            <td>Low</td>
+                            <td>4.5</td>
+                        </tr>
+                    </table>
+
+                    <h3>🚀 Key Takeaways</h3>
+                    <ul>
+                        <li>Use BLEU for translation but supplement it with METEOR.</li>
+                        <li>ROUGE is great for summarization.</li>
+                        <li>BERTScore is best for semantic similarity.</li>
+                        <li>Perplexity is key for evaluating fluency.</li>
+                        <li>FID helps in generative text evaluation.</li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+        <div class="failure-cases">
+            <div class="failure-cases">
+                <div>
+                    <h2>1. Model Architecture</h2>
+                    <p>ChatGPT is built on the <strong>Transformer</strong> architecture, specifically a
+                        <strong>decoder-only</strong> variant known as GPT (Generative Pre-trained Transformer).</p>
+                    <ul>
+                        <li><strong>Self-attention mechanism:</strong> Uses Scaled Dot-Product Attention.</li>
+                        <li><strong>Masked self-attention:</strong> Prevents the model from seeing future tokens.</li>
+                        <li><strong>Positional embeddings:</strong> Encodes word order since transformers lack inherent
+                            sequence understanding.</li>
+                        <li><strong>Feed-forward networks:</strong> Includes layer normalization and residual
+                            connections.</li>
+                    </ul>
+
+                    <h2>2. Pre-training (Unsupervised Learning)</h2>
+                    <p>The model is first trained on a vast corpus of internet text to learn general language patterns.
+                    </p>
+
+                    <h3>Training Objective: Causal Language Modeling (CLM)</h3>
+                    <p>The model predicts the next token <code>x_t</code> given previous tokens
+                        <code>x_1, x_2, ..., x_{t-1}</code>.</p>
+                    <pre>
+                  P(x_t | x_1, x_2, ..., x_{t-1})
+                </pre>
+                    <p>Loss function (negative log-likelihood):</p>
+                    <pre>
+                  L = - ∑ log P(x_t | x_{&lt;t})
+                </pre>
+
+                    <h3>Data Processing</h3>
+                    <ul>
+                        <li><strong>Tokenization:</strong> Uses Byte-Pair Encoding (BPE).</li>
+                        <li><strong>Dataset filtering:</strong> Removes low-quality, biased, or toxic data.</li>
+                        <li><strong>Training:</strong> Performed across multiple GPUs/TPUs with distributed training.
+                        </li>
+                    </ul>
+
+                    <h2>3. Fine-tuning (Supervised Learning)</h2>
+                    <p>After pre-training, the model is fine-tuned on instruction-following datasets.</p>
+                    <ul>
+                        <li>Human-labeled datasets with input prompts and desired responses.</li>
+                        <li>Still uses <strong>causal language modeling</strong> but on higher-quality data.</li>
+                    </ul>
+
+                    <h2>4. Reinforcement Learning with Human Feedback (RLHF)</h2>
+                    <p>To further align responses with human preferences, ChatGPT was fine-tuned using RLHF.</p>
+
+                    <h3>Step 1: Collecting Preference Data</h3>
+                    <p>Human annotators rank multiple responses for the same prompt.</p>
+
+                    <h3>Step 2: Training the Reward Model</h3>
+                    <p>A separate model predicts a score for each response:</p>
+                    <pre>
+                  R(x, y) → reward score
+                </pre>
+
+                    <h3>Step 3: Proximal Policy Optimization (PPO)</h3>
+                    <p>The GPT model is fine-tuned using <strong>reinforcement learning</strong> with the reward model.
+                    </p>
+                    <ul>
+                        <li><strong>Policy loss:</strong> Encourages high-reward responses.</li>
+                        <li><strong>Entropy loss:</strong> Maintains response diversity.</li>
+                        <li><strong>KL divergence penalty:</strong> Ensures the model doesn’t deviate too much from
+                            pre-trained behavior.</li>
+                    </ul>
+
+                    <h2>5. Post-training Safety & Filtering</h2>
+                    <ul>
+                        <li><strong>Toxicity filtering:</strong> Blocks harmful content.</li>
+                        <li><strong>Refinement via human evaluation:</strong> Continuous improvement based on real-world
+                            usage.</li>
+                        <li><strong>Dynamic updates:</strong> OpenAI periodically updates model behavior.</li>
+                    </ul>
+
+                    <h2>Summary of Training Pipeline</h2>
+                    <ol>
+                        <li><strong>Pre-training:</strong> Train GPT on massive datasets.</li>
+                        <li><strong>Supervised Fine-tuning:</strong> Train on human-annotated conversations.</li>
+                        <li><strong>Reward Model Training:</strong> Train a model to rank responses.</li>
+                        <li><strong>Reinforcement Learning (RLHF):</strong> Use PPO to fine-tune ChatGPT.</li>
+                        <li><strong>Post-training Filtering:</strong> Apply safety mechanisms.</li>
+                    </ol>
+                </div>
+
+            </div>
+        </div>
+        <div class="failure-cases">
+            <div class="failure-cases">
+                <div>
+                    <h1>Let's take a deep dive into <strong>RNNs, LSTMs, and GRUs</strong></h1>
+                    <p>We'll cover their architectures, equations, advantages, and trade-offs.</p>
+
+                    <hr>
+
+                    <h2>1. Recurrent Neural Networks (RNN)</h2>
+                    <h3>Architecture</h3>
+                    <p>An RNN is a type of neural network designed for sequential data. It processes input one step at a
+                        time, maintaining a hidden state \( h_t \) that acts as a memory of previous inputs.</p>
+
+                    <h3>Mathematical Formulation</h3>
+                    <p>At each time step \( t \), the hidden state is updated as:</p>
+                    <pre>
+                  h_t = tanh(W_h h_{t-1} + W_x x_t + b_h)
+                </pre>
+                    <p>Where:</p>
+                    <ul>
+                        <li><strong>\( h_t \)</strong> - Hidden state at time \( t \).</li>
+                        <li><strong>\( x_t \)</strong> - Input at time \( t \).</li>
+                        <li><strong>\( W_h, W_x \)</strong> - Weight matrices.</li>
+                        <li><strong>\( b_h \)</strong> - Bias term.</li>
+                        <li><strong>\( tanh \)</strong> - Activation function.</li>
+                    </ul>
+                    <p>The output at each time step is:</p>
+                    <pre>
+                  y_t = W_y h_t + b_y
+                </pre>
+
+                    <h3>Challenges in RNN</h3>
+                    <ul>
+                        <li><strong>Vanishing Gradient Problem:</strong> Gradients become very small for long sequences,
+                            making earlier layers hard to update.</li>
+                        <li><strong>Exploding Gradient Problem:</strong> Large gradients can cause unstable training.
+                        </li>
+                        <li><strong>Short-Term Memory:</strong> RNNs struggle to retain long-term dependencies.</li>
+                    </ul>
+
+                    <hr>
+
+                    <h2>2. Long Short-Term Memory (LSTM)</h2>
+                    <p>LSTMs introduce <strong>memory cells</strong> with <strong>gates</strong> to regulate information
+                        flow.</p>
+
+                    <h3>LSTM Cell Components</h3>
+                    <ul>
+                        <li><strong>Cell state \( C_t \)</strong> - Stores long-term information.</li>
+                        <li><strong>Forget gate \( f_t \)</strong> - Decides what information to discard.</li>
+                        <li><strong>Input gate \( i_t \)</strong> - Decides what new information to store.</li>
+                        <li><strong>Output gate \( o_t \)</strong> - Determines the next hidden state.</li>
+                    </ul>
+
+                    <h3>Mathematical Formulation</h3>
+                    <pre>
+                  Forget Gate:   f_t = σ(W_f [h_{t-1}, x_t] + b_f)
+                  Input Gate:    i_t = σ(W_i [h_{t-1}, x_t] + b_i)
+                  Candidate Cell:  Ĉ_t = tanh(W_C [h_{t-1}, x_t] + b_C)
+                  Cell State:    C_t = f_t C_{t-1} + i_t Ĉ_t
+                  Output Gate:   o_t = σ(W_o [h_{t-1}, x_t] + b_o)
+                  Hidden State:  h_t = o_t tanh(C_t)
+                </pre>
+
+                    <h3>Why LSTMs Work Well?</h3>
+                    <ul>
+                        <li>Gates regulate memory flow, preventing vanishing gradients.</li>
+                        <li>Can learn long-term dependencies by selectively forgetting or updating memory.</li>
+                    </ul>
+
+                    <hr>
+
+                    <h2>3. Gated Recurrent Unit (GRU)</h2>
+                    <p>GRU is a <strong>simplified</strong> version of LSTM that reduces computational complexity while
+                        maintaining similar performance.</p>
+
+                    <h3>GRU Cell Components</h3>
+                    <ul>
+                        <li><strong>Reset Gate \( r_t \)</strong> - Controls how much past information to forget.</li>
+                        <li><strong>Update Gate \( z_t \)</strong> - Decides how much of the past state should be
+                            carried forward.</li>
+                    </ul>
+
+                    <h3>Mathematical Formulation</h3>
+                    <pre>
+                  Reset Gate:    r_t = σ(W_r [h_{t-1}, x_t] + b_r)
+                  Update Gate:   z_t = σ(W_z [h_{t-1}, x_t] + b_z)
+                  Candidate State:  ĥ_t = tanh(W_h [r_t ⊙ h_{t-1}, x_t] + b_h)
+                  Final Hidden State: h_t = (1 - z_t) ⊙ h_{t-1} + z_t ⊙ ĥ_t
+                </pre>
+
+                    <h3>Why Use GRU?</h3>
+                    <ul>
+                        <li>Fewer parameters than LSTM, making it <strong>faster</strong>.</li>
+                        <li>Performs similarly to LSTM on many tasks.</li>
+                        <li>Works well when <strong>training data is limited</strong>.</li>
+                    </ul>
+
+                    <hr>
+
+                    <h2>Comparison Table: RNN vs. LSTM vs. GRU</h2>
+                    <table border="1">
+                        <tr>
+                            <th>Feature</th>
+                            <th>RNN</th>
+                            <th>LSTM</th>
+                            <th>GRU</th>
+                        </tr>
+                        <tr>
+                            <td><strong>Handles Long-Term Dependencies</strong></td>
+                            <td>❌ No</td>
+                            <td>✅ Yes</td>
+                            <td>✅ Yes</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Vanishing Gradient Problem</strong></td>
+                            <td>✅ Yes</td>
+                            <td>❌ No</td>
+                            <td>❌ No</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Number of Gates</strong></td>
+                            <td>1</td>
+                            <td>3</td>
+                            <td>2</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Computational Cost</strong></td>
+                            <td>Low</td>
+                            <td>High</td>
+                            <td>Medium</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Memory Efficiency</strong></td>
+                            <td>High</td>
+                            <td>Low</td>
+                            <td>Medium</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Training Speed</strong></td>
+                            <td>Fast</td>
+                            <td>Slow</td>
+                            <td>Faster than LSTM</td>
+                        </tr>
+                    </table>
+
+                    <hr>
+
+                    <h2>When to Use What?</h2>
+                    <ul>
+                        <li><strong>RNN</strong> → Use for <strong>very short sequences</strong> (e.g., simple time
+                            series) due to inefficiency with long-term dependencies.</li>
+                        <li><strong>LSTM</strong> → Use when <strong>long-term dependencies</strong> are crucial (e.g.,
+                            speech recognition, NLP, medical data).</li>
+                        <li><strong>GRU</strong> → Use when you need <strong>faster training</strong> and fewer
+                            parameters without much loss in performance.</li>
+                    </ul>
+
+                </div>
+
+            </div>
+        </div>
+        <div class="failure-cases">
+            <div class="failure-cases">
+                <div>
+                    <h2>Let's take a deep dive into <strong>RNNs, LSTMs, and GRUs</strong>, covering their
+                        architectures, equations, advantages, and trade-offs.</h2>
+
+                    <hr>
+
+                    <h2>1. Recurrent Neural Networks (RNN)</h2>
+                    <h3>Architecture</h3>
+                    <p>An RNN is a type of neural network designed for sequential data. It processes input one step at a
+                        time, maintaining a hidden state \( h_t \) that acts as a memory of previous inputs.</p>
+
+                    <h3>Mathematical Formulation</h3>
+                    <p>At each time step \( t \), the hidden state is updated as:</p>
+                    <pre>
+                  h_t = tanh(W_h h_{t-1} + W_x x_t + b_h)
+                </pre>
+                    <ul>
+                        <li>\( h_t \) is the hidden state at time \( t \).</li>
+                        <li>\( x_t \) is the input at time \( t \).</li>
+                        <li>\( W_h \) and \( W_x \) are weight matrices.</li>
+                        <li>\( b_h \) is a bias term.</li>
+                        <li>\( \tanh \) is the activation function.</li>
+                    </ul>
+
+                    <p>The output at each time step is:</p>
+                    <pre>
+                  y_t = W_y h_t + b_y
+                </pre>
+
+                    <h3>Challenges in RNN</h3>
+                    <ul>
+                        <li><strong>Vanishing Gradient Problem:</strong> During backpropagation, gradients become
+                            extremely small (especially for long sequences), making it hard to update earlier layers.
+                        </li>
+                        <li><strong>Exploding Gradient Problem:</strong> If gradients are too large, training becomes
+                            unstable.</li>
+                        <li><strong>Short-Term Memory:</strong> RNNs struggle to remember long-term dependencies.</li>
+                    </ul>
+
+                    <hr>
+
+                    <h2>2. Long Short-Term Memory (LSTM)</h2>
+                    <p>To overcome RNN limitations, LSTMs introduce <strong>memory cells</strong> with
+                        <strong>gates</strong> that control the flow of information.</p>
+
+                    <h3>LSTM Cell Components</h3>
+                    <ul>
+                        <li><strong>Cell state \( C_t \):</strong> Stores long-term information.</li>
+                        <li><strong>Forget gate \( f_t \):</strong> Decides what information to discard.</li>
+                        <li><strong>Input gate \( i_t \):</strong> Decides what new information to store.</li>
+                        <li><strong>Output gate \( o_t \):</strong> Determines the next hidden state.</li>
+                    </ul>
+
+                    <h3>Mathematical Formulation</h3>
+                    <pre>
+                  Forget Gate:
+                  f_t = σ(W_f [h_{t-1}, x_t] + b_f)
+                  
+                  Input Gate:
+                  i_t = σ(W_i [h_{t-1}, x_t] + b_i)
+                  
+                  Candidate Memory Cell:
+                  C̃_t = tanh(W_C [h_{t-1}, x_t] + b_C)
+                  
+                  Update Cell State:
+                  C_t = f_t C_{t-1} + i_t C̃_t
+                  
+                  Output Gate:
+                  o_t = σ(W_o [h_{t-1}, x_t] + b_o)
+                  
+                  Hidden State Update:
+                  h_t = o_t tanh(C_t)
+                </pre>
+
+                    <h3>Why LSTMs Work Well?</h3>
+                    <ul>
+                        <li><strong>Gates regulate memory flow</strong>, preventing vanishing gradients.</li>
+                        <li><strong>Can learn long-term dependencies</strong> by selectively forgetting or updating
+                            memory.</li>
+                    </ul>
+
+                    <hr>
+
+                    <h2>3. Gated Recurrent Unit (GRU)</h2>
+                    <p>GRU is a <strong>simplified</strong> version of LSTM that reduces computational complexity while
+                        maintaining similar performance.</p>
+
+                    <h3>GRU Cell Components</h3>
+                    <ul>
+                        <li><strong>Reset Gate \( r_t \):</strong> Controls how much past information to forget.</li>
+                        <li><strong>Update Gate \( z_t \):</strong> Decides how much of the past state should be carried
+                            forward.</li>
+                    </ul>
+
+                    <h3>Mathematical Formulation</h3>
+                    <pre>
+                  Reset Gate:
+                  r_t = σ(W_r [h_{t-1}, x_t] + b_r)
+                  
+                  Update Gate:
+                  z_t = σ(W_z [h_{t-1}, x_t] + b_z)
+                  
+                  Candidate Hidden State:
+                  h̃_t = tanh(W_h [r_t ⊙ h_{t-1}, x_t] + b_h)
+                  
+                  Final Hidden State:
+                  h_t = (1 - z_t) ⊙ h_{t-1} + z_t ⊙ h̃_t
+                </pre>
+
+                    <h3>Why Use GRU?</h3>
+                    <ul>
+                        <li>Fewer parameters than LSTM, making it <strong>faster</strong>.</li>
+                        <li>Performs similarly to LSTM on many tasks.</li>
+                        <li>Works well when <strong>training data is limited</strong>.</li>
+                    </ul>
+
+                    <hr>
+
+                    <h2>Comparison Table: RNN vs. LSTM vs. GRU</h2>
+                    <table border="1">
+                        <tr>
+                            <th>Feature</th>
+                            <th>RNN</th>
+                            <th>LSTM</th>
+                            <th>GRU</th>
+                        </tr>
+                        <tr>
+                            <td><strong>Handles Long-Term Dependencies</strong></td>
+                            <td>❌ No</td>
+                            <td>✅ Yes</td>
+                            <td>✅ Yes</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Vanishing Gradient Problem</strong></td>
+                            <td>✅ Yes</td>
+                            <td>❌ No</td>
+                            <td>❌ No</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Number of Gates</strong></td>
+                            <td>1</td>
+                            <td>3</td>
+                            <td>2</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Computational Cost</strong></td>
+                            <td>Low</td>
+                            <td>High</td>
+                            <td>Medium</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Memory Efficiency</strong></td>
+                            <td>High</td>
+                            <td>Low</td>
+                            <td>Medium</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Training Speed</strong></td>
+                            <td>Fast</td>
+                            <td>Slow</td>
+                            <td>Faster than LSTM</td>
+                        </tr>
+                    </table>
+
+                    <hr>
+
+                    <h2>When to Use What?</h2>
+                    <ul>
+                        <li><strong>RNN</strong> → Use for <strong>very short sequences</strong> (e.g., simple time
+                            series) due to its inefficiency with long-term dependencies.</li>
+                        <li><strong>LSTM</strong> → Use when <strong>long-term dependencies</strong> are crucial (e.g.,
+                            speech recognition, NLP, medical data).</li>
+                        <li><strong>GRU</strong> → Use when you need <strong>faster training</strong> and fewer
+                            parameters without much loss in performance.</li>
+                    </ul>
+
+                    <p>Let me know if you want code examples or further explanations! 🚀</p>
+                </div>
+
+            </div>
+        </div>
+        <div class="failure-cases">
+            <div class="failure-cases">
+                <div>
+                    <h3><strong>Detailed Explanation of Gradient Computation in RNNs (BPTT)</strong></h3>
+
+                    <p>Backpropagation Through Time (BPTT) is the process of computing gradients in an
+                        <strong>unrolled</strong> RNN. The key challenge is that hidden states are connected across
+                        time, requiring gradients to flow through multiple time steps.</p>
+
+                    <hr>
+
+                    <h2><strong>1. Revisiting RNN Equations</strong></h2>
+                    <p>For an RNN with input \( x_t \), hidden state \( h_t \), and output \( y_t \), the forward
+                        equations are:</p>
+
+                    <h3><strong>Hidden State Update</strong></h3>
+                    <p>\[
+                        h_t = \tanh(W_h h_{t-1} + W_x x_t + b_h)
+                        \]</p>
+
+                    <h3><strong>Output Computation</strong></h3>
+                    <p>\[
+                        y_t = W_y h_t + b_y
+                        \]</p>
+
+                    <h3><strong>Loss Function</strong></h3>
+                    <p>The total loss across \( T \) time steps is:</p>
+                    <p>\[
+                        L = \sum_{t=1}^{T} L_t
+                        \]</p>
+
+                    <p>where \( L_t \) is the loss at time step \( t \), typically:</p>
+                    <ul>
+                        <li><strong>Mean Squared Error (MSE) for regression</strong>: \( L_t = \frac{1}{2} (y_t -
+                            \hat{y}_t)^2 \)</li>
+                        <li><strong>Cross-Entropy Loss for classification</strong>: \( L_t = - \sum_i y_t^i
+                            \log(\hat{y}_t^i) \)</li>
+                    </ul>
+
+                    <hr>
+
+                    <h2><strong>2. Gradient Computation in BPTT</strong></h2>
+                    <p>The goal is to compute the gradients:</p>
+                    <ul>
+                        <li>\( \frac{\partial L}{\partial W_h} \) (hidden-to-hidden weights)</li>
+                        <li>\( \frac{\partial L}{\partial W_x} \) (input-to-hidden weights)</li>
+                        <li>\( \frac{\partial L}{\partial W_y} \) (hidden-to-output weights)</li>
+                    </ul>
+
+                    <h3><strong>Step 1: Compute Output Gradients</strong></h3>
+                    <p>\[
+                        \frac{\partial L_t}{\partial y_t} = \frac{\partial L_t}{\partial \hat{y}_t} \cdot \frac{\partial
+                        \hat{y}_t}{\partial y_t}
+                        \]</p>
+
+                    <p>Since \( y_t = W_y h_t + b_y \), the weight gradient is:</p>
+                    <p>\[
+                        \frac{\partial L_t}{\partial W_y} = \frac{\partial L_t}{\partial y_t} \cdot \frac{\partial
+                        y_t}{\partial W_y} = \delta_t h_t^T
+                        \]</p>
+
+                    <p>where \( \delta_t = \frac{\partial L_t}{\partial y_t} \) is the error term.</p>
+
+                    <hr>
+
+                    <h3><strong>Step 2: Compute Hidden State Gradients</strong></h3>
+                    <p>Using the chain rule:</p>
+                    <p>\[
+                        \frac{\partial L}{\partial h_t} = \delta_t W_y^T + \left( \frac{\partial L}{\partial h_{t+1}}
+                        \cdot W_h^T \right) \cdot \frac{\partial h_{t+1}}{\partial h_t}
+                        \]</p>
+
+                    <p>Since \( h_t = \tanh(W_h h_{t-1} + W_x x_t + b_h) \), the derivative is:</p>
+                    <p>\[
+                        \frac{\partial h_t}{\partial h_{t-1}} = (1 - h_t^2) W_h
+                        \]</p>
+
+                    <p>Thus, the hidden state gradient propagates <strong>backward through time</strong>.</p>
+
+                    <hr>
+
+                    <h3><strong>Step 3: Compute Weight Gradients</strong></h3>
+                    <h4><strong>Hidden-to-Hidden Weight Gradient (\( W_h \))</strong></h4>
+                    <p>\[
+                        \frac{\partial L}{\partial W_h} = \sum_{t=1}^{T} \delta_t (1 - h_t^2) h_{t-1}^T
+                        \]</p>
+
+                    <h4><strong>Input-to-Hidden Weight Gradient (\( W_x \))</strong></h4>
+                    <p>\[
+                        \frac{\partial L}{\partial W_x} = \sum_{t=1}^{T} \delta_t (1 - h_t^2) x_t^T
+                        \]</p>
+
+                    <hr>
+
+                    <h2><strong>4. Challenges in BPTT</strong></h2>
+                    <h3><strong>1. Vanishing Gradient Problem</strong></h3>
+                    <ul>
+                        <li>The term \( (1 - h_t^2) W_h^T \) is multiplied repeatedly in <strong>long
+                                sequences</strong>.</li>
+                        <li>If \( W_h \) has small values (e.g., 0.5), the gradient shrinks exponentially.</li>
+                        <li>This leads to <strong>poor learning of long-term dependencies</strong>.</li>
+                    </ul>
+
+                    <h3><strong>2. Exploding Gradient Problem</strong></h3>
+                    <ul>
+                        <li>If \( W_h \) has large values (>1.5), gradients explode.</li>
+                        <li><strong>Solution:</strong> <em>Gradient Clipping</em>, which limits the gradient size.</li>
+                    </ul>
+
+                    <hr>
+
+                    <h2><strong>5. Weight Update (Gradient Descent)</strong></h2>
+                    <p>Once gradients are computed, weights are updated using <strong>Stochastic Gradient Descent
+                            (SGD)</strong> or an optimizer like <strong>Adam</strong>:</p>
+
+                    <p>\[
+                        W_h = W_h - \eta \frac{\partial L}{\partial W_h}
+                        \]</p>
+
+                    <p>\[
+                        W_x = W_x - \eta \frac{\partial L}{\partial W_x}
+                        \]</p>
+
+                    <p>\[
+                        W_y = W_y - \eta \frac{\partial L}{\partial W_y}
+                        \]</p>
+
+                    <p>where \( \eta \) is the learning rate.</p>
+
+                    <hr>
+
+                    <h2><strong>6. Summary</strong></h2>
+                    <ol>
+                        <li><strong>Forward Pass:</strong> Compute \( h_t \) and \( y_t \).</li>
+                        <li><strong>Backward Pass (BPTT):</strong> Compute \( \frac{\partial L}{\partial h_t} \), then
+                            \( \frac{\partial L}{\partial W_h}, W_x, W_y \).</li>
+                        <li><strong>Weight Update:</strong> Apply gradient descent.</li>
+                    </ol>
+
+                    <p>Would you like a <strong>PyTorch implementation</strong> to visualize gradients in action? 🚀</p>
+                </div>
+
+            </div>
+        </div>
+        <div class="failure-cases">
+            <div class="failure-cases">
+                <div>
+                    <h2>BERT (Bidirectional Encoder Representations from Transformers)</h2>
+                    <p>BERT is a transformer-based deep learning model introduced by Google in 2018. It is designed to
+                        pre-train deep bidirectional representations by jointly conditioning on both left and right
+                        context in all layers. This allows BERT to capture rich contextual information and significantly
+                        improve performance on NLP tasks.</p>
+
+                    <h3>BERT Architecture in Detail</h3>
+                    <p>BERT is based on the Transformer encoder architecture introduced in the paper "Attention Is All
+                        You Need" (Vaswani et al., 2017). It consists of multiple stacked encoder layers and does not
+                        use the decoder part of the Transformer.</p>
+
+                    <h4>1. Input Representation</h4>
+                    <p>BERT’s input representation is designed to handle both single-sentence and sentence-pair tasks.
+                        It consists of:</p>
+                    <ul>
+                        <li><strong>Token Embeddings:</strong> Each token is converted into an embedding using WordPiece
+                            tokenization.</li>
+                        <li><strong>Segment Embeddings:</strong> Used to distinguish between sentences in sentence-pair
+                            tasks.</li>
+                        <li><strong>Position Embeddings:</strong> Capture the order of tokens in a sequence.</li>
+                    </ul>
+                    <p>The final input embedding is the sum of these three embeddings.</p>
+
+                    <h4>2. Transformer Encoder Layers</h4>
+                    <p>BERT consists of multiple Transformer encoder layers. The main components of each encoder layer
+                        are:</p>
+
+                    <h5>a. Multi-Head Self-Attention Mechanism</h5>
+                    <p>BERT uses self-attention to compute contextualized representations of words. Multi-head attention
+                        allows the model to focus on different parts of the input simultaneously.</p>
+                    <p>It calculates attention scores using the following formula:</p>
+                    <pre>
+                    Attention(Q, K, V) = softmax((QK^T) / sqrt(dk)) V
+                </pre>
+                    <p>Where:</p>
+                    <ul>
+                        <li><strong>Q, K, V</strong> are Query, Key, and Value matrices derived from input embeddings.
+                        </li>
+                        <li><strong>dk</strong> is the dimension of key vectors.</li>
+                    </ul>
+
+                    <h5>b. Feedforward Network</h5>
+                    <p>Each encoder layer also contains a position-wise feedforward network (FFN), which consists of:
+                    </p>
+                    <ul>
+                        <li>A fully connected layer with ReLU activation.</li>
+                        <li>A second fully connected layer.</li>
+                    </ul>
+
+                    <h5>c. Layer Normalization and Residual Connections</h5>
+                    <p>Each sub-layer in the encoder (self-attention and feedforward network) is followed by:</p>
+                    <ul>
+                        <li>Layer normalization</li>
+                        <li>Residual connection (adds input to the output)</li>
+                    </ul>
+
+                    <h4>3. Output Representation</h4>
+                    <p>The final output from BERT’s last encoder layer can be used for various NLP tasks:</p>
+                    <ul>
+                        <li>The [CLS] token representation is used for classification tasks.</li>
+                        <li>Each token's output embedding can be used for token-level tasks like Named Entity
+                            Recognition (NER).</li>
+                    </ul>
+
+                    <h3>BERT Variants</h3>
+                    <ul>
+                        <li><strong>BERT-Base:</strong>
+                            <ul>
+                                <li>12 layers (Transformer encoders)</li>
+                                <li>768 hidden size</li>
+                                <li>12 attention heads</li>
+                                <li>110M parameters</li>
+                            </ul>
+                        </li>
+                        <li><strong>BERT-Large:</strong>
+                            <ul>
+                                <li>24 layers (Transformer encoders)</li>
+                                <li>1024 hidden size</li>
+                                <li>16 attention heads</li>
+                                <li>340M parameters</li>
+                            </ul>
+                        </li>
+                    </ul>
+
+                    <h3>Pretraining and Fine-tuning</h3>
+                    <h4>1. Pretraining</h4>
+                    <p>BERT is pretrained on two tasks:</p>
+                    <ul>
+                        <li><strong>Masked Language Model (MLM):</strong> Randomly masks 15% of tokens and trains the
+                            model to predict them.</li>
+                        <li><strong>Next Sentence Prediction (NSP):</strong> Determines whether one sentence follows
+                            another.</li>
+                    </ul>
+
+                    <h4>2. Fine-tuning</h4>
+                    <p>After pretraining, BERT can be fine-tuned on specific NLP tasks with additional task-specific
+                        layers.</p>
+
+                    <p>BERT revolutionized NLP by introducing bidirectional context learning, leading to
+                        state-of-the-art results in various benchmarks.</p>
+                </div>
+
+            </div>
+        </div>
+        <div class="failure-cases">
+            <div class="failure-cases">
+                <div>
+                    <h2>ELECTRA: Efficiently Learning an Encoder that Classifies Token Replacements Accurately</h2>  
+                    <p>ELECTRA is a transformer-based model introduced by Google Research in 2020. It introduces a more efficient <strong>pretraining</strong> strategy than BERT, achieving similar or better performance with fewer training resources.</p>  
+                    
+                    <h3>1. Key Idea: Replacing MLM with a "Replacement Detection" Task</h3>  
+                    <p>Unlike BERT, which <strong>masks</strong> some tokens and predicts them, ELECTRA trains the model to detect <strong>replaced tokens</strong> rather than predict masked ones.</p>  
+                    
+                    <h4>🔥 Core Difference Between BERT and ELECTRA</h4>  
+                    <ul>
+                        <li><strong>BERT:</strong> Uses <strong>Masked Language Modeling (MLM)</strong>—randomly masks 15% of tokens and learns to predict them.</li>  
+                        <li><strong>ELECTRA:</strong> Uses <strong>Replaced Token Detection (RTD)</strong>—replaces words with <strong>incorrect</strong> ones (generated by a small "Generator" model) and trains a <strong>"Discriminator" model</strong> to detect which words are fake.</li>  
+                    </ul>
+                    
+                    <h3>2. ELECTRA Architecture</h3>
+                    <p>ELECTRA consists of <strong>two Transformer models</strong>:</p>  
+                    
+                    <h4>a) Generator (G)</h4>
+                    <ul>
+                        <li>Similar to BERT (smaller in size).</li>  
+                        <li>Uses <strong>Masked Language Modeling (MLM)</strong> to generate <strong>fake words</strong> for replacement.</li>  
+                    </ul>
+                    
+                    <h4>b) Discriminator (D)</h4>
+                    <ul>
+                        <li>Learns to <strong>detect fake tokens</strong> rather than predicting masked ones.</li>  
+                        <li>Instead of classifying words into a vocabulary, it outputs <strong>a binary classification</strong> (Real or Fake) for each token.</li>  
+                    </ul>
+                    
+                    <p><strong>Example:</strong></p>
+                    <p>Original: "The cat sat on the mat."</p>
+                    <p>Generator replaces <strong>"sat"</strong> → "ate": "The cat <strong>ate</strong> on the mat."</p>
+                    <p>Discriminator must classify <strong>"ate"</strong> as "Fake" and all other words as "Real".</p>
+                    
+                    <h3>3. Why is ELECTRA More Efficient?</h3>
+                    <ul>
+                        <li>✅ <strong>Full sentence learning:</strong> Unlike BERT, where only 15% of tokens contribute to learning, ELECTRA <strong>trains on every token</strong>, making learning more efficient.</li>  
+                        <li>✅ <strong>Smaller models, same accuracy:</strong> ELECTRA-Small (14M parameters) matches BERT-Base (110M parameters) in accuracy.</li>  
+                        <li>✅ <strong>Faster pretraining:</strong> Requires <strong>less compute power</strong> than BERT to achieve similar or better results.</li>  
+                    </ul>
+                    
+                    <h3>4. ELECTRA Variants</h3>
+                    <table>
+                        <tr>
+                            <th>Model</th>
+                            <th>Parameters</th>
+                            <th>Performance</th>
+                        </tr>
+                        <tr>
+                            <td>ELECTRA-Small</td>
+                            <td>14M</td>
+                            <td>Matches BERT-Base</td>
+                        </tr>
+                        <tr>
+                            <td>ELECTRA-Base</td>
+                            <td>110M</td>
+                            <td>Matches BERT-Large</td>
+                        </tr>
+                        <tr>
+                            <td>ELECTRA-Large</td>
+                            <td>335M</td>
+                            <td>Outperforms BERT-Large</td>
+                        </tr>
+                    </table>
+                    
+                    <h3>5. Comparison: BERT vs. ELECTRA</h3>
+                    <table>
+                        <tr>
+                            <th>Feature</th>
+                            <th>BERT</th>
+                            <th>ELECTRA</th>
+                        </tr>
+                        <tr>
+                            <td><strong>Pretraining Task</strong></td>
+                            <td>Masked Language Modeling (MLM)</td>
+                            <td>Replaced Token Detection (RTD)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Efficiency</strong></td>
+                            <td>Uses only 15% of tokens</td>
+                            <td>Uses <strong>all tokens</strong> for training</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Compute Power</strong></td>
+                            <td>Requires more training steps</td>
+                            <td>Learns faster, fewer steps needed</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Performance</strong></td>
+                            <td>Strong, but expensive</td>
+                            <td>More efficient and <strong>better in low-resource settings</strong></td>
+                        </tr>
+                    </table>
+                    
+                    <h3>6. Why Use ELECTRA?</h3>
+                    <ul>
+                        <li>🚀 <strong>Faster and cheaper to train than BERT</strong>.</li>  
+                        <li>🚀 <strong>Better accuracy for NER, sentiment analysis, and QA</strong>.</li>  
+                        <li>🚀 <strong>Smaller models perform as well as larger BERT variants</strong>.</li>  
+                    </ul>
+                    
+                    <p>Would you like a <strong>code example</strong> of using ELECTRA for a task like text classification or NER? 😊</p>
+                </div>
+                
+            </div>
+        </div>
+
+        <div class="failure-cases">
+            <div class="failure-cases">
+                <div>
+                    <h2>Self-Attention vs. Multi-Head Attention</h2>
+                
+                    <h3>1. Self-Attention (Scaled Dot-Product Attention)</h3>
+                    <p>Self-attention allows a model to focus on different words in an input sequence when processing each word. It computes attention scores based on the relationships between words, enabling the model to capture long-range dependencies.</p>
+                
+                    <h4>Steps in Self-Attention:</h4>
+                    <ol>
+                        <li><strong>Input Representation:</strong> The input sequence (tokens) is represented as a matrix of word embeddings.</li>
+                        <li><strong>Query, Key, and Value Matrices (Q, K, V):</strong> Each word embedding is projected into three different vectors:
+                            <pre>Q = XW_Q, K = XW_K, V = XW_V</pre>
+                        </li>
+                        <li><strong>Attention Scores Calculation:</strong> The attention scores are computed using the scaled dot-product formula:
+                            <pre>Attention(Q, K, V) = softmax(QK^T / sqrt(d_k)) V</pre>
+                        </li>
+                        <li><strong>Weighted Sum:</strong> The output is a weighted sum of the values (V), where important words have higher weights.</li>
+                    </ol>
+                
+                    <h3>2. Multi-Head Attention</h3>
+                    <p>Multi-head attention is an extension of self-attention that improves model expressiveness by applying self-attention multiple times in parallel, with different learned transformations.</p>
+                
+                    <h4>Key Differences:</h4>
+                    <ul>
+                        <li>Instead of applying a single attention function, multi-head attention uses multiple self-attention heads.</li>
+                        <li>Each head learns different attention patterns, capturing different types of relationships (e.g., syntax, semantics).</li>
+                        <li>The outputs from all heads are concatenated and linearly transformed.</li>
+                    </ul>
+                
+                    <h4>Steps in Multi-Head Attention:</h4>
+                    <ol>
+                        <li><strong>Split into Multiple Heads:</strong> Instead of one set of Q, K, V, we create multiple smaller sets by splitting the embedding dimension.</li>
+                        <li><strong>Apply Self-Attention in Parallel:</strong> Each head computes self-attention separately.</li>
+                        <li><strong>Concatenation & Projection:</strong> The outputs from all heads are concatenated and passed through a linear transformation.
+                            <pre>MultiHead(Q, K, V) = Concat(head_1, ..., head_h) W_O</pre>
+                        </li>
+                        <li>Each head is computed as:
+                            <pre>head_i = Attention(QW_{Q_i}, KW_{K_i}, VW_{V_i})</pre>
+                        </li>
+                    </ol>
+                
+                    <h3>Key Differences Summary</h3>
+                    <table border="1">
+                        <tr>
+                            <th>Feature</th>
+                            <th>Self-Attention</th>
+                            <th>Multi-Head Attention</th>
+                        </tr>
+                        <tr>
+                            <td>Definition</td>
+                            <td>Computes attention scores for a single set of Q, K, V</td>
+                            <td>Runs multiple self-attention mechanisms in parallel</td>
+                        </tr>
+                        <tr>
+                            <td>Number of Attention Heads</td>
+                            <td>1</td>
+                            <td>Multiple</td>
+                        </tr>
+                        <tr>
+                            <td>Expressiveness</td>
+                            <td>Captures only one type of relationship</td>
+                            <td>Captures multiple relationships (syntax, semantics, etc.)</td>
+                        </tr>
+                    </table>
+                </div>
+                
+            </div>
+        </div>
+        <div class="failure-cases">
+            <div class="failure-cases">
+
+            </div>
+        </div>
+</body>
+
+</html>

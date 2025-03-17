@@ -2283,6 +2283,139 @@
         <div class="failure-cases">
             <div class="failure-cases">
                 <div>
+                    <h1>How RoBERTa Was Trained: A Deep Dive</h1>
+                
+                    <h2>1. Data Collection & Preprocessing</h2>
+                    <p>RoBERTa was trained on a much larger dataset than BERT, improving its robustness and generalization.</p>
+                
+                    <h3>Data Sources</h3>
+                    <ul>
+                        <li><b>BOOKCORPUS</b>: A dataset containing 11,038 freely available books.</li>
+                        <li><b>English Wikipedia</b>: Processed and cleaned articles.</li>
+                        <li><b>Common Crawl News (CC-News)</b>: A 76GB dataset of news articles.</li>
+                        <li><b>OpenWebText</b>: A dataset replicating the high-quality texts from Reddit.</li>
+                        <li><b>Stories Dataset</b>: A collection of narrative texts from books and web sources.</li>
+                    </ul>
+                
+                    <h3>Preprocessing Steps</h3>
+                    <ul>
+                        <li><b>Tokenization</b>: Applied Byte-Pair Encoding (BPE) to split text into subword units.</li>
+                        <li><b>Text Normalization</b>: Converted to lowercase, removed special characters, and standardized punctuation.</li>
+                        <li><b>Data Filtering</b>: Removed duplicate, low-quality, or noisy content.</li>
+                        <li><b>Sentence Splitting</b>: Parsed text into meaningful sentence structures.</li>
+                    </ul>
+                
+                    <h2>2. Model Architecture</h2>
+                    <p>RoBERTa shares the same architecture as BERT-large but introduces several optimizations.</p>
+                    
+                    <h3>Model Specifications</h3>
+                    <ul>
+                        <li><b>24 Transformer layers</b> (same as BERT-large).</li>
+                        <li><b>1024 hidden units</b> per layer.</li>
+                        <li><b>16 attention heads</b> per layer.</li>
+                        <li><b>Total Parameters:</b> 355 million.</li>
+                    </ul>
+                
+                    <h3>Key Architectural Improvements</h3>
+                    <ul>
+                        <li><b>Dynamic Masking</b>: Unlike BERT, RoBERTa applies token masking dynamically at each training step.</li>
+                        <li><b>Removed Next Sentence Prediction (NSP)</b>: Found to be unnecessary and was discarded.</li>
+                        <li><b>Trained on Larger Batches</b>: Used batch sizes of up to 8,000 samples for stability.</li>
+                        <li><b>Trained for More Steps</b>: Pretrained with 500K additional training steps compared to BERT.</li>
+                    </ul>
+                
+                    <h2>3. Pretraining Objective: Masked Language Modeling (MLM)</h2>
+                    <p>RoBERTa was trained using a single objective: <b>Masked Language Modeling (MLM).</b></p>
+                
+                    <h3>Training Process</h3>
+                    <ul>
+                        <li><b>15% of tokens</b> were randomly masked.</li>
+                        <li><b>80%</b> of the masked tokens were replaced with "[MASK]".</li>
+                        <li><b>10%</b> of the masked tokens were replaced with a random word.</li>
+                        <li><b>10%</b> of the masked tokens remained unchanged.</li>
+                        <li>Optimized using <b>cross-entropy loss</b> to minimize prediction error.</li>
+                    </ul>
+                
+                    <h2>4. Hardware & Training Setup</h2>
+                    <p>RoBERTa required massive computational resources to train effectively.</p>
+                
+                    <h3>Training Configuration</h3>
+                    <ul>
+                        <li><b>Trained on 1024 NVIDIA V100 GPUs.</b></li>
+                        <li>Used <b>16 GPUs per node</b> with a batch size of 8,000.</li>
+                        <li>Applied <b>Adam optimizer</b> with weight decay.</li>
+                        <li>Utilized <b>mixed-precision training (FP16)</b> for efficiency.</li>
+                    </ul>
+                
+                    <h2>5. Fine-Tuning on Downstream Tasks</h2>
+                    <p>After pretraining, RoBERTa was fine-tuned for various NLP benchmarks.</p>
+                
+                    <h3>Benchmarks Used</h3>
+                    <ul>
+                        <li><b>GLUE</b>: General Language Understanding Evaluation.</li>
+                        <li><b>SQuAD</b>: Question Answering dataset.</li>
+                        <li><b>RACE</b>: Reading comprehension dataset.</li>
+                        <li><b>SuperGLUE</b>: More advanced NLP tasks.</li>
+                    </ul>
+                
+                    <h3>Fine-Tuning Process</h3>
+                    <ul>
+                        <li>Added a <b>classification head</b> on top of the transformer.</li>
+                        <li>Trained with task-specific loss functions.</li>
+                        <li>Used transfer learning to adapt to new tasks.</li>
+                    </ul>
+                
+                    <h2>6. Performance Improvements Over BERT</h2>
+                    <p>RoBERTa outperformed BERT on multiple NLP tasks.</p>
+                
+                    <h3>Key Reasons for Improved Performance</h3>
+                    <ul>
+                        <li><b>Better token masking strategy</b> (dynamic masking).</li>
+                        <li><b>Larger training dataset</b> (160GB vs. BERT's 16GB).</li>
+                        <li><b>Longer training with larger batch sizes</b>.</li>
+                        <li><b>Removal of Next Sentence Prediction (NSP)</b>.</li>
+                    </ul>
+                
+                    <h3>Benchmark Comparison</h3>
+                    <table border="1">
+                        <tr>
+                            <th>Model</th>
+                            <th>SQuAD 1.1 F1</th>
+                            <th>MNLI Accuracy</th>
+                            <th>GLUE Score</th>
+                        </tr>
+                        <tr>
+                            <td><b>BERT</b></td>
+                            <td>90.9</td>
+                            <td>86.6</td>
+                            <td>80.5</td>
+                        </tr>
+                        <tr>
+                            <td><b>RoBERTa</b></td>
+                            <td><b>94.6</b></td>
+                            <td><b>90.2</b></td>
+                            <td><b>88.5</b></td>
+                        </tr>
+                    </table>
+                
+                    <h2>7. Key Takeaways</h2>
+                    <ul>
+                        <li>RoBERTa is an <b>optimized version of BERT</b> with improved pretraining.</li>
+                        <li>It <b>removed Next Sentence Prediction (NSP)</b> for simpler training.</li>
+                        <li>It <b>used dynamic token masking</b> to improve generalization.</li>
+                        <li>It was <b>trained on 10x more data than BERT</b> for better language understanding.</li>
+                        <li>RoBERTa <b>outperformed BERT on nearly all NLP benchmarks.</b></li>
+                    </ul>
+                
+                    <h2>Conclusion</h2>
+                    <p>RoBERTa represents a major step forward in transformer-based models, leveraging large-scale training, dynamic masking, and an optimized training strategy to achieve state-of-the-art results.</p>
+                </div>
+                
+            </div>
+        </div>
+        <div class="failure-cases">
+            <div class="failure-cases">
+                <div>
                     <h2>ELECTRA: Efficiently Learning an Encoder that Classifies Token Replacements Accurately</h2>  
                     <p>ELECTRA is a transformer-based model introduced by Google Research in 2020. It introduces a more efficient <strong>pretraining</strong> strategy than BERT, achieving similar or better performance with fewer training resources.</p>  
                     

@@ -186,347 +186,48 @@
 
     <div class="failure-cases">
         <div class="case" style="font-family: 'Courier New', monospace; padding: 10px; border: 1px solid #ddd;">
-        
-                    <div>
-                        <h2>Electricity Demand Forecasting for London</h2>
 
-                        <h3>Introduction</h3>
-                        <p>Accurate electricity demand forecasts are crucial for electric utilities and regional
-                            transmission organizations. Long-term forecasts reduce investment risk, medium-term
-                            forecasts aid in planning fuel purchases and scheduling plant maintenance, and short-term
-                            forecasts are essential for matching electricity generation with demand to ensure grid
-                            reliability.</p>
-                        <p>This project focused on medium-term forecasting, specifically making one-week-out forecasts
-                            at an hourly resolution for London. Historical electricity demand and weather data from
-                            2002-2020 were used. A combination of time series analysis and regression models were
-                            employed to make forecasting predictions, which were compared against the observed hourly
-                            electricity demand for a series of one-week intervals.</p>
-
-                        <h3>Data Collection</h3>
-                        <ul>
-                            <li><strong>Electricity Demand Data:</strong> Historical electricity demand data was
-                                provided by the County of London Electric Supply Company (C.L.E.S.Co) Limited. The data
-                                for each year was segmented by weather zones. Initial processing included converting
-                                timestamps to datetime indexes, removing duplicate entries by averaging values with the
-                                same timestamp, and filling missing values by backfilling from the next available entry.
-                                This resulted in a dataframe of time and load.</li>
-                            <li><strong>Weather Data:</strong> Weather features like temperature and humidity impact
-                                electricity consumption. Weather data was sourced from Weather Underground. A parser was
-                                built to extract relevant data from a single API endpoint, and the data scraping script
-                                was extended to compile hourly weather data from 2002-2020 into a single dataframe. The
-                                data included time, temperature, humidity, wind speed, and weather conditions. Missing
-                                wind speed data was converted to the mean or lowest observed wind speed, weather
-                                conditions were converted to integers, and humidity values were converted to
-                                percentages. Hourly frequency of the data was enforced by removing duplicate entries.
-                            </li>
-                        </ul>
-
-                        <h3>Feature Engineering</h3>
-                        <p>The categorical feature "condition" was converted into a one-hot encoding. The original
-                            dataset from Weather Underground used 17 different weather conditions, which were grouped
-                            into 6 broad categories: clear, cloud, rain, tstorm, fog, and snow. The electricity demand
-                            and weather data were merged into a single dataframe, with missing values filled in by
-                            back-filling for one-hot encoding features and interpolation for continuous features.</p>
-                        <p>Additional temporal features were created, such as a boolean feature "weekday" to indicate
-                            whether it was a weekday, and sine/cosine transformations for the hour of the day to capture
-                            time-of-day effects. Continuous features were normalized to the range [0, 1] to facilitate
-                            model training.</p>
-
-                        <h3>Designing Models</h3>
-                        <p>Time series forecasting becomes more challenging as the forecasting period decreases.
-                            Therefore, the original electricity demand time series was decomposed into two components:
-                            monthly average electricity demand and hourly residuals. The monthly averages were modeled
-                            using traditional time series methods, while the hourly residuals (the amount above or below
-                            the monthly average at each hour) were modeled using various regression models. The
-                            predictions from both models were combined to get a full prediction for hourly electricity
-                            demand.</p>
-
-                        <h3>Summary: Electricity Demand Forecasting Models</h3>
-                        <h4>Monthly Averages (SARIMA)</h4>
-                        <ul>
-                            <li><strong>Model:</strong> SARIMA (seasonal ARIMA) captures yearly seasonality (m=12) and
-                                trends in monthly demand.</li>
-                            <li><strong>Data Split:</strong> Sequential training (2002–2014), validation (2015–2016),
-                                test (2017–2020) sets.</li>
-                            <li><strong>Tuning:</strong> Grid search for hyperparameters (values 0/1) using MAE (to
-                                avoid issues with normalized MAPE).</li>
-                            <li><strong>Insights:</strong> Clear upward trend (population growth) and seasonality
-                                (summer peaks, smaller winter spikes). Winter peaks correlate with holidays/cold
-                                weather.</li>
-                        </ul>
-
-                        <h4>Hourly Residuals (Regression)</h4>
-                        <ul>
-                            <li><strong>Approach:</strong> Residuals (actual – monthly average) modeled via regression
-                                for 1-week-ahead hourly forecasts.</li>
-                            <li><strong>Baseline:</strong> Persistence model (last week’s value as forecast).</li>
-                            <li><strong>Models Tested:</strong>
-                                <ol>
-                                    <li>Linear Regression: Outperformed baseline but lacked nuance (overweighted
-                                        time-of-day features).</li>
-                                    <li>Gradient Boosting (GBR): Best performance (61% MAPE improvement), captured daily
-                                        peaks.</li>
-                                    <li>MLP: Better than linear regression but lagged GBR due to hyperparameter tuning
-                                        challenges.</li>
-                                </ol>
-                            </li>
-                            <li><strong>Validation:</strong> Weekly forecasts concatenated to avoid error snowballing.
-                            </li>
-                        </ul>
-
-                        <h4>Key Takeaways</h4>
-                        <ul>
-                            <li>SARIMA + GBR combo delivered optimal accuracy.</li>
-                            <li>Future Improvements: Deeper hyperparameter tuning (especially MLP), adding contextual
-                                features (e.g., events).</li>
-                        </ul>
-
-                        <h3>Evaluating Final Models</h3>
-                        <p>The predictions from both the monthly and hourly models were combined and evaluated against
-                            the test data. The MAPE was computed for each model. All three models performed better than
-                            the baseline, with GBR performing best, followed by MLP, and linear regression significantly
-                            worse. Visualizations of one-week-out forecasts for each model over a span of two weeks on
-                            the test set showed GBR with the best performance, followed by MLP and linear regression.
-                        </p>
-
-                        <h3>Summary & Future Work</h3>
-                        <p>This project addressed the issue of forecasting electricity demand at one-week intervals with
-                            an hourly resolution. The original time series data was decomposed into monthly averages and
-                            hourly residuals. The monthly averages were modeled using a SARIMA model, and the hourly
-                            residuals were modeled using three different regression models. Gradient boosting regression
-                            showed the best performance on the test set, with a 61% improvement over the baseline
-                            persistence model.</p>
-                        <p>The accuracy of the gradient boosting regression model is quite good and could be used for
-                            one-week-out forecasting as a first-order estimate. For higher accuracy, further study is
-                            suggested, including a more thorough investigation of hyperparameters and adding contextual
-                            features to improve model accuracy.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="failure-cases">
-        <div class="case">
-            <div style="font-family: 'Courier New', monospace; padding: 10px; border: 1px solid #ddd;">
-                <div>
-                    <h2>Project Overview: Building an AI-Powered Knowledge Repository and Search Engine for Enterprise
-                        Code and Documents</h2>
-                    <p>This project aims to create a centralized repository for enterprise code and documents, enabling
-                        efficient search and retrieval of information using AI-powered semantic understanding and
-                        analysis. The system will leverage various AI/ML techniques, including Natural Language
-                        Processing (NLP), Optical Character Recognition (OCR), and potentially machine learning models
-                        for classification and entity recognition.</p>
-
-                    <h3>Key Components and Functionality:</h3>
-                    <ul>
-                        <li><strong>Data Ingestion and Processing:</strong>
-                            <ul>
-                                <li><strong>1.0 Crawler & Delta:</strong> This component is responsible for collecting
-                                    documents from various sources like SharePoint and S3 buckets. The "Delta" aspect
-                                    suggests it focuses on incremental updates and changes.</li>
-                                <li><strong>Nightly Document Delta Job Scheduler:</strong> This schedules the crawling
-                                    and updating process.</li>
-                                <li><strong>SOT Doc Pipeline & Delta:</strong> This pipeline processes the ingested
-                                    documents, likely involving steps like format conversion, metadata extraction, and
-                                    text preprocessing.</li>
-                                <li><strong>Data Extraction/OCR:</strong> Components like Textract and openpyxl are used
-                                    to extract text from different document formats, including OCR for images or scanned
-                                    documents.</li>
-                                <li><strong>Snippet Creation:</strong> This step likely involves breaking down documents
-                                    into smaller, searchable chunks or snippets.</li>
-                            </ul>
-                        </li>
-
-                        <li><strong>AI-Driven Understanding and Enrichment:</strong>
-                            <ul>
-                                <li><strong>2.0 Doc Classifier:</strong> This component classifies documents using the
-                                    "2.0 Docs" classification model, potentially using techniques like deep learning or
-                                    traditional machine learning.</li>
-                                <li><strong>Custom NER (Named Entity Recognition):</strong> This component identifies
-                                    and extracts key entities (e.g., people, organizations, locations) from the text.
-                                </li>
-                                <li><strong>Recognize Entities:</strong> Similar to NER, this focuses on identifying and
-                                    extracting specific entities relevant to the domain.</li>
-                                <li><strong>LLM (Large Language Model):</strong> This likely plays a crucial role in
-                                    understanding the semantics of the text, calculating coverage and limits, and
-                                    generating the final "SOT" (Source of Truth) data model.</li>
-                                <li><strong>Classification/Semantic Model (FAISS):</strong> FAISS (Facebook AI
-                                    Similarity Search) is used for efficient similarity search and clustering of
-                                    documents based on their semantic meaning.</li>
-                            </ul>
-                        </li>
-
-                        <li><strong>Data Storage and Management:</strong>
-                            <ul>
-                                <li><strong>EFS (Elastic File System):</strong> Provides temporary storage during
-                                    processing.</li>
-                                <li><strong>Mongo DB (Metadata Storage):</strong> Stores document metadata and revision
-                                    history.</li>
-                                <li><strong>S3 Bucket (Documents):</strong> Stores the actual document files.</li>
-                                <li><strong>Knowledge Graph (Mongo DB):</strong> Stores relationships between entities
-                                    and concepts extracted from the documents.</li>
-                                <li><strong>Facets Data Model (Mongo DB):</strong> Stores data related to facets
-                                    (categories or filters) for search and navigation.</li>
-                                <li><strong>MySQL Aurora (Facets Staging):</strong> A relational database used for
-                                    staging facet data before it's finalized.</li>
-                            </ul>
-                        </li>
-
-                        <li><strong>Search and Retrieval:</strong>
-                            <ul>
-                                <li><strong>Amazon Kendra:</strong> An enterprise search service that likely integrates
-                                    with the system to provide indexing and search capabilities.</li>
-                                <li><strong>Kendra 1.0 Search:</strong> Represents an earlier version of the search
-                                    functionality.</li>
-                                <li><strong>Search Engine (UI & APIs):</strong> Provides the user interface and APIs for
-                                    searching the repository.</li>
-                                <li><strong>Facets Code, Coverage, Limits:</strong> These components relate to specific
-                                    search facets, enabling users to filter results based on code details, coverage, or
-                                    limits.</li>
-                                <li><strong>Mapping Engine:</strong> Likely used to map search queries to relevant
-                                    documents or concepts in the knowledge graph.</li>
-                            </ul>
-                        </li>
-
-                        <li><strong>User Interface and Access:</strong>
-                            <ul>
-                                <li><strong>Users (GURU UI):</strong> Users interact with the system through a dedicated
-                                    UI to search for documents, code snippets, or information.</li>
-                            </ul>
-                        </li>
-                    </ul>
-
-                    <h3>AI/ML Focus:</h3>
-                    <ul>
-                        <li><strong>Semantic Search:</strong> Utilizing LLMs and FAISS to enable search based on the
-                            meaning of the query rather than just keywords.</li>
-                        <li><strong>Document Classification:</strong> Automatically categorizing documents for easier
-                            organization and retrieval.</li>
-                        <li><strong>Named Entity Recognition:</strong> Extracting key entities to enrich the data and
-                            enable faceted search.</li>
-                        <li><strong>Knowledge Graph Construction:</strong> Building a knowledge graph to capture
-                            relationships between concepts and improve search relevance.</li>
-                    </ul>
-
-                    <h3>Potential Use Cases:</h3>
-                    <ul>
-                        <li>Finding relevant code examples or documentation.</li>
-                        <li>Searching for information related to specific projects or topics.</li>
-                        <li>Identifying experts on particular subjects.</li>
-                        <li>Understanding the relationships between different concepts in the enterprise knowledge base.
-                        </li>
-                    </ul>
-
-                    <h3>Challenges and Considerations:</h3>
-                    <ul>
-                        <li><strong>Data Quality and Consistency:</strong> Ensuring the accuracy and consistency of data
-                            from various sources.</li>
-                        <li><strong>Scalability:</strong> Designing the system to handle a large volume of documents and
-                            user requests.</li>
-                        <li><strong>Performance:</strong> Optimizing the search and retrieval process for speed and
-                            efficiency.</li>
-                        <li><strong>Security:</strong> Protecting sensitive information within the repository.</li>
-                    </ul>
-
-                    <p>Overall, this project aims to build a powerful AI-driven knowledge management system that
-                        empowers users to efficiently access and leverage enterprise information assets. Let me know if
-                        you'd like me to elaborate on any specific component or aspect of this project!</p>
-                </div>
-
-            </div>
-        </div>
-    </div>
-
-    <div class="failure-cases">
-        <div class="case" style="font-family: 'Courier New', monospace; padding: 10px; border: 1px solid #ddd;">
             <div>
-                <h2>Project Overview: Building an AI-Powered Knowledge Repository and Search Engine for Enterprise Code
-                    and Documents</h2>
-                <p>In this project, I worked as an AI engineer where my main focus was on implementing **Named Entity
-                    Recognition (NER)** and **document classification** to help build a centralized repository for
-                    enterprise code and documents. The goal was to enable efficient search and retrieval of information
-                    using AI-powered semantic understanding and analysis. We utilized a variety of AI/ML techniques,
-                    including NLP and machine learning models for entity recognition and document classification.</p>
+                <h2>Introduction</h2>
+                <div>
+                    <p>AI has the power to transform industries, and I’ve dedicated my career to building intelligent
+                        solutions that drive efficiency and decision-making. My name is <strong>Ankit Dutta</strong>,
+                        with 9 years of professional experience, including 6 years specializing in AI/ML, NLP, and
+                        data-driven solutions across healthcare, telecom, and energy forecasting.</p>
 
-                <h3>Key Responsibilities and Contributions:</h3>
-                <ul>
-                    <li><strong>Named Entity Recognition (NER):</strong>
-                        <p>One of my core contributions was developing the NER model to extract key entities such as
-                            people, organizations, and locations from the documents. This involved fine-tuning existing
-                            NER models to suit the specific requirements of our enterprise domain. The goal was to
-                            enhance the document’s semantic structure and make it easier for users to retrieve the most
-                            relevant information based on entities.</p>
-                        <p>We used pre-trained models like spaCy and fine-tuned them with domain-specific data to
-                            improve accuracy. I also worked on integrating this NER model with the broader pipeline to
-                            tag documents with entities, enabling the search engine to understand and filter results
-                            based on recognized entities.</p>
-                    </li>
+                    <h3>Current Role</h3>
+                    <p>As a <strong>Senior Software Engineer (AI/ML)</strong> at Carelon Global Solutions, I develop
+                        AI-driven healthcare solutions, including:</p>
+                    <ul>
+                        <li>✅ LLM-based AI frameworks like an Agentic AI Bot using LlamaIndex.</li>
+                        <li>✅ Fine-tuned Google ELECTRA for intent classification and RoBERTa-based medical entity
+                            extraction.</li>
+                        <li>✅ Medical document classification model (Conv1D-LSTM) achieving 92% accuracy and 80% manual
+                            review reduction.</li>
+                    </ul>
 
-                    <li><strong>Document Classification:</strong>
-                        <p>Another key area of my work was **document classification**. We built a model to categorize
-                            incoming documents into predefined classes. This made it easier to organize and retrieve
-                            documents based on their content, significantly improving the user experience. I implemented
-                            classification models using deep learning techniques and also explored traditional machine
-                            learning algorithms.</p>
-                        <p>For classification, we leveraged techniques such as LSTM (Long Short-Term Memory) networks
-                            and BERT (Bidirectional Encoder Representations from Transformers). These models helped us
-                            classify documents accurately based on their semantic meaning. Fine-tuning BERT on our
-                            dataset allowed for better generalization across different types of documents in the
-                            enterprise repository.</p>
-                    </li>
+                    <h3>Previous Experience</h3>
+                    <ul>
+                        <li>🔹 <strong>EnigmaSoft Technologies (ML Developer)</strong>: Built NLP Email Tagger and
+                            Python Selenium scrapers for telecom pricing analysis.</li>
+                        <li>🔹 <strong>Ramtech/Reliance Jio</strong>: Developed time-series forecasting models (Seasonal
+                            ARIMA, XGBoost) for energy demand and QoS prediction.</li>
+                    </ul>
 
-                    <li><strong>AI-Driven Understanding and Enrichment:</strong>
-                        <p>In addition to NER and classification, I collaborated on integrating the **Large Language
-                            Model (LLM)** into our workflow. The LLM helped us understand the semantics of documents,
-                            calculate coverage, and refine the final "Source of Truth" data model.</p>
-                        <p>By using a combination of AI-driven enrichment and semantic search models, I was able to help
-                            the system interpret complex user queries and retrieve highly relevant documents from the
-                            knowledge base.</p>
-                    </li>
-                </ul>
+                    <h3>Technical Expertise</h3>
+                    <ul>
+                        <li><strong>Programming:</strong> Python (TensorFlow, PyTorch, Pandas)</li>
+                        <li><strong>NLP/LLMs:</strong> ELECTRA, RoBERTa, Attention models</li>
+                        <li><strong>Tools:</strong> Selenium, LlamaIndex, BeautifulSoup</li>
+                    </ul>
 
-                <h3>AI/ML Focus:</h3>
-                <ul>
-                    <li><strong>Semantic Search:</strong> Leveraged LLMs and FAISS (Facebook AI Similarity Search) to
-                        improve the search experience by focusing on the meaning of the query rather than just keywords.
-                    </li>
-                    <li><strong>Named Entity Recognition:</strong> My work in NER helped to identify and enrich
-                        documents with key entities, improving the accuracy of document retrieval and enabling advanced
-                        search functionalities.</li>
-                    <li><strong>Document Classification:</strong> I developed the classification system that allowed
-                        documents to be organized based on their content, which streamlined the process of finding
-                        relevant information.</li>
-                    <li><strong>Knowledge Graph Construction:</strong> I also contributed to building the knowledge
-                        graph that captured relationships between entities and concepts within the documents, enhancing
-                        the search relevance.</li>
-                </ul>
-
-                <h3>Challenges and Problem-Solving:</h3>
-                <ul>
-                    <li><strong>Data Quality:</strong> A challenge was ensuring that the data fed into the NER and
-                        classification models was high quality. I worked closely with the data engineering team to clean
-                        and preprocess the text data, which significantly improved the model's performance.</li>
-                    <li><strong>Model Generalization:</strong> Fine-tuning the models to generalize across various types
-                        of documents in the enterprise repository was another challenge. To address this, I used
-                        transfer learning techniques to adapt pre-trained models to our specific domain.</li>
-                    <li><strong>Scalability:</strong> The solution needed to handle a large volume of documents and
-                        queries. I collaborated with the infrastructure team to ensure the AI models were optimized for
-                        performance and scalability, enabling fast and accurate retrieval.</li>
-                </ul>
-
-                <h3>Impact and Results:</h3>
-                <p>My contributions to the NER and document classification components had a significant impact on the
-                    overall performance of the knowledge repository. With more accurate entity extraction and better
-                    document categorization, the system became much more efficient in serving user queries. The
-                    AI-powered search system was able to understand the semantic context of queries, leading to better
-                    search results and user satisfaction.</p>
-                <p>Overall, this project helped build a robust, AI-driven knowledge management system that greatly
-                    improved the accessibility and usefulness of enterprise documents.</p>
+                    <p>Passionate about solving healthcare challenges through AI/ML innovation and automation. Focused
+                        on turning data into actionable insights that improve outcomes.</p>
+                </div>
             </div>
-
         </div>
     </div>
-
+    </div>
     <div class="failure-cases">
         <div class="case" style="font-family: 'Courier New', monospace; padding: 10px; border: 1px solid #ddd;">
             <div class="project-pitch">
@@ -647,598 +348,425 @@
         </div>
     </div>
     <div class="failure-cases">
+        <div class="case">
+            <div>
+                <h2>1. High-Level Overview</h2>
+                <p>
+                    My part was to implement an intent classification model using a pretrained ELECTRA model in
+                    TensorFlow.
+                    It processes a dataset of text inputs labeled with different intents (e.g., 'update', 'delete'),
+                    fine-tunes the ELECTRA model, and evaluates its performance. The trained model can then be used to
+                    predict the intent of new text inputs.
+                </p>
+
+                <h2>2. Key Components Breakdown</h2>
+
+                <h3>A. Data Processing</h3>
+                <p>
+                    We start by defining intent labels and loading a dataset from a JSON file.
+                    The dataset is split into training and testing sets. We then use the ELECTRA tokenizer to preprocess
+                    text by converting words into tokenized representations, padding them to a fixed length,
+                    and mapping labels to numerical IDs.
+                </p>
+                <ul>
+                    <li>✅ Preprocessing function: Tokenizes text and assigns numerical labels</li>
+                    <li>✅ Filtering invalid labels: Removes any data points with missing labels</li>
+                </ul>
+
+                <h3>B. Model Selection & Training</h3>
+                <p>
+                    We use the TFElectraForSequenceClassification model, which is a transformer-based model designed for
+                    classification tasks. If a previously trained model exists, we load it; otherwise, we use a
+                    pre-trained
+                    ELECTRA model. We fine-tune it using Adam optimizer and Sparse Categorical Crossentropy loss.
+                </p>
+                <ul>
+                    <li>✅ Model Loading: Tries to load a saved model; otherwise, initializes a pretrained ELECTRA model
+                    </li>
+                    <li>✅ Compilation: Uses Adam optimizer and cross-entropy loss</li>
+                    <li>✅ Training: Runs for 15 epochs with validation on the test dataset</li>
+                </ul>
+
+                <h3>C. Model Evaluation</h3>
+                <p>
+                    Once trained, we evaluate the model on the test set by computing classification metrics like
+                    precision,
+                    recall, and F1-score using sklearn's classification report. Predictions are generated, and we
+                    compare
+                    them against ground-truth labels.
+                </p>
+                <ul>
+                    <li>✅ Predictions: Extracted from model logits</li>
+                    <li>✅ Metrics: Uses classification_report to assess model performance</li>
+                </ul>
+
+                <h3>D. Making Predictions</h3>
+                <p>
+                    We define a <code>predict_intent</code> function that takes raw text, tokenizes it, passes it
+                    through
+                    the trained model, and maps predicted labels back to human-readable intents. This allows us to
+                    classify
+                    new text inputs.
+                </p>
+                <ul>
+                    <li>✅ Tokenizes new inputs</li>
+                    <li>✅ Generates predictions</li>
+                    <li>✅ Maps back to intent labels</li>
+                </ul>
+
+                <h2>3. Why This Approach?</h2>
+                <p>
+                    Using ELECTRA for intent classification is efficient because it is a lightweight, pre-trained model
+                    designed for NLP tasks. It performs well with relatively small amounts of labeled data, making it a
+                    great choice for text classification tasks in real-world applications.
+                </p>
+
+
+                <h2>5. Handling Follow-up Questions</h2>
+
+                <h3>Q: Why did you choose ELECTRA over BERT?</h3>
+                <p>
+                    ELECTRA is more parameter-efficient than BERT. Instead of just predicting masked words like BERT, it
+                    learns from replaced tokens, making it more sample-efficient and faster to train.
+                </p>
+
+                <h3>Q: How would you improve the model’s performance?</h3>
+                <p>
+                    I’d experiment with larger models like electra-base or electra-large, fine-tune using more
+                    domain-specific
+                    data, and apply data augmentation techniques.
+                </p>
+
+                <h3>Q: How would you deploy this model?</h3>
+                <p>
+                    I’d save the model using <code>save_pretrained()</code>, package it in a Docker container, and
+                    deploy it as
+                    an API using FastAPI or AWS Lambda.
+                </p>
+
+            </div>
+
+        </div>
+    </div>
+
+    <div class="failure-cases">
         <div class="case" style="font-family: 'Courier New', monospace; padding: 10px; border: 1px solid #ddd;">
             <div>
-                <h2>Project Overview: FOBS Data - Intent Prediction and Classification</h2>
-                <p><strong>Objective:</strong><br>
-                    The project aimed to process user-submitted "change text" from the FOBS system, predict its intent
-                    using ELECTRA, and classify the text into two categories: <strong>"Benefit"</strong> or
-                    <strong>"GBA"</strong>. This helped in automating workflows and reducing manual review.
-                </p>
                 <div>
-                    <h2>Project Overview: FOBS Data - Intent Prediction, Classification, and Entity Extraction</h2>
-                    <p><strong>Objective:</strong><br>
-                        The project aimed to process user-submitted "change text" from the FOBS system, predict its
-                        intent using ELECTRA, classify the text into two categories: <strong>"Benefit"</strong> or
-                        <strong>"GBA"</strong>, and extract key entities using Rasa for deeper insights and downstream
-                        processing.
+                    <h2>1. High-Level Overview</h2>
+                    <p>
+                        This script implements a Named Entity Recognition (NER) model using a pretrained RoBERTa model
+                        in TensorFlow.
+                        It processes a dataset of text inputs with labeled entities (e.g., "benefitName", "uom"),
+                        fine-tunes the RoBERTa model,
+                        and evaluates its performance. The trained model can then extract entities from new text inputs.
+                    </p>
+
+                    <h2>2. Key Components Breakdown</h2>
+
+                    <h3>A. Data Processing</h3>
+                    <p>
+                        We define entity labels and load a dataset from a JSON file. The dataset is split into training
+                        and testing sets.
+                        We use the RoBERTa tokenizer to preprocess text by converting words into tokenized
+                        representations and mapping
+                        entity labels to token-level annotations.
+                    </p>
+                    <ul>
+                        <li>✅ Entity Labels: Defined for various entity types like "benefitName", "uom", and
+                            "benefitOption"</li>
+                        <li>✅ Tokenization: Converts words into tokenized sequences while preserving entity alignment
+                        </li>
+                        <li>✅ Label Mapping: Assigns entity labels to tokenized words</li>
+                    </ul>
+
+                    <h3>B. Model Selection & Training</h3>
+                    <p>
+                        We use the <code>TFRobertaForTokenClassification</code> model, which is a transformer-based
+                        model designed for
+                        token-level classification. If a previously trained model exists, we load it; otherwise, we use
+                        a pre-trained
+                        RoBERTa model and fine-tune it using an Adam optimizer.
+                    </p>
+                    <ul>
+                        <li>✅ Model Loading: Loads a saved model if available; otherwise, initializes a pretrained
+                            RoBERTa model</li>
+                        <li>✅ Compilation: Uses Adam optimizer and cross-entropy loss</li>
+                        <li>✅ Training: Runs for multiple epochs with validation on the test dataset</li>
+                    </ul>
+
+                    <h3>C. Model Evaluation</h3>
+                    <p>
+                        Once trained, we evaluate the model on the test set by computing classification metrics like
+                        precision, recall,
+                        and F1-score using sklearn’s classification report. Predictions are generated and compared
+                        against ground-truth labels.
+                    </p>
+                    <ul>
+                        <li>✅ Predictions: Extracted from model logits</li>
+                        <li>✅ Metrics: Uses classification_report to assess model performance</li>
+                    </ul>
+
+                    <h3>D. Making Predictions</h3>
+                    <p>
+                        We define a <code>predict_entities</code> function that takes raw text, tokenizes it, passes it
+                        through the trained model,
+                        and maps predicted entity labels back to meaningful outputs. This allows us to extract
+                        structured information from text.
+                    </p>
+                    <ul>
+                        <li>✅ Tokenizes new inputs</li>
+                        <li>✅ Generates entity predictions</li>
+                        <li>✅ Maps tokens back to entity labels</li>
+                    </ul>
+
+                    <h2>3. Why This Approach?</h2>
+                    <p>
+                        Using RoBERTa for NER is effective because it captures contextual meaning in text, allowing it
+                        to generalize well to
+                        unseen data. The model is optimized for token-level classification and performs well with
+                        relatively small amounts
+                        of labeled data.
+                    </p>
+
+                    <h2>4. Possible Extensions</h2>
+                    <ul>
+                        <li>✅ Fine-tune on a larger dataset for better accuracy</li>
+                        <li>✅ Optimize hyperparameters (learning rate, batch size)</li>
+                        <li>✅ Deploy the trained model using AWS Lambda or FastAPI for real-time entity extraction</li>
+                    </ul>
+
+                    <h2>5. Handling Follow-up Questions</h2>
+
+                    <h3>Q: Why did you choose RoBERTa over BERT?</h3>
+                    <p>
+                        RoBERTa is an optimized version of BERT that removes next-sentence prediction and uses dynamic
+                        masking,
+                        making it more robust and better suited for token classification tasks like NER.
+                    </p>
+
+                    <h3>Q: How would you improve the model’s performance?</h3>
+                    <p>
+                        I’d experiment with larger models like roberta-large, fine-tune using more domain-specific data,
+                        and apply
+                        data augmentation techniques.
+                    </p>
+
+                    <h3>Q: How would you deploy this model?</h3>
+                    <p>
+                        I’d save the model using <code>save_pretrained()</code>, package it in a Docker container, and
+                        deploy it as
+                        an API using FastAPI or AWS Lambda.
+                    </p>
+
+                    <h2>Final Tip</h2>
+                    <p>
+                        When explaining, stay structured, be concise, and adapt to the interviewer’s focus. Emphasize
+                        your
+                        understanding of model training, evaluation, and deployment—not just the code itself.
                     </p>
                 </div>
 
-                <div>
-                    <h3>Solution Approach</h3>
-                    <ol>
-                        <li><strong>Data Preprocessing:</strong>
-                            <ul>
-                                <li>Collected and cleaned the FOBS "change text" data.</li>
-                                <li>Performed tokenization, removed special characters, and handled class imbalance.
-                                </li>
-                            </ul>
-                        </li>
-                        <li><strong>Intent Prediction using ELECTRA:</strong>
-                            <ul>
-                                <li>Fine-tuned the ELECTRA model to predict the user's intent behind the change text.
-                                </li>
-                            </ul>
-                        </li>
-                        <li><strong>Benefit vs. GBA Classification:</strong>
-                            <ul>
-                                <li>Built a custom classifier on top of the intent prediction to classify the change
-                                    text into <strong>"Benefit"</strong> or <strong>"GBA"</strong>.</li>
-                            </ul>
-                        </li>
-                        <li><strong>Entity Extraction using Rasa:</strong>
-                            <ul>
-                                <li>Integrated Rasa NLU to extract key entities such as dates, benefit types, GBA codes,
-                                    and user-specific fields from the change text.</li>
-                            </ul>
-                        </li>
-                        <li><strong>Evaluation & Optimization:</strong>
-                            <ul>
-                                <li>Used metrics like <strong>F1-score</strong>, <strong>Precision</strong>, and
-                                    <strong>Recall</strong> to evaluate model performance.
-                                </li>
-                                <li>Addressed challenges like data imbalance, ambiguous text, and entity overlap through
-                                    advanced techniques.</li>
-                            </ul>
-                        </li>
-                    </ol>
-                </div>
-
-                <div>
-                    <h3>Code Examples</h3>
-
-                    <h4>1. Data Preprocessing</h4>
-                    <pre><code>
-                  import pandas as pd
-                  from sklearn.model_selection import train_test_split
-                  from transformers import ElectraTokenizer
-                  
-                  # Load FOBS change text data
-                  data = pd.read_csv("fobs_change_text.csv")
-                  
-                  # Sample preprocessing
-                  data['clean_text'] = data['change_text'].str.replace('[^a-zA-Z0-9 ]', '').str.lower()
-                  
-                  # Train-test split
-                  train_texts, val_texts, train_labels, val_labels = train_test_split(
-                      data['clean_text'], data['intent_label'], test_size=0.2, random_state=42
-                  )
-                  
-                  # Tokenize using ELECTRA tokenizer
-                  tokenizer = ElectraTokenizer.from_pretrained('google/electra-small-discriminator')
-                  train_encodings = tokenizer(list(train_texts), truncation=True, padding=True)
-                  val_encodings = tokenizer(list(val_texts), truncation=True, padding=True)
-                    </code></pre>
-
-                    <h4>2. Fine-Tuning ELECTRA for Intent Prediction</h4>
-                    <pre><code>
-                  import torch
-                  from transformers import ElectraForSequenceClassification, Trainer, TrainingArguments
-                  
-                  # Prepare ELECTRA model
-                  model = ElectraForSequenceClassification.from_pretrained('google/electra-small-discriminator', num_labels=3)
-                  
-                  # Prepare dataset class
-                  class FOBSDataset(torch.utils.data.Dataset):
-                      def __init__(self, encodings, labels):
-                          self.encodings = encodings
-                          self.labels = labels
-                  
-                      def __getitem__(self, idx):
-                          item = {key: torch.tensor(val[idx]) for key, val in self.encodings.items()}
-                          item['labels'] = torch.tensor(self.labels[idx])
-                          return item
-                  
-                      def __len__(self):
-                          return len(self.labels)
-                  
-                  # Create datasets
-                  train_dataset = FOBSDataset(train_encodings, train_labels.tolist())
-                  val_dataset = FOBSDataset(val_encodings, val_labels.tolist())
-                  
-                  # Training arguments
-                  training_args = TrainingArguments(
-                      output_dir='./results',
-                      evaluation_strategy="epoch",
-                      per_device_train_batch_size=16,
-                      per_device_eval_batch_size=16,
-                      num_train_epochs=4,
-                      weight_decay=0.01,
-                      logging_dir='./logs',
-                  )
-                  
-                  # Trainer
-                  trainer = Trainer(
-                      model=model,
-                      args=training_args,
-                      train_dataset=train_dataset,
-                      eval_dataset=val_dataset,
-                  )
-                  
-                  # Fine-tune ELECTRA
-                  trainer.train()
-                    </code></pre>
-
-                    <h4>3. Benefit vs. GBA Classification</h4>
-                    <pre><code>
-                  from sklearn.linear_model import LogisticRegression
-                  from sklearn.metrics import classification_report
-                  
-                  # Get ELECTRA embeddings for the clean text
-                  def get_embeddings(texts):
-                      inputs = tokenizer(texts, return_tensors="pt", truncation=True, padding=True)
-                      with torch.no_grad():
-                          outputs = model.electra(**inputs)
-                      return outputs.last_hidden_state.mean(dim=1).numpy()
-                  
-                  # Generate embeddings
-                  train_embeddings = get_embeddings(list(train_texts))
-                  val_embeddings = get_embeddings(list(val_texts))
-                  
-                  # Train Logistic Regression classifier
-                  clf = LogisticRegression(max_iter=1000)
-                  clf.fit(train_embeddings, data.loc[train_texts.index, 'benefit_gba_label'])
-                  
-                  # Evaluate classifier
-                  preds = clf.predict(val_embeddings)
-                  print(classification_report(data.loc[val_texts.index, 'benefit_gba_label'], preds))
-                    </code></pre>
-
-                    <h4>4. Entity Extraction using Rasa</h4>
-                    <pre><code>
-                  # Sample Rasa NLU pipeline configuration (config.yml)
-                  pipeline:
-                    - name: WhitespaceTokenizer
-                    - name: RegexFeaturizer
-                    - name: CRFEntityExtractor
-                    - name: DIETClassifier
-                      epochs: 100
-                    - name: EntitySynonymMapper
-                  
-                  # Sample NLU training data (nlu.yml)
-                  nlu:
-                  - intent: change_benefit
-                    examples: |
-                      - Change the benefit amount to $500 starting from [March 1st](start_date)
-                      - Update the [GBA1234](gba_code) plan for user [John Doe](user_name)
-                  
-                  # Python Code to Run Entity Extraction
-                  from rasa.nlu.model import Interpreter
-                  
-                  # Load trained Rasa model
-                  interpreter = Interpreter.load("./models")
-                  
-                  # Parse new change text
-                  message = "Please update benefit coverage starting from April 5th for user Sarah Connor."
-                  result = interpreter.parse(message)
-                  
-                  # Output extracted entities
-                  print("Intent:", result['intent']['name'])
-                  print("Entities:", result['entities'])
-                    </code></pre>
-
-                    <h4>5. Evaluation Metrics</h4>
-                    <pre><code>
-                  from sklearn.metrics import accuracy_score, precision_recall_fscore_support
-                  
-                  # For ELECTRA intent prediction
-                  intent_preds = trainer.predict(val_dataset)
-                  intent_labels = intent_preds.label_ids
-                  intent_predictions = intent_preds.predictions.argmax(axis=1)
-                  
-                  acc = accuracy_score(intent_labels, intent_predictions)
-                  precision, recall, f1, _ = precision_recall_fscore_support(intent_labels, intent_predictions, average='weighted')
-                  
-                  print(f"Intent Prediction - Accuracy: {acc:.2f}, Precision: {precision:.2f}, Recall: {recall:.2f}, F1: {f1:.2f}")
-                  
-                  # For Benefit vs. GBA classification
-                  print("Benefit vs. GBA Classification Report:")
-                  print(classification_report(data.loc[val_texts.index, 'benefit_gba_label'], preds))
-                    </code></pre>
-                </div>
-
-                <div>
-                    <h3>Challenges & Solutions</h3>
-                    <ul>
-                        <li><strong>Ambiguous Change Texts:</strong><br>
-                            <em>Solution:</em> Fine-tuned ELECTRA with domain-specific data to better handle ambiguous
-                            intents.
-                        </li>
-                        <li><strong>Class Imbalance:</strong><br>
-                            <em>Solution:</em> Used class weights in the Benefit/GBA classifier and applied data
-                            augmentation for underrepresented classes.
-                        </li>
-                        <li><strong>Complex Entity Structures:</strong><br>
-                            <em>Solution:</em> Leveraged Rasa's CRFEntityExtractor and DIETClassifier to accurately
-                            extract overlapping entities and handle complex entity relationships.
-                        </li>
-                        <li><strong>Pipeline Integration:</strong><br>
-                            <em>Solution:</em> Built a modular pipeline combining intent prediction, classification, and
-                            entity extraction for seamless processing.
-                        </li>
-                    </ul>
-                </div>
-
-                <div>
-                    <h3>Impact of the Project</h3>
-                    <ul>
-                        <li><strong>Accuracy Improvements:</strong> Intent prediction achieved <strong>~90%</strong>
-                            accuracy, Benefit/GBA classification had an F1-score of <strong>~88%</strong>, and entity
-                            extraction reached <strong>~85%</strong> accuracy.</li>
-                        <li><strong>Efficiency Gains:</strong> The pipeline reduced processing time by
-                            <strong>40%</strong>, leading to faster decision-making.
-                        </li>
-                        <li><strong>Enhanced Data Insights:</strong> Entity extraction provided granular data points for
-                            downstream processes, improving overall data usability.</li>
-                        <li><strong>Scalability:</strong> Designed the solution to be scalable, allowing integration
-                            into existing FOBS workflows.</li>
-                    </ul>
-                </div>
             </div>
+
         </div>
+    </div>
+
+
+
+
+    </div>
     </div>
     <div class="failure-cases">
         <div class="case" style="font-family: 'Courier New', monospace; padding: 10px; border: 1px solid #ddd;">
             <div>
-                <h2>Here’s a detailed explanation of the <strong>ELECTRA</strong> and <strong>Rasa</strong>
-                    architectures, including how they work under the hood.</h2>
-                <hr />
+                <h2>Electricity Demand Forecasting - Project Pitch</h2>
 
-                <h3>⚡ <strong>ELECTRA Architecture (Efficiently Learning an Encoder that Classifies Token
-                        Replacements Accurately)</strong></h3>
-                <p>ELECTRA introduces a new pretraining method called <strong>Replaced Token Detection</strong> as
-                    an alternative to traditional masked language modeling (like BERT).</p>
+                <h3>🔹 Introduction</h3>
+                <p>Accurate electricity demand forecasting is critical for utilities and grid operators. It reduces
+                    investment risks, optimizes fuel purchases, and ensures reliable power supply by balancing
+                    generation and consumption.</p>
+                <p>This project focused on <strong>medium-term forecasting</strong>, specifically predicting electricity
+                    demand <strong>one week in advance</strong> at an hourly resolution for London. Historical data from
+                    2002-2020 was used, leveraging time series analysis and regression models to generate forecasts.</p>
 
-                <h4>🏛 <strong>Architecture Overview:</strong></h4>
-                <p>ELECTRA consists of two main components:</p>
-                <ol>
-                    <li><strong>Generator</strong> (Small masked language model - MLM)</li>
-                    <li><strong>Discriminator</strong> (Main model that detects replaced tokens)</li>
-                </ol>
-                <pre>
-              [ Input Text ] → [ Generator (MLM) ] → [ Corrupted Text ] → [ Discriminator ] → [ Real or Fake Tokens? ]
-                </pre>
-
-                <hr />
-
-                <h4>🔄 <strong>Step-by-Step Workflow:</strong></h4>
-                <ol>
-                    <li><strong>Input Processing:</strong>
-                        <ul>
-                            <li>The input text is tokenized and masked randomly (like BERT).</li>
-                            <li>Example:
-                                <pre>
-              Original: The cat sat on the mat.
-              Masked: The [MASK] sat on the mat.
-                        </pre>
-                            </li>
-                        </ul>
-                    </li>
-                    <li><strong>Generator (Small MLM):</strong>
-                        <ul>
-                            <li>Predicts masked tokens (like BERT).</li>
-                            <li>Example Output:
-                                <pre>
-              "The [dog] sat on the mat."
-                        </pre>
-                            </li>
-                        </ul>
-                    </li>
-                    <li><strong>Corrupted Text Formation:</strong>
-                        <ul>
-                            <li>The predicted tokens from the generator are used to create a "corrupted" version of
-                                the input.</li>
-                            <li>Some tokens are replaced with generated tokens, others remain untouched.</li>
-                        </ul>
-                    </li>
-                    <li><strong>Discriminator (Core ELECTRA Model):</strong>
-                        <ul>
-                            <li>The corrupted text is fed into the discriminator.</li>
-                            <li>The discriminator predicts whether each token is <strong>Original</strong> or
-                                <strong>Replaced</strong>.
-                            </li>
-                        </ul>
-                    </li>
-                    <li><strong>Loss Functions:</strong>
-                        <ul>
-                            <li><strong>Generator:</strong> Uses cross-entropy loss (same as BERT's MLM loss).</li>
-                            <li><strong>Discriminator:</strong> Uses binary cross-entropy to predict real vs. fake
-                                tokens.</li>
-                        </ul>
-                    </li>
-                    <li><strong>Pretraining Objective - Replaced Token Detection:</strong>
-                        <ul>
-                            <li>ELECTRA focuses on teaching the discriminator to be highly sensitive to token
-                                replacements.</li>
-                        </ul>
-                    </li>
-                </ol>
-
-                <hr />
-
-                <h4>🛠 <strong>Advantages of ELECTRA:</strong></h4>
+                <h3>🔹 Data Collection</h3>
                 <ul>
-                    <li><strong>Efficiency:</strong> Trains faster than BERT while achieving similar or better
-                        performance.</li>
-                    <li><strong>Token-Level Discrimination:</strong> Learns from all tokens (not just masked ones),
-                        leading to richer representations.</li>
-                    <li><strong>Smaller Pretraining Cost:</strong> A smaller generator reduces compute needs.</li>
+                    <li><strong>Electricity Demand Data:</strong> Provided by County of London Electric Supply Company,
+                        cleaned by handling missing values and duplicates.</li>
+                    <li><strong>Weather Data:</strong> Sourced from Weather Underground, capturing temperature,
+                        humidity, wind speed, and weather conditions, which were preprocessed for consistency.</li>
                 </ul>
 
-                <h4>🧑‍💻 <strong>Code Snippet - Using ELECTRA for Intent Classification</strong></h4>
-                <pre><code class="language-python">
-              from transformers import ElectraTokenizer, ElectraForSequenceClassification
-              import torch
-              
-              # Load ELECTRA tokenizer and model
-              tokenizer = ElectraTokenizer.from_pretrained("google/electra-small-discriminator")
-              model = ElectraForSequenceClassification.from_pretrained("google/electra-small-discriminator", num_labels=3)
-              
-              # Sample text for intent prediction
-              text = "Update the benefit coverage starting next month."
-              inputs = tokenizer(text, return_tensors="pt")
-              outputs = model(**inputs)
-              
-              # Get intent prediction
-              predictions = torch.softmax(outputs.logits, dim=1)
-              predicted_intent = torch.argmax(predictions, dim=1)
-              print("Predicted Intent:", predicted_intent.item())
-                </code></pre>
-
-                <hr />
-
-                <h3>🤖 <strong>Rasa Architecture (Open-Source Conversational AI)</strong></h3>
-                <p>Rasa is a powerful open-source framework for building conversational agents, with two main
-                    components:</p>
-                <ol>
-                    <li><strong>Rasa NLU</strong> (Natural Language Understanding) – Handles intent classification &
-                        entity extraction.</li>
-                    <li><strong>Rasa Core</strong> (Dialogue Management) – Manages conversation flow and responses.
-                    </li>
-                </ol>
-                <pre>
-              [ User Input ] → [ Rasa NLU ] → [ Parsed Intent & Entities ] → [ Rasa Core ] → [ Bot Response ]
-                </pre>
-
-                <hr />
-
-                <h4>🏛 <strong>Rasa NLU Pipeline:</strong></h4>
-                <p>Rasa NLU processes the raw user input and converts it into structured data.</p>
-                <ol>
-                    <li><strong>Tokenizer:</strong> Splits the text into tokens.</li>
-                    <li><strong>Featurizer:</strong> Converts tokens into feature vectors.</li>
-                    <li><strong>Intent Classification:</strong> Identifies the user's intent using
-                        <strong>DIETClassifier</strong>.
-                    </li>
-                    <li><strong>Entity Extraction:</strong> Detects entities in the text.</li>
-                </ol>
-
-                <h4>🔍 <strong>Key Components:</strong></h4>
+                <h3>🔹 Feature Engineering</h3>
                 <ul>
-                    <li><strong>DIETClassifier:</strong> Multi-task transformer that predicts both intents and
-                        entities.</li>
-                    <li><strong>CRFEntityExtractor:</strong> Sequence labeling model that extracts entities based on
-                        token-level features.</li>
-                    <li><strong>RegexFeaturizer:</strong> Identifies predefined patterns (e.g., emails, phone
-                        numbers).</li>
+                    <li>Weather conditions converted into 6 broad categories (clear, cloud, rain, tstorm, fog, snow)
+                        using one-hot encoding.</li>
+                    <li>Created <strong>temporal features</strong> (weekday flag, sine/cosine encoding for time-of-day
+                        effects).</li>
+                    <li>Normalized continuous features to improve model performance.</li>
                 </ul>
 
-                <h4>🔄 <strong>Rasa Core - Dialogue Management:</strong></h4>
-                <p>Uses a policy-based system to manage dialogue flow, tracking conversation state using
-                    <strong>stories</strong> and guiding actions with policies like
-                    <strong>MemoizationPolicy</strong> and <strong>TEDPolicy</strong>.
-                </p>
-
-                <h4>🧑‍💻 <strong>Code Snippet - Entity Extraction with Rasa</strong></h4>
-                <pre><code class="language-yaml">
-              nlu:
-              - intent: change_benefit
-                examples: |
-                  - Change the benefit amount to $500 starting from [March 1st](start_date)
-                  - Update the [GBA1234](gba_code) plan for user [John Doe](user_name)
-                  - Modify coverage effective [April 5th](start_date)
-                </code></pre>
-
-                <pre><code class="language-yaml">
-              pipeline:
-                - name: WhitespaceTokenizer
-                - name: RegexFeaturizer
-                - name: DIETClassifier
-                  epochs: 100
-                - name: EntitySynonymMapper
-                </code></pre>
-
-                <pre><code class="language-python">
-              from rasa.nlu.model import Interpreter
-              
-              # Load trained Rasa model
-              interpreter = Interpreter.load("./models")
-              
-              # Parse user message
-              message = "Please update benefit coverage starting from May 10th for user Sarah Connor."
-              result = interpreter.parse(message)
-              
-              # Output
-              print("Intent:", result['intent']['name'])
-              print("Confidence:", result['intent']['confidence'])
-              print("Entities:", result['entities'])
-                </code></pre>
-
-                <h4>🛠 <strong>Advantages of Rasa:</strong></h4>
+                <h3>🔹 Model Design</h3>
+                <p>The forecasting problem was broken down into two parts:</p>
                 <ul>
-                    <li><strong>Custom NLU Pipelines:</strong> Easily customizable for domain-specific needs.</li>
-                    <li><strong>Multi-Task Learning:</strong> DIETClassifier handles both intents and entities.</li>
-                    <li><strong>Open-Source & Extensible:</strong> Supports custom components and integrations.</li>
-                    <li><strong>Modular Architecture:</strong> Can use only NLU or Core independently.</li>
+                    <li><strong>Monthly Trends (SARIMA):</strong> Captures long-term seasonal trends in demand.</li>
+                    <li><strong>Hourly Residuals (Regression):</strong> Predicts the difference between actual demand
+                        and monthly trend using machine learning models.</li>
                 </ul>
 
-                <h3>🚀 <strong>Combining ELECTRA + Rasa in Your Project:</strong></h3>
-                <p><strong>ELECTRA</strong>: Handles <strong>intent prediction</strong> with fine-tuned
-                    accuracy.<br />
-                    <strong>Rasa</strong>: Focuses on <strong>entity extraction</strong> from the same input text.
-                </p>
-                <pre>
-              [ User Input ]
-                    ↓
-              [ ELECTRA ] → Predict Intent
-                    ↓
-              [ Rasa NLU ] → Extract Entities
-                    ↓
-              [ Output ] → Intent + Entities for downstream processing
-                </pre>
+                <h3>🔹 Models Used</h3>
+                <ul>
+                    <li><strong>SARIMA:</strong> Modeled monthly electricity demand trends with clear seasonality and
+                        population growth.</li>
+                    <li><strong>Linear Regression:</strong> Provided a baseline but lacked predictive power.</li>
+                    <li><strong>Gradient Boosting Regression (GBR):</strong> Best performer, improving Mean Absolute
+                        Percentage Error (MAPE) by 61%.</li>
+                    <li><strong>Multi-Layer Perceptron (MLP):</strong> Outperformed linear regression but underperformed
+                        GBR due to hyperparameter tuning challenges.</li>
+                </ul>
+
+                <h3>🔹 Key Takeaways</h3>
+                <ul>
+                    <li>Best approach: <strong>SARIMA + Gradient Boosting Regression (GBR)</strong> for optimal
+                        accuracy.</li>
+                    <li>Future work: Improved hyperparameter tuning, adding contextual features (e.g., holidays,
+                        events).</li>
+                    <li>GBR model demonstrated reliable <strong>one-week-out electricity demand forecasts</strong>,
+                        making it a viable solution for power grid management.</li>
+                </ul>
+
+                <h3>💡 Why This Matters?</h3>
+                <p>By combining traditional time series modeling with machine learning, we achieved more accurate
+                    electricity demand predictions. This approach helps utilities optimize resource allocation, reduce
+                    costs, and improve energy efficiency.</p>
+
+                <h3>🚀 Final Pitch</h3>
+                <p>“Our project successfully developed a hybrid electricity demand forecasting model, leveraging SARIMA
+                    for long-term trends and Gradient Boosting for short-term predictions. The model achieved a 61%
+                    improvement over the baseline, offering a practical solution for utilities to enhance energy
+                    planning and grid stability.”</p>
             </div>
+
 
         </div>
     </div>
     <div class="failure-cases">
         <div class="case" style="font-family: 'Courier New', monospace; padding: 10px; border: 1px solid #ddd;">
-            <div>
-                <h2>📈 <strong>Time Series Analysis: A Detailed Explanation</strong></h2>
-                <hr />
-
-                <h3>⏳ <strong>What is Time Series Analysis?</strong></h3>
-                <p>
-                    Time Series Analysis involves analyzing data points collected or recorded at specific time
-                    intervals.
-                    The goal is to identify meaningful patterns, trends, and seasonalities in the data to make forecasts
-                    and informed decisions.
-                </p>
-
-                <h3>🏛 <strong>Key Components of Time Series Data:</strong></h3>
-                <ul>
-                    <li><strong>Trend (T):</strong> Long-term upward or downward movement in the data.</li>
-                    <li><strong>Seasonality (S):</strong> Repeating short-term cycles in the data (e.g., daily,
-                        monthly).</li>
-                    <li><strong>Cyclic Patterns (C):</strong> Long-term fluctuations not of a fixed period.</li>
-                    <li><strong>Irregular/Noise (I):</strong> Random variations or anomalies that cannot be explained.
-                    </li>
-                </ul>
-
-                <h3>🔄 <strong>Decomposition of Time Series:</strong></h3>
-                <p>
-                    A time series can be decomposed into its components using two models:
-                </p>
-                <ul>
-                    <li><strong>Additive Model:</strong> Y(t) = T(t) + S(t) + C(t) + I(t)</li>
-                    <li><strong>Multiplicative Model:</strong> Y(t) = T(t) * S(t) * C(t) * I(t)</li>
-                </ul>
-
-                <h3>📐 <strong>Mathematical Explanation:</strong></h3>
-                <p>
-                    Time series models often rely on autoregression and moving averages.
-                </p>
-                <ul>
-                    <li><strong>Autoregressive (AR) Model:</strong> Y<sub>t</sub> = c + &phi;<sub>1</sub>Y<sub>t-1</sub>
-                        + &phi;<sub>2</sub>Y<sub>t-2</sub> + ... + &phi;<sub>p</sub>Y<sub>t-p</sub> +
-                        &epsilon;<sub>t</sub></li>
-                    <li><strong>Moving Average (MA) Model:</strong> Y<sub>t</sub> = &mu; +
-                        &theta;<sub>1</sub>&epsilon;<sub>t-1</sub> + &theta;<sub>2</sub>&epsilon;<sub>t-2</sub> + ... +
-                        &theta;<sub>q</sub>&epsilon;<sub>t-q</sub> + &epsilon;<sub>t</sub></li>
-                    <li><strong>ARIMA Model:</strong> Combines AR and MA with differencing (I) to make data stationary.
-                        <br />
-                        ARIMA(p, d, q): p = AR terms, d = differencing order, q = MA terms.
-                    </li>
-                </ul>
-
-                <h3>📊 <strong>Key Techniques in Time Series Analysis:</strong></h3>
-                <ul>
-                    <li><strong>Stationarity Check:</strong> Ensures constant mean and variance over time (e.g., ADF
-                        Test).</li>
-                    <li><strong>Autocorrelation & Partial Autocorrelation:</strong> Helps determine lags for AR/MA
-                        models.</li>
-                    <li><strong>Seasonal Decomposition:</strong> Separates trend, seasonality, and noise.</li>
-                    <li><strong>Cross-Correlation:</strong> Identifies relationships between two time series.</li>
-                </ul>
-
-                <h3>🧑‍💻 <strong>Code Snippet - Basic Time Series Analysis Using Python</strong></h3>
-                <pre><code class="language-python">
-              import pandas as pd
-              import matplotlib.pyplot as plt
-              from statsmodels.tsa.seasonal import seasonal_decompose
-              
-              # Load time series data
-              data = pd.read_csv('timeseries.csv', parse_dates=['date'], index_col='date')
-              
-              # Plot the time series
-              data.plot(title='Time Series Data')
-              plt.xlabel('Date')
-              plt.ylabel('Value')
-              plt.show()
-              
-              # Decompose the time series
-              result = seasonal_decompose(data['value'], model='additive')
-              
-              # Plot decomposition
-              result.plot()
-              plt.show()
-                </code></pre>
-
-                <h3>📉 <strong>Graphical Representation:</strong></h3>
-                <p>
-                    The above code will produce two plots:
-                </p>
-                <ul>
-                    <li><strong>Original Time Series:</strong> Displays the raw data over time.</li>
-                    <li><strong>Decomposition Plot:</strong> Separates the data into Trend, Seasonality, and Residuals.
-                    </li>
-                </ul>
-
-                <h3>🚀 <strong>Advanced Techniques:</strong></h3>
-                <ul>
-                    <li><strong>LSTM (Long Short-Term Memory):</strong> Recurrent neural networks for sequential data.
-                    </li>
-                    <li><strong>GRU (Gated Recurrent Units):</strong> A lighter version of LSTM.</li>
-                    <li><strong>Transformer Models:</strong> Applied for time series forecasting (e.g., Time Series
-                        Transformer).</li>
-                </ul>
-
-                <h3>✅ <strong>Applications of Time Series Analysis:</strong></h3>
-                <ul>
-                    <li>Stock Market Prediction 📉📈</li>
-                    <li>Weather Forecasting 🌦</li>
-                    <li>Sales Forecasting 🛍</li>
-                    <li>Healthcare Monitoring 🏥</li>
-                    <li>Anomaly Detection 🔍</li>
-                </ul>
-
-                <h3>💡 <strong>Best Practices:</strong></h3>
-                <ul>
-                    <li>Ensure data quality and handle missing values.</li>
-                    <li>Use rolling statistics for stationarity checks.</li>
-                    <li>Always validate the model using out-of-sample testing.</li>
-                </ul>
-
-                <p>
-                    Would you like a deeper dive into <strong>ARIMA</strong> modeling or advanced
-                    <strong>LSTM</strong>-based forecasting techniques? 🚀
-                </p>
+            <div class="failure-cases">
+                <div class="case" style="font-family: 'Courier New', monospace; padding: 10px; border: 1px solid #ddd;">
+        
+                    <div>
+                        <h2>1. High-Level Overview</h2>
+                        <p>"Retrieval-Augmented Generation (RAG) is an AI technique that enhances large language models (LLMs)
+                            by retrieving external knowledge before generating responses. Instead of relying solely on a model's
+                            internal memory, RAG dynamically searches a knowledge base, extracts relevant information, and
+                            integrates it into the generation process. This improves accuracy, reduces hallucinations, and
+                            enables responses based on the latest available information."</p>
+        
+                        <h2>2. Key Components Breakdown</h2>
+        
+                        <h3>A. Data Preprocessing: Chunking & Vectorization</h3>
+                        <p>🔹 Before retrieval can happen, raw text data (e.g., documents, PDFs, or web pages) must be processed
+                            into smaller, searchable units called chunks.</p>
+        
+                        <ul>
+                            <li><strong>Chunking:</strong> "Long documents are broken into smaller, meaningful sections (e.g.,
+                                paragraphs or fixed-size text segments). This ensures that retrieval returns the most relevant
+                                context rather than entire documents."</li>
+                            <li><strong>Vectorization:</strong> "Each chunk is converted into an embedding (a numerical
+                                representation) using an embedding model (e.g., OpenAI’s text-embedding models, BERT, or SBERT).
+                                These embeddings capture semantic meaning and are stored in a vector database for efficient
+                                similarity search."</li>
+                        </ul>
+        
+                        <p><strong>💡 Why Chunking & Vectorization?</strong></p>
+                        <ul>
+                            <li>Prevents retrieving excessive or irrelevant text</li>
+                            <li>Improves the efficiency of search queries</li>
+                            <li>Helps the model focus on specific, relevant pieces of information</li>
+                        </ul>
+        
+                        <h3>B. Retrieval Phase</h3>
+                        <p>"When a user asks a question, their query is also converted into an embedding using the same
+                            embedding model. This embedding is then compared against stored document embeddings in a vector
+                            database (e.g., FAISS, Pinecone, ChromaDB) to find the most relevant chunks."</p>
+        
+                        <ul>
+                            <li>✅ Uses similarity search to find relevant text chunks</li>
+                            <li>✅ Supports keyword-based (BM25) and dense vector search</li>
+                            <li>✅ Retrieves only the most relevant knowledge for augmentation</li>
+                        </ul>
+        
+                        <h3>C. Augmentation & Fusion Phase</h3>
+                        <p>"The retrieved chunks are combined with the original query before being fed into a language model.
+                            This step ensures that the model generates responses grounded in factual, retrieved knowledge."</p>
+        
+                        <ul>
+                            <li>✅ Reduces hallucinations by forcing the model to use real data</li>
+                            <li>✅ Fusion strategies include simple concatenation or attention-based integration</li>
+                            <li>✅ Helps the model answer knowledge-intensive queries more accurately</li>
+                        </ul>
+        
+                        <h3>D. Generation Phase</h3>
+                        <p>"Finally, the augmented query is processed by a generative model (e.g., GPT-4, LLaMA, or T5), which
+                            uses both its pre-trained knowledge and the retrieved chunks to generate a final response."</p>
+        
+                        <ul>
+                            <li>✅ Uses retrieved information + model's internal knowledge</li>
+                            <li>✅ Ensures responses are relevant, fact-based, and context-aware</li>
+                            <li>✅ Improves interpretability and trustworthiness of AI-generated answers</li>
+                        </ul>
+        
+                        <h2>3. Why Use RAG?</h2>
+                        <p>"Traditional LLMs are static—they cannot update their knowledge without expensive fine-tuning. RAG
+                            solves this by dynamically fetching external knowledge, allowing models to stay up to date without
+                            retraining."</p>
+        
+                        <p><strong>💡 Key Benefits:</strong></p>
+                        <ul>
+                            <li>✅ More accurate responses with real-world knowledge</li>
+                            <li>✅ Reduces hallucinations (misleading or false information)</li>
+                            <li>✅ Lower computational cost compared to full fine-tuning</li>
+                            <li>✅ Can be easily updated by refreshing the knowledge base</li>
+                        </ul>
+        
+                        <h2>4. Possible Extensions & Optimizations</h2>
+                        <ul>
+                            <li>✅ <strong>Hybrid Search:</strong> Combining keyword search (BM25) with dense vector search for
+                                better retrieval</li>
+                            <li>✅ <strong>Multi-Document Fusion:</strong> Retrieving multiple relevant chunks and merging
+                                insights</li>
+                            <li>✅ <strong>Memory-Augmented RAG:</strong> Keeping track of previous conversations for contextual
+                                continuity</li>
+                            <li>✅ <strong>RAG + Agents:</strong> Using agentic workflows where retrieved knowledge helps in
+                                multi-step reasoning</li>
+                        </ul>
+        
+                        <h2>5. Handling Follow-up Questions</h2>
+        
+                        <h3>❓ Q: How does RAG compare to fine-tuning?</h3>
+                        <p>"Fine-tuning updates a model’s internal parameters, making it expensive and requiring periodic
+                            retraining. RAG, on the other hand, retrieves external knowledge dynamically, allowing real-time
+                            updates without modifying the model itself."</p>
+        
+                        <h3>❓ Q: What challenges exist in RAG implementation?</h3>
+                        <p>"Challenges include retrieval latency, noisy data affecting response quality, and maintaining an
+                            efficient knowledge base. These can be mitigated with optimized chunking strategies, ranking
+                            algorithms, and indexing improvements."</p>
+        
+                        <h3>❓ Q: How would you deploy RAG in production?</h3>
+                        <p>"I’d use a vector database like FAISS or Pinecone to store embeddings, integrate an API-based LLM for
+                            generation, and optimize retrieval latency using caching and ranking techniques."</p>
+        
+                        <h2>Final Tip</h2>
+                        <p>"When explaining RAG, focus on its <strong>practical advantages, real-world applications, and how it
+                                enhances LLM capabilities.</strong> Stay structured, provide clear examples, and be ready to
+                            discuss trade-offs!" 🚀</p>
+                    </div>
+        
+                </div>
             </div>
-
-        </div>
-    </div>
-    <div class="failure-cases">
-        <div class="case" style="font-family: 'Courier New', monospace; padding: 10px; border: 1px solid #ddd;">
         </div>
     </div>
     <div class="failure-cases">

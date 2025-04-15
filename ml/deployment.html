@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MLOps</title>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;700&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <!-- MathJax for Equations -->
+    <script type="text/javascript" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML">
+        </script>
+
+    <style>
+        /* Global Styles */
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            color: #ffffff;
+            background: url('../assets/images/ml-Background.jpg') no-repeat center center fixed;
+            background-size: cover;
+            position: relative;
+        }
+
+        /* Dark Overlay */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            z-index: -1;
+        }
+
+        /* Layout Containers */
+        header,
+        footer {
+            background: linear-gradient(135deg, #0829df, #04013c);
+            text-align: center;
+            padding: 20px;
+            font-size: 24px;
+            position: relative;
+            z-index: 10;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        main {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 30px;
+            background: rgba(19, 50, 185, 0.9);
+            border-radius: 12px;
+            box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.3);
+            position: relative;
+            z-index: 10;
+        }
+
+        h1,
+        h2,
+        h3 {
+            color: #ffcc00;
+            text-align: left;
+        }
+
+        /* Styling for Key Sections */
+        .case h3 {
+            color: #ffcc00;
+        }
+
+        .case p {
+            color: #e0e0e0;
+            line-height: 1.6;
+        }
+
+        /* Table Styles */
+        table {
+            font-family: 'Courier New', monospace;
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        th,
+        td {
+            border: 1px solid #ccc;
+            padding: 12px;
+            text-align: center;
+            font-size: 14px;
+        }
+
+        th {
+            background: rgba(0, 0, 0, 0.3);
+        }
+
+        /* Image Styling */
+        .image-container {
+            text-align: left;
+            margin: 20px 0;
+        }
+
+        .image-container img {
+            width: 50%;
+            border-radius: 10px;
+            box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Content Alignment */
+        .content-container {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: left;
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+        .text-container {
+            flex: 1;
+            width: 50%;
+        }
+
+        /* Failure Cases Section */
+        .failure-cases {
+            width: 90%;
+            max-width: 1200px;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.3);
+            margin: 40px auto;
+            text-align: left;
+        }
+
+        .case {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.15);
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Decision Tree Node Styles */
+        .node circle {
+            fill: #69b3a2;
+            stroke: #555;
+            stroke-width: 2px;
+        }
+
+        .node text {
+            font-size: 14px;
+            font-family: 'Courier New', monospace;
+            fill: white;
+        }
+
+        .link {
+            fill: none;
+            stroke: #ccc;
+            stroke-width: 2px;
+        }
+
+        a {
+            color: #ffcc00;
+            text-decoration: underline;
+            font-weight: bold;
+        }
+
+        a:hover {
+            color: #ffffff;
+            text-decoration: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="failure-cases">
+        <div class="case" style="font-family: 'Courier New', monospace; padding: 10px; border: 1px solid #ddd;">
+
+        <h2>✅ MLOps Pipeline Architecture (Overview)</h2>
+        <p><strong>Core Components:</strong></p>
+        <ul>
+          <li>FastAPI – Serves ML models via API</li>
+          <li>Prefect – Orchestrates training/inference workflows</li>
+          <li>MLflow – Experiment tracking (metrics, params, artifacts)</li>
+          <li>DVC (optional) – Dataset version control</li>
+          <li>AWS S3 – Stores models & datasets</li>
+          <li>Docker – Containerizes the entire pipeline</li>
+          <li>GitHub Actions – CI/CD automation</li>
+          <li>AWS ECR – Docker image registry</li>
+        </ul>
+      
+        <h2>🔁 Workflow Summary</h2>
+        <ol>
+          <li><strong>Data Versioning:</strong> Use S3 with folder timestamps or DVC for dataset tracking.</li>
+          <li><strong>Model Training:</strong> Prefect flow trains model and saves it to S3 as <code>model_YYYY-MM-DD-HH-MM-SS.pkl</code>.</li>
+          <li><strong>MLflow Tracking:</strong> Inside Prefect flow:
+            <pre><code>
+      with mlflow.start_run():
+          mlflow.log_param("lr", 0.001)
+          mlflow.log_metric("accuracy", acc)
+          mlflow.log_artifact("model.pkl")
+            </code></pre>
+          </li>
+          <li><strong>Containerization:</strong> One Dockerfile for all:
+            <pre><code>
+      FROM python:3.9
+      WORKDIR /app
+      COPY . .
+      RUN pip install -r requirements.txt
+      CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
+            </code></pre>
+          </li>
+        </ol>
+      
+        <h2>🌐 Inference Endpoint via FastAPI</h2>
+        <p>Define endpoints like <code>/predict</code> that load model from S3 or MLflow registry.</p>
+      
+        <h2>⚙️ Prefect Integration</h2>
+        <p>You can trigger flows via API:</p>
+        <pre><code>
+      @app.post("/train")
+      def train_model():
+          flow_run = flow.deploy()
+          return {"flow_run_id": flow_run.id}
+        </code></pre>
+      
+        <h2>🚀 GitHub Actions for CI/CD</h2>
+        <p><strong>File:</strong> <code>.github/workflows/deploy.yml</code></p>
+        <pre><code>
+      name: Deploy to ECR
+      
+      on:
+        push:
+          branches: [main]
+      
+      jobs:
+        build_and_push:
+          runs-on: ubuntu-latest
+          steps:
+          - uses: actions/checkout@v2
+      
+          - name: Set up Docker
+            uses: docker/setup-buildx-action@v2
+      
+          - name: Log in to ECR
+            run: |
+              aws ecr get-login-password --region ${{ secrets.AWS_REGION }} |
+              docker login --username AWS --password-stdin \
+              ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com
+      
+          - name: Build Docker image
+            run: docker build -t mlflow-prefect-fastapi .
+      
+          - name: Tag Docker image
+            run: docker tag mlflow-prefect-fastapi:latest \
+              ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/mlflow-prefect-fastapi:latest
+      
+          - name: Push Docker image to ECR
+            run: docker push \
+              ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/mlflow-prefect-fastapi:latest
+        </code></pre>
+      
+        <h2>🔐 GitHub Secrets Needed</h2>
+        <ul>
+          <li><code>AWS_ACCESS_KEY_ID</code></li>
+          <li><code>AWS_SECRET_ACCESS_KEY</code></li>
+          <li><code>AWS_REGION</code></li>
+          <li><code>AWS_ACCOUNT_ID</code></li>
+        </ul>
+      
+        <h2>🐳 Manual Docker Push to ECR</h2>
+        <pre><code>
+      # Authenticate
+      aws ecr get-login-password --region &lt;region&gt; | \
+      docker login --username AWS --password-stdin &lt;account_id&gt;.dkr.ecr.&lt;region&gt;.amazonaws.com
+      
+      # Build
+      docker build -t mlflow-prefect-fastapi .
+      
+      # Tag
+      docker tag mlflow-prefect-fastapi:latest \
+      &lt;account_id&gt;.dkr.ecr.&lt;region&gt;.amazonaws.com/mlflow-prefect-fastapi:latest
+      
+      # Push
+      docker push \
+      &lt;account_id&gt;.dkr.ecr.&lt;region&gt;.amazonaws.com/mlflow-prefect-fastapi:latest
+        </code></pre>
+      
+        <h2>💡 Final Notes</h2>
+        <ul>
+          <li>A single Dockerfile is sufficient if structured well.</li>
+          <li>Deploy to ECS/EKS with proper configuration to pull from ECR.</li>
+          <li>Expose endpoints like <code>/train</code>, <code>/predict</code> from FastAPI.</li>
+          <li>MLflow UI can be added for monitoring experiments.</li>
+        </ul>
+      
+      </div>
+      
+</body>
+</html>

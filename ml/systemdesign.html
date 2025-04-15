@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Understanding K-Nearest Neighbors (KNN)</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script type="text/javascript" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML">
+        </script>
+
+    <style>
+        /* Global Styles */
+        body {
+            font-family: 'Courier New', monospace;
+            margin: 0;
+            padding: 0;
+            color: #ffffff;
+            background: url('../assets/images/ml-Background.jpg') no-repeat center center fixed;
+            background-size: cover;
+            position: relative;
+        }
+
+        /* Dark Overlay */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1;
+        }
+
+        /* Layout Containers */
+        header,
+        footer {
+            background: linear-gradient(135deg, #0829df, #04013c);
+            text-align: center;
+            padding: 20px;
+            font-size: 24px;
+            position: relative;
+            z-index: 10;
+        }
+
+        main {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 25px;
+            background: rgba(19, 50, 185, 0.85);
+            border-radius: 10px;
+            box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+            position: relative;
+            z-index: 10;
+        }
+
+        h1,
+        h2,
+        h3 {
+            color: #d9dcdf;
+        }
+
+        .case h3 {
+            color: #ffcc00;
+        }
+
+        .case p {
+            color: #ffffff;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        th,
+        td {
+            border: 1px solid rgba(255, 255, 255, 0.43);
+            padding: 12px;
+            text-align: center;
+            color: #ffffff;
+        }
+
+        th {
+            background: rgba(255, 255, 255, 0.2);
+            font-weight: bold;
+        }
+
+        .image-container {
+            text-align: center;
+            margin: 5px 0;
+        }
+
+        .image-container img {
+            width: 85%;
+            border-radius: 5px;
+            box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Keep Flexbox for content before "Conclusion" */
+        .content-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+        }
+
+        .image-container {
+            flex: 1;
+        }
+
+        .image-container img {
+            width: 100%;
+            border-radius: 10px;
+        }
+
+        .text-container {
+            flex: 1;
+        }
+
+        /* Remove Flexbox after "Conclusion" */
+        .container-cases {
+            width: 90%;
+            max-width: 1600px;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+            margin: 20px auto;
+            display: block;
+            /* Stack elements instead of flex */
+            text-align: justify;
+        }
+
+        /* Individual Case Boxes */
+        .case {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.15);
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 6px;
+        }
+
+        .case h3 {
+            color: #ffcc00;
+            margin-bottom: 5px;
+        }
+
+        .case p {
+            color: #ffffff;
+        }
+    </style>
+</head>
+
+<header>
+    <h1>System Design Components </h1>
+</header>
+
+<body>
+    <div>
+        <h2>Client-Server Architecture</h2>
+        <p>Almost every web application that you use is built on this simple yet powerful concept called client-server architecture.</p>
+      
+        <p>On one side, you have a client—this could be a web browser, a mobile app, or any other frontend application.</p>
+        <p>On the other side, you have a server—a machine that runs continuously, waiting to handle incoming requests.</p>
+      
+        <p>The client sends a request to store, retrieve, or modify data.</p>
+        <p>The server receives the request, processes it, performs the necessary operations, and sends back a response.</p>
+      
+        <p>This sounds simple, but there’s a big question: How does the client even know where to find the server?</p>
+      
+        <h3>1. IP Address</h3>
+        <p>A client doesn’t magically know where a server is; it needs an address to locate and communicate with it.</p>
+        <p>On the internet, computers identify each other using IP addresses, which work like phone numbers for servers.</p>
+      
+        <p>Every publicly deployed server has a unique IP address. When a client wants to interact with a service, it must send requests to the correct IP address.</p>
+      
+        <p>But there’s a problem: When we visit a website, we don’t type its IP address—we just enter the website name.</p>
+        <p>We can’t expect users (or even systems) to memorize a string of random numbers for every service they connect to.</p>
+        <p>And if we migrate our service to another server, its IP address may change—breaking all direct connections.</p>
+      
+        <h3>2. DNS</h3>
+        <p>Instead of relying on hard-to-remember IP addresses, we use something much more human-friendly: domain names.</p>
+        <p>But, we need a way to map a domain name to its corresponding IP address.</p>
+      
+        <p>This is where DNS (or Domain Name System) comes in. It maps easy-to-remember domain names (like algomaster.io) to their corresponding IP addresses.</p>
+      
+        <p>Here’s what happens behind the scenes:</p>
+        <ul>
+          <li>When you type algomaster.io into your browser, your computer asks a DNS server for the corresponding IP address.</li>
+          <li>Once the DNS server responds with the IP, your browser uses it to establish a connection with the server and make a request.</li>
+        </ul>
+      
+        <p>You can find the IP address of any domain using the ping command. Just open your terminal and type <code>ping domain_name</code>, and it’ll return the IP address currently assigned to that domain.</p>
+      
+        <h3>3. Proxy / Reverse Proxy</h3>
+        <p>When you visit a website, your request doesn’t always go directly to the server—sometimes, it passes through a proxy or reverse proxy first.</p>
+      
+        <p>A proxy server acts as a middleman between your device and the internet.</p>
+        <p>When you request a webpage, the proxy forwards your request to the target server, retrieves the response, and sends it back to you.</p>
+        <p>A proxy hides your IP address, keeping your location and identity private.</p>
+      
+        <p>A reverse proxy works the other way around. It intercepts client requests and forwards them to backend servers based on predefined rules.</p>
+      
+        <p>Allowing direct access to servers can pose security risks, exposing them to threats like hackers and DDoS attacks.</p>
+        <p>A reverse proxy mitigates these risks by acting as a controlled entry point that regulates incoming traffic and hides server IPs.</p>
+        <p>It can also act as a load balancer, distributing traffic across multiple servers.</p>
+      
+        <h3>4. Latency</h3>
+        <p>Whenever a client communicates with a server, there’s always some delay. One of the biggest causes of this delay is physical distance.</p>
+      
+        <p>For example, if our server is in New York, but a user in India sends a request, the data has to travel halfway across the world—and then the response has to make the same long trip back.</p>
+      
+        <p>This round-trip delay is called latency—the total time it takes for data to travel between the client and the server. High latency can make applications feel slow and unresponsive.</p>
+      
+        <p>One way to reduce latency is by deploying our service across multiple data centers worldwide. This way, users can connect to the nearest server instead of waiting for data to travel across the globe.</p>
+      
+        <h3>5. HTTP/HTTPS</h3>
+        <p>Every time you visit a website, your browser and the server communicate using a set of rules called HTTP (Hypertext Transfer Protocol).</p>
+      
+        <p>That’s why most URLs start with <code>http://</code> or its secure version, <code>https://</code>.</p>
+      
+        <p>HTTP has a major security flaw: it sends data in plain text. This is a serious problem, especially for sensitive information like passwords, credit card details, and personal data.</p>
+      
+        <p>That’s why modern websites use HTTPS (Hypertext Transfer Protocol Secure) instead. HTTPS encrypts all data using SSL/TLS, ensuring that even if someone intercepts the request, they can’t read or alter it.</p>
+      
+        <h3>6. APIs</h3>
+        <p>Think of an API as a middleman that allows clients (like web and mobile apps) to communicate with servers without worrying about low-level details.</p>
+      
+        <p>Almost every digital service you use—social media, e-commerce, online banking, ride-hailing apps—is built on APIs working together behind the scenes.</p>
+      
+        <h3>7. REST API</h3>
+        <p>Among the different API styles, REST (Representational State Transfer) is the most widely used.</p>
+      
+        <p>A REST API follows a set of rules that define how clients and servers communicate over HTTP in a structured way.</p>
+      
+        <p>REST APIs are great because they’re simple, scalable, and easy to cache, but they have limitations, especially when dealing with complex data retrieval.</p>
+      
+        <h3>8. GraphQL</h3>
+        <p>Unlike REST, which forces clients to retrieve fixed sets of data, GraphQL lets clients ask for exactly what they need—nothing more, nothing less.</p>
+      
+        <p>With a REST API, if you need user details, profile details, and recent posts, you might have to make multiple requests to different endpoints.</p>
+      
+        <p>With GraphQL, you can combine those requests into one and fetch exactly the data you need in a single query.</p>
+      
+        <h3>9. Databases</h3>
+        <p>A database is the backbone of any application. It ensures that data is stored, retrieved, and managed efficiently while keeping it secure, consistent, and durable.</p>
+      
+        <p>Different applications have different scalability, performance, and consistency requirements, which is why choosing the right type of database is important.</p>
+      </div>
+      
+</body>
+
+</html>

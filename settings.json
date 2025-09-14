@@ -1,0 +1,38 @@
+{
+    "workbench.colorTheme": "Visual Studio Light",
+    "editor.fontFamily": "JetBrains Mono Light",
+    "editor.fontSize": 13,
+    "editor.fontLigatures": true,
+    "editor.letterSpacing": 0.1,
+    "editor.lineHeight": 1.2,
+    "javascript.suggest.enabled": false,
+    "typescript.suggest.enabled": false,
+    "editor.inlineSuggest.enabled": false,
+    "workbench.colorCustomizations": {
+        "editor.foreground": "#2c2c2c",                         // Dark gray text
+        "editor.background": "#ffffff",                         // Pure white background
+        "editorGutter.background": "#f7f7f7",                   // Slightly off-white gutter
+        "editorLineNumber.foreground": "#6e6e6e",               // Medium gray line numbers
+        "editorLineNumber.activeForeground": "#d17b0f",         // Warm orange highlight for active line number
+        "editor.selectionBackground": "#ffd580",                // Soft yellow-orange selection
+        "editor.wordHighlightBackground": "#ffe4a1",            // Light yellow word highlight
+        "editor.findMatchBackground": "#a1c4fd",                // Soft blue for found matches
+        "editor.findMatchBorder": "#0c2d57",                    // Deep blue border
+        "editor.findMatchHighlightBackground": "#f4a261",       // Peach highlight for matches
+        "editor.findMatchHighlightBorder": "#e76f51"            // Coral border for highlight
+    },
+    "liveServer.settings.donotShowInfoMsg": true,
+    "workbench.editorAssociations": {
+        "*.copilotmd": "vscode.markdown.preview.editor",
+        "*.db": "default"
+    },
+    "files.autoSave": "onFocusChange",
+    "python.defaultInterpreterPath": "c:\\Users\\ruchi\\PycharmProjects\\genai_env\\Scripts\\python.exe",
+    "workbench.preferredDarkColorTheme": "Quiet Light",
+    "window.autoDetectColorScheme": true,
+    "python.autoComplete.extraPaths": [],
+    "python.terminal.launchArgs": [
+        
+    ],
+    "workbench.preferredLightColorTheme": "JupyterLab Light"
+}

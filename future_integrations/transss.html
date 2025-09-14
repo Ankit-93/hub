@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Transformer Architecture</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      padding: 40px;
+      line-height: 1.6;
+      white-space: pre-line;
+    }
+    h1, h2 {
+      border-bottom: 1px solid #ccc;
+    }
+    code {
+      background: #eee;
+      padding: 2px 4px;
+      border-radius: 3px;
+    }
+  </style>
+</head>
+<body>
+
+<h1>Transformer Architecture</h1>
+
+<h2>⚙️ Standard Hyperparameters</h2>
+
+- Attention heads: 8  
+- Dimension per head: <code>d_k = d_q = d_v = 64</code>  
+- Model dimension: <code>d_model = 512</code>  
+- Feedforward hidden: <code>d_ff = 2048</code>  
+- Batch size: <code>B</code>  
+- Sequence length: <code>T</code>  
+- Vocabulary size: <code>V</code>
+
+---
+
+<h2>✅ Encoder Structure</h2>
+
+The encoder is repeated N times (commonly 6)
+
+<b>1. Input:</b> token IDs <code>(B, T)</code>  
+→ After embedding: <code>(B, T, 512)</code>  
+→ After adding positional encoding: <code>(B, T, 512)</code>
+
+<b>2. Multi-Head Self-Attention</b>  
+- Inputs: <code>(B, T, 512)</code>  
+- Project to Q, K, V:  
+  <code>Q = XW_Q</code>,  
+  <code>K = XW_K</code>,  
+  <code>V = XW_V</code>  
+  → each: <code>(B, T, 512)</code>  
+- Split into 8 heads: each head → <code>(B, T, 64)</code>  
+- Attention scores: <code>QKᵀ / √64</code> → <code>(B, T, T)</code>  
+- Softmax → weighted sum with V: <code>(B, T, 64)</code>  
+- Concatenate heads: <code>(B, T, 512)</code>  
+- Linear projection: <code>(B, T, 512)</code>
+
+<b>3. Add & Layer Normalization</b>  
+- Residual connection  
+- Output: <code>(B, T, 512)</code>
+
+<b>4. Position-wise Feedforward Network</b>  
+- Linear 1: 512 → 2048 → <code>(B, T, 2048)</code>  
+- ReLU  
+- Linear 2: 2048 → 512 → <code>(B, T, 512)</code>
+
+<b>5. Add & Layer Normalization</b>  
+- Residual connection  
+- Output: <code>(B, T, 512)</code>
+
+This block is repeated N times, passing <code>(B, T, 512)</code> forward each time.
+
+---
+
+<h2>✅ Decoder Structure</h2>
+
+The decoder is also repeated N times (commonly 6)
+
+<b>1. Input Embedding + Positional Encoding</b>  
+- Input tokens: <code>(B, T_dec)</code>  
+- Embedded: <code>(B, T_dec, 512)</code>
+
+<b>2. Masked Multi-Head Self-Attention</b>  
+- Q, K, V from decoder input: <code>(B, T_dec, 512)</code>  
+- Split into 8 heads: <code>(B, T_dec, 64)</code>  
+- Mask future tokens  
+- Attention scores: <code>QKᵀ / √64</code> → <code>(B, T_dec, T_dec)</code>  
+- Softmax → weighted sum with V: <code>(B, T_dec, 64)</code>  
+- Concat heads: <code>(B, T_dec, 512)</code>  
+- Linear projection: <code>(B, T_dec, 512)</code>
+
+<b>3. Add & Layer Normalization</b>  
+- Residual connection  
+- Output: <code>(B, T_dec, 512)</code>
+
+<b>4. Cross-Attention (Encoder-Decoder Attention)</b>  
+- Q from decoder: <code>(B, T_dec, 512)</code>  
+- K, V from encoder output: <code>(B, T, 512)</code>  
+- Project Q/K/V to 8 heads  
+- Attention scores: <code>QKᵀ / √64</code> → <code>(B, T_dec, T)</code>  
+- Softmax → weighted sum with V  
+- Concat heads: <code>(B, T_dec, 512)</code>  
+- Linear projection: <code>(B, T_dec, 512)</code>
+
+<b>5. Add & Layer Normalization</b>  
+- Residual connection  
+- Output: <code>(B, T_dec, 512)</code>
+
+<b>6. Position-wise Feedforward</b>  
+- Linear 1: 512 → 2048 → <code>(B, T_dec, 2048)</code>  
+- ReLU  
+- Linear 2: 2048 → 512 → <code>(B, T_dec, 512)</code>
+
+<b>7. Add & Layer Normalization</b>  
+- Residual connection  
+- Output: <code>(B, T_dec, 512)</code>
+
+---
+
+<h2>🎯 Final Linear & Softmax</h2>
+
+- Linear projection: <code>512 → V</code>  
+- Output logits: <code>(B, T_dec, V)</code>  
+- Softmax over vocabulary  
+- Final probabilities: <code>(B, T_dec, V)</code>
+
+---
+
+<h2>🔷 Positional Encoding</h2>
+
+Since self-attention is permutation-invariant, we add positional encodings:
+
+<pre>
+PE(pos, 2i)   = sin(pos / 10000^(2i / d_model))  
+PE(pos, 2i+1) = cos(pos / 10000^(2i / d_model))  
+Shape: (1, T, 512) — broadcast to batch  
+</pre>
+
+---
+
+<h3>🔗 Resources</h3>
+- <a href="https://ankit-93.github.io/hub/deep_learning/forward_prop.html" target="_blank">Forward Propagation</a>  
+- <a href="https://ankit-93.github.io/hub/deep_learning/back_prop.html" target="_blank">Backward Propagation</a>
+
+</body>
+</html>

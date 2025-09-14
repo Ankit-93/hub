@@ -1,150 +1,287 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Z-Score Distribution</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <style>
-        /* Global Styles */
-        body {
-            font-family: 'Courier New', monospace;
-            margin: 0;
-            padding: 0;
-            color: #ffffff;
-            background: url('../assets/images/Background.jpg') no-repeat center center fixed;
-            background-size: cover;
-            position: relative;
-        }
-        
-        /* Dark Overlay */
-        body::before {
-            content: "";
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            z-index: 1;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Comprehensive resource for statistics and machine learning concepts">
+  <title>Statistics & Machine Learning Hub</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <style>
+    :root {
+      --primary-dark: #770799;
+      --primary-medium: #fcfefe;
+      --accent-color: #fafafa;
+      --section-bg: #770799;
+      --text-light: #ffffff;
+    }
 
-        /* Layout Containers */
-        header, footer {
-            background: linear-gradient(135deg, #002c26, #004d40);
-            text-align: center;
-            padding: 20px;
-            font-size: 24px;
-            position: relative;
-            z-index: 10;
-        }
-        
-        main {
-            max-width: 900px;
-            margin: 40px auto;
-            padding: 25px;
-            background: rgba(3, 40, 36, 0.85);
-            border-radius: 10px;
-            box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
-            position: relative;
-            z-index: 10;
-        }
-        
-        h2, h3 {
-            color: #f5f5f5;
-        }
-        
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 20px 0;
-            background: rgba(255, 255, 255, 0.1);
-        }
-        
-        th, td {
-            border: 1px solid rgba(255, 255, 255, 0.43);
-            padding: 12px;
-            text-align: center;
-            color: #ffffff;
-        }
-        
-        th {
-            background: rgba(255, 255, 255, 0.2);
-            font-weight: bold;
-        }
+    body {
+      font-family: 'Poppins', sans-serif;
+      margin: 0;
+      padding: 0;
+      color: var(--text-light);
+      background: url("../assets/images/Background.jpg") no-repeat center center fixed;
+      background-size: cover;
+      line-height: 1.6;
+    }
 
-        .image-container {
-            text-align: center;
-            margin: 30px 0;
-        }
-        
-        .image-container img {
-            width: 85%;
-            border-radius: 10px;
-            box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
-        }
-        
-        .result {
-            background: rgba(255, 255, 255, 0.2);
-            padding: 15px;
-            margin: 10px 0;
-            border-radius: 8px;
-            font-weight: bold;
-        }
-    </style>
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.6);
+      z-index: 1;
+    }
+
+    header {
+      background: linear-gradient(135deg, var(--primary-dark), var(--primary-medium));
+      padding: 2rem;
+      text-align: center;
+      position: relative;
+      z-index: 10;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 2.5rem;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      background: linear-gradient(to right, #fff 0%, var(--accent-color) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    main {
+      max-width: 1000px;
+      margin: 3rem auto;
+      padding: 2.5rem;
+      background: var(--section-bg);
+      border-radius: 15px;
+      box-shadow: 0 10px 30px rgba(225, 220, 220, 0.3);
+      position: relative;
+      z-index: 10;
+      backdrop-filter: blur(5px);
+    }
+
+    section {
+      margin-bottom: 3rem;
+      padding: 1.5rem;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.08);
+      transition: transform 0.3s ease;
+    }
+
+    section:hover {
+      transform: translateY(-3px);
+    }
+
+    h2 {
+      color: var(--accent-color);
+      margin-top: 0;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid var(--accent-color);
+      font-size: 1.8rem;
+    }
+
+    h3 {
+      color: var(--text-light);
+      margin: 1.5rem 0 1rem;
+      font-size: 1.4rem;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+      margin: 1rem 0;
+    }
+
+    li {
+      padding: 0.8rem;
+      margin: 0.5rem 0;
+      background: rgba(255, 255, 255, 0.07);
+      border-radius: 5px;
+      transition: all 0.3s ease;
+    }
+
+    li:hover {
+      background: rgba(255, 255, 255, 0.15);
+      transform: translateX(5px);
+    }
+
+    li a {
+      color: var(--text-light);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+    }
+
+    li a:hover {
+      color: var(--accent-color);
+    }
+
+    li a i {
+      color: var(--accent-color);
+      width: 1.5rem;
+      text-align: center;
+    }
+
+    .image-container {
+      position: relative;
+      margin: 3rem auto;
+      max-width: 90%;
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+    }
+
+    .image-container img {
+      width: 100%;
+      height: auto;
+      display: block;
+      transition: transform 0.3s ease;
+    }
+
+    .image-container:hover img {
+      transform: scale(1.03);
+    }
+
+    .failure-cases {
+      width: 90%;
+      max-width: 1600px;
+      background: rgba(255, 255, 255, 0.05);
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+      margin: 20px auto;
+      text-align: justify;
+      position: relative;
+      z-index: 10;
+    }
+
+    figure {
+      margin: 1rem 0;
+    }
+
+    figure img {
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    figcaption {
+      font-size: 0.85rem;
+      margin-top: 0.5rem;
+      color: var(--accent-color);
+    }
+
+    footer {
+      background: linear-gradient(135deg, var(--primary-dark), var(--primary-medium));
+      text-align: center;
+      padding: 1.5rem;
+      position: relative;
+      z-index: 10;
+      margin-top: 4rem;
+    }
+
+    footer p {
+      margin: 0;
+      font-size: 0.9rem;
+      opacity: 0.9;
+    }
+
+    .social-links {
+      margin-top: 1rem;
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+    }
+
+    .social-links a {
+      color: var(--text-light);
+      font-size: 1.2rem;
+      transition: color 0.3s ease;
+    }
+
+    .social-links a:hover {
+      color: var(--accent-color);
+    }
+
+    @media (max-width: 768px) {
+      main {
+        margin: 2rem;
+        padding: 1.5rem;
+      }
+
+      header h1 {
+        font-size: 2rem;
+      }
+
+      section {
+        padding: 1rem;
+      }
+    }
+  </style>
 </head>
+
 <body>
 
-<header>
-    <h1>Z-Score Distribution</h1>
-</header>
-
-<section class="content">
-    <h2>Understanding Z-Score</h2>
-    <p>The <strong>Z-score</strong> (also called the standard score) indicates how many standard deviations a data point is from the mean.</p>
-    <p>The formula for the Z-score is:</p>
-    <pre>
+    <header>
+        <h1>Z-Score Distribution</h1>
+    </header>
+    <div class="failure-cases">
+        <section class="content">
+            <h2>Understanding Z-Score</h2>
+            <p>The <strong>Z-score</strong> (also called the standard score) indicates how many standard deviations a
+                data point is from the mean.</p>
+            <p>The formula for the Z-score is:</p>
+            <pre>
 Z = (X - μ) / σ
     </pre>
-    <p>Where:</p>
-    <ul>
-        <li><strong>X</strong> = individual data point</li>
-        <li><strong>μ</strong> = mean of the data</li>
-        <li><strong>σ</strong> = standard deviation</li>
-    </ul>
-</section>
+            <p>Where:</p>
+            <ul>
+                <li><strong>X</strong> = individual data point</li>
+                <li><strong>μ</strong> = mean of the data</li>
+                <li><strong>σ</strong> = standard deviation</li>
+            </ul>
+        </section>
 
-<hr>
+        <hr>
 
-<section class="content">
-    <h2>Example Calculation</h2>
-    <h3>Q: What is the Z-score of a student who scored 85 on a test where the class average is 75 with a standard deviation of 5?</h3>
-    <p>Using the formula:</p>
-    <pre>
+        <section class="content">
+            <h2>Example Calculation</h2>
+            <h3>Q: What is the Z-score of a student who scored 85 on a test where the class average is 75 with a
+                standard deviation of 5?</h3>
+            <p>Using the formula:</p>
+            <pre>
 Z = (X - μ) / σ
 Z = (85 - 75) / 5 = 2.0
     </pre>
-    <p>This means the student's score is <strong>2 standard deviations above</strong> the mean.</p>
-</section>
+            <p>This means the student's score is <strong>2 standard deviations above</strong> the mean.</p>
+        </section>
 
-<hr>
+        <hr>
 
-<section class="content">
-    <h2>Interpreting Z-Scores</h2>
-    <ul>
-        <li>A <strong>Z-score of 0</strong> means the value is exactly at the mean.</li>
-        <li>A <strong>positive Z-score</strong> means the value is above the mean.</li>
-        <li>A <strong>negative Z-score</strong> means the value is below the mean.</li>
-    </ul>
-</section>
+        <section class="content">
+            <h2>Interpreting Z-Scores</h2>
+            <ul>
+                <li>A <strong>Z-score of 0</strong> means the value is exactly at the mean.</li>
+                <li>A <strong>positive Z-score</strong> means the value is above the mean.</li>
+                <li>A <strong>negative Z-score</strong> means the value is below the mean.</li>
+            </ul>
+        </section>
 
-<hr>
+        <hr>
 
-<section class="content">
-    <h2>Z-Score Table (Standard Normal Distribution)</h2>
-    <p>The Z-score allows us to calculate probabilities using the standard normal table:</p>
-    <pre>
+        <section class="content">
+            <h2>Z-Score Table (Standard Normal Distribution)</h2>
+            <p>The Z-score allows us to calculate probabilities using the standard normal table:</p>
+            <pre>
 Z-Score   Probability
 ----------------------
 -2.0      0.0228
@@ -153,35 +290,37 @@ Z-Score   Probability
  1.0      0.8413
  2.0      0.9772
     </pre>
-    <p>For example, a Z-score of 1.0 corresponds to a probability of 0.8413, meaning 84.13% of the data lies below this value.</p>
-</section>
+            <p>For example, a Z-score of 1.0 corresponds to a probability of 0.8413, meaning 84.13% of the data lies
+                below this value.</p>
+        </section>
 
-<hr>
+        <hr>
 
-<section class="content">
-    <h2>Visual Representation</h2>
-    <p>The standard normal distribution curve:</p>
-    <figure>
-        <img src="../assets/images/z-score.png" alt="Z-Score Distribution">
-        <figcaption>Above is Z Score Distribution.</figcaption>
-      </figure>
-    <ul>
-        <li><strong>68%</strong> of data falls between <strong>-1σ and +1σ</strong>.</li>
-        <li><strong>95%</strong> falls between <strong>-2σ and +2σ</strong>.</li>
-        <li><strong>99.7%</strong> falls between <strong>-3σ and +3σ</strong>.</li>
-    </ul>
-</section>
+        <section class="content">
+            <h2>Visual Representation</h2>
+            <p>The standard normal distribution curve:</p>
+            <figure>
+                <img src="../assets/images/z-score.png" alt="Z-Score Distribution">
+                <figcaption>Above is Z Score Distribution.</figcaption>
+            </figure>
+            <ul>
+                <li><strong>68%</strong> of data falls between <strong>-1σ and +1σ</strong>.</li>
+                <li><strong>95%</strong> falls between <strong>-2σ and +2σ</strong>.</li>
+                <li><strong>99.7%</strong> falls between <strong>-3σ and +3σ</strong>.</li>
+            </ul>
+        </section>
 
-<hr>
+        <hr>
 
-<section class="content">
-    <h2>Applications of Z-Scores</h2>
-    <ul>
-        <li><strong>Standardization</strong>: Used in machine learning to normalize data.</li>
-        <li><strong>Outlier detection</strong>: Identifies extreme values in datasets.</li>
-        <li><strong>Statistical significance</strong>: Helps determine whether a value is unusual.</li>
-    </ul>
-</section>
-
+        <section class="content">
+            <h2>Applications of Z-Scores</h2>
+            <ul>
+                <li><strong>Standardization</strong>: Used in machine learning to normalize data.</li>
+                <li><strong>Outlier detection</strong>: Identifies extreme values in datasets.</li>
+                <li><strong>Statistical significance</strong>: Helps determine whether a value is unusual.</li>
+            </ul>
+        </section>
+        </div>
 </body>
+
 </html>
